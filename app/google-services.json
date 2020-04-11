@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "36854013555",
+    "firebase_url": "https://supremevideochat.firebaseio.com",
+    "project_id": "supremevideochat",
+    "storage_bucket": "supremevideochat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:36854013555:android:564b4b97899c6badee1406",
+        "android_client_info": {
+          "package_name": "com.magnitudestudios.sriharivishnu.supremevideo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "36854013555-nko6rb6ofr19710s5uoetu5millhl0r0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.magnitudestudios.sriharivishnu.supremevideo",
+            "certificate_hash": "a0cbf29b616b2d2042e94be8ce6655afde76b6a2"
+          }
+        },
+        {
+          "client_id": "36854013555-60de7p6n5l4ccogogpuq15hin0tjv5ek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLIZ_pkbWpkvEbzlBumVTWwqz1QkOYwpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "36854013555-60de7p6n5l4ccogogpuq15hin0tjv5ek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

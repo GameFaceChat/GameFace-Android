@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="connectButton">#526cff</color>
+    <color name="connectButtonOnClick">#8f9ef2</color>
+    <color name="disconnectButton">#c93524</color>
+    <color name="disconnectButtonOnClick">#ff5a47</color>
+
+    <color name="darkGray">#5c5c5c</color>
+    <color name="lightGray">#b5b3b3</color>
+
+
+</resources>
