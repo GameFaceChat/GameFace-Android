@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.magnitudestudios.sriharivishnu.supremevideo.Network.GetNetworkRequest;
 import com.vidyo.VidyoClient.Connector.ConnectorPkg;
 import com.vidyo.VidyoClient.Connector.Connector;
 
@@ -13,7 +14,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,23 +25,11 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import static com.magnitudestudios.sriharivishnu.supremevideo.Constants.*;
 
 public class MainActivity extends AppCompatActivity implements Connector.IConnect, View.OnClickListener {
     private static final String TAG = "MainActivity";
-
-    public static final int CAMERA_PERMISSION_CODE = 100;
-    public static final int NETWORK_STATE_CODE = 101;
-    public static final int RECORD_AUDIO_CODE = 102;
-
-    public static final int STATE_COMPLETED = 200;
-
-    public static final int STATE_CONNECTED = 1;
-    public static final int STATE_FAILED = -1;
-    public static final int STATE_DISCONNECTED = -2;
 
     private String USERNAME = "";
 
@@ -67,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
             }
         }
     };
+
 
     //Video Service Handler
     @SuppressLint("HandlerLeak")
@@ -153,62 +142,6 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
 
     }
 
-
-    @Override
-    public void onSuccess() {
-        Message msg = new Message();
-        msg.what = STATE_CONNECTED;
-        mVideoHandler.sendMessage(msg);
-    }
-
-    @Override
-    public void onFailure(Connector.ConnectorFailReason connectorFailReason) {
-        Message msg = new Message();
-        msg.what = STATE_FAILED;
-        mVideoHandler.sendMessage(msg);
-    }
-
-    @Override
-    public void onDisconnected(Connector.ConnectorDisconnectReason connectorDisconnectReason) {
-        Message msg = new Message();
-        msg.what = STATE_DISCONNECTED;
-        mVideoHandler.sendMessage(msg);
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        else if (requestCode == NETWORK_STATE_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Network Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Network Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        else if (requestCode == RECORD_AUDIO_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Record Audio Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Record Audio Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
     private void setUnclickable(Button button) {
         button.setBackground(getDrawable(R.drawable.disabled_background));
         button.setTextColor(getColor(R.color.darkGray));
@@ -244,6 +177,64 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
         }
     }
 
+
+    @Override
+    public void onSuccess() {
+        Message msg = new Message();
+        msg.what = STATE_CONNECTED;
+        mVideoHandler.sendMessage(msg);
+    }
+
+    @Override
+    public void onFailure(Connector.ConnectorFailReason connectorFailReason) {
+        Message msg = new Message();
+        msg.what = STATE_FAILED;
+        mVideoHandler.sendMessage(msg);
+    }
+
+    @Override
+    public void onDisconnected(Connector.ConnectorDisconnectReason connectorDisconnectReason) {
+        Message msg = new Message();
+        msg.what = STATE_DISCONNECTED;
+        mVideoHandler.sendMessage(msg);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        Log.d(TAG, "onRequestPermissionsResult: "+ permissions.toString() + grantResults.toString());
+
+        if (requestCode == CAMERA_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(MainActivity.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        else if (requestCode == NETWORK_STATE_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Network Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(MainActivity.this, "Network Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        else if (requestCode == RECORD_AUDIO_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(MainActivity.this, "Record Audio Permission Granted", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(MainActivity.this, "Record Audio Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -263,50 +254,6 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
             case R.id.disconnectButton:
                 disconnect();
                 break;
-        }
-    }
-
-
-
-    public class GetNetworkRequest extends AsyncTask<String, Void, Void> {
-        Handler mHandler;
-        String stringUrl;
-
-        public GetNetworkRequest(Handler handler, String stringUrl) {
-            this.mHandler = handler;
-            this.stringUrl = stringUrl;
-        }
-        @Override
-        protected Void doInBackground(String... strings) {
-            try {
-                StringBuilder response  = new StringBuilder();
-
-                URL url = new URL(stringUrl);
-                HttpURLConnection httpconn = (HttpURLConnection)url.openConnection();
-                if (httpconn.getResponseCode() == HttpURLConnection.HTTP_OK)
-                {
-                    BufferedReader input = new BufferedReader(new InputStreamReader(httpconn.getInputStream()),16384);
-                    String strLine;
-                    while ((strLine = input.readLine()) != null)
-                    {
-                        response.append(strLine);
-                    }
-                    input.close();
-                }
-                Message message = new Message();
-                message.what = STATE_COMPLETED;
-                message.obj = response.toString();
-                mHandler.sendMessage(message);
-            } catch (Exception e) {
-                Log.d("Error Occured", "Link not found");
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
         }
     }
 
