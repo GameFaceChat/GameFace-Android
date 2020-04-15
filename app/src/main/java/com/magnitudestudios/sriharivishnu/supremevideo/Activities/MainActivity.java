@@ -1,19 +1,15 @@
-package com.magnitudestudios.sriharivishnu.supremevideo;
+package com.magnitudestudios.sriharivishnu.supremevideo.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
+import com.magnitudestudios.sriharivishnu.supremevideo.Bases.BasePermissionsActivity;
 import com.magnitudestudios.sriharivishnu.supremevideo.Network.GetNetworkRequest;
+import com.magnitudestudios.sriharivishnu.supremevideo.R;
 import com.vidyo.VidyoClient.Connector.ConnectorPkg;
 import com.vidyo.VidyoClient.Connector.Connector;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -28,7 +24,7 @@ import android.widget.Toast;
 
 import static com.magnitudestudios.sriharivishnu.supremevideo.Constants.*;
 
-public class MainActivity extends AppCompatActivity implements Connector.IConnect, View.OnClickListener {
+public class MainActivity extends BasePermissionsActivity implements Connector.IConnect, View.OnClickListener {
     private static final String TAG = "MainActivity";
 
     private String USERNAME = "";
@@ -52,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
                     Log.d(TAG, "handleMessage: " + (String) msg.obj);
                     ConnectToResource("prod.vidyo.io", (String) msg.obj, USERNAME, "VideoChat");
                     break;
+                case STATE_URL_FAILED:
+                    Log.d(TAG, "handleMessage: " + (String) msg.obj);
+                    Toast.makeText(MainActivity.this, "Cannot Connect to Server", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };
@@ -68,8 +68,7 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
                     Log.d(TAG, "handleMessage: " + "SUCCESS");
                     setDisconnectButtonEnabled();
                     setUnclickable(connect);
-
-                    Toast.makeText(getApplicationContext(), "SUCCESS!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "SUCCESS!", Toast.LENGTH_LONG).show();
                     break;
                 case STATE_FAILED:
                     Log.e(TAG, "handleMessage: " + "FAILED");
@@ -89,9 +88,6 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermission(Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE);
-        checkPermission(Manifest.permission.ACCESS_NETWORK_STATE, NETWORK_STATE_CODE);
-        checkPermission(Manifest.permission.RECORD_AUDIO, RECORD_AUDIO_CODE);
         ConnectorPkg.setApplicationUIContext(this);
         ConnectorPkg.initialize();
 
@@ -112,17 +108,8 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
 
     /* Callbacks */
 
-    // Function to check and request permission.
-    public void checkPermission(String permission, int requestCode)
-    {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, permission) == PackageManager.PERMISSION_DENIED) {
-            // Requesting the permission
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] { permission }, requestCode);
-        }
-    }
-
     private void getUserName(final OnReceiveUsername listener) {
-        final View v = getLayoutInflater().inflate(R.layout.dialog_view, null);
+        final View v = getLayoutInflater().inflate(R.layout.home_dialog_username, null);
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
                 .setTitle("Username Input")
                 .setView(v)
@@ -171,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
     private void disconnect() {
         if (mVidyoConnector == null) {
             Toast.makeText(MainActivity.this, "There is no Connection", Toast.LENGTH_LONG).show();
-        }else {
+        } else {
             mVidyoConnector.disconnect();
             mVidyoConnector = null;
         }
@@ -197,42 +184,6 @@ public class MainActivity extends AppCompatActivity implements Connector.IConnec
         Message msg = new Message();
         msg.what = STATE_DISCONNECTED;
         mVideoHandler.sendMessage(msg);
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
-    {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        Log.d(TAG, "onRequestPermissionsResult: "+ permissions.toString() + grantResults.toString());
-
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Camera Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        else if (requestCode == NETWORK_STATE_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Network Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Network Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-
-        else if (requestCode == RECORD_AUDIO_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Record Audio Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Record Audio Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     @Override

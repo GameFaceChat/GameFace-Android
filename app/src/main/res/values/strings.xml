@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">SupremeVideo</string>
+    <string name="app_name">GameFace</string>
+    <string name="slogan">Video-calling made fun again.</string>
+
+    <string name="brand_name_1">Game</string>
+    <string name="brand_name_2">Face</string>
+
+    <!-- Start Screen -->
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="sign_up_with_email">Sign up with Email</string>
+    <string name="already_have_account">Already have an account? Login.</string>
+
 </resources>

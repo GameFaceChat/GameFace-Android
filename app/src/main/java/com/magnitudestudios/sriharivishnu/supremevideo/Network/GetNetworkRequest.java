@@ -22,6 +22,7 @@ public class GetNetworkRequest extends AsyncTask<String, Void, Void> {
     }
     @Override
     protected Void doInBackground(String... strings) {
+        Message message = new Message();
         try {
             StringBuilder response  = new StringBuilder();
 
@@ -37,14 +38,14 @@ public class GetNetworkRequest extends AsyncTask<String, Void, Void> {
                 }
                 input.close();
             }
-            Message message = new Message();
             message.what = STATE_COMPLETED;
             message.obj = response.toString();
-            mHandler.sendMessage(message);
         } catch (Exception e) {
-            Log.d("Error Occurred", "Link not found");
             e.printStackTrace();
+            message.what = STATE_URL_FAILED;
+            message.obj = e.toString();
         }
+        mHandler.sendMessage(message);
         return null;
     }
 
