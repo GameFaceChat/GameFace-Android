@@ -56,7 +56,7 @@
             />
 
         <EditText
-            android:id="@+id/usernameInput"
+            android:id="@+id/signup_usernameInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -68,7 +68,7 @@
             android:autofillHints="username"/>
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/signup_emailInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -81,7 +81,7 @@
             android:importantForAutofill="auto"/>
 
         <EditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/signup_passwordInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -93,7 +93,7 @@
             android:importantForAutofill="no"/>
 
         <EditText
-            android:id="@+id/cPasswordInput"
+            android:id="@+id/signup_cPasswordInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -128,6 +128,16 @@
         app:layout_constraintEnd_toStartOf="@+id/signup_guideline_horizontal_2"
         app:layout_constraintStart_toStartOf="@+id/signup_guideline_horizontal"
         app:layout_constraintTop_toBottomOf="@id/signup_button_signup" />
+
+    <Button
+        android:id="@+id/signup_gottologin"
+        style="@style/startscreen_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_medium"
+        android:text="@string/already_have_account"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

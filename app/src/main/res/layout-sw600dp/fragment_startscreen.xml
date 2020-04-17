@@ -117,7 +117,7 @@
         android:clickable="true"
         android:focusable="true"
 
-        app:layout_constraintBottom_toTopOf="@+id/login_gottologin"
+        app:layout_constraintBottom_toTopOf="@+id/startscreen_gottologin"
         app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
         app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1">
 
@@ -159,7 +159,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/login_gottologin"
+        android:id="@+id/startscreen_gottologin"
         style="@style/startscreen_btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

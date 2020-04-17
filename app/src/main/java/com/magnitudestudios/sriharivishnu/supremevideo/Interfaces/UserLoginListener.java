@@ -1,5 +1,8 @@
 package com.magnitudestudios.sriharivishnu.supremevideo.Interfaces;
 
 public interface UserLoginListener {
-    void onClickButton();
+    void onClickSignUpButton();
+    void onClickLoginButton();
+
+    void signedInUser();
 }

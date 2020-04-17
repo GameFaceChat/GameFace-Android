@@ -1,8 +1,26 @@
 package com.magnitudestudios.sriharivishnu.supremevideo.pojo;
 
-import java.util.ArrayList;
-
 public class User {
-    String email;
-    ArrayList<String> friends;
+    public String email;
+    public String username;
+    public User (String email, String username) {
+        this.email = email;
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

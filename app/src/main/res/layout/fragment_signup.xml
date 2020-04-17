@@ -151,5 +151,15 @@
         app:layout_constraintStart_toStartOf="@+id/signup_guideline_horizontal"
         app:layout_constraintTop_toBottomOf="@id/signup_button_signup" />
 
+    <Button
+        android:id="@+id/signup_gottologin"
+        style="@style/startscreen_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_medium"
+        android:text="@string/already_have_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
