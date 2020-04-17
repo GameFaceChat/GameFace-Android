@@ -8,6 +8,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="primary_button_theme">
+        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <!-- StartScreen -->
     <style name="start_text">
         <item name="android:textColor">@color/white</item>
@@ -37,6 +43,8 @@
         <item name="android:src">@drawable/card_background</item>
     </style>
 
+    <!-- Sign Up Screen -->
+
     <style name="startscreen_text_signup">
         <item name="android:textColor">@color/black</item>
         <item name="fontFamily">@font/raleway</item>
@@ -54,6 +62,33 @@
         <item name="textAllCaps">false</item>
         <item name="fontFamily">@font/raleway</item>
         <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="signup_title" parent="start_text">
+        <item name="android:padding">@dimen/padding_large</item>
+        <item name="android:textAlignment">center</item>
+        <item name="fontFamily">@font/raleway</item>
+        <item name="android:textSize">@dimen/text_size_title</item>
+    </style>
+
+    <style name="signup_edittext">
+        <item name="android:background">@drawable/signup_editext</item>
+        <item name="drawableTint">@color/greyed_text</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="hintTextColor">@color/greyed_text</item>
+        <item name="fontFamily">@font/raleway</item>
+        <item name="android:drawablePadding">@dimen/padding_large</item>
+        <item name="android:padding">@dimen/padding_edittext</item>
+    </style>
+
+    <style name="signup_button" parent="primary_button_theme">
+        <item name="android:background">@drawable/signup_button</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+    
+    <style name="terms_and_conditions" parent="start_text">
+        <item name="fontFamily">@font/raleway</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
 

@@ -28,7 +28,12 @@
     <dimen name="padding_very_small">4dp</dimen>
     <dimen name="padding_tiny">2dp</dimen>
 
+    <dimen name="padding_edittext">10dp</dimen>
+
     <!-- Corner Radius -->
     <dimen name="card_radius">20dp</dimen>
+
+    <!-- Icon Size-->
+    <dimen name="icon_size">25dp</dimen>
 
 </resources>

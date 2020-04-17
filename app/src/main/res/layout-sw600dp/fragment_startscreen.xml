@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_background">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startscreen_guideline_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startscreen_guideline_horizontal_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startscreen_guideline_horizontal_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.77" />
+
+    <LinearLayout
+        android:id="@+id/startscreen_txv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/startscreen_guideline_vertical">
+
+        <TextView
+            style="@style/startscreen_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/brand_name_1" />
+
+        <TextView
+            style="@style/startscreen_text_title_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/brand_name_2" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/startscreen_txv_slogan"
+        style="@style/startscreen_text_slogan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_large"
+        android:text="@string/slogan"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
+        app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1"
+        app:layout_constraintTop_toBottomOf="@+id/startscreen_txv_title" />
+
+    <RelativeLayout
+        android:id="@+id/startscreen_card_signupwithgoogle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_medium"
+
+        app:layout_constraintBottom_toTopOf="@+id/startscreen_card_signupwithemail"
+        app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
+        app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1">
+
+        <ImageView
+            style="@style/imageview_card_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@id/activation_layout_google"
+            android:layout_alignTop="@+id/activation_layout_google"
+            android:layout_alignEnd="@id/activation_layout_google"
+            android:layout_alignBottom="@id/activation_layout_google"
+            android:layout_marginStart="@dimen/layout_margin_very_small" />
+
+        <LinearLayout
+            android:id="@+id/activation_layout_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_large">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/padding_medium"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_tiny"
+                android:paddingStart="@dimen/padding_very_small"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_google" />
+
+            <TextView
+                style="@style/startscreen_text_signup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="@string/sign_up_with_google" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/startscreen_card_signupwithemail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_medium"
+
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
+        app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1">
+
+        <ImageView
+            style="@style/imageview_card_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignStart="@id/activation_layout_email"
+            android:layout_alignTop="@+id/activation_layout_email"
+            android:layout_alignEnd="@id/activation_layout_email"
+            android:layout_alignBottom="@id/activation_layout_email"
+            android:layout_marginStart="@dimen/layout_margin_very_small" />
+
+        <LinearLayout
+            android:id="@+id/activation_layout_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_large">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/padding_medium"
+                android:layout_weight="1"
+                android:padding="@dimen/padding_tiny"
+                android:paddingStart="@dimen/padding_very_small"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_mail"
+                android:tint="@color/darkGray" />
+
+            <TextView
+                style="@style/startscreen_text_signup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="@string/sign_up_with_email" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button"
+        style="@style/startscreen_btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_very_huge"
+        android:text="@string/already_have_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

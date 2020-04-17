@@ -83,7 +83,7 @@
 
         <LinearLayout
             android:id="@+id/activation_layout_google"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/padding_large">
@@ -129,7 +129,7 @@
 
         <LinearLayout
             android:id="@+id/activation_layout_email"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/padding_large">
@@ -142,7 +142,8 @@
                 android:paddingEnd="0dp"
                 android:padding="@dimen/padding_tiny"
                 android:layout_marginBottom="@dimen/padding_medium"
-                android:src="@drawable/ic_google" />
+                android:src="@drawable/ic_mail"
+                android:tint="@color/darkGray"/>
 
             <TextView
                 style="@style/startscreen_text_signup"
@@ -157,8 +158,9 @@
         style="@style/startscreen_btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/already_have_account"
         android:layout_marginTop="@dimen/layout_margin_small"
+        android:text="@string/already_have_account"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startscreen_card_signupwithemail" />
