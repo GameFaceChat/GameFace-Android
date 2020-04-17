@@ -25,7 +25,6 @@ public class LoginActivity extends AppCompatActivity implements UserLoginListene
         setContentView(R.layout.activity_login);
         switchFragment(new StartScreenFragment());
         mAuth = FirebaseAuth.getInstance();
-        mAuth.signOut();
     }
 
     @Override
@@ -63,5 +62,10 @@ public class LoginActivity extends AppCompatActivity implements UserLoginListene
     @Override
     public void signedInUser() {
         goToMainActivity();
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

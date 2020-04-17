@@ -1,4 +1,6 @@
 <resources>
+    <string name="google_oAuth_client_ID">36854013555-60de7p6n5l4ccogogpuq15hin0tjv5ek.apps.googleusercontent.com</string>
+
     <string name="app_name">GameFace</string>
     <string name="slogan">Video-calling made fun again.</string>
 

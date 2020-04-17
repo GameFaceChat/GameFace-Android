@@ -2,6 +2,7 @@ package com.magnitudestudios.sriharivishnu.supremevideo.Activities;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.magnitudestudios.sriharivishnu.supremevideo.Bases.BasePermissionsActivity;
 import com.magnitudestudios.sriharivishnu.supremevideo.Network.GetNetworkRequest;
 import com.magnitudestudios.sriharivishnu.supremevideo.R;
@@ -10,6 +11,7 @@ import com.vidyo.VidyoClient.Connector.Connector;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,9 +35,10 @@ public class MainActivity extends BasePermissionsActivity implements Connector.I
     int remoteParticipants = 10;
 
     private FrameLayout videoFrame;
-    private Button connect, disconnect;
+    private Button connect, disconnect, signout;
     private ProgressBar progressBar;
 
+    FirebaseAuth mAuth;
 
     //Network Handler
     @SuppressLint("HandlerLeak")
@@ -88,15 +91,19 @@ public class MainActivity extends BasePermissionsActivity implements Connector.I
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth = FirebaseAuth.getInstance();
         ConnectorPkg.setApplicationUIContext(this);
         ConnectorPkg.initialize();
 
         videoFrame = findViewById(R.id.videoFrame);
         connect = findViewById(R.id.connectButton);
         disconnect = findViewById(R.id.disconnectButton);
+        signout = findViewById(R.id.main_button_signout);
         progressBar = findViewById(R.id.progressBar);
         connect.setOnClickListener(this);
         disconnect.setOnClickListener(this);
+        signout.setOnClickListener(this);
+
 
         setUnclickable(disconnect);
 
@@ -204,6 +211,12 @@ public class MainActivity extends BasePermissionsActivity implements Connector.I
                 break;
             case R.id.disconnectButton:
                 disconnect();
+                break;
+            case R.id.main_button_signout:
+                mAuth.signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

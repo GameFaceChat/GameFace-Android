@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,7 @@ public class SignUpScreenFragment extends Fragment implements View.OnClickListen
     private static final String TAG = "SignUpScreenFragment";
     private Button goToLogin, signUp;
     private UserLoginListener listener;
-    private EditText username_et, email_et, password_et, cpassword_et;
+    private EditText usernameInput, emailInput, passwordInput, cPasswordInput;
 
     private FirebaseAuth mAuth;
 
@@ -44,10 +45,10 @@ public class SignUpScreenFragment extends Fragment implements View.OnClickListen
         signUp.setOnClickListener(this);
 
         //EditTexts
-        username_et = view.findViewById(R.id.signup_usernameInput);
-        email_et = view.findViewById(R.id.signup_emailInput);
-        password_et = view.findViewById(R.id.signup_passwordInput);
-        cpassword_et = view.findViewById(R.id.signup_cPasswordInput);
+        usernameInput = view.findViewById(R.id.signup_usernameInput);
+        emailInput = view.findViewById(R.id.signup_emailInput);
+        passwordInput = view.findViewById(R.id.signup_passwordInput);
+        cPasswordInput = view.findViewById(R.id.signup_cPasswordInput);
 
         mAuth = FirebaseAuth.getInstance();
         return view;
@@ -55,20 +56,20 @@ public class SignUpScreenFragment extends Fragment implements View.OnClickListen
 
     private boolean validateDetails() {
         boolean valid = true;
-        if (!(username_et.getText().toString().length() > 5)) {
+        if (!(usernameInput.getText().toString().length() > 5)) {
             valid = false;
-            username_et.setError("Username must be more than 5 characters");
+            usernameInput.setError("Username must be more than 5 characters");
         }
-        if (!email_et.getText().toString().contains("@") || !email_et.getText().toString().contains(".")) {
-            email_et.setError("Please enter a valid email");
+        if (!emailInput.getText().toString().contains("@") || !emailInput.getText().toString().contains(".")) {
+            emailInput.setError("Please enter a valid email");
         }
-        if (!(password_et.getText().toString().length() > 6)) {
+        if (!(passwordInput.getText().toString().length() > 6)) {
             valid = false;
-            password_et.setError("Password must be more than 6 characters in length");
+            passwordInput.setError("Password must be more than 6 characters in length");
         }
-        if (!password_et.getText().toString().equals(cpassword_et.getText().toString())) {
+        if (!passwordInput.getText().toString().equals(cPasswordInput.getText().toString())) {
             valid = false;
-            cpassword_et.setError("Passwords must match");
+            cPasswordInput.setError("Passwords must match");
         }
         return valid;
     }
@@ -86,6 +87,7 @@ public class SignUpScreenFragment extends Fragment implements View.OnClickListen
                             listener.signedInUser();
                         } else {
                             Log.e(TAG, "onCompleteSignUp: FAILURE");
+                            Toast.makeText(getContext(), "Sign Up Failed", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -100,7 +102,7 @@ public class SignUpScreenFragment extends Fragment implements View.OnClickListen
                 break;
             case R.id.signup_button_signup:
                 if (validateDetails()) {
-                    signUpUser(username_et.getText().toString(), email_et.getText().toString(), password_et.getText().toString());
+                    signUpUser(usernameInput.getText().toString(), emailInput.getText().toString(), passwordInput.getText().toString());
                 }
                 break;
         }
