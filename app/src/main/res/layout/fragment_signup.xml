@@ -78,7 +78,7 @@
             />
 
         <EditText
-            android:id="@+id/usernameInput"
+            android:id="@+id/signup_usernameInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -90,7 +90,7 @@
             android:autofillHints="username"/>
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/signup_emailInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -103,7 +103,7 @@
             android:importantForAutofill="auto"/>
 
         <EditText
-            android:id="@+id/passwordInput"
+            android:id="@+id/signup_passwordInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"
@@ -115,7 +115,7 @@
             android:importantForAutofill="no"/>
 
         <EditText
-            android:id="@+id/cPasswordInput"
+            android:id="@+id/signup_cPasswordInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
             android:layout_weight="1"

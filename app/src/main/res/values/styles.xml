@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -12,11 +12,13 @@
         <item name="textAllCaps">false</item>
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/signup_button</item>
     </style>
 
     <!-- StartScreen -->
     <style name="start_text">
         <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/raleway</item>
     </style>
 
     <style name="startscreen_text_title" parent="start_text">
@@ -40,14 +42,14 @@
 
     <style name="imageview_card_style">
         <item name="android:scaleType">fitXY</item>
-        <item name="android:src">@drawable/card_background</item>
+        <item name="android:src">@drawable/button_shadow</item>
     </style>
 
     <!-- Sign Up Screen -->
 
     <style name="startscreen_text_signup">
         <item name="android:textColor">@color/black</item>
-        <item name="fontFamily">@font/raleway</item>
+        <item name="fontFamily">@font/raleway_light</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="textAllCaps">false</item>
         <item name="android:textAlignment">textStart</item>
@@ -82,7 +84,6 @@
     </style>
 
     <style name="signup_button" parent="primary_button_theme">
-        <item name="android:background">@drawable/signup_button</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
     
@@ -90,6 +91,26 @@
         <item name="fontFamily">@font/raleway</item>
         <item name="android:textAlignment">center</item>
     </style>
+
+    <!-- Login Screen -->
+    <style name="login_title" parent="start_text">
+        <item name="android:textSize">@dimen/text_size_huge</item>
+    </style>
+
+    <style name="login_horizontal_line">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="login_horizontal_line_text">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/raleway_light</item>
+    </style>
+
+
 
 
 </resources>

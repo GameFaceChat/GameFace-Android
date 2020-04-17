@@ -66,7 +66,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/layout_margin_very_huge"
-
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
         app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1"
         app:layout_constraintTop_toBottomOf="@+id/startscreen_txv_slogan">
@@ -112,7 +113,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/layout_margin_medium"
-
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
         app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1"
         app:layout_constraintTop_toBottomOf="@+id/startscreen_card_signupwithgoogle">
@@ -155,6 +157,7 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/login_gottologin"
         style="@style/startscreen_btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
