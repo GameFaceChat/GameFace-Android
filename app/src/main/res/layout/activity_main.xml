@@ -5,27 +5,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity">
-
-    <FrameLayout
-        android:id="@+id/videoFrame"
+    <LinearLayout
+        android:id="@+id/videoLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:orientation="vertical"
         android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <org.webrtc.SurfaceViewRenderer
+            android:id="@+id/localVideo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+        <org.webrtc.SurfaceViewRenderer
+            android:id="@+id/remoteVideo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/videoFrame"
-        app:layout_constraintEnd_toEndOf="@+id/videoFrame"
-        app:layout_constraintStart_toStartOf="@+id/videoFrame"
-        app:layout_constraintTop_toTopOf="@+id/videoFrame" />
+        app:layout_constraintBottom_toBottomOf="@+id/videoLayout"
+        app:layout_constraintEnd_toEndOf="@+id/videoLayout"
+        app:layout_constraintStart_toStartOf="@+id/videoLayout"
+        app:layout_constraintTop_toTopOf="@+id/videoLayout" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
