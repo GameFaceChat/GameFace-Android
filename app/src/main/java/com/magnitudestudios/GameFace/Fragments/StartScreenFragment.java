@@ -120,8 +120,7 @@ public class StartScreenFragment extends Fragment implements View.OnClickListene
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try {
-            listener = (UserLoginListener) context;
+        try { listener = (UserLoginListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " Must implement UserLoginListener");
         }

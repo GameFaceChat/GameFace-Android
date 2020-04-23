@@ -3,15 +3,15 @@ package com.magnitudestudios.GameFace.Activities;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 import com.magnitudestudios.GameFace.Bases.BasePermissionsActivity;
+import com.magnitudestudios.GameFace.Network.FirebaseHelper;
 import com.magnitudestudios.GameFace.Network.GetNetworkRequest;
 import com.magnitudestudios.GameFace.R;
 import com.magnitudestudios.GameFace.Utils.CustomPeerConnectionObserver;
 import com.magnitudestudios.GameFace.Utils.CustomSdpObserver;
-import com.twilio.rest.proxy.v1.service.SessionCreator;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +30,8 @@ import org.webrtc.AudioTrack;
 import org.webrtc.Camera1Enumerator;
 import org.webrtc.CameraEnumerator;
 import org.webrtc.DataChannel;
+import org.webrtc.DefaultVideoDecoderFactory;
+import org.webrtc.DefaultVideoEncoderFactory;
 import org.webrtc.EglBase;
 import org.webrtc.IceCandidate;
 import org.webrtc.MediaConstraints;
@@ -41,9 +43,11 @@ import org.webrtc.RTCStatsReport;
 import org.webrtc.RtpReceiver;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
+import org.webrtc.SurfaceTextureHelper;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoCapturer;
-import org.webrtc.VideoRenderer;
+import org.webrtc.SurfaceViewRenderer;
+
 import org.webrtc.VideoSource;
 import org.webrtc.VideoTrack;
 
@@ -65,8 +69,8 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     private MediaConstraints sdpConstraints;
     private PeerConnection localPeer, remotePeer;
 
-    VideoRenderer localRenderer;
-    VideoRenderer remoteRenderer;
+
+    EglBase rootEglBase;
 
     private AudioSource audioSource;
     private AudioTrack localAudioTrack;
@@ -77,8 +81,7 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
 
     private Button connect, disconnect, signout;
 
-    private FirebaseAuth mAuth;
-
+    private FirebaseHelper firebaseHelper;
     //Network Handler
     @SuppressLint("HandlerLeak")
     private final Handler mUrlHandler = new Handler() {
@@ -98,38 +101,38 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     };
 
 
-    //Video Service Handler
-    @SuppressLint("HandlerLeak")
-    private final Handler mVideoHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            progressBar.setVisibility(View.GONE);
-            switch (msg.what) {
-                case STATE_CONNECTED:
-                    Log.d(TAG, "handleMessage: " + "SUCCESS");
-                    setDisconnectButtonEnabled();
-                    setUnclickable(connect);
-                    Toast.makeText(MainActivity.this, "SUCCESS!", Toast.LENGTH_LONG).show();
-                    break;
-                case STATE_FAILED:
-                    Log.e(TAG, "handleMessage: " + "FAILED");
-                    Toast.makeText(MainActivity.this, "Connection Failed", Toast.LENGTH_LONG).show();
-                    break;
-                case STATE_DISCONNECTED:
-                    Log.e(TAG, "handleMessage: " + "DISCONNECTED");
-                    setConnectButtonEnabled();
-                    setUnclickable(disconnect);
-                    Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_LONG).show();
-                    break;
-            }
-        }
-    };
+//    //Video Service Handler
+//    @SuppressLint("HandlerLeak")
+//    private final Handler mVideoHandler = new Handler() {
+//        @Override
+//        public void handleMessage(Message msg) {
+//            progressBar.setVisibility(View.GONE);
+//            switch (msg.what) {
+//                case STATE_CONNECTED:
+//                    Log.d(TAG, "handleMessage: " + "SUCCESS");
+//                    setDisconnectButtonEnabled();
+//                    setUnclickable(connect);
+//                    Toast.makeText(MainActivity.this, "SUCCESS!", Toast.LENGTH_LONG).show();
+//                    break;
+//                case STATE_FAILED:
+//                    Log.e(TAG, "handleMessage: " + "FAILED");
+//                    Toast.makeText(MainActivity.this, "Connection Failed", Toast.LENGTH_LONG).show();
+//                    break;
+//                case STATE_DISCONNECTED:
+//                    Log.e(TAG, "handleMessage: " + "DISCONNECTED");
+//                    setConnectButtonEnabled();
+//                    setUnclickable(disconnect);
+//                    Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_LONG).show();
+//                    break;
+//            }
+//        }
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth = FirebaseAuth.getInstance();
+        firebaseHelper = FirebaseHelper.getInstance();
 
         localVideo = findViewById(R.id.localVideo);
         remoteVideo = findViewById(R.id.remoteVideo);
@@ -141,7 +144,7 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         disconnect.setOnClickListener(this);
         signout.setOnClickListener(this);
 
-        EglBase rootEglBase = EglBase.create();
+        rootEglBase = EglBase.create();
         localVideo.init(rootEglBase.getEglBaseContext(), null);
         remoteVideo.init(rootEglBase.getEglBaseContext(), null);
         localVideo.setZOrderMediaOverlay(true);
@@ -154,135 +157,111 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     }
 
     private void startCamera() {
-        PeerConnectionFactory.initializeAndroidGlobals(this, true);
-        //Create a new PeerConnectionFactory instance.
-        PeerConnectionFactory.Options options = new PeerConnectionFactory.Options();
-        peerConnectionFactory = new PeerConnectionFactory(options);
+        //Initialize PeerConnectionFactory globals.
+        PeerConnectionFactory.InitializationOptions initializationOptions = PeerConnectionFactory.InitializationOptions.builder(this).createInitializationOptions();
+        PeerConnectionFactory.initialize(initializationOptions);
 
-        //Now create a VideoCapturer instance. Callback methods are there if you want to do something!
-        videoCapturer = createVideoCapturer();
+        //Create a new PeerConnectionFactory instance - using Hardware encoder and decoder.
+        PeerConnectionFactory.Options options = new PeerConnectionFactory.Options();
+        DefaultVideoEncoderFactory defaultVideoEncoderFactory = new DefaultVideoEncoderFactory(rootEglBase.getEglBaseContext(), true, true);
+        DefaultVideoDecoderFactory defaultVideoDecoderFactory = new DefaultVideoDecoderFactory(rootEglBase.getEglBaseContext());
+        peerConnectionFactory = PeerConnectionFactory.builder()
+                .setOptions(options)
+                .setVideoEncoderFactory(defaultVideoEncoderFactory)
+                .setVideoDecoderFactory(defaultVideoDecoderFactory)
+                .createPeerConnectionFactory();
+
         //Create MediaConstraints - Will be useful for specifying video and audio constraints. More on this later!
         audioConstraints = new MediaConstraints();
         videoConstraints = new MediaConstraints();
 
+        //Now create a VideoCapturer instance. Callback methods are there if you want to do something!
+        videoCapturer = createCameraCapturer(new Camera1Enumerator(false));
+        if (videoCapturer != null) {
+            SurfaceTextureHelper surfaceTextureHelper = SurfaceTextureHelper.create("CaptureThread", rootEglBase.getEglBaseContext());
+            videoSource = peerConnectionFactory.createVideoSource(videoCapturer.isScreencast());
+            videoCapturer.initialize(surfaceTextureHelper, this, videoSource.getCapturerObserver());
+        }
+
         //Create a VideoSource instance
-        videoSource = peerConnectionFactory.createVideoSource(videoCapturer);
         localVideoTrack = peerConnectionFactory.createVideoTrack("100", videoSource);
 
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints);
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource);
 
-        videoCapturer.startCapture(500, 500, 30);
+        videoCapturer.startCapture(1024, 720, 30);
 
         //create surface renderer, init it and add the renderer to the track
         localVideo.setMirror(true);
-        localRenderer = new VideoRenderer(localVideo);
         localVideo.setEnableHardwareScaler(true);
-
-        localVideoTrack.addRenderer(localRenderer);
+        localVideoTrack.addSink(localVideo);
     }
 
     private void call() {
         List<PeerConnection.IceServer> iceServers = new ArrayList<>();
 
-        sdpConstraints = new MediaConstraints();
-        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("offerToReceiveAudio", "true"));
-        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("offerToReceiveVideo", "true"));
-
-        localPeer = peerConnectionFactory.createPeerConnection(iceServers, sdpConstraints, new CustomPeerConnectionObserver(" LOCAL") {
+        PeerConnection.RTCConfiguration rtcConfig = new PeerConnection.RTCConfiguration(iceServers);
+        // TCP candidates are only useful when connecting to a server that supports
+        // ICE-TCP.
+        rtcConfig.tcpCandidatePolicy = PeerConnection.TcpCandidatePolicy.DISABLED;
+        rtcConfig.bundlePolicy = PeerConnection.BundlePolicy.MAXBUNDLE;
+        rtcConfig.rtcpMuxPolicy = PeerConnection.RtcpMuxPolicy.REQUIRE;
+        rtcConfig.continualGatheringPolicy = PeerConnection.ContinualGatheringPolicy.GATHER_CONTINUALLY;
+        rtcConfig.keyType = PeerConnection.KeyType.ECDSA;
+        localPeer = peerConnectionFactory.createPeerConnection(rtcConfig, new CustomPeerConnectionObserver("localPeerCreation") {
             @Override
             public void onIceCandidate(IceCandidate iceCandidate) {
                 super.onIceCandidate(iceCandidate);
-                localPeer.addIceCandidate(iceCandidate);
+                //Send it
+//                onIceCandidateReceived(iceCandidate);
             }
-            @Override
-            public void onAddStream(MediaStream mediaStream) {
-                super.onAddStream(mediaStream);
-            }
-        });
 
-        remotePeer = peerConnectionFactory.createPeerConnection(iceServers, sdpConstraints, new CustomPeerConnectionObserver(" REMOTE") {
-            @Override
-            public void onIceCandidate(IceCandidate iceCandidate) {
-                super.onIceCandidate(iceCandidate);
-                remotePeer.addIceCandidate(iceCandidate);
-            }
             @Override
             public void onAddStream(MediaStream mediaStream) {
                 super.onAddStream(mediaStream);
-                remotePeer.getStats(new RTCStatsCollectorCallback() {
-                    @Override
-                    public void onStatsDelivered(RTCStatsReport rtcStatsReport) {
-                        Log.d(TAG, "onStatsDelivered: "+rtcStatsReport.toString());
-                    }
-                });
                 gotRemoteStream(mediaStream);
             }
-
-            @Override
-            public void onIceGatheringChange(PeerConnection.IceGatheringState iceGatheringState) {
-                super.onIceGatheringChange(iceGatheringState);
-            }
         });
+
 
         MediaStream stream = peerConnectionFactory.createLocalMediaStream("102");
         stream.addTrack(localAudioTrack);
         stream.addTrack(localVideoTrack);
         localPeer.addStream(stream);
-//        gotRemoteStream(stream);
+        gotRemoteStream(stream);
 
-        localPeer.createOffer(new CustomSdpObserver("localCreateOffer"){
+        sdpConstraints = new MediaConstraints();
+        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"));
+        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"));
+        localPeer.createOffer(new CustomSdpObserver("localCreateOffer") {
             @Override
             public void onCreateSuccess(SessionDescription sessionDescription) {
-                //we have localOffer. Set it as local desc for localpeer and remote desc for remote peer.
-                //try to create answer from the remote peer.
                 super.onCreateSuccess(sessionDescription);
+                Log.d(TAG, "onCreateSuccess234: "+sessionDescription.description);
                 localPeer.setLocalDescription(new CustomSdpObserver("localSetLocalDesc"), sessionDescription);
-                remotePeer.setRemoteDescription(new CustomSdpObserver("remoteSetRemoteDesc"), sessionDescription);
-                remotePeer.createAnswer(new CustomSdpObserver("remoteCreateOffer") {
-                    @Override
-                    public void onCreateSuccess(SessionDescription sessionDescription) {
-                        super.onCreateSuccess(sessionDescription);
-                        Log.d(TAG, "onCreateSuccess2: " + sessionDescription.description);
-                        remotePeer.setLocalDescription(new CustomSdpObserver("remoteSetLocalDesc"), sessionDescription);
-                        localPeer.setRemoteDescription(new CustomSdpObserver("localSetRemoteDesc"), sessionDescription);
+                //Send to peer
 
-                    }
-                }, new MediaConstraints());
             }
         }, sdpConstraints);
     }
 
     private void gotRemoteStream(MediaStream stream) {
         //we have remote video stream. add to the renderer.
-        final VideoTrack videoTrack = stream.videoTracks.getFirst();
-        final AudioTrack audioTrack = stream.audioTracks.getFirst();
-        Log.d(TAG, "gotRemoteStream: "+stream.videoTracks);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    remoteRenderer = new VideoRenderer(remoteVideo);
-                    remoteVideo.setVisibility(View.VISIBLE);
-                    videoTrack.addRenderer(remoteRenderer);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        final VideoTrack videoTrack = stream.videoTracks.get(0);
+
+        runOnUiThread(() -> {
+            try {
+                remoteVideo.setVisibility(View.VISIBLE);
+                videoTrack.addSink(remoteVideo);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
     }
-
-    private VideoCapturer createVideoCapturer() {
-        VideoCapturer videoCapturer;
-        videoCapturer = createCameraCapturer(new Camera1Enumerator(false));
-        return videoCapturer;
-    }
-
     private VideoCapturer createCameraCapturer(CameraEnumerator enumerator) {
         final String[] deviceNames = enumerator.getDeviceNames();
-
         // Trying to find a front facing camera!
         for (String deviceName : deviceNames) {
             if (enumerator.isFrontFacing(deviceName)) {
@@ -348,7 +327,8 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
                 disconnect();
                 break;
             case R.id.main_button_signout:
-                mAuth.signOut();
+                firebaseHelper.signOut();
+
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

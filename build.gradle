@@ -21,6 +21,9 @@ allprojects {
         flatDir {
             dirs 'libs'
         }
+        maven {
+            url 'https://raw.github.com/abdularis/libwebrtc-android/repo/'
+        }
         
     }
 }
