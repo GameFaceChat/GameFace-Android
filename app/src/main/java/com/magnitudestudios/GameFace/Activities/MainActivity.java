@@ -4,14 +4,21 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.magnitudestudios.GameFace.Bases.BasePermissionsActivity;
-import com.magnitudestudios.GameFace.Network.FirebaseHelper;
+import com.magnitudestudios.GameFace.GameFace;
+import com.magnitudestudios.GameFace.Interfaces.RoomCallback;
 import com.magnitudestudios.GameFace.Network.GetNetworkRequest;
 import com.magnitudestudios.GameFace.R;
 import com.magnitudestudios.GameFace.Utils.CustomPeerConnectionObserver;
 import com.magnitudestudios.GameFace.Utils.CustomSdpObserver;
+import com.magnitudestudios.GameFace.pojo.IceCandidatePOJO;
+import com.magnitudestudios.GameFace.pojo.IceServer;
+import com.magnitudestudios.GameFace.pojo.ServerInformation;
+import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,10 +45,6 @@ import org.webrtc.MediaConstraints;
 import org.webrtc.MediaStream;
 import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnectionFactory;
-import org.webrtc.RTCStatsCollectorCallback;
-import org.webrtc.RTCStatsReport;
-import org.webrtc.RtpReceiver;
-import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
 import org.webrtc.SurfaceTextureHelper;
 import org.webrtc.SurfaceViewRenderer;
@@ -56,7 +59,7 @@ import java.util.List;
 
 import static com.magnitudestudios.GameFace.Constants.*;
 
-public class MainActivity extends BasePermissionsActivity implements View.OnClickListener {
+public class MainActivity extends BasePermissionsActivity implements View.OnClickListener, RoomCallback {
     private static final String TAG = "MainActivity";
 
     private PeerConnectionFactory peerConnectionFactory;
@@ -67,8 +70,9 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     private MediaConstraints audioConstraints;
     private MediaConstraints videoConstraints;
     private MediaConstraints sdpConstraints;
-    private PeerConnection localPeer, remotePeer;
+    private PeerConnection localPeer;
 
+    private List<PeerConnection.IceServer> iceServers;
 
     EglBase rootEglBase;
 
@@ -79,9 +83,8 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
 
     private ProgressBar progressBar;
 
-    private Button connect, disconnect, signout;
+    private Button connect, disconnect, signout, joinButton;
 
-    private FirebaseHelper firebaseHelper;
     //Network Handler
     @SuppressLint("HandlerLeak")
     private final Handler mUrlHandler = new Handler() {
@@ -90,7 +93,16 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
 
             switch (msg.what) {
                 case STATE_COMPLETED:
+                    progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "handleMessage: " + (String) msg.obj);
+                    Gson gson = new Gson();
+                    try {
+                        ServerInformation serverInformation = gson.fromJson((String) msg.obj, ServerInformation.class);
+                        serverInformation.printAll();
+                        addToIceServers(serverInformation);
+                    } catch (JsonParseException e) {
+                        Log.e(TAG, "handleMessage: " + "COULD NOT PARSE JSON", e);
+                    }
                     break;
                 case STATE_URL_FAILED:
                     Log.d(TAG, "handleMessage: " + (String) msg.obj);
@@ -101,38 +113,13 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     };
 
 
-//    //Video Service Handler
-//    @SuppressLint("HandlerLeak")
-//    private final Handler mVideoHandler = new Handler() {
-//        @Override
-//        public void handleMessage(Message msg) {
-//            progressBar.setVisibility(View.GONE);
-//            switch (msg.what) {
-//                case STATE_CONNECTED:
-//                    Log.d(TAG, "handleMessage: " + "SUCCESS");
-//                    setDisconnectButtonEnabled();
-//                    setUnclickable(connect);
-//                    Toast.makeText(MainActivity.this, "SUCCESS!", Toast.LENGTH_LONG).show();
-//                    break;
-//                case STATE_FAILED:
-//                    Log.e(TAG, "handleMessage: " + "FAILED");
-//                    Toast.makeText(MainActivity.this, "Connection Failed", Toast.LENGTH_LONG).show();
-//                    break;
-//                case STATE_DISCONNECTED:
-//                    Log.e(TAG, "handleMessage: " + "DISCONNECTED");
-//                    setConnectButtonEnabled();
-//                    setUnclickable(disconnect);
-//                    Toast.makeText(MainActivity.this, "Disconnected", Toast.LENGTH_LONG).show();
-//                    break;
-//            }
-//        }
-//    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        firebaseHelper = FirebaseHelper.getInstance();
+        iceServers = new ArrayList<>();
+
+        firebaseHelper = ((GameFace) getApplicationContext()).firebaseHelper;
 
         localVideo = findViewById(R.id.localVideo);
         remoteVideo = findViewById(R.id.remoteVideo);
@@ -140,9 +127,11 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         disconnect = findViewById(R.id.disconnectButton);
         signout = findViewById(R.id.main_button_signout);
         progressBar = findViewById(R.id.progressBar);
+        joinButton = findViewById(R.id.joinButton);
         connect.setOnClickListener(this);
         disconnect.setOnClickListener(this);
         signout.setOnClickListener(this);
+        joinButton.setOnClickListener(this);
 
         rootEglBase = EglBase.create();
         localVideo.init(rootEglBase.getEglBaseContext(), null);
@@ -152,11 +141,27 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
 
 //        setUnclickable(disconnect);
 
-        startCamera();
+    }
 
+    private void addToIceServers(ServerInformation serverInformation) {
+        for (IceServer iceServer : serverInformation.iceServers) {
+            Log.e(TAG, "FOUND ICE SERVER: " + iceServer.url);
+            PeerConnection.IceServer peerIceServer;
+            if (iceServer.credential == null) {
+                peerIceServer = PeerConnection.IceServer.builder(iceServer.url).createIceServer();
+                iceServers.add(peerIceServer);
+            } else {
+                peerIceServer = PeerConnection.IceServer.builder(iceServer.url)
+                        .setUsername(iceServer.username)
+                        .setPassword(iceServer.credential)
+                        .createIceServer();
+                iceServers.add(peerIceServer);
+            }
+        }
     }
 
     private void startCamera() {
+        Log.e(TAG, "startCamera: "+"STARTING CAMERA");
         //Initialize PeerConnectionFactory globals.
         PeerConnectionFactory.InitializationOptions initializationOptions = PeerConnectionFactory.InitializationOptions.builder(this).createInitializationOptions();
         PeerConnectionFactory.initialize(initializationOptions);
@@ -196,11 +201,27 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         localVideo.setMirror(true);
         localVideo.setEnableHardwareScaler(true);
         localVideoTrack.addSink(localVideo);
+
+        onTryToStart();
     }
 
-    private void call() {
-        List<PeerConnection.IceServer> iceServers = new ArrayList<>();
+    private void create() {
+        Log.e(TAG, "call: "+"CALLING");
+        iceServers = new ArrayList<>();
+        getIceServers();
+        startCamera();
+        firebaseHelper.createRoom("ROOM2", "SRIHARI", this);
+    }
 
+    private void join() {
+        Log.e(TAG, "call: "+"CALLING");
+        iceServers = new ArrayList<>();
+        getIceServers();
+        startCamera();
+        firebaseHelper.joinRoom("ROOM2", "SRIHARI2", this);
+    }
+
+    private void createPeerConnection() {
         PeerConnection.RTCConfiguration rtcConfig = new PeerConnection.RTCConfiguration(iceServers);
         // TCP candidates are only useful when connecting to a server that supports
         // ICE-TCP.
@@ -208,13 +229,14 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         rtcConfig.bundlePolicy = PeerConnection.BundlePolicy.MAXBUNDLE;
         rtcConfig.rtcpMuxPolicy = PeerConnection.RtcpMuxPolicy.REQUIRE;
         rtcConfig.continualGatheringPolicy = PeerConnection.ContinualGatheringPolicy.GATHER_CONTINUALLY;
+        // Use ECDSA encryption.
         rtcConfig.keyType = PeerConnection.KeyType.ECDSA;
         localPeer = peerConnectionFactory.createPeerConnection(rtcConfig, new CustomPeerConnectionObserver("localPeerCreation") {
             @Override
             public void onIceCandidate(IceCandidate iceCandidate) {
                 super.onIceCandidate(iceCandidate);
-                //Send it
-//                onIceCandidateReceived(iceCandidate);
+                Log.e(TAG, "onIceCandidate: "+iceCandidate.serverUrl);
+                firebaseHelper.addIceCandidate(iceCandidate);
             }
 
             @Override
@@ -224,29 +246,25 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
             }
         });
 
-
         MediaStream stream = peerConnectionFactory.createLocalMediaStream("102");
         stream.addTrack(localAudioTrack);
         stream.addTrack(localVideoTrack);
         localPeer.addStream(stream);
-        gotRemoteStream(stream);
 
-        sdpConstraints = new MediaConstraints();
-        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"));
-        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"));
-        localPeer.createOffer(new CustomSdpObserver("localCreateOffer") {
-            @Override
-            public void onCreateSuccess(SessionDescription sessionDescription) {
-                super.onCreateSuccess(sessionDescription);
-                Log.d(TAG, "onCreateSuccess234: "+sessionDescription.description);
-                localPeer.setLocalDescription(new CustomSdpObserver("localSetLocalDesc"), sessionDescription);
-                //Send to peer
+    }
 
+    public void onTryToStart() {
+        runOnUiThread(() -> {
+            Log.e(TAG, "onTryToStart: "+"TRYING TO START");
+            if (localVideoTrack != null && !firebaseHelper.started) {
+                createPeerConnection();
+                firebaseHelper.started = true;
             }
-        }, sdpConstraints);
+        });
     }
 
     private void gotRemoteStream(MediaStream stream) {
+        Log.e(TAG, "gotRemoteStream: " + "GOT REMOTE STREAM");
         //we have remote video stream. add to the renderer.
         final VideoTrack videoTrack = stream.videoTracks.get(0);
 
@@ -260,6 +278,158 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         });
 
     }
+
+
+    /* Callbacks */
+
+//    private void setUnclickable(Button button) {
+//        button.setBackground(getDrawable(R.drawable.disabled_background));
+//        button.setTextColor(getColor(R.color.darkGray));
+//        button.setEnabled(false);
+//    }
+//
+//    private void setConnectButtonEnabled() {
+//        connect.setEnabled(true);
+//        connect.setBackground(getDrawable(R.drawable.connect_background));
+//        connect.setTextColor(getColor(android.R.color.white));
+//    }
+//
+//    private void setDisconnectButtonEnabled() {
+//        disconnect.setEnabled(true);
+//        disconnect.setBackground(getDrawable(R.drawable.disconnect_background));
+//        disconnect.setTextColor(getColor(android.R.color.white));
+//    }
+
+    private void getIceServers() {
+        progressBar.setVisibility(View.VISIBLE);
+        GetNetworkRequest a = new GetNetworkRequest(mUrlHandler, getString(R.string.backend_cloud_function));
+        a.execute();
+    }
+
+    private void disconnect() {
+        hangUp();
+        firebaseHelper.leaveRoom(this);
+        localVideo.clearImage();
+        localVideo.release();
+        try {
+            if (videoCapturer != null) videoCapturer.stopCapture();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.connectButton:
+                create();
+                break;
+            case R.id.joinButton:
+                join();
+                break;
+            case R.id.disconnectButton:
+                disconnect();
+                break;
+            case R.id.main_button_signout:
+                firebaseHelper.signOut();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+        }
+    }
+
+    private void hangUp() {
+        try {
+            if (localPeer != null) {
+                localPeer.close();
+            }
+            localPeer = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        disconnect();
+
+    }
+
+    @Override
+    public void onCreateRoom() {
+        //Send offer
+        Log.e(TAG, "CREATED ROOM");
+        sdpConstraints = new MediaConstraints();
+        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"));
+        sdpConstraints.mandatory.add(new MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"));
+        localPeer.createOffer(new CustomSdpObserver("localCreateOffer") {
+            @Override
+            public void onCreateSuccess(SessionDescription sessionDescription) {
+                super.onCreateSuccess(sessionDescription);
+                Log.d(TAG, "onCreateSuccess234: "+sessionDescription.description);
+                localPeer.setLocalDescription(new CustomSdpObserver("localSetLocalDesc"), sessionDescription);
+                //Send to peer
+                firebaseHelper.sendOffer(sessionDescription);
+            }
+        }, sdpConstraints);
+    }
+
+    @Override
+    public void onLeftRoom() {
+        Toast.makeText(MainActivity.this, "Left Room", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void offerReceived(SessionInfoPOJO session) {
+        //Received offer
+        Log.e(TAG, "offerReceived: "+session.description);
+        localPeer.setRemoteDescription(new CustomSdpObserver("gotOffer"), new SessionDescription(SessionDescription.Type.fromCanonicalForm(session.type.toLowerCase()), session.description));
+        localPeer.createAnswer(new CustomSdpObserver("localCreateAns") {
+            @Override
+            public void onCreateSuccess(SessionDescription sessionDescription) {
+                super.onCreateSuccess(sessionDescription);
+                onTryToStart();
+                localPeer.setLocalDescription(new CustomSdpObserver("localSetLocal"), sessionDescription);
+                firebaseHelper.sendAnswer(sessionDescription);
+            }
+        }, new MediaConstraints());
+    }
+
+    @Override
+    public void answerReceived(SessionInfoPOJO session) {
+        Log.e(TAG, "answerReceived: " + session);
+        localPeer.setRemoteDescription(new CustomSdpObserver("localSetRemote"), new SessionDescription(SessionDescription.Type.fromCanonicalForm(session.type.toLowerCase()), session.description));
+    }
+
+    @Override
+    public void newParticipantJoined(String user) {
+        Log.e(TAG, "newParticipantJoined: "+user);
+    }
+
+    @Override
+    public void iceServerReceived(IceCandidatePOJO iceCandidate) {
+        Log.e(TAG, "iceServerReceived: ");
+
+        localPeer.addIceCandidate(new IceCandidate(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp));
+    }
+
+    @Override
+    public void participantLeft(String s) {
+        Log.e(TAG, "participantLeft: "+s);
+        Toast.makeText(MainActivity.this, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show();
+        disconnect();
+        firebaseHelper.closeRoom();
+    }
+
+    @Override
+    public void onJoinedRoom(boolean b) {
+        Log.e(TAG, "onJoinedRoom: ");
+    }
+
     private VideoCapturer createCameraCapturer(CameraEnumerator enumerator) {
         final String[] deviceNames = enumerator.getDeviceNames();
         // Trying to find a front facing camera!
@@ -286,54 +456,5 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         return null;
     }
 
-
-    /* Callbacks */
-
-    private void setUnclickable(Button button) {
-        button.setBackground(getDrawable(R.drawable.disabled_background));
-        button.setTextColor(getColor(R.color.darkGray));
-        button.setEnabled(false);
-    }
-
-    private void setConnectButtonEnabled() {
-        connect.setEnabled(true);
-        connect.setBackground(getDrawable(R.drawable.connect_background));
-        connect.setTextColor(getColor(android.R.color.white));
-    }
-
-    private void setDisconnectButtonEnabled() {
-        disconnect.setEnabled(true);
-        disconnect.setBackground(getDrawable(R.drawable.disconnect_background));
-        disconnect.setTextColor(getColor(android.R.color.white));
-    }
-
-    private void connect() {
-        progressBar.setVisibility(View.VISIBLE);
-        GetNetworkRequest a = new GetNetworkRequest(mUrlHandler, getString(R.string.backend_cloud_function));
-        a.execute();
-    }
-
-    private void disconnect() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.connectButton:
-                call();
-                break;
-            case R.id.disconnectButton:
-                disconnect();
-                break;
-            case R.id.main_button_signout:
-                firebaseHelper.signOut();
-
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-        }
-    }
 }
 

@@ -56,6 +56,15 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:text="Connect" />
+        <Button
+            android:id="@+id/joinButton"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="Join" />
 
         <Button
             android:id="@+id/disconnectButton"
@@ -66,6 +75,7 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:text="Disconnect" />
+
 
         <Button
             android:id="@+id/main_button_signout"

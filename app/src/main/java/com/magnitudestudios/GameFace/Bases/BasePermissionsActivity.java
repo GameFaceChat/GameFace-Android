@@ -8,13 +8,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import static com.magnitudestudios.GameFace.Constants.ALL_PERMISSIONS;
 import static com.magnitudestudios.GameFace.Constants.PERMISSIONS;
 
-public class BasePermissionsActivity extends AppCompatActivity {
+public class BasePermissionsActivity extends BaseActivity {
 
     private static final String TAG = "BasePermissionsActivity";
     @Override

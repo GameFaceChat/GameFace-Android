@@ -5,11 +5,11 @@
     android:padding="8dp">
 
     <EditText
-        android:id="@+id/usernameInput"
+        android:id="@+id/home_dialog_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Username"
+        android:hint="Room ID"
         android:inputType="textPersonName"
         />
 </LinearLayout>

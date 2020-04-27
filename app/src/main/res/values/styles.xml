@@ -42,7 +42,7 @@
 
     <style name="imageview_card_style">
         <item name="android:scaleType">fitXY</item>
-        <item name="android:src">@drawable/button_shadow</item>
+        <item name="srcCompat">@drawable/button_shadow</item>
     </style>
 
     <!-- Sign Up Screen -->
