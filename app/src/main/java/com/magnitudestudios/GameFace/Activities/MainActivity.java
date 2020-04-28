@@ -1,8 +1,5 @@
 package com.magnitudestudios.GameFace.Activities;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.magnitudestudios.GameFace.Bases.BasePermissionsActivity;
@@ -49,7 +46,6 @@ import org.webrtc.SessionDescription;
 import org.webrtc.SurfaceTextureHelper;
 import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoCapturer;
-import org.webrtc.SurfaceViewRenderer;
 
 import org.webrtc.VideoSource;
 import org.webrtc.VideoTrack;
@@ -100,6 +96,10 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
                         ServerInformation serverInformation = gson.fromJson((String) msg.obj, ServerInformation.class);
                         serverInformation.printAll();
                         addToIceServers(serverInformation);
+                        if (firebaseHelper.initiator) firebaseHelper.createRoom("ROOM2", "SRIHARI", MainActivity.this);
+                        else firebaseHelper.joinRoom("ROOM2", "SRIHARI2", MainActivity.this);
+
+                        onTryToStart();
                     } catch (JsonParseException e) {
                         Log.e(TAG, "handleMessage: " + "COULD NOT PARSE JSON", e);
                     }
@@ -202,29 +202,28 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         localVideo.setEnableHardwareScaler(true);
         localVideoTrack.addSink(localVideo);
 
-        onTryToStart();
+//        onTryToStart();
     }
 
     private void create() {
+        firebaseHelper.initiator = true;
         Log.e(TAG, "call: "+"CALLING");
         iceServers = new ArrayList<>();
         getIceServers();
         startCamera();
-        firebaseHelper.createRoom("ROOM2", "SRIHARI", this);
     }
-
+    // Try moving getting ice servers before creating room
     private void join() {
-        Log.e(TAG, "call: "+"CALLING");
+        firebaseHelper.initiator = false;
+        Log.e(TAG, "join: "+"JOINING");
         iceServers = new ArrayList<>();
         getIceServers();
         startCamera();
-        firebaseHelper.joinRoom("ROOM2", "SRIHARI2", this);
     }
 
     private void createPeerConnection() {
+        Log.e(TAG, "createPeerConnection: " + iceServers.toString());
         PeerConnection.RTCConfiguration rtcConfig = new PeerConnection.RTCConfiguration(iceServers);
-        // TCP candidates are only useful when connecting to a server that supports
-        // ICE-TCP.
         rtcConfig.tcpCandidatePolicy = PeerConnection.TcpCandidatePolicy.DISABLED;
         rtcConfig.bundlePolicy = PeerConnection.BundlePolicy.MAXBUNDLE;
         rtcConfig.rtcpMuxPolicy = PeerConnection.RtcpMuxPolicy.REQUIRE;
@@ -235,7 +234,8 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
             @Override
             public void onIceCandidate(IceCandidate iceCandidate) {
                 super.onIceCandidate(iceCandidate);
-                Log.e(TAG, "onIceCandidate: "+iceCandidate.serverUrl);
+
+                Log.e(TAG, "onIceCandidate: "+iceCandidate.sdp);
                 firebaseHelper.addIceCandidate(iceCandidate);
             }
 
@@ -309,6 +309,7 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     private void disconnect() {
         hangUp();
         firebaseHelper.leaveRoom(this);
+        firebaseHelper.started = false;
         localVideo.clearImage();
         localVideo.release();
         try {
@@ -379,11 +380,6 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     }
 
     @Override
-    public void onLeftRoom() {
-        Toast.makeText(MainActivity.this, "Left Room", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
     public void offerReceived(SessionInfoPOJO session) {
         //Received offer
         Log.e(TAG, "offerReceived: "+session.description);
@@ -417,6 +413,7 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         localPeer.addIceCandidate(new IceCandidate(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp));
     }
 
+
     @Override
     public void participantLeft(String s) {
         Log.e(TAG, "participantLeft: "+s);
@@ -428,6 +425,11 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
     @Override
     public void onJoinedRoom(boolean b) {
         Log.e(TAG, "onJoinedRoom: ");
+    }
+
+    @Override
+    public void onLeftRoom() {
+        Toast.makeText(MainActivity.this, "Left Room", Toast.LENGTH_SHORT).show();
     }
 
     private VideoCapturer createCameraCapturer(CameraEnumerator enumerator) {

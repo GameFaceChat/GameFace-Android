@@ -1,12 +1,10 @@
 package com.magnitudestudios.GameFace.Network;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -15,15 +13,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
+import com.magnitudestudios.GameFace.Interfaces.ReferenceExists;
 import com.magnitudestudios.GameFace.Interfaces.RoomCallback;
 import com.magnitudestudios.GameFace.pojo.EmitMessage;
 import com.magnitudestudios.GameFace.pojo.IceCandidatePOJO;
 import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO;
 
 import org.webrtc.IceCandidate;
-import org.webrtc.PeerConnection;
 import org.webrtc.SessionDescription;
 
 public class FirebaseHelper {
@@ -39,6 +37,7 @@ public class FirebaseHelper {
     private String currentUser = null;
 
     public boolean started;
+    public boolean initiator;
 
     public static FirebaseHelper getInstance() {
         if (firebaseHelper == null) {
@@ -52,6 +51,7 @@ public class FirebaseHelper {
         mDatabase = FirebaseDatabase.getInstance();
         firebaseUser = mAuth.getCurrentUser();
         started = false;
+        initiator = false;
     }
 
     public String getCurrentRoom() {
@@ -134,11 +134,15 @@ public class FirebaseHelper {
     }
 
     public void leaveRoom(RoomCallback callback) {
-        if (currentUser != null) {
+        if (currentUser != null && currentRoom != null) {
             mDatabase.getReference("rooms").child(currentRoom).removeEventListener(childEventListener);
-            sendMessage("LEFT", currentUser).addOnCompleteListener(task -> {
-                callback.onLeftRoom();
-            });
+            referenceExists((b, data) -> {
+                if (b) {
+                    sendMessage("LEFT", currentUser).addOnCompleteListener(task -> {
+                        callback.onLeftRoom();
+                    });
+                }
+            }, "rooms", currentRoom);
         }
     }
 
@@ -164,18 +168,18 @@ public class FirebaseHelper {
         mAuth.signOut();
     }
 
-//    private void referenceExists(ReferenceExists exists, String... path) {
-//        DatabaseReference databaseReference = mDatabase.getReference();
-//        for (String ref : path) databaseReference = databaseReference.child(ref);
-//
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                exists.referenceExists(dataSnapshot.exists(), dataSnapshot);
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) { }
-//        });
-//    }
+    private void referenceExists(ReferenceExists exists, String... path) {
+        DatabaseReference databaseReference = mDatabase.getReference();
+        for (String ref : path) databaseReference = databaseReference.child(ref);
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                exists.referenceExists(dataSnapshot.exists(), dataSnapshot);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+    }
 
 }
