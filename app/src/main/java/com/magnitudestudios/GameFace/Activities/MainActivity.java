@@ -15,7 +15,6 @@ import com.magnitudestudios.GameFace.pojo.ServerInformation;
 import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,8 +22,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -33,7 +30,6 @@ import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
 import org.webrtc.Camera1Enumerator;
 import org.webrtc.CameraEnumerator;
-import org.webrtc.DataChannel;
 import org.webrtc.DefaultVideoDecoderFactory;
 import org.webrtc.DefaultVideoEncoderFactory;
 import org.webrtc.EglBase;
@@ -81,6 +77,34 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
 
     private Button connect, disconnect, signout, joinButton;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        iceServers = new ArrayList<>();
+
+        firebaseHelper = ((GameFace) getApplicationContext()).firebaseHelper;
+
+        localVideo = findViewById(R.id.localVideo);
+        remoteVideo = findViewById(R.id.remoteVideo);
+        connect = findViewById(R.id.connectButton);
+        disconnect = findViewById(R.id.disconnectButton);
+        signout = findViewById(R.id.main_button_signout);
+        progressBar = findViewById(R.id.progressBar);
+        joinButton = findViewById(R.id.joinButton);
+        connect.setOnClickListener(this);
+        disconnect.setOnClickListener(this);
+        signout.setOnClickListener(this);
+        joinButton.setOnClickListener(this);
+
+        rootEglBase = EglBase.create();
+        localVideo.init(rootEglBase.getEglBaseContext(), null);
+        remoteVideo.init(rootEglBase.getEglBaseContext(), null);
+        localVideo.setZOrderMediaOverlay(true);
+        remoteVideo.setZOrderMediaOverlay(true);
+
+    }
+
     //Network Handler
     @SuppressLint("HandlerLeak")
     private final Handler mUrlHandler = new Handler() {
@@ -111,37 +135,6 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
             }
         }
     };
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        iceServers = new ArrayList<>();
-
-        firebaseHelper = ((GameFace) getApplicationContext()).firebaseHelper;
-
-        localVideo = findViewById(R.id.localVideo);
-        remoteVideo = findViewById(R.id.remoteVideo);
-        connect = findViewById(R.id.connectButton);
-        disconnect = findViewById(R.id.disconnectButton);
-        signout = findViewById(R.id.main_button_signout);
-        progressBar = findViewById(R.id.progressBar);
-        joinButton = findViewById(R.id.joinButton);
-        connect.setOnClickListener(this);
-        disconnect.setOnClickListener(this);
-        signout.setOnClickListener(this);
-        joinButton.setOnClickListener(this);
-
-        rootEglBase = EglBase.create();
-        localVideo.init(rootEglBase.getEglBaseContext(), null);
-        remoteVideo.init(rootEglBase.getEglBaseContext(), null);
-        localVideo.setZOrderMediaOverlay(true);
-        remoteVideo.setZOrderMediaOverlay(true);
-
-//        setUnclickable(disconnect);
-
-    }
 
     private void addToIceServers(ServerInformation serverInformation) {
         for (IceServer iceServer : serverInformation.iceServers) {
@@ -201,8 +194,6 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         localVideo.setMirror(true);
         localVideo.setEnableHardwareScaler(true);
         localVideoTrack.addSink(localVideo);
-
-//        onTryToStart();
     }
 
     private void create() {
@@ -278,27 +269,6 @@ public class MainActivity extends BasePermissionsActivity implements View.OnClic
         });
 
     }
-
-
-    /* Callbacks */
-
-//    private void setUnclickable(Button button) {
-//        button.setBackground(getDrawable(R.drawable.disabled_background));
-//        button.setTextColor(getColor(R.color.darkGray));
-//        button.setEnabled(false);
-//    }
-//
-//    private void setConnectButtonEnabled() {
-//        connect.setEnabled(true);
-//        connect.setBackground(getDrawable(R.drawable.connect_background));
-//        connect.setTextColor(getColor(android.R.color.white));
-//    }
-//
-//    private void setDisconnectButtonEnabled() {
-//        disconnect.setEnabled(true);
-//        disconnect.setBackground(getDrawable(R.drawable.disconnect_background));
-//        disconnect.setTextColor(getColor(android.R.color.white));
-//    }
 
     private void getIceServers() {
         progressBar.setVisibility(View.VISIBLE);

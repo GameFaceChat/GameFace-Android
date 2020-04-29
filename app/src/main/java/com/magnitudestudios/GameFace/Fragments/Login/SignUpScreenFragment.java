@@ -1,4 +1,4 @@
-package com.magnitudestudios.GameFace.Fragments;
+package com.magnitudestudios.GameFace.Fragments.Login;
 
 import android.content.Context;
 import android.os.Bundle;

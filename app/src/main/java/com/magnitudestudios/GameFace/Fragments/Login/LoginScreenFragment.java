@@ -1,4 +1,4 @@
-package com.magnitudestudios.GameFace.Fragments;
+package com.magnitudestudios.GameFace.Fragments.Login;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -29,30 +30,33 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.magnitudestudios.GameFace.Interfaces.UserLoginListener;
 import com.magnitudestudios.GameFace.R;
 
-public class StartScreenFragment extends Fragment implements View.OnClickListener {
-    private static final String TAG = "StartScreenFragment";
-
-    private RelativeLayout signUpWithGoogle, signUpWithEmail;
-    private Button goToLogin;
+public class LoginScreenFragment extends Fragment implements View.OnClickListener {
+    private static final String TAG = "LoginScreenFragment";
+    private Button loginBtn, goToSignUp;
     private UserLoginListener listener;
+    private EditText emailInput, passwordInput;
+    private RelativeLayout signInWithGoogle;
     private FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
-    public static final int GOOGLE_RESULT = 101;
-    public StartScreenFragment() {}
+    private static final int GOOGLE_RESULT = 101;
+
+    public LoginScreenFragment() {}
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_startscreen, container, false);
-        signUpWithGoogle = view.findViewById(R.id.startscreen_card_signupwithgoogle);
-        signUpWithGoogle.setOnClickListener(this);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        goToSignUp = view.findViewById(R.id.login_btn_signup);
+        goToSignUp.setOnClickListener(this);
 
-        signUpWithEmail = view.findViewById(R.id.startscreen_card_signupwithemail);
-        signUpWithEmail.setOnClickListener(this);
-
-        goToLogin = view.findViewById(R.id.startscreen_gottologin);
-        goToLogin.setOnClickListener(this);
+        emailInput = view.findViewById(R.id.login_emailInput);
+        passwordInput = view.findViewById(R.id.login_passwordInput);
+        loginBtn = view.findViewById(R.id.login_sign_button);
+        loginBtn.setOnClickListener(this);
+        signInWithGoogle = view.findViewById(R.id.login_card_signinwithgoogle);
+        signInWithGoogle.setOnClickListener(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.google_oAuth_client_ID))
@@ -64,6 +68,34 @@ public class StartScreenFragment extends Fragment implements View.OnClickListene
         mAuth = FirebaseAuth.getInstance();
         return view;
     }
+
+    private void signInUser() {
+        mAuth.signInWithEmailAndPassword(emailInput.getText().toString(), passwordInput.getText().toString())
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        listener.signedInUser();
+                    } else {
+                        Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+    }
+
+    private boolean validate() {
+        boolean valid = true;
+        if (emailInput.getText().toString().isEmpty()) {
+            emailInput.setError("Please enter an email address");
+            valid = false;
+        }
+        if (passwordInput.getText().toString().isEmpty()) {
+            passwordInput.setError("Please enter your password");
+            valid = false;
+        }
+        return valid;
+    }
+
     private void onClickSignWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, GOOGLE_RESULT);
@@ -81,7 +113,7 @@ public class StartScreenFragment extends Fragment implements View.OnClickListene
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w(TAG, "Google sign in failed", e);
+                Log.w("LoginFragment", "Google sign in failed", e);
                 Toast.makeText(getContext(), "Sign in failed", Toast.LENGTH_LONG).show();
             }
         }
@@ -105,14 +137,16 @@ public class StartScreenFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.startscreen_card_signupwithgoogle:
-                onClickSignWithGoogle();
-                break;
-            case R.id.startscreen_card_signupwithemail:
+            case R.id.login_btn_signup:
                 listener.onClickSignUpButton();
                 break;
-            case R.id.startscreen_gottologin:
-                listener.onClickLoginButton();
+            case R.id.login_sign_button:
+                if (validate()) {
+                    signInUser();
+                }
+                break;
+            case R.id.login_card_signinwithgoogle:
+                onClickSignWithGoogle();
                 break;
         }
     }
@@ -120,7 +154,8 @@ public class StartScreenFragment extends Fragment implements View.OnClickListene
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        try { listener = (UserLoginListener) context;
+        try {
+            listener = (UserLoginListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " Must implement UserLoginListener");
         }

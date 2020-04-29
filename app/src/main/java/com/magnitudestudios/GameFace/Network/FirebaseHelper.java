@@ -159,11 +159,6 @@ public class FirebaseHelper {
         sendMessage("ICECANDIDATE", new IceCandidatePOJO(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp, iceCandidate.serverUrl));
     }
 
-    public String getEmail() {
-        if (mAuth != null) return mAuth.getCurrentUser().getEmail();
-        return "NOEMAIL";
-    }
-
     public void signOut() {
         mAuth.signOut();
     }
