@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_navigation"
+    app:startDestination="@id/startScreenFragment"
+    >
+
+    <fragment
+        android:id="@+id/startScreenFragment"
+        android:name="com.magnitudestudios.GameFace.Fragments.Login.StartScreenFragment"
+        android:label="StartScreenFragment"
+        tools:layout="@layout/fragment_startscreen">
+        <action
+            android:id="@+id/action_startScreenFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+        <action
+            android:id="@+id/action_startScreenFragment_to_signUpScreenFragment"
+            app:destination="@id/signUpScreenFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginScreenFragment"
+        android:name="com.magnitudestudios.GameFace.Fragments.Login.LoginScreenFragment"
+        android:label="LoginScreenFragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginScreenFragment_to_signUpScreenFragment"
+            app:destination="@id/signUpScreenFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpScreenFragment"
+        android:name="com.magnitudestudios.GameFace.Fragments.Login.SignUpScreenFragment"
+        android:label="SignUpScreenFragment"
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signUpScreenFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+
+
+</navigation>

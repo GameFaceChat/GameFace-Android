@@ -1,0 +1,3 @@
+package com.magnitudestudios.GameFace.Fragments
+
+class CameraFragment

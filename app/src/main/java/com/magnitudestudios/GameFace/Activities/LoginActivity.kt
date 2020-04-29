@@ -10,13 +10,16 @@ import com.magnitudestudios.GameFace.Fragments.Login.SignUpScreenFragment
 import com.magnitudestudios.GameFace.Fragments.Login.StartScreenFragment
 import com.magnitudestudios.GameFace.Interfaces.UserLoginListener
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity(), UserLoginListener {
     private var mAuth: FirebaseAuth? = null
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        switchFragment(StartScreenFragment())
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+//        switchFragment(StartScreenFragment())
         mAuth = FirebaseAuth.getInstance()
     }
 
@@ -28,20 +31,20 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
         }
     }
 
-    private fun switchFragment(f: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.login_frame_replace, f)
-        fragmentTransaction.addToBackStack("")
-        fragmentTransaction.commit()
-    }
+//    private fun switchFragment(f: Fragment) {
+//        val fragmentTransaction = supportFragmentManager.beginTransaction()
+//        fragmentTransaction.replace(R.id.login_frame_replace, f)
+//        fragmentTransaction.addToBackStack("")
+//        fragmentTransaction.commit()
+//    }
 
-    override fun onClickSignUpButton() {
-        switchFragment(SignUpScreenFragment())
-    }
-
-    override fun onClickLoginButton() {
-        switchFragment(LoginScreenFragment())
-    }
+//    override fun onClickSignUpButton() {
+//        switchFragment(SignUpScreenFragment())
+//    }
+//
+//    override fun onClickLoginButton() {
+//        switchFragment(LoginScreenFragment())
+//    }
 
     private fun goToMainActivity() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java)

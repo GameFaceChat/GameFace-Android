@@ -1,5 +1,6 @@
 package com.magnitudestudios.GameFace.Bases
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.magnitudestudios.GameFace.Constants
 
+@SuppressLint("Registered")
 open class BasePermissionsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,10 +46,10 @@ open class BasePermissionsActivity : BaseActivity() {
 
     companion object {
         private const val TAG = "BasePermissionsActivity"
-        fun hasPermissions(context: Context?, permissions: Array<String?>?): Boolean {
-            if (context != null && permissions != null) {
+        fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+            if (context != null) {
                 for (permission in permissions) {
-                    if (ActivityCompat.checkSelfPermission(context, permission!!) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                         return false
                     }
                 }
