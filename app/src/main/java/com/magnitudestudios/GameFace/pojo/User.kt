@@ -7,7 +7,7 @@ class User() {
     @JvmField
     var username: String? = null
 
-    constructor(username: String, email: String) : this() {
+    constructor(email: String, username: String) : this() {
         this.username = username
         this.email = email
     }
