@@ -5,7 +5,7 @@ import org.webrtc.*
 import org.webrtc.PeerConnection.*
 
 open class CustomPeerConnectionObserver(logTag: String) : Observer {
-    private lateinit var logTag : String
+    private var logTag : String = this.javaClass.canonicalName + " " + logTag
     override fun onSignalingChange(signalingState: SignalingState) {
         Log.d(logTag, "onSignalingChange() called with: signalingState = [$signalingState]")
     }
@@ -48,7 +48,4 @@ open class CustomPeerConnectionObserver(logTag: String) : Observer {
 
     override fun onAddTrack(rtpReceiver: RtpReceiver, mediaStreams: Array<MediaStream>) {}
 
-    init {
-        this.logTag = this.javaClass.canonicalName + " " + logTag
-    }
 }

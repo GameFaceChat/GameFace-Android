@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <FrameLayout
         android:id="@+id/videoLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -28,7 +28,7 @@
             tools:ignore="MissingConstraints"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"

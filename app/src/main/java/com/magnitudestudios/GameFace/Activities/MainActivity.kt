@@ -224,12 +224,12 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     }
 
     private fun transitionConnected() {
-        binding.remoteVideo.visibility = View.VISIBLE
+//        binding.remoteVideo.visibility = View.VISIBLE
         binding.localVideo.setCalling()
     }
 
     private fun transitionDisconnected() {
-        binding.remoteVideo.visibility = View.GONE
+//        binding.remoteVideo.visibility = View.GONE
         binding.localVideo.setLocal()
     }
 
