@@ -8,7 +8,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1007588916864:android:10237fb11c2f0ddddaf065",
+        "mobilesdk_app_id": "1:1007588916864:android:b2801d0fb394aa48daf065",
         "android_client_info": {
           "package_name": "com.magnitudestudios.GameFace"
         }
@@ -29,7 +29,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC5A6YzN4X1G-cY6q7VjJclcnvCgPKEreQ"
+          "current_key": "AIzaSyBqYZAnFhM4GwO05-vuDTpzAr40-dgudE4"
         }
       ],
       "services": {
