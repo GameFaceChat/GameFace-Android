@@ -8,7 +8,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.magnitudestudios.GameFace.Fragments.Login.LoginScreenFragment
 import com.magnitudestudios.GameFace.Fragments.Login.SignUpScreenFragment
 import com.magnitudestudios.GameFace.Fragments.Login.StartScreenFragment
+import com.magnitudestudios.GameFace.GameFace
 import com.magnitudestudios.GameFace.Interfaces.UserLoginListener
+import com.magnitudestudios.GameFace.Network.FirebaseHelper
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.ActivityLoginBinding
 
@@ -31,20 +33,6 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
         }
     }
 
-//    private fun switchFragment(f: Fragment) {
-//        val fragmentTransaction = supportFragmentManager.beginTransaction()
-//        fragmentTransaction.replace(R.id.login_frame_replace, f)
-//        fragmentTransaction.addToBackStack("")
-//        fragmentTransaction.commit()
-//    }
-
-//    override fun onClickSignUpButton() {
-//        switchFragment(SignUpScreenFragment())
-//    }
-//
-//    override fun onClickLoginButton() {
-//        switchFragment(LoginScreenFragment())
-//    }
 
     private fun goToMainActivity() {
         val intent = Intent(this@LoginActivity, MainActivity::class.java)
@@ -53,6 +41,8 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
     }
 
     override fun signedInUser() {
+        (applicationContext as GameFace).firebaseHelper?.getUsername()
+
         goToMainActivity()
     }
 

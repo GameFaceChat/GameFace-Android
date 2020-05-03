@@ -9,7 +9,7 @@ class GameFace : Application() {
     override fun onCreate() {
         super.onCreate()
         //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        firebaseHelper = FirebaseHelper.getInstance()
+        firebaseHelper = FirebaseHelper.instance
     }
 
     override fun onLowMemory() {

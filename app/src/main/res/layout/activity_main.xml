@@ -14,15 +14,17 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomBar"
         app:layout_constraintTop_toTopOf="parent">
 
+
         <org.webrtc.SurfaceViewRenderer
-            android:id="@+id/localVideo"
+            android:id="@+id/remoteVideo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             android:layout_weight="1"
             />
 
         <org.webrtc.SurfaceViewRenderer
-            android:id="@+id/remoteVideo"
+            android:id="@+id/localVideo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -56,15 +58,6 @@
             android:layout_margin="8dp"
             android:layout_weight="1"
             android:text="Connect" />
-        <Button
-            android:id="@+id/joinButton"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:text="Join" />
 
         <Button
             android:id="@+id/disconnectButton"

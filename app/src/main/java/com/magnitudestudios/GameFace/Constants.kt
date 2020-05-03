@@ -17,4 +17,12 @@ object Constants {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.ACCESS_WIFI_STATE
     )
+
+
+    //Fire
+    const val JOINED_KEY = "JOINED"
+    const val LEFT_KEY = "LEFT"
+    const val OFFER_KEY = "OFFER"
+    const val ANSWER_KEY = "ANSWER"
+    const val ICE_CANDIDATE_KEY = "ICECANDIDATE"
 }

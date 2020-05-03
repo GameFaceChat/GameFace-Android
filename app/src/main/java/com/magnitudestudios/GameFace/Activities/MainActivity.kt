@@ -1,7 +1,9 @@
 package com.magnitudestudios.GameFace.Activities
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -28,6 +30,7 @@ import org.webrtc.PeerConnectionFactory.InitializationOptions
 import java.util.*
 import kotlin.collections.ArrayList
 
+
 class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallback {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
     private var videoCapturer: VideoCapturer ?= null
@@ -46,6 +49,8 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var audioManager: AudioManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -57,12 +62,17 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         binding.connectButton.setOnClickListener(this)
         binding.disconnectButton.setOnClickListener(this)
         binding.mainButtonSignout.setOnClickListener(this)
-        binding.joinButton.setOnClickListener(this)
         rootEglBase = EglBase.create()
         localVideo.init(rootEglBase.eglBaseContext, null)
         remoteVideo.init(rootEglBase.eglBaseContext, null)
         localVideo.setZOrderMediaOverlay(true)
         remoteVideo.setZOrderMediaOverlay(true)
+        audioManager = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.isSpeakerphoneOn = true
+        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
+
+        startCamera()
+
     }
 
     //Network Handler
@@ -71,14 +81,13 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         override fun handleMessage(msg: Message) {
             when (msg.what) {
                 Constants.STATE_COMPLETED -> {
-                    binding.progressBar.visibility = View.GONE
                     Log.d(TAG, "handleMessage: " + msg.obj as String)
                     val gson = Gson()
                     try {
                         val serverInformation = gson.fromJson(msg.obj as String, ServerInformation::class.java)
                         serverInformation.printAll()
                         addToIceServers(serverInformation)
-                        if (firebaseHelper!!.initiator) firebaseHelper!!.createRoom("ROOM2", "SRIHARI", this@MainActivity) else firebaseHelper!!.joinRoom("ROOM2", "SRIHARI2", this@MainActivity)
+                        firebaseHelper!!.call("ROOM2", this@MainActivity)
                         onTryToStart()
                     } catch (e: JsonParseException) {
                         Log.e(TAG, "handleMessage: " + "COULD NOT PARSE JSON", e)
@@ -141,7 +150,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource)
-        videoCapturer!!.startCapture(1024, 720, 30)
+        videoCapturer!!.startCapture(720, 480, 30)
 
         //create surface renderer, init it and add the renderer to the track
         localVideo.setMirror(true)
@@ -150,21 +159,12 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     }
 
     private fun create() {
-        firebaseHelper!!.initiator = true
         Log.e(TAG, "call: " + "CALLING")
         iceServers = ArrayList()
         getIceServers()
-        startCamera()
     }
 
     // Try moving getting ice servers before creating room
-    private fun join() {
-        firebaseHelper!!.initiator = false
-        Log.e(TAG, "join: " + "JOINING")
-        iceServers = ArrayList()
-        getIceServers()
-        startCamera()
-    }
 
     private fun createPeerConnection() {
         Log.e(TAG, "createPeerConnection: $iceServers")
@@ -206,6 +206,10 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     private fun gotRemoteStream(stream: MediaStream) {
         Log.e(TAG, "gotRemoteStream: " + "GOT REMOTE STREAM")
         //we have remote video stream. add to the renderer.
+        runOnUiThread {
+            binding.progressBar.visibility = View.GONE
+        }
+
         val videoTrack = stream.videoTracks[0]
         runOnUiThread {
             try {
@@ -223,14 +227,24 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         a.execute()
     }
 
-    private fun disconnect() {
-        hangUp()
+    private fun hangUp() {
+        try {
+            localPeer?.close()
+            localPeer = null
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         firebaseHelper!!.leaveRoom(this)
         firebaseHelper!!.started = false
-        localVideo.clearImage()
-        localVideo.release()
+        remoteVideo.visibility = View.GONE
+    }
+
+    private fun disconnect() {
+        hangUp()
         try {
             videoCapturer?.stopCapture()
+            remoteVideo.release()
+            localVideo.release()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -239,8 +253,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     override fun onClick(v: View) {
         when (v.id) {
             R.id.connectButton -> create()
-            R.id.joinButton -> join()
-            R.id.disconnectButton -> disconnect()
+            R.id.disconnectButton -> hangUp()
             R.id.main_button_signout -> {
                 firebaseHelper!!.signOut()
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
@@ -250,19 +263,12 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         }
     }
 
-    private fun hangUp() {
-        try {
-            if (localPeer != null) {
-                localPeer!!.close()
-            }
-            localPeer = null
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     override fun onStop() {
         super.onStop()
+        hangUp()
+    }
+    override fun onDestroy() {
+        super.onDestroy()
         disconnect()
     }
 
@@ -290,7 +296,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         localPeer!!.createAnswer(object : CustomSdpObserver("localCreateAns") {
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 super.onCreateSuccess(sessionDescription)
-                onTryToStart()
+//                onTryToStart()
                 localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocal"), sessionDescription)
                 firebaseHelper!!.sendAnswer(sessionDescription)
             }
@@ -314,8 +320,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     override fun participantLeft(s: String) {
         Log.e(TAG, "participantLeft: $s")
         Toast.makeText(this@MainActivity, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show()
-        disconnect()
-        firebaseHelper!!.closeRoom()
+        hangUp()
     }
 
     override fun onJoinedRoom(b: Boolean) {
@@ -323,6 +328,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     }
 
     override fun onLeftRoom() {
+        binding.progressBar.visibility = View.GONE
         Toast.makeText(this@MainActivity, "Left Room", Toast.LENGTH_SHORT).show()
     }
 
