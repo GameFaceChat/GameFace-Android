@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is prohibited
+ * All software is proprietary and confidential
+ *
+ */
+
 package com.magnitudestudios.GameFace.Activities
 
 import android.annotation.SuppressLint
@@ -14,7 +21,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import com.magnitudestudios.GameFace.Bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.Constants
-import com.magnitudestudios.GameFace.GameFace
 import com.magnitudestudios.GameFace.Interfaces.RoomCallback
 import com.magnitudestudios.GameFace.Network.FirebaseHelper
 import com.magnitudestudios.GameFace.Network.GetNetworkRequest
@@ -46,8 +52,6 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     private lateinit var rootEglBase: EglBase
     private lateinit var audioSource: AudioSource
     private lateinit var localAudioTrack: AudioTrack
-    private lateinit var localVideo: SurfaceViewRenderer
-    private lateinit var remoteVideo: SurfaceViewRenderer
 
     private lateinit var binding: ActivityMainBinding
 
@@ -59,16 +63,14 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         setContentView(binding.root)
         iceServers = ArrayList()
         SessionHelper.getUsername()
-        localVideo = findViewById(R.id.localVideo)
-        remoteVideo = findViewById(R.id.remoteVideo)
         binding.connectButton.setOnClickListener(this)
         binding.disconnectButton.setOnClickListener(this)
         binding.mainButtonSignout.setOnClickListener(this)
         rootEglBase = EglBase.create()
-        localVideo.init(rootEglBase.eglBaseContext, null)
-        remoteVideo.init(rootEglBase.eglBaseContext, null)
-        localVideo.setZOrderMediaOverlay(true)
-        remoteVideo.setZOrderMediaOverlay(true)
+        binding.localVideo.init(rootEglBase.eglBaseContext, null)
+        binding.remoteVideo.init(rootEglBase.eglBaseContext, null)
+        binding.localVideo.setZOrderMediaOverlay(true)
+        binding.remoteVideo.setZOrderMediaOverlay(true)
         audioManager = this.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
@@ -155,9 +157,10 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         videoCapturer!!.startCapture(720, 480, 30)
 
         //create surface renderer, init it and add the renderer to the track
-        localVideo.setMirror(true)
-        localVideo.setEnableHardwareScaler(true)
-        localVideoTrack.addSink(localVideo)
+        binding.localVideo.setMirror(true)
+        binding.localVideo.setEnableHardwareScaler(true)
+        binding.remoteVideo.setEnableHardwareScaler(true)
+        localVideoTrack.addSink(binding.localVideo)
     }
 
     private fun create() {
@@ -209,18 +212,25 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         Log.e(TAG, "gotRemoteStream: " + "GOT REMOTE STREAM")
         //we have remote video stream. add to the renderer.
         runOnUiThread {
+            val videoTrack = stream.videoTracks[0]
             binding.progressBar.visibility = View.GONE
-        }
-
-        val videoTrack = stream.videoTracks[0]
-        runOnUiThread {
             try {
-                remoteVideo.visibility = View.VISIBLE
-                videoTrack.addSink(remoteVideo)
+                transitionConnected()
+                videoTrack.addSink(binding.remoteVideo)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun transitionConnected() {
+        binding.remoteVideo.visibility = View.VISIBLE
+        binding.localVideo.setCalling()
+    }
+
+    private fun transitionDisconnected() {
+        binding.remoteVideo.visibility = View.GONE
+        binding.localVideo.setLocal()
     }
 
     private fun getIceServers() {
@@ -238,15 +248,15 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         }
         SessionHelper.leaveRoom(this)
         SessionHelper.started = false
-        remoteVideo.visibility = View.GONE
+        transitionDisconnected()
     }
 
     private fun disconnect() {
         hangUp()
         try {
             videoCapturer?.stopCapture()
-            remoteVideo.release()
-            localVideo.release()
+            binding.remoteVideo.release()
+            binding.remoteVideo.release()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -255,7 +265,9 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     override fun onClick(v: View) {
         when (v.id) {
             R.id.connectButton -> create()
+//            R.id.connectButton -> transitionConnected()
             R.id.disconnectButton -> hangUp()
+//            R.id.disconnectButton -> transitionDisconnected()
             R.id.main_button_signout -> {
                 FirebaseHelper.signOut()
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
@@ -298,7 +310,6 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         localPeer!!.createAnswer(object : CustomSdpObserver("localCreateAns") {
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 super.onCreateSuccess(sessionDescription)
-//                onTryToStart()
                 localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocal"), sessionDescription)
                 SessionHelper.sendAnswer(sessionDescription)
             }

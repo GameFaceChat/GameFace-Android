@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.MainActivity">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/videoLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -18,19 +18,17 @@
         <org.webrtc.SurfaceViewRenderer
             android:id="@+id/remoteVideo"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:visibility="gone"
-            android:layout_weight="1"
-            />
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints" />
 
-        <org.webrtc.SurfaceViewRenderer
+        <com.magnitudestudios.GameFace.Views.MovableSurfaceView
             android:id="@+id/localVideo"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
+            tools:ignore="MissingConstraints"
             />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
