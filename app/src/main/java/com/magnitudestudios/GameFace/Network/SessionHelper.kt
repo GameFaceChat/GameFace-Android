@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.gson.Gson
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.Interfaces.ReferenceExists
 import com.magnitudestudios.GameFace.Interfaces.RoomCallback
 import com.magnitudestudios.GameFace.pojo.EmitMessage
@@ -14,16 +15,19 @@ import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO
 import org.webrtc.IceCandidate
 import org.webrtc.SessionDescription
 
-class SessionHelper {
-    private val TAG = "Session Helper"
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val mDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val firebaseUser: FirebaseUser?
+object SessionHelper {
+    private var mAuth: FirebaseAuth
+    private val mDatabase: FirebaseDatabase
+    private var groupMembers = 0
+    var username = ""
     private var childEventListener: ChildEventListener? = null
     var currentRoom: String? = null
-    private var currentUser: String? = null
+        private set
     var started: Boolean
     var initiator: Boolean
+
+    private const val TAG = "SessionHelper"
+
 
     fun readMessage(callback: RoomCallback) {
         if (currentRoom == null) return
@@ -35,21 +39,24 @@ class SessionHelper {
                     Log.e(TAG, "onChildAdded: NULL MESSAGE")
                     return
                 }
-                Log.i(TAG, "onChildAdded: " + emitMessage.type)
                 if (emitMessage.userID == null) {
                     Log.e(TAG, "onChildAdded: " + "NO USER ID")
-                } else if (emitMessage.userID == currentUser) {
+                } else if (emitMessage.userID == username) {
                     return
                 }
                 val gson = Gson()
                 when (emitMessage.type) {
-                    "JOINED" -> callback.newParticipantJoined(emitMessage.userID)
-                    "LEFT" -> {
-                        callback.participantLeft(emitMessage.userID)
+                    Constants.JOINED_KEY -> {
+                        callback.newParticipantJoined(emitMessage.userID)
+                        groupMembers += 1
                     }
-                    "OFFER" -> callback.offerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
-                    "ANSWER" -> callback.answerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
-                    "ICECANDIDATE" -> callback.iceServerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), IceCandidatePOJO::class.java))
+                    Constants.LEFT_KEY -> {
+                        callback.participantLeft(emitMessage.userID)
+                        groupMembers -= 1
+                    }
+                    Constants.OFFER_KEY -> callback.offerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
+                    Constants.ANSWER_KEY -> callback.answerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
+                    Constants.ICE_CANDIDATE_KEY -> callback.iceServerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), IceCandidatePOJO::class.java))
                 }
             }
 
@@ -60,56 +67,71 @@ class SessionHelper {
                 Log.e(TAG, "onCancelled: " + databaseError.message)
             }
         }
-        mDatabase.getReference("rooms").child(currentRoom!!).addChildEventListener(childEventListener as ChildEventListener)
+        mDatabase.getReference("rooms").child(currentRoom!!).addChildEventListener(childEventListener!!)
     }
 
     private fun sendMessage(type: String, data: Any?): Task<Void?> {
-        return mDatabase.reference.child("rooms").child(currentRoom!!).push().setValue(EmitMessage(currentUser, type, data))
+        return mDatabase.reference.child("rooms").child(currentRoom!!).push().setValue(EmitMessage(username, type, data))
     }
 
-    fun createRoom(roomName: String?, username: String?, callback: RoomCallback) {
-        currentRoom = roomName
-        currentUser = username
-        sendMessage("JOINED", username).addOnCompleteListener { task: Task<Void?>? ->
+    private fun createRoom(callback: RoomCallback) {
+        initiator = true
+        sendMessage(Constants.JOINED_KEY, username).addOnCompleteListener {
             callback.onCreateRoom()
             readMessage(callback)
         }
     }
 
-    fun closeRoom() {
-        mDatabase.reference.child("rooms").child(currentRoom!!).removeValue()
-    }
-
-    fun joinRoom(roomName: String?, username: String?, callback: RoomCallback) {
-        currentRoom = roomName
-        currentUser = username
-        sendMessage("JOINED", username).addOnCompleteListener { task: Task<Void?>? ->
+    private fun joinRoom(callback: RoomCallback) {
+        initiator = false
+        sendMessage(Constants.JOINED_KEY, username).addOnCompleteListener {
             callback.onJoinedRoom(true)
             readMessage(callback)
         }
     }
 
+    fun call(roomName: String?, callback: RoomCallback) {
+        currentRoom = roomName
+        groupMembers += 1
+        referenceExists(ReferenceExists { b, _ ->
+            if (b) {
+                joinRoom(callback)
+            } else {
+                createRoom(callback)
+            }
+        }, "rooms", currentRoom!!)
+    }
+
     fun leaveRoom(callback: RoomCallback) {
-        if (currentUser != null && currentRoom != null) {
+        if (currentRoom != null) {
             mDatabase.getReference("rooms").child(currentRoom!!).removeEventListener(childEventListener!!)
-            referenceExists(ReferenceExists { b: Boolean, data: DataSnapshot? ->
+            referenceExists(ReferenceExists { b: Boolean, _: DataSnapshot? ->
                 if (b) {
-                    sendMessage("LEFT", currentUser).addOnCompleteListener { task: Task<Void?>? -> callback.onLeftRoom() }
+                    sendMessage(Constants.LEFT_KEY, username).addOnCompleteListener {
+                        callback.onLeftRoom()
+                        if (groupMembers == 1) closeRoom()
+                        groupMembers = 0
+                        currentRoom = null
+                    }
                 }
             }, "rooms", currentRoom!!)
         }
     }
 
+    private fun closeRoom() {
+        mDatabase.reference.child("rooms").child(currentRoom!!).removeValue()
+    }
+
     fun sendOffer(session: SessionDescription) {
-        sendMessage("OFFER", SessionInfoPOJO(session.type.toString(), session.description))
+        sendMessage(Constants.OFFER_KEY, SessionInfoPOJO(session.type.toString(), session.description))
     }
 
     fun sendAnswer(session: SessionDescription) {
-        sendMessage("ANSWER", SessionInfoPOJO(session.type.toString(), session.description))
+        sendMessage(Constants.ANSWER_KEY, SessionInfoPOJO(session.type.toString(), session.description))
     }
 
-    fun sendIceCandidate(iceCandidate: IceCandidate) {
-        sendMessage("ICECANDIDATE", IceCandidatePOJO(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp, iceCandidate.serverUrl))
+    fun addIceCandidate(iceCandidate: IceCandidate) {
+        sendMessage(Constants.ICE_CANDIDATE_KEY, IceCandidatePOJO(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp, iceCandidate.serverUrl))
     }
 
 
@@ -125,9 +147,24 @@ class SessionHelper {
         })
     }
 
+    fun getUsername() {
+        if (mAuth.currentUser == null) return
+        referenceExists(ReferenceExists { b, data ->
+            if (b) {
+                this.username = data.value as String
+            }
+            else {
+                this.username = "RANDOM_USER_"+ (Math.random()*100000).toInt()
+            }
+        }, Constants.USERS_PATH, mAuth.uid!!,"username")
+    }
+
+
     init {
-        firebaseUser = mAuth.currentUser
+        mAuth = FirebaseAuth.getInstance()
+        mDatabase = FirebaseDatabase.getInstance()
         started = false
         initiator = false
+        getUsername()
     }
 }

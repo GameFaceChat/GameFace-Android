@@ -153,7 +153,7 @@
 
     <Button
         android:id="@+id/signup_gottologin"
-        style="@style/startscreen_btn_login"
+        style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/layout_margin_medium"

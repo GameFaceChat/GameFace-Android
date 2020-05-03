@@ -16,7 +16,9 @@ import com.magnitudestudios.GameFace.Bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.GameFace
 import com.magnitudestudios.GameFace.Interfaces.RoomCallback
+import com.magnitudestudios.GameFace.Network.FirebaseHelper
 import com.magnitudestudios.GameFace.Network.GetNetworkRequest
+import com.magnitudestudios.GameFace.Network.SessionHelper
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.Utils.CustomPeerConnectionObserver
 import com.magnitudestudios.GameFace.Utils.CustomSdpObserver
@@ -56,7 +58,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         iceServers = ArrayList()
-        firebaseHelper = (applicationContext as GameFace).firebaseHelper
+        SessionHelper.getUsername()
         localVideo = findViewById(R.id.localVideo)
         remoteVideo = findViewById(R.id.remoteVideo)
         binding.connectButton.setOnClickListener(this)
@@ -87,7 +89,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
                         val serverInformation = gson.fromJson(msg.obj as String, ServerInformation::class.java)
                         serverInformation.printAll()
                         addToIceServers(serverInformation)
-                        firebaseHelper!!.call("ROOM2", this@MainActivity)
+                        SessionHelper.call("ROOM2", this@MainActivity)
                         onTryToStart()
                     } catch (e: JsonParseException) {
                         Log.e(TAG, "handleMessage: " + "COULD NOT PARSE JSON", e)
@@ -179,7 +181,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
             override fun onIceCandidate(iceCandidate: IceCandidate) {
                 super.onIceCandidate(iceCandidate)
                 Log.e(TAG, "onIceCandidate: " + iceCandidate.sdp)
-                firebaseHelper!!.addIceCandidate(iceCandidate)
+                SessionHelper.addIceCandidate(iceCandidate)
             }
 
             override fun onAddStream(mediaStream: MediaStream) {
@@ -196,9 +198,9 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
     fun onTryToStart() {
         runOnUiThread {
             Log.e(TAG, "onTryToStart: " + "TRYING TO START")
-            if (!firebaseHelper!!.started) {
+            if (!SessionHelper.started) {
                 createPeerConnection()
-                firebaseHelper!!.started = true
+                SessionHelper.started = true
             }
         }
     }
@@ -234,8 +236,8 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        firebaseHelper!!.leaveRoom(this)
-        firebaseHelper!!.started = false
+        SessionHelper.leaveRoom(this)
+        SessionHelper.started = false
         remoteVideo.visibility = View.GONE
     }
 
@@ -255,7 +257,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
             R.id.connectButton -> create()
             R.id.disconnectButton -> hangUp()
             R.id.main_button_signout -> {
-                firebaseHelper!!.signOut()
+                FirebaseHelper.signOut()
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -284,7 +286,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
                 Log.d(TAG, "onCreateSuccess234: " + sessionDescription.description)
                 localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocalDesc"), sessionDescription)
                 //Send to peer
-                firebaseHelper!!.sendOffer(sessionDescription)
+                SessionHelper.sendOffer(sessionDescription)
             }
         }, sdpConstraints)
     }
@@ -298,18 +300,18 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
                 super.onCreateSuccess(sessionDescription)
 //                onTryToStart()
                 localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocal"), sessionDescription)
-                firebaseHelper!!.sendAnswer(sessionDescription)
+                SessionHelper.sendAnswer(sessionDescription)
             }
         }, MediaConstraints())
     }
 
-    override fun answerReceived(session: SessionInfoPOJO) {
+    override fun answerReceived(session: SessionInfoPOJO?) {
         Log.e(TAG, "answerReceived: $session")
-        localPeer!!.setRemoteDescription(CustomSdpObserver("localSetRemote"), SessionDescription(SessionDescription.Type.fromCanonicalForm(session.type!!.toLowerCase(Locale.getDefault())), session.description))
+        localPeer!!.setRemoteDescription(CustomSdpObserver("localSetRemote"), SessionDescription(SessionDescription.Type.fromCanonicalForm(session?.type!!.toLowerCase(Locale.getDefault())), session.description))
     }
 
-    override fun newParticipantJoined(user: String) {
-        Log.e(TAG, "newParticipantJoined: $user")
+    override fun newParticipantJoined(s: String?) {
+        Log.e(TAG, "newParticipantJoined: $s")
     }
 
     override fun iceServerReceived(iceCandidate: IceCandidatePOJO) {
@@ -317,7 +319,7 @@ class MainActivity : BasePermissionsActivity(), View.OnClickListener, RoomCallba
         localPeer!!.addIceCandidate(IceCandidate(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp))
     }
 
-    override fun participantLeft(s: String) {
+    override fun participantLeft(s: String?) {
         Log.e(TAG, "participantLeft: $s")
         Toast.makeText(this@MainActivity, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show()
         hangUp()

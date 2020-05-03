@@ -18,8 +18,11 @@ object Constants {
             Manifest.permission.ACCESS_WIFI_STATE
     )
 
+    //Firebase paths
+    const val ROOMS_PATH = "rooms"
+    const val USERS_PATH = "users"
 
-    //Fire
+    //Firebase signalling keywords
     const val JOINED_KEY = "JOINED"
     const val LEFT_KEY = "LEFT"
     const val OFFER_KEY = "OFFER"

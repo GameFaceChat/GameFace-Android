@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
     }
 
     override fun signedInUser() {
-        (applicationContext as GameFace).firebaseHelper?.getUsername()
+        FirebaseHelper.getUsername()
 
         goToMainActivity()
     }

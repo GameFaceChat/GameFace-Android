@@ -48,7 +48,7 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
             valid = false
             binding.signupPasswordInput.error = "Password must be more than 6 characters in length"
         }
-        if (binding.signupPasswordInput.text.toString() != binding.signupCPasswordInput!!.text.toString()) {
+        if (binding.signupPasswordInput.text.toString() != binding.signupCPasswordInput.text.toString()) {
             valid = false
             signup_cPasswordInput.error = "Passwords must match"
         }

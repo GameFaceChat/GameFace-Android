@@ -94,13 +94,14 @@
             style="@style/signup_button"/>
 
         <Button
+            android:id="@+id/forgotPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/layout_margin_medium"
             android:minHeight="10dp"
             android:text="@string/forgot_password"
-            style="@style/startscreen_btn_login"/>
+            style="@style/button_white_text_no_background"/>
     </LinearLayout>
 
     <LinearLayout
@@ -180,7 +181,7 @@
 
     <Button
         android:id="@+id/login_btn_signup"
-        style="@style/startscreen_btn_login"
+        style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dont_have_account"

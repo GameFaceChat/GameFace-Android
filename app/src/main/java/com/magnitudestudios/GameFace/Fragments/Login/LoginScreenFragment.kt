@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.magnitudestudios.GameFace.Interfaces.UserLoginListener
@@ -36,6 +37,7 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         binding.loginBtnSignup.setOnClickListener(this)
         binding.loginSignButton.setOnClickListener(this)
         binding.loginCardSigninwithgoogle.setOnClickListener(this)
+        binding.forgotPassword.setOnClickListener(this)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.google_oAuth_client_ID))
                 .requestEmail()
@@ -56,13 +58,19 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
                 }
     }
 
+    private fun validateEmail(email: String): Boolean {
+        return !email.isEmpty() && email.contains("@") && email.contains(".")
+    }
+
     private fun validate(): Boolean {
         var valid = true
-        if (binding.loginEmailInput.text.toString().isEmpty()) {
-            binding.loginEmailInput.error = "Please enter an email address"
+        val email = binding.loginEmailInput.text.toString()
+        val password = binding.loginPasswordInput.text.toString()
+        if (!validateEmail(email)) {
+            binding.loginEmailInput.error = "Please enter a valid email address"
             valid = false
         }
-        if (binding.loginPasswordInput.text.toString().isEmpty()) {
+        if (password.isEmpty()) {
             binding.loginPasswordInput.error = "Please enter your password"
             valid = false
         }
@@ -101,6 +109,21 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    private fun sendForgotPassword() {
+        val emailAddress = binding.loginEmailInput.text.toString()
+        if (validateEmail(emailAddress)) {
+            mAuth?.sendPasswordResetEmail(emailAddress)?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(context, "Password reset email sent to $emailAddress ", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(context, "Error occurred. Email not sent", Toast.LENGTH_LONG).show()
+                }
+            }
+        } else {
+            binding.loginEmailInput.error = "Please enter a valid email!"
+        }
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             R.id.login_btn_signup -> findNavController().navigate(R.id.action_loginScreenFragment_to_signUpScreenFragment)
@@ -108,6 +131,7 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
                 signInUser()
             }
             R.id.login_card_signinwithgoogle -> onClickSignWithGoogle()
+            R.id.forgotPassword -> sendForgotPassword()
         }
     }
 
