@@ -36,6 +36,7 @@
         android:background="@color/colorPrimaryDark"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/main_bottom_nav"
+        app:itemIconTint="@color/bottom_nav_icon_colour"
         app:itemIconSize="@dimen/bottom_nav_icon_size"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
