@@ -3,6 +3,7 @@
     <string name="backend_cloud_function">https://us-central1-gameface-chat.cloudfunctions.net/getKeys</string>
 
     <string name="app_name">GameFace</string>
+    <string name="app_name_with_styling">Game<b>Face</b></string>
     <string name="slogan">Video-calling made fun again.</string>
 
     <string name="brand_name_1">Game</string>
@@ -29,5 +30,10 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="dont_have_account">Don\'t have an account? <u>Sign Up</u></string>
     <string name="horizontal_line">or</string>
+
+    <!-- Bottom Nav View -->
+    <string name="bottom_nav_home_title">Home</string>
+    <string name="bottom_nav_profile_title">Profile</string>
+    <string name="bottom_nav_shop_title">Shop</string>
 
 </resources>

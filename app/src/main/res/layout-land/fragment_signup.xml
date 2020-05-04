@@ -80,28 +80,44 @@
             android:autofillHints="email"
             android:importantForAutofill="auto"/>
 
-        <EditText
-            android:id="@+id/signup_passwordInput"
-            style="@style/signup_edittext"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="0dp"
-            android:drawableStart="@drawable/ic_lock"
-            android:hint="@string/password_input_hint"
+            android:layout_weight="1"
             android:layout_marginBottom="@dimen/layout_margin_medium"
-            android:inputType="textPassword"
-            android:importantForAutofill="no"/>
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_passwordInput"
+                style="@style/signup_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="@string/password_input_hint"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/signup_cPasswordInput"
-            style="@style/signup_edittext"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="0dp"
-            android:drawableStart="@drawable/ic_lock"
-            android:hint="@string/cpassword_input_hint"
-            android:inputType="textPassword"
-            android:importantForAutofill="no"/>
+            android:layout_weight="1"
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/signup_cPasswordInput"
+                style="@style/signup_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="@string/cpassword_input_hint"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

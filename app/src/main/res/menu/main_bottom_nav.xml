@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="@string/bottom_nav_shop_title"
+        android:enabled="true"
+        android:icon="@drawable/ic_shopping_cart"
+        android:id="@+id/shopFragment"/>
+    <item
+        android:title="@string/bottom_nav_home_title"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_icon"
+        android:id="@+id/homeFragment"/>
+    <item
+        android:title="@string/bottom_nav_profile_title"
+        android:enabled="true"
+        android:icon="@drawable/ic_person"
+        android:id="@+id/profileFragment"/>
+</menu>

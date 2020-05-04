@@ -70,16 +70,24 @@
             app:layout_constraintEnd_toStartOf="@+id/login_guideline_horizontal_2"
             app:layout_constraintStart_toStartOf="@+id/login_guideline_horizontal_1" />
 
-        <EditText
-            android:id="@+id/login_passwordInput"
-            style="@style/signup_edittext"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:drawableStart="@drawable/ic_lock"
-            android:hint="@string/password_input_hint"
-            android:importantForAutofill="no"
-            android:inputType="textPassword" />
+            app:passwordToggleEnabled="true"
+            app:hintEnabled="false"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login_passwordInput"
+                style="@style/signup_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableStart="@drawable/ic_lock"
+                android:hint="@string/password_input_hint"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/login_sign_button"
