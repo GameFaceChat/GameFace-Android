@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.magnitudestudios.GameFace.Fragments.Login.LoginScreenFragment
 import com.magnitudestudios.GameFace.Fragments.Login.SignUpScreenFragment
@@ -46,5 +47,7 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
         goToMainActivity()
     }
 
-    override fun onBackPressed() {}
+    override fun onBackPressed() {
+        findNavController(R.id.login_frame_replace).navigateUp()
+    }
 }

@@ -14,11 +14,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.magnitudestudios.GameFace.Activities.LoginActivity
 import com.magnitudestudios.GameFace.Bases.BaseFragment
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.Interfaces.RoomCallback
-import com.magnitudestudios.GameFace.Network.FirebaseHelper
 import com.magnitudestudios.GameFace.Network.GetNetworkRequest
 import com.magnitudestudios.GameFace.Network.SessionHelper
 import com.magnitudestudios.GameFace.R

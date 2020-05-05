@@ -34,10 +34,6 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.loginBtnSignup.setOnClickListener(this)
-        binding.loginSignButton.setOnClickListener(this)
-        binding.loginCardSigninwithgoogle.setOnClickListener(this)
-        binding.forgotPassword.setOnClickListener(this)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.google_oAuth_client_ID))
                 .requestEmail()
@@ -45,6 +41,15 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
         mAuth = FirebaseAuth.getInstance()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.loginBtnSignup.setOnClickListener(this)
+        binding.loginSignButton.setOnClickListener(this)
+        binding.loginCardSigninwithgoogle.setOnClickListener(this)
+        binding.forgotPassword.setOnClickListener(this)
+        binding.loginCloseBtn.setOnClickListener(this)
     }
 
     private fun signInUser() {
@@ -124,14 +129,15 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         }
     }
 
+
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.login_btn_signup -> findNavController().navigate(R.id.action_loginScreenFragment_to_signUpScreenFragment)
-            R.id.login_sign_button -> if (validate()) {
+        when (v) {
+            binding.loginSignButton -> if (validate()) {
                 signInUser()
             }
-            R.id.login_card_signinwithgoogle -> onClickSignWithGoogle()
-            R.id.forgotPassword -> sendForgotPassword()
+            binding.loginCardSigninwithgoogle -> onClickSignWithGoogle()
+            binding.forgotPassword -> sendForgotPassword()
+            binding.loginCloseBtn -> findNavController().popBackStack()
         }
     }
 

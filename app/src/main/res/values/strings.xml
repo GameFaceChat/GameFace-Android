@@ -21,7 +21,7 @@
     <string name="password_input_hint">Password</string>
     <string name="cpassword_input_hint">Confirm Password</string>
     <string name="sign_up_button">Sign Up</string>
-    <string name="terms_and_conditions_text">By signing up, you accept the <u>Terms and Conditions</u> and <u>Privacy Policy</u></string>
+    <string name="terms_and_conditions_text">By signing up, you accept our <u>Terms and Conditions</u> and <u>Privacy Policy</u></string>
 
     <!-- Login Screen -->
     <string name="login_title">Welcome.</string>
@@ -30,6 +30,7 @@
     <string name="sign_in_with_google">Sign in with Google</string>
     <string name="dont_have_account">Don\'t have an account? <u>Sign Up</u></string>
     <string name="horizontal_line">or</string>
+    <string name="terms_and_condition_login">By signing in, you accept our <u>Terms and Conditions</u> and <u>Privacy Policy</u></string>
 
     <!-- Bottom Nav View -->
     <string name="bottom_nav_home_title">Home</string>

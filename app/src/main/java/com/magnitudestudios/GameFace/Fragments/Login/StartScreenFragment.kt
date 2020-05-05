@@ -84,10 +84,10 @@ class StartScreenFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.startscreen_card_signupwithgoogle -> onClickSignWithGoogle()
-            R.id.startscreen_card_signupwithemail -> navController.navigate(R.id.action_startScreenFragment_to_signUpScreenFragment)
-            R.id.startscreen_gottologin -> navController.navigate(R.id.action_startScreenFragment_to_loginScreenFragment)
+        when (v) {
+            binding.startscreenCardSignupwithgoogle -> onClickSignWithGoogle()
+            binding.startscreenCardSignupwithemail -> navController.navigate(R.id.action_startScreenFragment_to_signUpScreenFragment)
+            binding.startscreenGottologin -> navController.navigate(R.id.action_startScreenFragment_to_loginScreenFragment)
         }
     }
 

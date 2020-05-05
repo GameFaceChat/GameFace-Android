@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/ic_background">
 
     <androidx.constraintlayout.widget.Guideline
@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15"/>
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_guideline_horizontal_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85"/>
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/login_guideline_vertical_1"
@@ -33,6 +33,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
+
+    <Button
+        style="@style/Widget.AppCompat.ActionButton"
+        android:id="@+id/login_close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/button_no_bgnd_text"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/ic_close_black_24dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/login_txv_title"
@@ -74,9 +84,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:passwordToggleEnabled="true"
             app:hintEnabled="false"
-            >
+            app:passwordToggleEnabled="true">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_passwordInput"
                 style="@style/signup_edittext"
@@ -85,47 +95,46 @@
                 android:drawableStart="@drawable/ic_lock"
                 android:hint="@string/password_input_hint"
                 android:importantForAutofill="no"
-                android:inputType="textPassword"
-                />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/login_sign_button"
+            style="@style/signup_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/layout_margin_large"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:layout_marginEnd="@dimen/layout_margin_large"
-            android:layout_marginStart="@dimen/layout_margin_large"
-            android:text="@string/sign_in_button"
-            style="@style/signup_button"/>
+            android:layout_weight="1"
+            android:text="@string/sign_in_button" />
 
         <Button
             android:id="@+id/forgotPassword"
+            style="@style/button_white_text_no_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/layout_margin_medium"
             android:minHeight="10dp"
-            android:text="@string/forgot_password"
-            style="@style/button_white_text_no_background"/>
+            android:text="@string/forgot_password" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/login_horizontal_line"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_medium"
         android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/layout_margin_medium"
-        app:layout_constraintTop_toBottomOf="@+id/login_guideline_vertical_2"
         app:layout_constraintEnd_toStartOf="@+id/login_guideline_horizontal_2"
-        app:layout_constraintStart_toStartOf="@+id/login_guideline_horizontal_1">
+        app:layout_constraintStart_toStartOf="@+id/login_guideline_horizontal_1"
+        app:layout_constraintTop_toBottomOf="@+id/login_guideline_vertical_2">
 
         <View
             style="@style/login_horizontal_line"
-            android:layout_marginEnd="@dimen/layout_margin_medium"/>
+            android:layout_marginEnd="@dimen/layout_margin_medium" />
 
         <TextView
             style="@style/login_horizontal_line_text"
@@ -135,7 +144,7 @@
 
         <View
             style="@style/login_horizontal_line"
-            android:layout_marginStart="@dimen/layout_margin_medium"/>
+            android:layout_marginStart="@dimen/layout_margin_medium" />
 
     </LinearLayout>
 
@@ -159,7 +168,7 @@
             android:layout_alignTop="@+id/login_layout_email"
             android:layout_alignEnd="@id/login_layout_email"
             android:layout_alignBottom="@id/login_layout_email"
-            android:layout_marginStart="@dimen/layout_margin_very_small"/>
+            android:layout_marginStart="@dimen/layout_margin_very_small" />
 
         <LinearLayout
             android:id="@+id/login_layout_email"
@@ -171,11 +180,11 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/padding_medium"
                 android:layout_weight="1"
+                android:padding="@dimen/padding_tiny"
                 android:paddingStart="@dimen/padding_very_small"
                 android:paddingEnd="0dp"
-                android:padding="@dimen/padding_tiny"
-                android:layout_marginBottom="@dimen/padding_medium"
                 android:src="@drawable/ic_google" />
 
             <TextView
@@ -187,15 +196,16 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <Button
+    <TextView
         android:id="@+id/login_btn_signup"
-        style="@style/button_white_text_no_background"
-        android:layout_width="wrap_content"
+        style="@style/terms_and_conditions"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/dont_have_account"
         android:layout_marginBottom="@dimen/layout_margin_medium"
+        android:text="@string/terms_and_condition_login"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@id/login_guideline_horizontal_2"
+        app:layout_constraintStart_toStartOf="@id/login_guideline_horizontal_1"
+        app:layout_constraintTop_toBottomOf="@+id/login_card_signinwithgoogle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

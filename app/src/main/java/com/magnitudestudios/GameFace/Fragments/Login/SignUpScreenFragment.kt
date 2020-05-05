@@ -26,13 +26,15 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentSignupBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
-        //Buttons
-        binding.signupGottologin.setOnClickListener(this)
-        binding.signupButtonSignup.setOnClickListener(this)
-
-        //EditTexts
         mAuth = FirebaseAuth.getInstance()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.signupButtonSignup.setOnClickListener(this)
+        binding.signupCloseBtn.setOnClickListener(this)
+
     }
 
     private fun validateDetails(): Boolean {
@@ -72,11 +74,11 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.signup_gottologin -> findNavController().navigate(R.id.action_signUpScreenFragment_to_loginScreenFragment)
-            R.id.signup_button_signup -> if (validateDetails()) {
+        when (v) {
+            binding.signupButtonSignup -> if (validateDetails()) {
                 signUpUser(binding.signupUsernameInput.text.toString(), binding.signupEmailInput.text.toString(), binding.signupPasswordInput.text.toString())
             }
+            binding.signupCloseBtn -> findNavController().popBackStack()
         }
     }
 
