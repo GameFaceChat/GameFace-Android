@@ -65,7 +65,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         binding.localVideo.init(rootEglBase.eglBaseContext, null)
         binding.remoteVideo.init(rootEglBase.eglBaseContext, null)
         binding.localVideo.setZOrderMediaOverlay(true)
-        binding.remoteVideo.setZOrderMediaOverlay(true)
+        binding.remoteVideo.setZOrderMediaOverlay(false)
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION

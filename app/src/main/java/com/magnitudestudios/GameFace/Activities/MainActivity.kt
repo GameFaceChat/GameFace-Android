@@ -10,6 +10,7 @@ package com.magnitudestudios.GameFace.Activities
 import android.os.Bundle
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.magnitudestudios.GameFace.Bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.ActivityMainBinding
@@ -26,7 +27,6 @@ class MainActivity : BasePermissionsActivity() {
         setContentView(binding.root)
         val navhost = findNavController(R.id.mainNavHost)
         binding.mainBottomNav.setupWithNavController(navhost)
-
     }
 
     companion object {
