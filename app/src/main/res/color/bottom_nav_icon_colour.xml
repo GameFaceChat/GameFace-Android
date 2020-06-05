@@ -8,5 +8,5 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="@color/white" android:state_checked="true"/>
-    <item android:color="#2b2a26"/>
+    <item android:color="@color/bottom_nav_icon_unselected"/>
 </selector>

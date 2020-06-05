@@ -35,6 +35,8 @@
 
     <!-- Icon Size-->
     <dimen name="icon_size">25dp</dimen>
-    <dimen name="bottom_nav_icon_size">30dp</dimen>
+    <dimen name="bottom_nav_icon_size">27dp</dimen>
+    <dimen name="large_icon_size">50dp</dimen>
+
 
 </resources>

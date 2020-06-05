@@ -37,4 +37,12 @@
     <string name="bottom_nav_profile_title">Profile</string>
     <string name="bottom_nav_shop_title">Shop</string>
 
+    <!-- Shop Fragment -->
+    <string name="app_bar_search_title">Search</string>
+
+    <!-- Profile Fragment -->
+    <string name="no_friend_requests">No New Friend Requests</string>
+    <string name="add_friends_button">Add Friends</string>
+    <string name="no_friends">Add Friends to See Them Here!</string>
+
 </resources>

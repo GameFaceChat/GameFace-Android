@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/startScreenFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.Login.StartScreenFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.StartScreenFragment"
         android:label="StartScreenFragment"
         tools:layout="@layout/fragment_startscreen">
         <action
@@ -25,12 +25,12 @@
 
     <fragment
         android:id="@+id/loginScreenFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.Login.LoginScreenFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.LoginScreenFragment"
         android:label="LoginScreenFragment"
         tools:layout="@layout/fragment_login"/>
     <fragment
         android:id="@+id/signUpScreenFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.Login.SignUpScreenFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.SignUpScreenFragment"
         android:label="SignUpScreenFragment"
         tools:layout="@layout/fragment_signup"/>
 

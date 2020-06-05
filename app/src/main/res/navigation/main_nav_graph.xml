@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.Main.HomeFragment"
+        android:name="com.magnitudestudios.GameFace.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -24,17 +24,17 @@
     </fragment>
     <fragment
         android:id="@+id/shopFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.Main.ShopFragment"
+        android:name="com.magnitudestudios.GameFace.ui.shop.ShopFragment"
         android:label="ShopFragment"
         tools:layout="@layout/fragment_shop"/>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.Main.ProfileFragment"
+        android:name="com.magnitudestudios.GameFace.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.magnitudestudios.GameFace.Fragments.CameraFragment"
+        android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
         android:label="CameraFragment"
         tools:layout="@layout/fragment_camera"/>
 </navigation>

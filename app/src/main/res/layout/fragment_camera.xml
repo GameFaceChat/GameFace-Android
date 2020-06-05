@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             tools:ignore="MissingConstraints" />
 
-        <com.magnitudestudios.GameFace.Views.MovableSurfaceView
+        <com.magnitudestudios.GameFace.views.MovableSurfaceView
             android:id="@+id/localVideo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
