@@ -1,14 +1,28 @@
 package com.magnitudestudios.GameFace.pojo
 
-class User() {
-    @JvmField
-    var email: String? = null
+import androidx.annotation.NonNull
+import com.google.gson.annotations.SerializedName
 
-    @JvmField
-    var username: String? = null
+data class User(
+        @JvmField
+        @NonNull
+        @field:SerializedName("uid")
+        val uid: String,
 
-    constructor(email: String, username: String) : this() {
-        this.username = username
-        this.email = email
-    }
-}
+        @JvmField
+        @field:SerializedName("email")
+        val email: String?,
+
+        @JvmField
+        @field:SerializedName("username")
+        val username: String?,
+
+        @JvmField
+        @field:SerializedName("avatar_url")
+        val avatarUrl: String?,
+
+        @JvmField
+        @field:SerializedName("full_name")
+        val fullName: String?
+
+)

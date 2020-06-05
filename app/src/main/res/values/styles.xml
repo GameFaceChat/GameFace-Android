@@ -139,6 +139,7 @@
         <item name="searchIcon">@drawable/ic_baseline_search_24</item>
         <item name="android:hint">@string/app_bar_search_title</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColorHint">@color/white</item>
         <item name="android:background">@drawable/searchable_background</item>
     </style>

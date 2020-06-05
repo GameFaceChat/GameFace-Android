@@ -21,32 +21,36 @@
         android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/profile_pic"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:layout_marginStart="@dimen/layout_margin_small"
             android:layout_marginTop="@dimen/layout_margin_small"
             android:layout_marginBottom="@dimen/layout_margin_small"
 
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            android:src="@drawable/ic_add_profile_pic"
+            />
 
         <TextView
             style="@style/normal_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:layout_marginStart="@dimen/layout_margin_medium"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            android:layout_marginStart="@dimen/layout_margin_large"
+            app:layout_constraintStart_toEndOf="@+id/profile_pic"
+            app:layout_constraintTop_toTopOf="@+id/profile_pic"
             tools:text="@string/username_input_hint" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/profile_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.tabs.TabItem

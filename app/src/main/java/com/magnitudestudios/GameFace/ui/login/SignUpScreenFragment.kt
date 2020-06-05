@@ -61,7 +61,9 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
                         Log.d(TAG, "onCompleteSignUp: SUCCESS")
                         val database = FirebaseDatabase.getInstance()
                         val myRef = database.getReference("users")
-                        myRef.child(mAuth!!.currentUser!!.uid).setValue(User(email, username))
+                        with(mAuth?.currentUser!!) {
+                            myRef.child(uid).setValue(User(uid, email, username, "NO URL", "NO NAME"))
+                        }
                         listener!!.signedInUser()
                     } else {
                         Log.e(TAG, "onCompleteSignUp: FAILURE")

@@ -1,0 +1,30 @@
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="130dp"
+    android:height="130dp"
+    android:viewportWidth="130"
+    android:viewportHeight="130">
+  <path
+      android:pathData="M65,65m-63.5,0a63.5,63.5 0,1 1,127 0a63.5,63.5 0,1 1,-127 0"
+      android:strokeWidth="3"
+      android:fillColor="#ffffff"
+      android:strokeColor="#706E6E"/>
+  <path
+      android:pathData="M87.049,83h3.902v20h-3.902z"
+      android:fillColor="#888888"/>
+  <path
+      android:pathData="M79,94.951l0,-3.902l20,-0l0,3.902z"
+      android:fillColor="#888888"/>
+  <path
+      android:pathData="M58.927,85.435C53.686,85.435 48.438,85.457 43.197,85.423C40.162,85.407 37.507,84.454 35.586,81.957C34.489,80.535 33.951,78.877 33.89,77.118C33.727,72.33 34.181,67.604 36.04,63.135C37.418,59.814 39.495,57.121 43.197,56.107C45.045,55.603 46.719,55.598 48.36,56.874C50.544,58.571 53.03,59.736 55.752,60.33C59.784,61.214 63.553,60.397 67.126,58.47C68.167,57.905 69.192,57.283 70.133,56.561C71.258,55.698 72.463,55.654 73.762,55.878C77.223,56.471 79.563,58.515 81.182,61.522C82.951,64.81 83.646,68.388 83.954,72.05C84.099,73.809 84.223,75.595 84.066,77.342C83.601,82.332 80.034,85.412 74.842,85.429C69.539,85.446 64.23,85.435 58.927,85.435Z"
+      android:fillColor="#888888"/>
+  <path
+      android:pathData="M72.698,44.23C72.737,51.823 66.655,57.944 59.034,57.983C51.451,58.022 45.331,51.93 45.286,44.314C45.252,36.709 51.311,30.605 58.95,30.56C66.538,30.515 72.659,36.602 72.698,44.23Z"
+      android:fillColor="#888888"/>
+</vector>
