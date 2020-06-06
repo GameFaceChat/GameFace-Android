@@ -1,11 +1,15 @@
 package com.magnitudestudios.GameFace.pojo
 
-class IceServer {
+data class IceServer (
     @JvmField
-    var url: String? = null
+    val url: String,
     @JvmField
-    var username: String? = null
-    var urls: String? = null
+    val username: String,
     @JvmField
-    var credential: String? = null
+    val urls: String? = null,
+    @JvmField
+    val credential: String
+)
+{
+    constructor() : this("", "", "", "")
 }

@@ -54,13 +54,13 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
                     if (task.isSuccessful) {
                         listener!!.signedInUser()
                     } else {
-                        Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, getString(R.string.login_failed), Toast.LENGTH_LONG).show()
                     }
                 }
     }
 
     private fun validateEmail(email: String): Boolean {
-        return !email.isEmpty() && email.contains("@") && email.contains(".")
+        return email.isNotEmpty() && email.contains("@") && email.contains(".")
     }
 
     private fun validate(): Boolean {
@@ -92,9 +92,8 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
-                // Google Sign In failed, update UI appropriately
                 Log.w("LoginFragment", "Google sign in failed", e)
-                Toast.makeText(context, "Sign in failed", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, getString(R.string.google_sign_in_failed), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -115,13 +114,13 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         if (validateEmail(emailAddress)) {
             mAuth?.sendPasswordResetEmail(emailAddress)?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(context, "Password reset email sent to $emailAddress ", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.pwd_reset_email_sent, emailAddress), Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(context, "Error occurred. Email not sent", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.pwd_reset_email_error), Toast.LENGTH_LONG).show()
                 }
             }
         } else {
-            binding.loginEmailInput.error = "Please enter a valid email!"
+            binding.loginEmailInput.error = getString(R.string.enter_valid_email)
         }
     }
 

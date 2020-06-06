@@ -2,16 +2,26 @@ package com.magnitudestudios.GameFace.pojo
 
 import android.util.Log
 import java.util.*
+import kotlin.collections.ArrayList
 
-class ServerInformation {
-    var accountSid: String? = null
-    var dateCreated: String? = null
-    var dateUpdated: String? = null
-    @JvmField
-    var iceServers: ArrayList<IceServer>? = null
-    var password: String? = null
-    var ttl = 0
-    var username: String? = null
+data class ServerInformation (
+        @JvmField
+        val accountSid: String? = null,
+        @JvmField
+        val dateCreated: String? = null,
+        @JvmField
+        val dateUpdated: String? = null,
+        @JvmField
+        val iceServers: ArrayList<IceServer>? = null,
+        @JvmField
+        val password: String? = null,
+        @JvmField
+        val ttl: Int = 0,
+        @JvmField
+        val username: String? = null
+)
+{
+    constructor() : this("", "", "", ArrayList(), "", 0, "")
     fun printAll() {
         Log.d("TAG", "printAll: $accountSid $dateCreated $dateUpdated")
         for (i in iceServers!!) {

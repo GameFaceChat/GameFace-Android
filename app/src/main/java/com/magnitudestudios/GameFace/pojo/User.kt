@@ -7,22 +7,25 @@ data class User(
         @JvmField
         @NonNull
         @field:SerializedName("uid")
-        val uid: String,
+        var uid: String,
 
         @JvmField
         @field:SerializedName("email")
-        val email: String?,
+        var email: String?,
 
         @JvmField
         @field:SerializedName("username")
-        val username: String?,
+        var username: String?,
 
         @JvmField
         @field:SerializedName("avatar_url")
-        val avatarUrl: String?,
+        var avatarUrl: String?,
 
         @JvmField
         @field:SerializedName("full_name")
-        val fullName: String?
+        var fullName: String?
 
-)
+) {
+        //For Firebase
+        constructor() : this("", "", "", "", "")
+}

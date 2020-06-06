@@ -1,6 +1,8 @@
 package com.magnitudestudios.GameFace.pojo
 
-class SessionDetails {
-    var username: String? = null
-    var sessionDescriptionJSON: String? = null
-}
+data class SessionDetails (
+        @JvmField
+        var username: String? = null,
+        @JvmField
+        var sessionDescriptionJSON: String? = null
+)

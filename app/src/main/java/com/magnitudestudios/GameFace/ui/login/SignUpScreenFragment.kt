@@ -10,20 +10,21 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.UserLoginListener
 import com.magnitudestudios.GameFace.databinding.FragmentSignupBinding
+import com.magnitudestudios.GameFace.network.FirebaseHelper
 import com.magnitudestudios.GameFace.pojo.User
 import kotlinx.android.synthetic.main.fragment_signup.*
 
 class SignUpScreenFragment : Fragment(), View.OnClickListener {
     private var listener: UserLoginListener? = null
-    private var mAuth: FirebaseAuth? = null
 
     private lateinit var binding: FragmentSignupBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSignupBinding.inflate(inflater, container, false)
-        mAuth = FirebaseAuth.getInstance()
         return binding.root
     }
 
@@ -38,36 +39,34 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
         var valid = true
         if (binding.signupUsernameInput.text.toString().length <= 5) {
             valid = false
-            binding.signupUsernameInput.error = "Username must be more than 5 characters"
+            binding.signupUsernameInput.error = getString(R.string.username_length)
         }
         if (!binding.signupEmailInput.text.toString().contains("@") || !binding.signupEmailInput.text.toString().contains(".")) {
-            binding.signupEmailInput.error = "Please enter a valid email"
+            binding.signupEmailInput.error = getString(R.string.enter_valid_email)
         }
-        if (binding.signupPasswordInput.text.toString().length <= 6) {
+        if (binding.signupPasswordInput.text.toString().length <= 5) {
             valid = false
-            binding.signupPasswordInput.error = "Password must be more than 6 characters in length"
+            binding.signupPasswordInput.error = getString(R.string.pwd_length)
         }
         if (binding.signupPasswordInput.text.toString() != binding.signupCPasswordInput.text.toString()) {
             valid = false
-            signup_cPasswordInput.error = "Passwords must match"
+            signup_cPasswordInput.error = getString(R.string.pwd_must_match)
         }
         return valid
     }
 
     private fun signUpUser(username: String, email: String, password: String) {
-        mAuth!!.createUserWithEmailAndPassword(email, password)
+        Firebase.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.d(TAG, "onCompleteSignUp: SUCCESS")
-                        val database = FirebaseDatabase.getInstance()
-                        val myRef = database.getReference("users")
-                        with(mAuth?.currentUser!!) {
-                            myRef.child(uid).setValue(User(uid, email, username, "NO URL", "NO NAME"))
-                        }
+
+                        FirebaseHelper.createUser(User(Firebase.auth.uid!!, email, username, "NO URL", "NO NAME"))
                         listener!!.signedInUser()
-                    } else {
-                        Log.e(TAG, "onCompleteSignUp: FAILURE")
-                        Toast.makeText(context, "Sign Up Failed", Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        Log.e(TAG, "onCompleteSignUp: " + task.exception.toString())
+                        Toast.makeText(context, getString(R.string.sign_up_failed), Toast.LENGTH_LONG).show()
                     }
                 }
     }

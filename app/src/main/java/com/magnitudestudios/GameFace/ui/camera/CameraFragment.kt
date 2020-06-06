@@ -18,20 +18,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
+import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
 import com.magnitudestudios.GameFace.network.GetNetworkRequest
 import com.magnitudestudios.GameFace.network.SessionHelper
-import com.magnitudestudios.GameFace.R
-import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
-import com.magnitudestudios.GameFace.utils.CustomSdpObserver
-import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
 import com.magnitudestudios.GameFace.pojo.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.ServerInformation
 import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO
+import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
+import com.magnitudestudios.GameFace.utils.CustomSdpObserver
+import kotlinx.coroutines.launch
 import org.webrtc.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -64,7 +66,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iceServers = ArrayList()
-        SessionHelper.getUsername()
         binding.connectButton.setOnClickListener(this)
         binding.disconnectButton.setOnClickListener(this)
         rootEglBase = EglBase.create()
@@ -91,7 +92,9 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
                         val serverInformation = gson.fromJson(msg.obj as String, ServerInformation::class.java)
                         serverInformation.printAll()
                         addToIceServers(serverInformation)
-                        SessionHelper.call("ROOM2", this@CameraFragment)
+                        lifecycleScope.launch {
+                            SessionHelper.call("ROOM2", this@CameraFragment)
+                        }
                         onTryToStart()
                     } catch (e: JsonParseException) {
                         Log.e(TAG, "handleMessage: " + "COULD NOT PARSE JSON", e)
@@ -108,17 +111,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     private fun addToIceServers(serverInformation: ServerInformation) {
         for (iceServer in serverInformation.iceServers!!) {
             Log.e(TAG, "FOUND ICE SERVER: " + iceServer.url)
-            var peerIceServer: PeerConnection.IceServer
-            if (iceServer.credential == null) {
-                peerIceServer = PeerConnection.IceServer.builder(iceServer.url).createIceServer()
-                iceServers.add(peerIceServer)
-            } else {
-                peerIceServer = PeerConnection.IceServer.builder(iceServer.url)
-                        .setUsername(iceServer.username)
-                        .setPassword(iceServer.credential)
-                        .createIceServer()
-                iceServers.add(peerIceServer)
-            }
+            val peerIceServer: PeerConnection.IceServer = PeerConnection.IceServer.builder(iceServer.url)
+                    .setUsername(iceServer.username)
+                    .setPassword(iceServer.credential)
+                    .createIceServer()
+            iceServers.add(peerIceServer)
         }
     }
 
@@ -246,7 +243,9 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        SessionHelper.leaveRoom(this)
+        lifecycleScope.launch {
+            SessionHelper.leaveRoom(this@CameraFragment)
+        }
         SessionHelper.started = false
         transitionDisconnected()
     }

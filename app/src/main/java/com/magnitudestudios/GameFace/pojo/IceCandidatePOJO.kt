@@ -1,19 +1,15 @@
 package com.magnitudestudios.GameFace.pojo
 
-class IceCandidatePOJO {
+data class IceCandidatePOJO (
     @JvmField
-    var sdpMid: String? = null
+    val sdpMid: String = "",
     @JvmField
-    var sdpMLineIndex = 0
+    val sdpMLineIndex: Int = 0,
     @JvmField
-    var sdp: String? = null
-    var serverUrl: String? = null
-
-    constructor() {}
-    constructor(sdpMid: String?, sdpMLineIndex: Int, sdp: String?, serverUrl: String?) {
-        this.sdpMid = sdpMid
-        this.sdpMLineIndex = sdpMLineIndex
-        this.sdp = sdp
-        this.serverUrl = serverUrl
-    }
+    val sdp: String = "",
+    @JvmField
+    val serverUrl: String = ""
+)
+{
+    constructor() : this("", 0, "", "")
 }

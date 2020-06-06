@@ -31,6 +31,7 @@
     <string name="dont_have_account">Don\'t have an account? <u>Sign Up</u></string>
     <string name="horizontal_line">or</string>
     <string name="terms_and_condition_login">By signing in, you accept our <u>Terms and Conditions</u> and <u>Privacy Policy</u></string>
+    <string name="pwd_reset_email_sent">Password reset email sent to %1$s</string>
 
     <!-- Bottom Nav View -->
     <string name="bottom_nav_home_title">Home</string>
@@ -44,5 +45,17 @@
     <string name="no_friend_requests">No New Friend Requests</string>
     <string name="add_friends_button">Add Friends</string>
     <string name="no_friends">Add Friends to See Them Here!</string>
+
+    <!-- Error -->
+    <string name="error_fetching_user">No user found! Please login</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="enter_valid_email">Please enter a valid email!</string>
+    <string name="pwd_reset_email_error">Error occurred. Email not sent</string>
+    <string name="google_sign_in_failed">Google Sign in failed</string>
+    <string name="username_length">Username must be at least 6 characters in length</string>
+    <string name="pwd_length">Username must be at least 6 characters in length</string>
+    <string name="pwd_must_match">Passwords must match</string>
+    <string name="sign_up_failed">Sign Up Failed</string>
+
 
 </resources>

@@ -1,14 +1,11 @@
 package com.magnitudestudios.GameFace.pojo
 
-class SessionInfoPOJO {
+data class SessionInfoPOJO (
     @JvmField
-    var type: String? = null
+    var type: String? = "",
     @JvmField
-    var description: String? = null
-
-    constructor() {}
-    constructor(type: String?, description: String?) {
-        this.type = type
-        this.description = description
-    }
+    var description: String? = ""
+)
+{
+    constructor() : this("", "")
 }

@@ -1,70 +1,38 @@
 package com.magnitudestudios.GameFace.network
 
-import com.google.android.gms.tasks.Task
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.Constants
-import com.magnitudestudios.GameFace.callbacks.ReferenceExists
 import com.magnitudestudios.GameFace.pojo.User
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
 
 object FirebaseHelper {
-    private var mAuth: FirebaseAuth
-    private val mDatabase: FirebaseDatabase
-    private val firebaseUser: FirebaseUser?
-
     private const val TAG = "FirebaseHelper"
 
-    var username = ""
-
     fun signOut() {
-        mAuth.signOut()
-    }
-
-    private fun referenceExists(exists: ReferenceExists, vararg path: String) {
-        var databaseReference = mDatabase.reference
-        for (ref in path) databaseReference = databaseReference.child(ref)
-        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                exists.referenceExists(dataSnapshot.exists(), dataSnapshot)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
-        })
-    }
-
-    fun getUsername() {
-        if (mAuth.currentUser == null) return
-        referenceExists(ReferenceExists { b, data ->
-            if (b) {
-                this.username = data.value as String
-            }
-            else {
-                this.username = "RANDOM_USER_"+ (Math.random()*100000).toInt()
-            }
-        }, Constants.USERS_PATH, mAuth.uid!!,"username")
+        FirebaseAuth.getInstance().signOut()
     }
 
     suspend fun getUserByUID(uid: String): User? {
-        if (firebaseUser == null) return null
-        return try {
-            val data = Firebase.database.getReference(Constants.USERS_PATH)
-
-            null
+        val a = try {
+            Log.e("HERE", uid)
+            val data = Firebase.firestore.collection(Constants.USERS_PATH).document(uid).get().await()
+            val user = data.toObject(User::class.java)
+            Log.e("USER", user!!.uid)
+            user
         }
         catch (e: Exception) {
+            Log.e("ERROR", "HERE", e)
             null
         }
+        if (a?.username.isNullOrEmpty()) a?.username = "RANDOM_USER_"+ (Math.random()*100000).toInt()
+        return a
     }
 
-    init {
-        mAuth = FirebaseAuth.getInstance()
-        mDatabase = FirebaseDatabase.getInstance()
-        firebaseUser = mAuth.currentUser
-        getUsername()
+    fun createUser(user: User) {
+        Firebase.firestore.collection(Constants.USERS_PATH).document(user.uid).set(user)
     }
 }

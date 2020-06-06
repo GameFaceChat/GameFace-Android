@@ -14,7 +14,6 @@ import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 import com.magnitudestudios.GameFace.callbacks.UserLoginListener
-import com.magnitudestudios.GameFace.network.FirebaseHelper
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.ActivityLoginBinding
 
@@ -25,7 +24,6 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        switchFragment(StartScreenFragment())
         mAuth = FirebaseAuth.getInstance()
     }
 
@@ -45,8 +43,6 @@ class LoginActivity : AppCompatActivity(), UserLoginListener {
     }
 
     override fun signedInUser() {
-        FirebaseHelper.getUsername()
-
         goToMainActivity()
     }
 
