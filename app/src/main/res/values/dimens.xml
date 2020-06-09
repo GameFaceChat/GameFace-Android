@@ -32,11 +32,13 @@
 
     <!-- Corner Radius -->
     <dimen name="card_radius">20dp</dimen>
+    <dimen name="rounded_rect">15dp</dimen>
 
     <!-- Icon Size-->
-    <dimen name="icon_size">25dp</dimen>
-    <dimen name="bottom_nav_icon_size">27dp</dimen>
+    <dimen name="icon_size">30dp</dimen>
+    <dimen name="bottom_nav_icon_size">32dp</dimen>
     <dimen name="large_icon_size">50dp</dimen>
+    <dimen name="huge_icon_size">100dp</dimen>
 
 
 </resources>

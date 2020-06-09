@@ -16,7 +16,6 @@
 
     <!-- Sign Up Screen -->
     <string name="sign_up_title">Create an account</string>
-    <string name="username_input_hint">Username</string>
     <string name="email_input_hint">Email</string>
     <string name="password_input_hint">Password</string>
     <string name="cpassword_input_hint">Confirm Password</string>
@@ -33,6 +32,15 @@
     <string name="terms_and_condition_login">By signing in, you accept our <u>Terms and Conditions</u> and <u>Privacy Policy</u></string>
     <string name="pwd_reset_email_sent">Password reset email sent to %1$s</string>
 
+    <!-- Almost Done -->
+    <string name="almost_done_title">Finish Setting Up Your Account</string>
+    <string name="username_input_hint">Username</string>
+    <string name="full_name_input_hint">Full Name</string>
+    <string name="bio_input_hint">Bio</string>
+    <string name="finish_signup">Finish Signup</string>
+
+
+
     <!-- Bottom Nav View -->
     <string name="bottom_nav_home_title">Home</string>
     <string name="bottom_nav_profile_title">Profile</string>
@@ -47,15 +55,17 @@
     <string name="no_friends">Add Friends to See Them Here!</string>
 
     <!-- Error -->
+    <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>
     <string name="error_fetching_user">No user found! Please login</string>
     <string name="login_failed">Login Failed</string>
     <string name="enter_valid_email">Please enter a valid email!</string>
     <string name="pwd_reset_email_error">Error occurred. Email not sent</string>
     <string name="google_sign_in_failed">Google Sign in failed</string>
     <string name="username_length">Username must be at least 6 characters in length</string>
-    <string name="pwd_length">Username must be at least 6 characters in length</string>
+    <string name="pwd_length">Password must be at least 6 characters in length</string>
     <string name="pwd_must_match">Passwords must match</string>
     <string name="sign_up_failed">Sign Up Failed</string>
+
 
 
 </resources>

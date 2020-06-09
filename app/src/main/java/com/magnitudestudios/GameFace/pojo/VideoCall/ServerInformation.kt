@@ -1,7 +1,7 @@
-package com.magnitudestudios.GameFace.pojo
+package com.magnitudestudios.GameFace.pojo.VideoCall
 
 import android.util.Log
-import java.util.*
+import com.magnitudestudios.GameFace.pojo.VideoCall.IceServer
 import kotlin.collections.ArrayList
 
 data class ServerInformation (

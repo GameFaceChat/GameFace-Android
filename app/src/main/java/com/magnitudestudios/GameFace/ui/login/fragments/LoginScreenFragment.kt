@@ -1,6 +1,12 @@
-package com.magnitudestudios.GameFace.ui.login
+/*
+ * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is prohibited
+ * All software is proprietary and confidential
+ *
+ */
 
-import android.content.Context
+package com.magnitudestudios.GameFace.ui.login.fragments
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,33 +15,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.magnitudestudios.GameFace.callbacks.UserLoginListener
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentLoginBinding
+import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
 class LoginScreenFragment : Fragment(), View.OnClickListener {
-    private var listener: UserLoginListener? = null
-    private var mAuth: FirebaseAuth? = null
     private var mGoogleSignInClient: GoogleSignInClient? = null
 
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        viewModel = activity?.run {
+            ViewModelProvider(this).get(LoginViewModel::class.java)
+        }!!
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.google_oAuth_client_ID))
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-        mAuth = FirebaseAuth.getInstance()
         return binding.root
     }
 
@@ -48,31 +55,16 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         binding.loginCloseBtn.setOnClickListener(this)
     }
 
-    private fun signInUser() {
-        mAuth!!.signInWithEmailAndPassword(binding.loginEmailInput.text.toString(), binding.loginPasswordInput.text.toString())
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        listener!!.signedInUser()
-                    } else {
-                        Toast.makeText(context, getString(R.string.login_failed), Toast.LENGTH_LONG).show()
-                    }
-                }
-    }
-
-    private fun validateEmail(email: String): Boolean {
-        return email.isNotEmpty() && email.contains("@") && email.contains(".")
-    }
-
     private fun validate(): Boolean {
         var valid = true
         val email = binding.loginEmailInput.text.toString()
         val password = binding.loginPasswordInput.text.toString()
-        if (!validateEmail(email)) {
-            binding.loginEmailInput.error = "Please enter a valid email address"
+        if (!viewModel.validateEmail(email)) {
+            binding.loginEmailInput.error = getString(R.string.enter_valid_email)
             valid = false
         }
         if (password.isEmpty()) {
-            binding.loginPasswordInput.error = "Please enter your password"
+            binding.loginPasswordLayout.error = getString(R.string.pwd_length)
             valid = false
         }
         return valid
@@ -90,35 +82,26 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account)
+                viewModel.firebaseAuthWithGoogle(account).observe(this@LoginScreenFragment, Observer {
+                    if (it.status == Status.SUCCESS && !it.data!!) findNavController().navigate(R.id.action_loginScreenFragment_to_finishSignUpFragment)
+                })
             } catch (e: ApiException) {
-                Log.w("LoginFragment", "Google sign in failed", e)
-                Toast.makeText(context, getString(R.string.google_sign_in_failed), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-        val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
-        mAuth!!.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                listener!!.signedInUser()
-            } else {
-                Toast.makeText(context, "Sign up failed", Toast.LENGTH_LONG).show()
+                Log.w(TAG, "Google sign in failed", e)
+                Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
             }
         }
     }
 
     private fun sendForgotPassword() {
         val emailAddress = binding.loginEmailInput.text.toString()
-        if (validateEmail(emailAddress)) {
-            mAuth?.sendPasswordResetEmail(emailAddress)?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(context, getString(R.string.pwd_reset_email_sent, emailAddress), Toast.LENGTH_LONG).show()
-                } else {
-                    Toast.makeText(context, getString(R.string.pwd_reset_email_error), Toast.LENGTH_LONG).show()
+        if (viewModel.validateEmail(emailAddress)) {
+            viewModel.sendForgotPassword(emailAddress).observe(this, Observer {
+                when (it.status) {
+                    Status.SUCCESS -> Toast.makeText(context, getString(R.string.pwd_reset_email_sent), Toast.LENGTH_SHORT).show()
+                    Status.ERROR -> Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+                    else -> Log.e(TAG, "Unknown Status " + it.status.name)
                 }
-            }
+            })
         } else {
             binding.loginEmailInput.error = getString(R.string.enter_valid_email)
         }
@@ -128,20 +111,11 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v) {
             binding.loginSignButton -> if (validate()) {
-                signInUser()
+                viewModel.signInWithEmail(binding.loginEmailInput.text.toString(), binding.loginPasswordInput.text.toString())
             }
             binding.loginCardSigninwithgoogle -> onClickSignWithGoogle()
             binding.forgotPassword -> sendForgotPassword()
             binding.loginCloseBtn -> findNavController().popBackStack()
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = try {
-            context as UserLoginListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context Must implement UserLoginListener")
         }
     }
 

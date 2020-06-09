@@ -1,4 +1,4 @@
-package com.magnitudestudios.GameFace.pojo
+package com.magnitudestudios.GameFace.pojo.VideoCall
 
 data class SessionDetails (
         @JvmField

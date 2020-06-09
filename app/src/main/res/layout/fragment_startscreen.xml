@@ -140,10 +140,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:paddingStart="@dimen/padding_very_small"
+                android:paddingStart="@dimen/padding_small"
                 android:paddingEnd="0dp"
-                android:padding="@dimen/padding_tiny"
-                android:layout_marginBottom="@dimen/padding_medium"
+                android:layout_marginBottom="@dimen/padding_small"
                 android:src="@drawable/ic_mail"
                 android:tint="@color/darkGray"/>
 
@@ -156,7 +155,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startscreen_gottologin"
         style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"

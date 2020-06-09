@@ -1,6 +1,12 @@
-package com.magnitudestudios.GameFace.ui.login
+/*
+ * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+ * Unauthorized copying of this file, via any medium is prohibited
+ * All software is proprietary and confidential
+ *
+ */
 
-import android.content.Context
+package com.magnitudestudios.GameFace.ui.login.fragments
+
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,29 +15,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
-import com.magnitudestudios.GameFace.callbacks.UserLoginListener
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentStartscreenBinding
+import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
 class StartScreenFragment : Fragment(), View.OnClickListener {
-    private var listener: UserLoginListener? = null
-    private var mAuth: FirebaseAuth? = null
     private var mGoogleSignInClient: GoogleSignInClient? = null
-
     private lateinit var navController: NavController
-
     private lateinit var binding: FragmentStartscreenBinding
+    private lateinit var viewModel: LoginViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentStartscreenBinding.inflate(inflater, container, false)
+        viewModel = activity?.run {
+            ViewModelProvider(this).get(LoginViewModel::class.java)
+        }!!
+
         binding.startscreenCardSignupwithgoogle.setOnClickListener(this)
         binding.startscreenCardSignupwithemail.setOnClickListener(this)
         binding.startscreenGottologin.setOnClickListener(this)
@@ -40,7 +49,6 @@ class StartScreenFragment : Fragment(), View.OnClickListener {
                 .requestEmail()
                 .build()
         mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-        mAuth = FirebaseAuth.getInstance()
         return binding.root
     }
 
@@ -61,22 +69,13 @@ class StartScreenFragment : Fragment(), View.OnClickListener {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account)
+                viewModel.firebaseAuthWithGoogle(account).observe(this@StartScreenFragment, Observer {
+                    if (it.status == Status.SUCCESS && !it.data!!) findNavController().navigate(R.id.action_startScreenFragment_to_finishSignUpFragment)
+                })
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
                 Toast.makeText(context, "Sign in failed", Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-        val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
-        mAuth!!.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                listener!!.signedInUser()
-            } else {
-                Toast.makeText(context, "Sign up failed", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -86,14 +85,6 @@ class StartScreenFragment : Fragment(), View.OnClickListener {
             binding.startscreenCardSignupwithgoogle -> onClickSignWithGoogle()
             binding.startscreenCardSignupwithemail -> navController.navigate(R.id.action_startScreenFragment_to_signUpScreenFragment)
             binding.startscreenGottologin -> navController.navigate(R.id.action_startScreenFragment_to_loginScreenFragment)
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = try { context as UserLoginListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException("$context Must implement UserLoginListener")
         }
     }
 

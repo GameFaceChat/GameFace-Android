@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
@@ -27,10 +28,11 @@ import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
 import com.magnitudestudios.GameFace.network.GetNetworkRequest
-import com.magnitudestudios.GameFace.network.SessionHelper
-import com.magnitudestudios.GameFace.pojo.IceCandidatePOJO
-import com.magnitudestudios.GameFace.pojo.ServerInformation
-import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO
+import com.magnitudestudios.GameFace.repository.SessionHelper
+import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
+import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
+import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
+import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
 import com.magnitudestudios.GameFace.utils.CustomSdpObserver
 import kotlinx.coroutines.launch
@@ -56,10 +58,14 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     private lateinit var audioManager: AudioManager
 
+    private lateinit var viewModel: MainViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentCameraBinding.inflate(inflater)
-
+        viewModel = activity?.run {
+            ViewModelProvider(this).get(MainViewModel::class.java)
+        }!!
         return binding.root
     }
 
@@ -93,7 +99,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
                         serverInformation.printAll()
                         addToIceServers(serverInformation)
                         lifecycleScope.launch {
-                            SessionHelper.call("ROOM2", this@CameraFragment)
+                            SessionHelper.call("ROOM2", this@CameraFragment, viewModel.user.value?.data?.profile?.username!!)
                         }
                         onTryToStart()
                     } catch (e: JsonParseException) {

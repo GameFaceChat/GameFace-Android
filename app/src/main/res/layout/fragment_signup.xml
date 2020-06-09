@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_background">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_close_btn"
         style="@style/Widget.AppCompat.ActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_close_black_24dp"
         android:backgroundTint="@color/white"
+        android:background="@drawable/ic_close_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,17 +84,17 @@
             android:layout_marginBottom="@dimen/layout_margin_huge"
             android:text="@string/sign_up_title" />
 
-        <EditText
-            android:id="@+id/signup_usernameInput"
-            style="@style/signup_edittext"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/layout_margin_large"
-            android:layout_weight="1"
-            android:autofillHints="username"
-            android:drawableStart="@drawable/ic_person"
-            android:hint="@string/username_input_hint"
-            android:inputType="text" />
+<!--        <EditText-->
+<!--            android:id="@+id/signup_usernameInput"-->
+<!--            style="@style/signup_edittext"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginBottom="@dimen/layout_margin_large"-->
+<!--            android:layout_weight="1"-->
+<!--            android:autofillHints="username"-->
+<!--            android:drawableStart="@drawable/ic_person"-->
+<!--            android:hint="@string/username_input_hint"-->
+<!--            android:inputType="text" />-->
 
         <EditText
             android:id="@+id/signup_emailInput"
@@ -110,10 +110,12 @@
             android:inputType="textEmailAddress" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/layout_margin_large"
             android:layout_weight="1"
+            app:boxBackgroundMode="none"
             app:hintEnabled="false"
             app:passwordToggleEnabled="true">
 
@@ -129,8 +131,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/signup_cPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:boxBackgroundMode="none"
             android:layout_marginBottom="@dimen/layout_margin_large"
             android:layout_weight="1"
             app:hintEnabled="false"
@@ -149,7 +153,7 @@
 
     </LinearLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signup_button_signup"
         style="@style/signup_button"
         android:layout_width="0dp"

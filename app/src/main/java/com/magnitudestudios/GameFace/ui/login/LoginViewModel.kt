@@ -7,18 +7,113 @@
 
 package com.magnitudestudios.GameFace.ui.login
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.util.Log
+import androidx.lifecycle.*
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ServerValue
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
+import com.magnitudestudios.GameFace.pojo.UserInfo.User
+import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class LoginViewModel : ViewModel() {
-    val signUpUsername = MutableLiveData<String>()
-    val signUpPassword = MutableLiveData<String>()
+    val authenticated = MutableLiveData<Resource<Boolean>>()
 
-    val loginUsername = MutableLiveData<String>()
-    val loginPassword = MutableLiveData<String>()
+    init {
+        if (Firebase.auth.currentUser != null) authenticated.value = Resource.success(true)
+    }
 
-    val authenticatedByGoogle = MutableLiveData<Boolean>()
+    fun validateEmail(email: String): Boolean {
+        return email.isNotEmpty() && email.contains("@") && email.contains(".")
+    }
+
+    fun signUpUserWithEmail (email: String, password: String) : LiveData<Resource<Boolean>> {
+        authenticated.value = Resource.loading(false)
+        return liveData(Dispatchers.IO) {
+            emit(Resource.loading(false))
+            try {
+                Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+                emit(Resource.success(true))
+
+            } catch (e: FirebaseAuthException) {
+                Log.e("LoginViewModel: ", "Error when creating user", e)
+                emit(Resource(Status.ERROR, false, e.localizedMessage))
+            }
+            authenticated.postValue(Resource.nothing(false))
+        }
+    }
+    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) : LiveData<Resource<Boolean>> {
+        val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
+        return liveData(Dispatchers.IO) {
+            try {
+                Firebase.auth.signInWithCredential(credential).await()
+                //Login
+                if (FirebaseHelper.getUserByUID(Firebase.auth.currentUser?.uid!!) != null) {
+                    emit(Resource.success(true))
+                    authenticated.postValue(Resource.success(true))
+                }
+                //New User
+                else {
+                    emit(Resource.success(false))
+                }
+            } catch (e: FirebaseAuthException) {
+                emit(Resource(Status.ERROR, false, e.localizedMessage))
+            }
+        }
+    }
+
+
+    fun signInWithEmail (email: String, password: String) {
+        authenticated.value = Resource.loading(false)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                Firebase.auth.signInWithEmailAndPassword(email, password).await()
+                authenticated.postValue(Resource.success(true))
+            } catch (e: FirebaseAuthException) {
+                Log.e("LoginViewModel: ", "Error when signing in user", e)
+                authenticated.postValue(Resource(Status.ERROR, false, e.localizedMessage))
+            }
+        }
+    }
+
+    fun sendForgotPassword(email: String) : LiveData<Resource<Boolean>> {
+        return liveData {
+            try {
+                Firebase.auth.sendPasswordResetEmail(email).await()
+                emit(Resource.success(true))
+            } catch (e: FirebaseAuthException) {
+                Log.e("LoginViewModel: ", "Error when sending PWD Reset", e)
+                emit(Resource(Status.ERROR, false, e.localizedMessage))
+            }
+        }
+    }
+
+    fun createUser(username: String, name: String, bio: String) {
+        authenticated.postValue(Resource.loading(false))
+        viewModelScope.launch {
+            try {
+                val user = User(Firebase.auth.uid!!, Profile(username, name, bio, "", 0, ServerValue.TIMESTAMP))
+                Firebase.database.reference.child(Constants.USERS_PATH).child(user.uid).setValue(user).await()
+                authenticated.postValue(Resource.success(true))
+            } catch (e: FirebaseException) {
+                Log.e("FirebaseHelper", "Create User failed", e.cause)
+                authenticated.postValue(Resource(Status.ERROR, false, e.localizedMessage))
+            }
+        }
+
+    }
+
 
 
 }

@@ -34,7 +34,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         style="@style/Widget.AppCompat.ActionButton"
         android:id="@+id/login_close_btn"
         android:layout_width="wrap_content"
@@ -81,9 +81,11 @@
             app:layout_constraintStart_toStartOf="@+id/login_guideline_horizontal_1" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/login_passwordLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            app:boxBackgroundMode="none"
             app:hintEnabled="false"
             app:passwordToggleEnabled="true">
 
@@ -98,7 +100,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_sign_button"
             style="@style/signup_button"
             android:layout_width="match_parent"
@@ -110,7 +112,7 @@
             android:layout_weight="1"
             android:text="@string/sign_in_button" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/forgotPassword"
             style="@style/button_white_text_no_background"
             android:layout_width="wrap_content"

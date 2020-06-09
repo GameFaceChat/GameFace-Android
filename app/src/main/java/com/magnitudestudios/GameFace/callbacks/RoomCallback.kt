@@ -1,7 +1,7 @@
 package com.magnitudestudios.GameFace.callbacks
 
-import com.magnitudestudios.GameFace.pojo.IceCandidatePOJO
-import com.magnitudestudios.GameFace.pojo.SessionInfoPOJO
+import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
+import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
 
 interface RoomCallback {
     fun offerReceived(session: SessionInfoPOJO)

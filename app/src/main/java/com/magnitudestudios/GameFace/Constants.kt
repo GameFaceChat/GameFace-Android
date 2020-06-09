@@ -29,4 +29,8 @@ object Constants {
     const val OFFER_KEY = "OFFER"
     const val ANSWER_KEY = "ANSWER"
     const val ICE_CANDIDATE_KEY = "ICECANDIDATE"
+
+    const val SIGN_IN_CLIENT = "SIGNED_IN_CLIENT"
+
+    const val NOT_FINISHED = "NotFinished"
 }

@@ -158,7 +158,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/startscreen_gottologin"
         style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"

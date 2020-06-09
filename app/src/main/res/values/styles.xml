@@ -16,7 +16,14 @@
         <item name="textAllCaps">false</item>
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:background">@drawable/signup_button</item>
+        <item name="android:background">@drawable/primary_button</item>
+    </style>
+
+    <style name="accent_button_theme">
+        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/accent_button</item>
     </style>
 
     <style name="small_text">
@@ -100,7 +107,11 @@
         <item name="android:padding">@dimen/padding_edittext</item>
     </style>
 
-    <style name="signup_button" parent="primary_button_theme">
+    <style name="signup_bio" parent="signup_edittext">
+        <item name="android:padding">@dimen/padding_large</item>
+    </style>
+
+    <style name="signup_button" parent="accent_button_theme">
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
     

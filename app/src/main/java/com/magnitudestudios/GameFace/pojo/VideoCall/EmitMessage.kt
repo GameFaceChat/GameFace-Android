@@ -1,4 +1,6 @@
-package com.magnitudestudios.GameFace.pojo
+package com.magnitudestudios.GameFace.pojo.VideoCall
+
+import com.google.firebase.database.ServerValue
 
 data class EmitMessage(
         @JvmField
@@ -7,6 +9,7 @@ data class EmitMessage(
         val type: String,
         @JvmField
         val data: Any? = null
+
 ) {
     constructor() : this("","", "")
 }

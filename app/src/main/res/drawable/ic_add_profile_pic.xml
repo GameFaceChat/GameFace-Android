@@ -6,8 +6,8 @@
   -->
 
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="130dp"
-    android:height="130dp"
+    android:width="@dimen/huge_icon_size"
+    android:height="@dimen/huge_icon_size"
     android:viewportWidth="130"
     android:viewportHeight="130">
   <path

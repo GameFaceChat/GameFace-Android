@@ -3,15 +3,15 @@
     <item android:state_pressed="false">
         <shape
             android:shape="rectangle">
-            <corners android:radius="@dimen/card_radius"/>
-            <solid android:color="@color/colorPrimary"/>
+            <corners android:radius="@dimen/rounded_rect"/>
+            <solid android:color="@color/colorAccent"/>
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape
             android:shape="rectangle">
-            <corners android:radius="@dimen/card_radius"/>
-            <solid android:color="@color/colorPrimaryDark"/>
+            <corners android:radius="@dimen/rounded_rect"/>
+            <solid android:color="@color/colorAccent"/>
         </shape>
     </item>
 </selector>

@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/startScreenFragment"
-        android:name="com.magnitudestudios.GameFace.ui.login.StartScreenFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.fragments.StartScreenFragment"
         android:label="StartScreenFragment"
         tools:layout="@layout/fragment_startscreen">
         <action
@@ -21,18 +21,34 @@
             app:destination="@id/signUpScreenFragment"
             app:enterAnim="@anim/slide_from_bottom"
             app:popExitAnim="@anim/slide_out_bottom" />
+        <action
+            android:id="@+id/action_startScreenFragment_to_finishSignUpFragment"
+            app:destination="@id/finishSignUpFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/loginScreenFragment"
-        android:name="com.magnitudestudios.GameFace.ui.login.LoginScreenFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.fragments.LoginScreenFragment"
         android:label="LoginScreenFragment"
-        tools:layout="@layout/fragment_login"/>
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginScreenFragment_to_finishSignUpFragment"
+            app:destination="@id/finishSignUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpScreenFragment"
-        android:name="com.magnitudestudios.GameFace.ui.login.SignUpScreenFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.fragments.SignUpScreenFragment"
         android:label="SignUpScreenFragment"
-        tools:layout="@layout/fragment_signup"/>
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signUpScreenFragment_to_finishSignUpFragment"
+            app:destination="@id/finishSignUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/finishSignUpFragment"
+        android:name="com.magnitudestudios.GameFace.ui.login.fragments.FinishSignUpFragment"
+        android:label="FinishSignUpFragment"
+        tools:layout="@layout/fragment_finish_signing_up"/>
 
 
 </navigation>

@@ -5,10 +5,7 @@
  *
  */
 
-package com.magnitudestudios.GameFace.pojo
+package com.magnitudestudios.GameFace.ui.addFriends
 
-enum class Status {
-    SUCCESS,
-    ERROR,
-    LOADING
+class AddFriendsViewModel {
 }
