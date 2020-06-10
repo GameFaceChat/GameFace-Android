@@ -18,6 +18,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
+        android:visibility="visible"
         android:gravity="center">
         <ImageView
             android:layout_width="@dimen/large_icon_size"
@@ -41,9 +42,19 @@
             android:fontFamily="@font/raleway"
             android:text="@string/add_friends_button"/>
     </LinearLayout>
+    <SearchView
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:queryHint="Search Friends"
+        app:defaultQueryHint="Search Friends"
+        android:visibility="gone"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:listitem="@layout/row_friends"
+        tools:itemCount="5"
         android:visibility="gone" />
 </LinearLayout>

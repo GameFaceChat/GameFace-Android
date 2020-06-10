@@ -9,6 +9,7 @@ package com.magnitudestudios.GameFace.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,25 +33,23 @@ class MainActivity : BasePermissionsActivity() {
         setContentView(binding.root)
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.user.observe(this, Observer {
-            if (it.status == Status.ERROR) {
-                goToLogin(it.message!!)
-            }
+            if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             else if (it.status == Status.SUCCESS && it.data == null) {
-                goToLogin("Signed Out")
+                goToLogin()
             }
-            else if (it.status == Status.SUCCESS && it.data?.profile?.username.isNullOrEmpty()) {
-//                startActivity(Intent(this@MainActivity,
-//                        LoginActivity::class.java).putExtra(Constants.NOT_FINISHED, true))
-                //HAVE TO HAVE SAFETY HERE IF USER DOES NOT FINISH REGISTRATION
-            }
+        })
+        viewModel.profile.observe(this, Observer {
+            if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            else if (it.status == Status.SUCCESS && it.data == null) Log.e("NOT FINISHED", "User has not finished setting up profile")
         })
         val navhost = findNavController(R.id.mainNavHost)
         binding.mainBottomNav.setupWithNavController(navhost)
     }
 
-    private fun goToLogin(msg: String) {
+    private fun goToLogin() {
         viewModel.signOutUser()
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
+        Log.e("HERE", "HERE1")
+        Toast.makeText(this, "Signed Out", Toast.LENGTH_LONG).show()
         val i = Intent(this@MainActivity, LoginActivity::class.java)
         startActivity(i)
         finish()

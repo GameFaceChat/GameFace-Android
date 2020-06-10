@@ -8,7 +8,7 @@
 package com.magnitudestudios.GameFace.pojo.UserInfo
 
 import androidx.annotation.NonNull
-import com.google.gson.annotations.SerializedName
+import com.google.firebase.database.Exclude
 
 data class User(
         @JvmField
@@ -16,10 +16,28 @@ data class User(
         var uid: String = "",
 
         @JvmField
-        @NonNull
-        var profile: Profile? = Profile(),
+        var created: Any? = null,
 
         @JvmField
-        @NonNull
-        var friendRequests: Map<String, String>? = null
-)
+        var devicesID: List<String> = mutableListOf(),
+
+        @JvmField
+        var friendRequests: List<FriendRequest> = listOf(),
+
+        @JvmField
+        var friendRequestsSent: List<FriendRequest> = listOf(),
+
+        @JvmField
+        var friends: Map<String, Friend>? = HashMap()
+
+
+) {
+        @Exclude
+        fun getCreated(): Long? {
+                return if (created is Long) {
+                        created as Long?
+                } else {
+                        null
+                }
+        }
+}

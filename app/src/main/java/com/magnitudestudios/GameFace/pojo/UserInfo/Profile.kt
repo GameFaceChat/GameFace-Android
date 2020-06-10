@@ -18,29 +18,19 @@ data class Profile(
         var username: String = "",
 
         @JvmField
-        @NonNull
         var name: String = "",
 
         @JvmField
-        @NonNull
         var bio: String = "",
 
         @JvmField
-        @NonNull
         var profilePic: String = "",
 
         @JvmField
-        @NonNull
         var score: Int = 0,
 
         @JvmField
-        @NonNull
-        var lastLogin: Any = ServerValue.TIMESTAMP
-
-//        @JvmField
-//        @NonNull
-//        @field:SerializedName("updated")
-//        var updated: Any = ServerValue.TIMESTAMP
+        var lastLogin: Any? = null
 ) {
         @Exclude
         fun getLastLogin(): Long? {

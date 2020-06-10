@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <include
+        android:id="@+id/searchBarLayout"
+        layout="@layout/app_top_search_bar"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/users_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/row_users"
+        tools:itemCount="5"
+        />
+
+    <Button
+        android:id="@+id/done_btn"
+        style="@style/primary_button_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingStart="@dimen/padding_huge"
+        android:paddingEnd="@dimen/padding_large"
+        android:layout_marginTop="@dimen/layout_margin_medium"
+        android:layout_marginBottom="@dimen/layout_margin_medium"
+        android:text="@string/done_button"/>
+
+
+</LinearLayout>

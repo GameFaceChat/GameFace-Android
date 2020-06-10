@@ -22,6 +22,7 @@ object Constants {
     const val ROOMS_PATH = "rooms"
     const val USERS_PATH = "users"
     const val CONNECT_PATH = "connection"
+    const val PROFILE_PATH = "profiles"
 
     //Firebase signalling keywords
     const val JOINED_KEY = "JOINED"

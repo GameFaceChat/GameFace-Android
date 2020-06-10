@@ -28,6 +28,8 @@ import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
 import com.magnitudestudios.GameFace.network.GetNetworkRequest
+import com.magnitudestudios.GameFace.network.HTTPRequest
+import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.repository.SessionHelper
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
@@ -35,6 +37,7 @@ import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
 import com.magnitudestudios.GameFace.utils.CustomSdpObserver
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.webrtc.*
 import java.util.*
@@ -87,32 +90,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     }
 
     //Network Handler
-    @SuppressLint("HandlerLeak")
-    private val mUrlHandler: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                Constants.STATE_COMPLETED -> {
-                    Log.d(TAG, "handleMessage: " + msg.obj as String)
-                    val gson = Gson()
-                    try {
-                        val serverInformation = gson.fromJson(msg.obj as String, ServerInformation::class.java)
-                        serverInformation.printAll()
-                        addToIceServers(serverInformation)
-                        lifecycleScope.launch {
-                            SessionHelper.call("ROOM2", this@CameraFragment, viewModel.user.value?.data?.profile?.username!!)
-                        }
-                        onTryToStart()
-                    } catch (e: JsonParseException) {
-                        Log.e(TAG, "handleMessage: " + "COULD NOT PARSE JSON", e)
-                    }
-                }
-                Constants.STATE_URL_FAILED -> {
-                    Log.d(TAG, "handleMessage: " + msg.obj as String)
-                    Toast.makeText(context, "Cannot Connect to Server", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
+
 
     private fun addToIceServers(serverInformation: ServerInformation) {
         for (iceServer in serverInformation.iceServers!!) {
@@ -169,7 +147,10 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     private fun create() {
         Log.e(TAG, "call: " + "CALLING")
         iceServers = ArrayList()
-        getIceServers()
+        binding.progressBar.visibility = View.VISIBLE
+        lifecycleScope.launch(Dispatchers.IO) {
+            getIceServers()
+        }
     }
 
     // Try moving getting ice servers before creating room
@@ -201,7 +182,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         localPeer!!.addStream(stream)
     }
 
-    fun onTryToStart() {
+    private fun onTryToStart() {
         activity?.runOnUiThread {
             Log.e(TAG, "onTryToStart: " + "TRYING TO START")
             if (!SessionHelper.started) {
@@ -236,10 +217,29 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         binding.localVideo.setLocal()
     }
 
-    private fun getIceServers() {
-        binding.progressBar.visibility = View.VISIBLE
-        val a = GetNetworkRequest(mUrlHandler, getString(R.string.backend_cloud_function))
-        a.execute()
+    private suspend fun getIceServers() {
+        val gson = Gson()
+        val data = HTTPRequest.getServers(getString(R.string.backend_cloud_function))
+        if (data.status == Status.ERROR) {
+            connectionFailed(data.message)
+            return
+        }
+        try {
+            val serverInformation = gson.fromJson(data.data, ServerInformation::class.java)
+            serverInformation.printAll()
+            addToIceServers(serverInformation)
+            SessionHelper.call("ROOM2", this@CameraFragment, viewModel.profile.value?.data?.username!!)
+            onTryToStart()
+        } catch (e: JsonParseException) {
+            Log.e(TAG, "handleMessage: COULD NOT PARSE JSON: ${data.data}", e)
+            connectionFailed("No Connection to Server")
+        }
+    }
+    private fun connectionFailed(message: String? = null) {
+        activity?.runOnUiThread {
+            binding.progressBar.visibility = View.GONE
+            if (!message.isNullOrEmpty()) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun hangUp() {

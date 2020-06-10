@@ -23,7 +23,8 @@
             app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/action_startScreenFragment_to_finishSignUpFragment"
-            app:destination="@id/finishSignUpFragment" />
+            app:destination="@id/finishSignUpFragment"
+            app:enterAnim="@anim/slide_from_bottom" />
     </fragment>
 
     <fragment
@@ -33,7 +34,8 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginScreenFragment_to_finishSignUpFragment"
-            app:destination="@id/finishSignUpFragment" />
+            app:destination="@id/finishSignUpFragment"
+            app:enterAnim="@anim/slide_from_bottom" />
     </fragment>
     <fragment
         android:id="@+id/signUpScreenFragment"
@@ -42,7 +44,8 @@
         tools:layout="@layout/fragment_signup">
         <action
             android:id="@+id/action_signUpScreenFragment_to_finishSignUpFragment"
-            app:destination="@id/finishSignUpFragment" />
+            app:destination="@id/finishSignUpFragment"
+            app:enterAnim="@anim/slide_from_bottom" />
     </fragment>
     <fragment
         android:id="@+id/finishSignUpFragment"

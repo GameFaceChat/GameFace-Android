@@ -13,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -20,13 +22,16 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentProfileBinding
+import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.PersonalFragment
 
 class ProfileFragment : BaseFragment() {
     private lateinit var bind: FragmentProfileBinding
-    private lateinit var adapter: ProfileTabAdapter
+
+    private lateinit var mainViewModel: MainViewModel
+
     companion object {
         const val NUMBER_OF_TABS = 3
         private const val TAG = "ProfileFragment"
@@ -34,6 +39,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentProfileBinding.inflate(inflater)
+        mainViewModel = activity?.run {  ViewModelProvider(this).get(MainViewModel::class.java) }!!
         return bind.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +52,10 @@ class ProfileFragment : BaseFragment() {
                 .fallback(R.drawable.ic_add_profile_pic)
                 .circleCrop()
                 .into(bind.profilePic)
+        mainViewModel.profile.observe(viewLifecycleOwner, Observer {
+            if (it == null) bind.displayUsername.text = "Loading..."
+            else bind.displayUsername.text = it.data?.username
+        })
 
         TabLayoutMediator(bind.profileTabs, bind.viewpager) { tab, position ->
             when (position) {

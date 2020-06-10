@@ -16,6 +16,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ktx.database
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
@@ -44,9 +45,12 @@ class LoginViewModel : ViewModel() {
             emit(Resource.loading(false))
             try {
                 Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+                FirebaseHelper.createUser(User(Firebase.auth.uid!!, ServerValue.TIMESTAMP, mutableListOf(
+                        FirebaseHelper.getDeviceToken()
+                ))).await()
                 emit(Resource.success(true))
 
-            } catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseException) {
                 Log.e("LoginViewModel: ", "Error when creating user", e)
                 emit(Resource(Status.ERROR, false, e.localizedMessage))
             }
@@ -58,13 +62,16 @@ class LoginViewModel : ViewModel() {
         return liveData(Dispatchers.IO) {
             try {
                 Firebase.auth.signInWithCredential(credential).await()
-                //Login
-                if (FirebaseHelper.getUserByUID(Firebase.auth.currentUser?.uid!!) != null) {
+                //Login (So send back true)
+                if (FirebaseHelper.getUserProfileByUID(Firebase.auth.currentUser?.uid!!) != null) {
                     emit(Resource.success(true))
                     authenticated.postValue(Resource.success(true))
                 }
-                //New User
+                //New User (So send back false)
                 else {
+                    FirebaseHelper.createUser(User(Firebase.auth.uid!!, ServerValue.TIMESTAMP, mutableListOf(
+                            FirebaseHelper.getDeviceToken()
+                    ))).await()
                     emit(Resource.success(false))
                 }
             } catch (e: FirebaseAuthException) {
@@ -103,8 +110,7 @@ class LoginViewModel : ViewModel() {
         authenticated.postValue(Resource.loading(false))
         viewModelScope.launch {
             try {
-                val user = User(Firebase.auth.uid!!, Profile(username, name, bio, "", 0, ServerValue.TIMESTAMP))
-                Firebase.database.reference.child(Constants.USERS_PATH).child(user.uid).setValue(user).await()
+                FirebaseHelper.createProfile(Profile(username, name, bio, "", 0, ServerValue.TIMESTAMP))
                 authenticated.postValue(Resource.success(true))
             } catch (e: FirebaseException) {
                 Log.e("FirebaseHelper", "Create User failed", e.cause)

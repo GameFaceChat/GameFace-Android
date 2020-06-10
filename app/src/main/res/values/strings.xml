@@ -1,6 +1,6 @@
 <resources>
     <string name="google_oAuth_client_ID">1007588916864-ui8qdpimhdsauq5irh98qcsuqgvo63o2.apps.googleusercontent.com</string>
-    <string name="backend_cloud_function">https://us-central1-gameface-chat.cloudfunctions.net/getKeys</string>
+    <string name="backend_cloud_function">https://us-central1-gameface-chat.cloudfunctions.net/app/servers</string>
 
     <string name="app_name">GameFace</string>
     <string name="app_name_with_styling">Game<b>Face</b></string>
@@ -39,8 +39,6 @@
     <string name="bio_input_hint">Bio</string>
     <string name="finish_signup">Finish Signup</string>
 
-
-
     <!-- Bottom Nav View -->
     <string name="bottom_nav_home_title">Home</string>
     <string name="bottom_nav_profile_title">Profile</string>
@@ -53,6 +51,8 @@
     <string name="no_friend_requests">No New Friend Requests</string>
     <string name="add_friends_button">Add Friends</string>
     <string name="no_friends">Add Friends to See Them Here!</string>
+    <string name="done_button">Done</string>
+    <string name="users_send_request">Send Request</string>
 
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>

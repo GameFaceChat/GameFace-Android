@@ -31,10 +31,21 @@
         android:id="@+id/profileFragment"
         android:name="com.magnitudestudios.GameFace.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_addFriendsFragment"
+            app:destination="@id/addFriendsFragment"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom" />
+    </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
         android:label="CameraFragment"
         tools:layout="@layout/fragment_camera"/>
+    <fragment
+        android:id="@+id/addFriendsFragment"
+        android:name="com.magnitudestudios.GameFace.ui.addFriends.AddFriendsFragment"
+        android:label="AddFriendsFragment"
+        tools:layout="@layout/fragment_add_friends"/>
 </navigation>

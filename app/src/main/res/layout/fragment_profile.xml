@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/profile_pic"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -28,7 +28,7 @@
             android:layout_marginStart="@dimen/layout_margin_small"
             android:layout_marginTop="@dimen/layout_margin_small"
             android:layout_marginBottom="@dimen/layout_margin_small"
-
+            android:background="#00000000"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +36,7 @@
             />
 
         <TextView
+            android:id="@+id/display_username"
             style="@style/normal_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

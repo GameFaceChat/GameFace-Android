@@ -11,27 +11,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <com.google.android.material.appbar.AppBarLayout
+
+    <include
         android:id="@+id/appbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:contentInsetStart="0dp"
-        app:layout_constraintTop_toTopOf="parent">
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/materialToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/padding_medium"
-                android:layout_marginStart="@dimen/layout_margin_small"
-                android:layout_marginEnd="@dimen/layout_margin_small"
-                android:drawableStart="@drawable/ic_baseline_search_24"
-                android:drawablePadding="@dimen/padding_medium"
-                style="@style/shop_searchbar"/>
-        </com.google.android.material.appbar.MaterialToolbar>
-    </com.google.android.material.appbar.AppBarLayout>
+        layout="@layout/app_top_search_bar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

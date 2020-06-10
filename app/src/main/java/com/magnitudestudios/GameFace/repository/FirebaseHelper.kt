@@ -8,6 +8,9 @@
 package com.magnitudestudios.GameFace.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -15,8 +18,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
@@ -27,22 +33,55 @@ import kotlin.math.roundToInt
 object FirebaseHelper {
     private const val TAG = "FirebaseHelper"
 
-    fun signOut() {
-        FirebaseAuth.getInstance().signOut()
+    fun createUser(user: User) : Task<Void> {
+        return Firebase.database.reference.child(Constants.USERS_PATH).child(Firebase.auth.currentUser?.uid!!).setValue(user)
+    }
+
+    fun createProfile(profile: Profile) : Task<Void> {
+        return Firebase.database.reference.child(Constants.PROFILE_PATH).child(Firebase.auth.currentUser?.uid!!).setValue(profile)
+    }
+
+    suspend fun updateUser(values: MutableMap<String, Any>) : Boolean {
+        return try {
+            Firebase.database.reference.child(Constants.PROFILE_PATH).child(Firebase.auth.currentUser?.uid!!).updateChildren(values).await()
+            true
+        } catch (e: FirebaseException) {
+            Log.e("ERROR", "Updating User", e)
+            false
+        }
+    }
+
+    suspend fun getDeviceToken() : String {
+        return FirebaseInstanceId.getInstance().instanceId.await().token
     }
 
     suspend fun getUserByUID(uid: String): User? {
         if (!exists(Constants.USERS_PATH, uid)) return null
         return suspendCoroutine { cont ->
-            Firebase.database.reference.child(Constants.USERS_PATH).child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    cont.resume(null)
-                }
+            Firebase.database.reference
+                    .child(Constants.USERS_PATH).child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) { cont.resume(null) }
 
                 override fun onDataChange(data: DataSnapshot) {
                     val user = data.getValue(User::class.java)
-                    if (user?.profile?.username.isNullOrEmpty()) user?.profile?.username = "random_user_"+ (Math.random()* 100000).roundToInt().toString()
+//                    if (user?.profile?.username.isNullOrEmpty()) user?.profile?.username = "random_user_"+ (Math.random()* 100000).roundToInt().toString()
                     cont.resume(user)
+                }
+            })
+        }
+    }
+
+    suspend fun getUserProfileByUID(uid: String) : Profile? {
+        if (!exists(Constants.PROFILE_PATH, uid)) return null
+        return suspendCoroutine { cont ->
+            Firebase.database.reference
+                    .child(Constants.PROFILE_PATH).child(uid)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) { cont.resume(null) }
+
+                override fun onDataChange(data: DataSnapshot) {
+                    val userProfile = data.getValue(Profile::class.java)
+                    cont.resume(userProfile)
                 }
             })
         }
@@ -81,6 +120,35 @@ object FirebaseHelper {
                 }
 
             })
+        }
+    }
+
+    suspend fun getProfilesByUsername(query: String): Resource<List<Profile>> {
+        Log.e("QUErY: ", query)
+        return suspendCoroutine {cont ->
+                Firebase.database.reference.child(Constants.PROFILE_PATH)
+                        .orderByChild("username")
+                        .startAt(query)
+                        .endAt("${query}\uf8ff")
+                        .limitToFirst(25)
+                        .addListenerForSingleValueEvent(
+                                object : ValueEventListener {
+                                    override fun onCancelled(p0: DatabaseError) {
+                                        cont.resume(Resource.error(p0.message, null))
+                                    }
+
+                                    override fun onDataChange(data: DataSnapshot) {
+                                        val temp = mutableListOf<Profile>()
+                                        Log.e("HERE", data.toString())
+                                        for (snap in data.children) {
+                                            val profile = snap.getValue(Profile::class.java)
+                                            if (profile != null) temp.add(profile)
+                                        }
+                                        cont.resume(Resource.success(temp))
+                                    }
+
+                                }
+                        )
         }
     }
 }
