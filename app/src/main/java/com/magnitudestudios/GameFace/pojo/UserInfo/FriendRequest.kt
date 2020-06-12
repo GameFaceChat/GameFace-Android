@@ -9,7 +9,7 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 
 data class FriendRequest (
         @JvmField
-        var senderUID: String = "",
+        var friendUID: String = "",
 
         @JvmField
         var sentDate: Any? = null,

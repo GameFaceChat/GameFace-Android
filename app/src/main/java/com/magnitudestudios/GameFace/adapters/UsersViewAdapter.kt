@@ -9,17 +9,18 @@ package com.magnitudestudios.GameFace.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
 import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.databinding.RowUsersBinding
+import com.magnitudestudios.GameFace.pojo.UserInfo.FriendRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.views.UsersViewHolder
+import com.magnitudestudios.GameFace.views.AddFriendViewHolder
 
-class UsersViewAdapter(rvListener: RVButtonClick) : RecyclerView.Adapter<UsersViewHolder>() {
+class UsersViewAdapter(rvListener: RVButtonClick) : RecyclerView.Adapter<AddFriendViewHolder>() {
     private val listener = rvListener
+    private val friendsRequestedUIDs = mutableListOf<String>()
     private val sortedList: SortedList<Profile> = SortedList(Profile::class.java, object : SortedList.Callback<Profile>() {
         override fun areItemsTheSame(item1: Profile?, item2: Profile?): Boolean {
             return item1?.username == item2?.username
@@ -62,19 +63,31 @@ class UsersViewAdapter(rvListener: RVButtonClick) : RecyclerView.Adapter<UsersVi
         sortedList.endBatchedUpdates()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return UsersViewHolder(RowUsersBinding.inflate(inflater, parent, false), listener)
+    fun setRequestedFriends(requests: HashMap<String, FriendRequest>) {
+        friendsRequestedUIDs.clear()
+        requests.forEach {
+            friendsRequestedUIDs.add(it.value.friendUID)
+        }
     }
 
-    override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
+    fun getRequestedFriends() : MutableList<String> {
+        return friendsRequestedUIDs
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddFriendViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return AddFriendViewHolder(RowUsersBinding.inflate(inflater, parent, false), listener)
+    }
+
+    override fun onBindViewHolder(holder: AddFriendViewHolder, position: Int) {
         val value = sortedList.get(position)
         Glide.with(holder.itemView.context).load("https://randomuser.me/api/portraits/med/men/75.jpg").circleCrop().into(holder.getImageView())
         holder.bind(value)
-
-//        holder.getAddFriendButton().setOnClickListener {
-//            Toast.makeText(holder.itemView.context, "Clicked Position: $position", Toast.LENGTH_LONG).show()
-//        }
+        if (friendsRequestedUIDs.contains(sortedList.get(position).uid)) {
+            holder.setSent(true)
+        } else {
+            holder.setSent(false)
+        }
     }
 
     override fun getItemCount(): Int = sortedList.size()

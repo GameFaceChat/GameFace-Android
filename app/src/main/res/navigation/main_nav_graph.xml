@@ -37,6 +37,12 @@
             app:destination="@id/addFriendsFragment"
             app:enterAnim="@anim/slide_from_bottom"
             app:popExitAnim="@anim/slide_out_bottom" />
+        <action
+            android:id="@+id/action_profileFragment_to_takePhotoFragment"
+            app:destination="@id/takePhotoFragment"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpTo="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -48,4 +54,9 @@
         android:name="com.magnitudestudios.GameFace.ui.addFriends.AddFriendsFragment"
         android:label="AddFriendsFragment"
         tools:layout="@layout/fragment_add_friends"/>
+    <fragment
+        android:id="@+id/takePhotoFragment"
+        android:name="com.magnitudestudios.GameFace.ui.takePhoto.TakePhotoFragment"
+        android:label="TakePhotoFragment"
+        tools:layout="@layout/fragment_take_photo"/>
 </navigation>

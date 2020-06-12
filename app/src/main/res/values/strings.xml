@@ -9,6 +9,8 @@
     <string name="brand_name_1">Game</string>
     <string name="brand_name_2">Face</string>
 
+    <string name="notification_channel_1">Friends</string>
+
     <!-- Start Screen -->
     <string name="sign_up_with_google">Sign up with Google</string>
     <string name="sign_up_with_email">Sign up with Email</string>
@@ -53,6 +55,7 @@
     <string name="no_friends">Add Friends to See Them Here!</string>
     <string name="done_button">Done</string>
     <string name="users_send_request">Send Request</string>
+    <string name="users_request_sent">Request Sent</string>
 
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>

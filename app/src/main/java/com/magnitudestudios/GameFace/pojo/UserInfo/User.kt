@@ -22,10 +22,10 @@ data class User(
         var devicesID: List<String> = mutableListOf(),
 
         @JvmField
-        var friendRequests: List<FriendRequest> = listOf(),
+        var friendRequests: HashMap<String, FriendRequest> = HashMap(),
 
         @JvmField
-        var friendRequestsSent: List<FriendRequest> = listOf(),
+        var friendRequestsSent: HashMap<String, FriendRequest> = HashMap(),
 
         @JvmField
         var friends: Map<String, Friend>? = HashMap()

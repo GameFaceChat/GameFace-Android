@@ -28,4 +28,9 @@ class FriendRequestsFragment : Fragment() {
         mainViewModel = activity?.run { ViewModelProvider(this).get(MainViewModel::class.java) }!!
         return bind.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
 }

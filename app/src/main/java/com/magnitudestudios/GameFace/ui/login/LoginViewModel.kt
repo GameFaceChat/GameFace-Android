@@ -110,7 +110,7 @@ class LoginViewModel : ViewModel() {
         authenticated.postValue(Resource.loading(false))
         viewModelScope.launch {
             try {
-                FirebaseHelper.createProfile(Profile(username, name, bio, "", 0, ServerValue.TIMESTAMP))
+                FirebaseHelper.createProfile(Profile(Firebase.auth.currentUser?.uid!!, username, name, bio, "", 0, ServerValue.TIMESTAMP))
                 authenticated.postValue(Resource.success(true))
             } catch (e: FirebaseException) {
                 Log.e("FirebaseHelper", "Create User failed", e.cause)

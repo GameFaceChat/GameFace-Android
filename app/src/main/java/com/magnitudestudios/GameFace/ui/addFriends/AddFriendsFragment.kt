@@ -32,6 +32,8 @@ class AddFriendsFragment : Fragment() {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var viewModel: AddFriendsViewModel
 
+    private lateinit var addAdapter: UsersViewAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentAddFriendsBinding.inflate(inflater, container, false)
         viewModel = requireParentFragment().run { ViewModelProvider(this).get(AddFriendsViewModel::class.java) }
@@ -43,29 +45,34 @@ class AddFriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (!viewModel.getQueryString().isNullOrEmpty()) bind.searchBarLayout.searchEditText.setText(viewModel.getQueryString())
         bind.doneBtn.setOnClickListener { findNavController().popBackStack() }
+        addAdapter = UsersViewAdapter(object : RVButtonClick {
+            override fun onClick(position: Int) {
+                val clicked = addAdapter.getitem(position)
+
+                if (!addAdapter.getRequestedFriends().contains(clicked.uid)) viewModel.sendFriendRequest(clicked)
+            }
+
+            override fun onLongClick(position: Int) {}
+        })
 
         bind.usersList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = UsersViewAdapter(object : RVButtonClick {
-                override fun onClick(position: Int) {
-                    Toast.makeText(context, "Clicked: $position", Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onLongClick(position: Int) {
-                    Toast.makeText(context, "Long Clicked: $position", Toast.LENGTH_SHORT).show()
-                }
-
-            })
+            adapter = addAdapter
         }
 
         viewModel.results.observe(viewLifecycleOwner, Observer {
             if (it.status == Status.SUCCESS && it.data != null) {
                 (bind.usersList.adapter as UsersViewAdapter).replaceAll(it.data)
-                for (e in it.data) {
-                    Log.e("FOUND", "Item: ${e.username}")
-                }
             } else {
                 Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        mainViewModel.friendRequestsSent.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                (bind.usersList.adapter as UsersViewAdapter).setRequestedFriends(it)
+                bind.usersList.adapter = null
+                bind.usersList.adapter = addAdapter
             }
         })
 
@@ -75,7 +82,6 @@ class AddFriendsFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 viewModel.setQueryString(s.toString())
             }
-
         })
 
     }

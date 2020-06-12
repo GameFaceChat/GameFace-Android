@@ -16,12 +16,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.UserInfo.FriendRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -35,6 +37,10 @@ object FirebaseHelper {
 
     fun createUser(user: User) : Task<Void> {
         return Firebase.database.reference.child(Constants.USERS_PATH).child(Firebase.auth.currentUser?.uid!!).setValue(user)
+    }
+
+    suspend fun setUser(user: User) {
+        Firebase.database.reference.child(Constants.USERS_PATH).child(Firebase.auth.currentUser?.uid!!).setValue(user).await()
     }
 
     fun createProfile(profile: Profile) : Task<Void> {
@@ -55,6 +61,15 @@ object FirebaseHelper {
         return FirebaseInstanceId.getInstance().instanceId.await().token
     }
 
+    suspend fun updateDeviceToken(token: String) {
+        val updated = getUserByUID(Firebase.auth.uid!!)
+        if (updated != null) {
+            (updated.devicesID as ArrayList).add(token)
+            setUser(updated)
+            Log.e("UPDATED", "DEVICE TOKEN SUCESS")
+        }
+    }
+
     suspend fun getUserByUID(uid: String): User? {
         if (!exists(Constants.USERS_PATH, uid)) return null
         return suspendCoroutine { cont ->
@@ -64,7 +79,6 @@ object FirebaseHelper {
 
                 override fun onDataChange(data: DataSnapshot) {
                     val user = data.getValue(User::class.java)
-//                    if (user?.profile?.username.isNullOrEmpty()) user?.profile?.username = "random_user_"+ (Math.random()* 100000).roundToInt().toString()
                     cont.resume(user)
                 }
             })
@@ -150,5 +164,23 @@ object FirebaseHelper {
                                 }
                         )
         }
+    }
+
+    fun sendFriendRequest(toUser: Profile)  {
+        //Send Request to Friend
+        Firebase.database.reference
+                .child(Constants.USERS_PATH)
+                .child(toUser.uid)
+                .child(User::friendRequests.name).push().setValue(
+                        FriendRequest(Firebase.auth.currentUser!!.uid, ServerValue.TIMESTAMP, false)
+                )
+
+        //Put in friendRequestsSent
+        Firebase.database.reference
+                .child(Constants.USERS_PATH)
+                .child(Firebase.auth.currentUser!!.uid)
+                .child(User::friendRequestsSent.name).push().setValue(
+                        FriendRequest(toUser.uid, ServerValue.TIMESTAMP, false)
+                )
     }
 }

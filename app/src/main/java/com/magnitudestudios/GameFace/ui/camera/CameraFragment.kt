@@ -7,12 +7,9 @@
 
 package com.magnitudestudios.GameFace.ui.camera
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,18 +19,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
-import com.magnitudestudios.GameFace.network.GetNetworkRequest
 import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.Helper.Status
-import com.magnitudestudios.GameFace.repository.SessionHelper
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
 import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
+import com.magnitudestudios.GameFace.repository.SessionHelper
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
 import com.magnitudestudios.GameFace.utils.CustomSdpObserver
@@ -88,9 +83,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
         startCamera()
     }
-
-    //Network Handler
-
 
     private fun addToIceServers(serverInformation: ServerInformation) {
         for (iceServer in serverInformation.iceServers!!) {

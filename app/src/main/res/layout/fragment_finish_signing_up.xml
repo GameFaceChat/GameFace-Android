@@ -46,7 +46,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/profilePic"
         android:layout_width="@dimen/huge_icon_size"
         android:layout_height="@dimen/huge_icon_size"
         android:scaleType="fitXY"
@@ -65,7 +65,7 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline_top"
         app:layout_constraintEnd_toEndOf="@id/guideline_right"
         app:layout_constraintStart_toStartOf="@id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton">
+        app:layout_constraintTop_toBottomOf="@+id/profilePic">
 
         <EditText
             android:id="@+id/signup_usernameInput"

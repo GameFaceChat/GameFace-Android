@@ -22,6 +22,8 @@ import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.UserInfo.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class MainViewModel : ViewModel() {
@@ -44,11 +46,11 @@ class MainViewModel : ViewModel() {
     }
     val friendRequests = Transformations.map(user) {
         if (it.status == Status.SUCCESS && it.data != null) it.data.friendRequests
-        else listOf()
+        else HashMap()
     }
     val friendRequestsSent = Transformations.map(user) {
         if (it.status == Status.SUCCESS && it.data != null) it.data.friendRequestsSent
-        else listOf()
+        else HashMap()
     }
     private var listener: ValueEventListener? = null
 
@@ -83,6 +85,14 @@ class MainViewModel : ViewModel() {
                     })
         } else {
             user.value = (Resource(Status.SUCCESS, null, "Login Required"))
+        }
+    }
+
+    fun checkDevice() {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (!user.value?.data?.devicesID?.contains(FirebaseHelper.getDeviceToken())!!) {
+                FirebaseHelper.updateDeviceToken(FirebaseHelper.getDeviceToken())
+            }
         }
     }
 

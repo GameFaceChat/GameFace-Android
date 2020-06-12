@@ -7,14 +7,15 @@
 
 package com.magnitudestudios.GameFace.views
 
-import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.databinding.RowUsersBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 
-class UsersViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : RecyclerView.ViewHolder(bind.root) {
+class AddFriendViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : RecyclerView.ViewHolder(bind.root) {
     private val mBinding = bind
     private val mListener = listener
     init {
@@ -30,6 +31,16 @@ class UsersViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : Recycler
     fun bind(data: Profile) {
         mBinding.username.text = data.username
         mBinding.fullName.text = data.name
+    }
+
+    fun setSent(sent: Boolean) {
+        if (sent) {
+            mBinding.sendRequest.text = itemView.context.getText(R.string.users_request_sent)
+            mBinding.sendRequest.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.color_accent_selector)
+        } else {
+            mBinding.sendRequest.text = itemView.context.getText(R.string.users_send_request)
+            mBinding.sendRequest.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.color_primary_selector)
+        }
     }
 
 //    override fun onClick(v: View?) {

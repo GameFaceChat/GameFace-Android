@@ -37,6 +37,9 @@ class FinishSignUpFragment : Fragment() {
                  binding.bioInput.text.toString())
             }
         }
+        binding.profilePic.setOnClickListener {
+
+        }
     }
 
     private fun validateDetails(): Boolean {

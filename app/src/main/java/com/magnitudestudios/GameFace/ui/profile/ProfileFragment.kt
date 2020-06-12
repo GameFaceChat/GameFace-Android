@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -56,6 +57,10 @@ class ProfileFragment : BaseFragment() {
             if (it == null) bind.displayUsername.text = "Loading..."
             else bind.displayUsername.text = it.data?.username
         })
+
+        bind.profilePic.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_takePhotoFragment)
+        }
 
         TabLayoutMediator(bind.profileTabs, bind.viewpager) { tab, position ->
             when (position) {

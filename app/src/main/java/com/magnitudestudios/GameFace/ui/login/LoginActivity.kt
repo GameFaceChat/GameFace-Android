@@ -20,12 +20,13 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.auth.FirebaseAuth
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.databinding.ActivityLoginBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BasePermissionsActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
                 gApi.getErrorDialog(this, resultCode, 2404).show()
             } else {
                 Toast.makeText(this, resources.getString(R.string.toast_playservices_unrecoverable), Toast.LENGTH_LONG).show()
-                finish()
+                GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this)
             }
             finish()
         }

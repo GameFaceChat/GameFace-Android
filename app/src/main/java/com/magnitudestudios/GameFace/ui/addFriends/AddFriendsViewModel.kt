@@ -7,13 +7,11 @@
 
 package com.magnitudestudios.GameFace.ui.addFriends
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import com.google.firebase.database.ktx.database
+import androidx.lifecycle.*
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.pojo.UserInfo.FriendRequest
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import kotlinx.coroutines.Dispatchers
 
@@ -25,13 +23,18 @@ class AddFriendsViewModel : ViewModel() {
         }
     }
 
+
     fun setQueryString(query: String) {
         queryString.value = query
-        Firebase.database.reference.child(Constants.PROFILE_PATH).orderByChild("username")
     }
 
     fun getQueryString(): String? {
         return queryString.value
     }
+
+    fun sendFriendRequest(profile: Profile) {
+        if (profile.uid != Firebase.auth.currentUser!!.uid) FirebaseHelper.sendFriendRequest(profile)
+    }
+
 
 }

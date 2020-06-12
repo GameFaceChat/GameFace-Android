@@ -51,7 +51,19 @@
         android:id="@+id/finishSignUpFragment"
         android:name="com.magnitudestudios.GameFace.ui.login.fragments.FinishSignUpFragment"
         android:label="FinishSignUpFragment"
-        tools:layout="@layout/fragment_finish_signing_up"/>
+        tools:layout="@layout/fragment_finish_signing_up">
+        <action
+            android:id="@+id/action_finishSignUpFragment_to_takePhotoFragment2"
+            app:destination="@id/takePhotoFragment2"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom"
+            app:popUpTo="@id/finishSignUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/takePhotoFragment2"
+        android:name="com.magnitudestudios.GameFace.ui.takePhoto.TakePhotoFragment"
+        android:label="TakePhotoFragment"
+        tools:layout="@layout/fragment_take_photo"/>
 
 
 </navigation>

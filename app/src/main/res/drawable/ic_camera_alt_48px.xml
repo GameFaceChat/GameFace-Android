@@ -1,0 +1,19 @@
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/icon_size"
+    android:height="@dimen/icon_size"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M24,24m-6.4,0a6.4,6.4 0,1 1,12.8 0a6.4,6.4 0,1 1,-12.8 0"/>
+  <path
+      android:fillColor="#FF000000"
+      android:pathData="M18,4l-3.66,4L8,8c-2.21,0 -4,1.79 -4,4v24c0,2.21 1.79,4 4,4h32c2.21,0 4,-1.79 4,-4L44,12c0,-2.21 -1.79,-4 -4,-4h-6.34L30,4L18,4zM24,34c-5.52,0 -10,-4.48 -10,-10s4.48,-10 10,-10 10,4.48 10,10 -4.48,10 -10,10z"/>
+</vector>

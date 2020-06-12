@@ -15,6 +15,10 @@ import com.google.gson.annotations.SerializedName
 data class Profile(
         @JvmField
         @NonNull
+        var uid: String = "",
+
+        @JvmField
+        @NonNull
         var username: String = "",
 
         @JvmField
