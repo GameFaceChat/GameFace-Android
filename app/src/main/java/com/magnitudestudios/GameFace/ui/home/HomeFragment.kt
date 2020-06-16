@@ -25,6 +25,7 @@ class HomeFragment : BaseFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.btnMorph.setOnClickListener { binding.btnMorph.startAnimation() }
         binding.goToCamera.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_cameraFragment)
         }
