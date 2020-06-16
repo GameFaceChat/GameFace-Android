@@ -14,20 +14,37 @@
 
     <include android:id="@+id/profile" layout="@layout/profile_quick_view"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/send_request"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/accept_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/users_send_request"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
+            android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/raleway"
+            android:text="@string/accept_request"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/deny_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/colorAccent"
-            android:layout_marginEnd="@dimen/layout_margin_medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:fontFamily="@font/raleway"
+            android:text="@string/deny_request"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginEnd="@dimen/layout_margin_very_small"
+            />
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

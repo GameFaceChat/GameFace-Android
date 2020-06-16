@@ -38,16 +38,15 @@ class MainActivity : BasePermissionsActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.user.observe(this, Observer {
             if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            else if (it.status == Status.SUCCESS && it.data == null) {
-                goToLogin()
-            }
-            else if (it.status == Status.SUCCESS && it.data != null){
-                viewModel.checkDevice()
-            }
+            else if (it.status == Status.SUCCESS && it.data == null) goToLogin()
+            else if (it.status == Status.SUCCESS && it.data != null) viewModel.checkDevice()
         })
         viewModel.profile.observe(this, Observer {
             if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-            else if (it.status == Status.SUCCESS && it.data == null) Log.e("NOT FINISHED", "User has not finished setting up profile")
+            else if (it.status == Status.SUCCESS && it.data == null)  {
+                viewModel.signOutUser()
+                Toast.makeText(this, getString(R.string.not_finished_setting_up), Toast.LENGTH_LONG).show()
+            }
         })
         val navhost = findNavController(R.id.mainNavHost)
         binding.mainBottomNav.setupWithNavController(navhost)
@@ -55,7 +54,6 @@ class MainActivity : BasePermissionsActivity() {
 
     private fun goToLogin() {
         viewModel.signOutUser()
-        Log.e("HERE", "HERE1")
         Toast.makeText(this, "Signed Out", Toast.LENGTH_LONG).show()
         val i = Intent(this@MainActivity, LoginActivity::class.java)
         startActivity(i)

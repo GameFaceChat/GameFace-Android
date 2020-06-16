@@ -49,6 +49,9 @@ class NotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
+        for (a in p0.data) {
+            Log.e("Got Data", "${a.key} : ${a.value}")
+        }
         val intent = Intent(this, MainActivity::class.java)
         val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
             // Add the intent, which inflates the back stack

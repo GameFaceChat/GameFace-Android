@@ -58,7 +58,7 @@ class LoginActivity : BasePermissionsActivity() {
     }
 
     override fun onBackPressed() {
-        findNavController(R.id.login_frame_replace).navigateUp()
+        if (viewModel.isFirebaseUserNull()) findNavController(R.id.login_frame_replace).navigateUp()
     }
 
     private fun checkPlayServices() {

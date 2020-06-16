@@ -19,22 +19,36 @@ class ProfileViewModel : ViewModel() {
     private val queryString = MutableLiveData<String>()
     val searchResultsFriends = Transformations.switchMap(queryString){ query -> getFilteredFriendProfiles(query)}
 
+    val requestProfiles = MutableLiveData<List<Profile>>()
+
     private fun getFilteredFriendProfiles(query: String) : LiveData<List<Profile>> {
         return Transformations.map(friendProfiles){input: List<Profile>? -> input?.filter { query.isEmpty() || it.username.startsWith(query) || it.name.contains(query)}}
     }
-    fun getFriendProfiles(uids: MutableList<String>) : LiveData<List<Profile>> {
+    fun getFriendProfiles(uids: List<String>) {
         viewModelScope.launch(Dispatchers.IO) {
-            val temp = mutableListOf<Profile>()
-            for (uid in uids) {
-                val profile = FirebaseHelper.getUserProfileByUID(uid)
-                if (profile != null) temp.add(profile)
-            }
-            friendProfiles.postValue(temp)
+            friendProfiles.postValue(FirebaseHelper.getUserProfilesByUID(uids))
         }
-        return friendProfiles
+    }
+
+    fun getRequestProfiles(uids: MutableList<String>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            requestProfiles.postValue(FirebaseHelper.getUserProfilesByUID(uids))
+        }
     }
 
     fun setQueryFriend(query: String) {
         queryString.value = query
+    }
+
+    fun acceptFriendRequest(uid: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            FirebaseHelper.acceptFriendRequest(uid)
+        }
+    }
+
+    fun denyFriendRequest(uid: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            FirebaseHelper.deleteFriendRequest(uid)
+        }
     }
 }

@@ -120,6 +120,10 @@ class LoginViewModel : ViewModel() {
 
     }
 
+    fun isFirebaseUserNull() : Boolean {
+        return Firebase.auth.currentUser == null
+    }
+
 
 
 }

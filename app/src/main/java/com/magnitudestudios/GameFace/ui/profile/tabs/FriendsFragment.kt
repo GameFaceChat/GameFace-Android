@@ -17,35 +17,35 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.R
-import com.magnitudestudios.GameFace.adapters.FriendsViewAdapter
+import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentFriendsBinding
+import com.magnitudestudios.GameFace.databinding.RowFriendsBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
+import com.magnitudestudios.GameFace.views.FriendViewHolder
 
 class FriendsFragment : Fragment() {
     private lateinit var bind: FragmentFriendsBinding
-    private lateinit var mainViewModel: MainViewModel
     private lateinit var viewModel: ProfileViewModel
+
+    private lateinit var mAdapter: SortedRVAdapter<Profile>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentFriendsBinding.inflate(inflater, container, false)
         viewModel = activity?.run { ViewModelProvider(this).get(ProfileViewModel::class.java) }!!
-        mainViewModel = activity?.run { ViewModelProvider(this).get(MainViewModel::class.java) }!!
         return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initAdapter()
         bind.friendsList.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = FriendsViewAdapter()
+            adapter = mAdapter
         }
-        mainViewModel.friends.observe(viewLifecycleOwner, Observer {
-            if (it != null && it.isNotEmpty()) {
-                viewModel.getFriendProfiles(it.keys.toMutableList())
-            }
-        })
+
         viewModel.friendProfiles.observe(viewLifecycleOwner, Observer {
             if (!it.isNullOrEmpty()) {
                 bind.noFriends.visibility = View.GONE
@@ -81,6 +81,31 @@ class FriendsFragment : Fragment() {
     }
 
     private fun populateRecyclerView(profiles: List<Profile>) {
-        (bind.friendsList.adapter as FriendsViewAdapter).replaceAll(profiles)
+        mAdapter.replaceAll(profiles)
+    }
+
+    private fun initAdapter() {
+        mAdapter = object : SortedRVAdapter<Profile>(Profile::class.java) {
+            override fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+                val inflater = LayoutInflater.from(parent.context)
+                return FriendViewHolder(RowFriendsBinding.inflate(inflater, parent, false))
+            }
+
+            override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
+                val value = mAdapter.getitem(position)
+                holder as FriendViewHolder
+                Glide.with(holder.itemView.context).load("https://randomuser.me/api/portraits/med/men/75.jpg").circleCrop().into(holder.getImageView())
+                holder.bind(value)
+            }
+
+            override fun areItemsSame(item1: Profile, item2: Profile): Boolean {
+                return item1.uid == item2.uid
+            }
+
+            override fun compareItems(item1: Profile, item2: Profile): Int {
+                return item1.username.compareTo(item2.username)
+            }
+
+        }
     }
 }

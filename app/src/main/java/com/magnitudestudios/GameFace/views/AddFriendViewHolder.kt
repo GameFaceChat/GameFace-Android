@@ -26,20 +26,21 @@ class AddFriendViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : Recy
         }
     }
     fun getImageView(): ImageView {
-        return mBinding.profilePic
+        return mBinding.profile.profilePic
     }
     fun bind(data: Profile) {
-        mBinding.username.text = data.username
-        mBinding.fullName.text = data.name
+        mBinding.profile.username.text = data.username
+        mBinding.profile.fullName.text = data.name
     }
 
-    fun setSent(sent: Boolean) {
-        if (sent) {
-            mBinding.sendRequest.text = itemView.context.getText(R.string.users_request_sent)
-            mBinding.sendRequest.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.color_accent_selector)
-        } else {
+    //0 = default | 1 = request sent | 2 = Friends
+    fun setState(state: Int = 0) {
+        if (state == 0) {
             mBinding.sendRequest.text = itemView.context.getText(R.string.users_send_request)
             mBinding.sendRequest.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.color_primary_selector)
+        } else {
+            mBinding.sendRequest.text = itemView.context.getText(R.string.users_request_sent)
+            mBinding.sendRequest.backgroundTintList = ContextCompat.getColorStateList(itemView.context, R.color.color_accent_selector)
         }
     }
 

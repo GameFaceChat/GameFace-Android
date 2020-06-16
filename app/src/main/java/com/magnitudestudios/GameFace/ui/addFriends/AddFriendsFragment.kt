@@ -20,19 +20,24 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.magnitudestudios.GameFace.adapters.UsersViewAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.callbacks.RVButtonClick
+import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentAddFriendsBinding
+import com.magnitudestudios.GameFace.databinding.RowUsersBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
-import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
+import com.magnitudestudios.GameFace.views.AddFriendViewHolder
 
 class AddFriendsFragment : Fragment() {
     private lateinit var bind: FragmentAddFriendsBinding
     private lateinit var mainViewModel: MainViewModel
     private lateinit var viewModel: AddFriendsViewModel
 
-    private lateinit var addAdapter: UsersViewAdapter
+    private lateinit var addAdapter: SortedRVAdapter<Profile>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentAddFriendsBinding.inflate(inflater, container, false)
@@ -45,15 +50,8 @@ class AddFriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (!viewModel.getQueryString().isNullOrEmpty()) bind.searchBarLayout.searchEditText.setText(viewModel.getQueryString())
         bind.doneBtn.setOnClickListener { findNavController().popBackStack() }
-        addAdapter = UsersViewAdapter(object : RVButtonClick {
-            override fun onClick(position: Int) {
-                val clicked = addAdapter.getitem(position)
 
-                if (!addAdapter.getRequestedFriends().contains(clicked.uid)) viewModel.sendFriendRequest(clicked)
-            }
-
-            override fun onLongClick(position: Int) {}
-        })
+        initAdapter()
 
         bind.usersList.apply {
             layoutManager = LinearLayoutManager(context)
@@ -62,19 +60,16 @@ class AddFriendsFragment : Fragment() {
 
         viewModel.results.observe(viewLifecycleOwner, Observer {
             if (it.status == Status.SUCCESS && it.data != null) {
-                (bind.usersList.adapter as UsersViewAdapter).replaceAll(it.data)
+                addAdapter.replaceAll(it.data)
             } else {
                 Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
             }
         })
 
-        mainViewModel.friendRequestsSent.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                (bind.usersList.adapter as UsersViewAdapter).setRequestedFriends(it)
-                bind.usersList.adapter = null
-                bind.usersList.adapter = addAdapter
-            }
-        })
+        viewModel.friendRequestedUIDs.observe(viewLifecycleOwner, Observer { redrawList() })
+
+        mainViewModel.friendRequestsSent.observe(viewLifecycleOwner, Observer { viewModel.setFriendRequestsSent(it) })
+        mainViewModel.friends.observe(viewLifecycleOwner, Observer { viewModel.setFriends(it) })
 
         bind.searchBarLayout.searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -84,5 +79,44 @@ class AddFriendsFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun redrawList() {
+        bind.usersList.adapter = null
+        bind.usersList.adapter = addAdapter
+    }
+
+    private fun initAdapter() {
+        addAdapter = object : SortedRVAdapter<Profile>(Profile::class.java) {
+            override fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+                val inflater = LayoutInflater.from(parent.context)
+                return AddFriendViewHolder(RowUsersBinding.inflate(inflater, parent, false), object : RVButtonClick {
+                    override fun onClick(position: Int) {
+                        val clicked = addAdapter.getitem(position)
+                        if (!viewModel.getFriendRequestedUIDs().contains(clicked.uid)) viewModel.sendFriendRequest(clicked)
+                    }
+                    override fun onLongClick(position: Int) {}
+
+                })
+            }
+
+            override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
+                val value = addAdapter.getitem(position)
+                holder as AddFriendViewHolder
+                Glide.with(holder.itemView.context).load("https://picsum.photos/300/300").circleCrop().into(holder.getImageView())
+                holder.bind(value)
+                when {
+                    viewModel.getFriendRequestedUIDs().contains(value.uid) -> holder.setState(Constants.STATE_REQUESTED)        //Already Requested
+                    viewModel.getFriendUIDs().contains(value.uid) -> holder.setState(Constants.STATE_FRIENDS) //Friends
+                    mainViewModel.user.value?.data?.uid == value.uid -> holder.setState(Constants.STATE_OWN_PROFILE)              //Is current user
+                    else -> holder.setState(Constants.STATE_DEFAULT)
+                }
+            }
+
+            override fun areItemsSame(item1: Profile, item2: Profile): Boolean { return item1.uid == item2.uid }
+
+            override fun compareItems(item1: Profile, item2: Profile): Int { return item1.username.compareTo(item2.username) }
+
+        }
     }
 }

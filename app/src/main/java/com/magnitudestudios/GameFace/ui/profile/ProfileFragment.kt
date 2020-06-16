@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
@@ -32,6 +34,7 @@ class ProfileFragment : BaseFragment() {
     private lateinit var bind: FragmentProfileBinding
 
     private lateinit var mainViewModel: MainViewModel
+    private lateinit var viewModel: ProfileViewModel
 
     companion object {
         const val NUMBER_OF_TABS = 3
@@ -41,6 +44,7 @@ class ProfileFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentProfileBinding.inflate(inflater)
         mainViewModel = activity?.run {  ViewModelProvider(this).get(MainViewModel::class.java) }!!
+        viewModel = activity?.run { ViewModelProvider(this).get(ProfileViewModel::class.java) }!!
         return bind.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,6 +60,7 @@ class ProfileFragment : BaseFragment() {
         mainViewModel.profile.observe(viewLifecycleOwner, Observer {
             if (it == null) bind.displayUsername.text = "Loading..."
             else bind.displayUsername.text = it.data?.username
+            if (it != null) bind.displayName.text = it.data?.name
         })
 
         bind.profilePic.setOnClickListener {
@@ -70,6 +75,25 @@ class ProfileFragment : BaseFragment() {
                 else -> throw IndexOutOfBoundsException("Index Out of Bounds At Profile Fragment Tabs: $position")
             }
         }.attach()
+
+        //Observe for friend request changes
+        mainViewModel.friendRequests.observe(viewLifecycleOwner, Observer { it ->
+            viewModel.getRequestProfiles(it.map { it.friendUID } as MutableList<String>)
+        })
+
+        mainViewModel.friends.observe(viewLifecycleOwner, Observer { friend ->
+            if (friend != null) {
+                viewModel.getFriendProfiles(friend.map { it.uid })
+            }
+        })
+
+        viewModel.requestProfiles.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty()) {
+                bind.profileTabs.getTabAt(2)?.orCreateBadge?.number = it.size
+            } else {
+                bind.profileTabs.getTabAt(2)?.removeBadge()
+            }
+        })
 
 
     }

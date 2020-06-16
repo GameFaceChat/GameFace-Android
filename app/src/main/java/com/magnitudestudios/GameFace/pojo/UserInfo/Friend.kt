@@ -8,6 +8,7 @@
 package com.magnitudestudios.GameFace.pojo.UserInfo
 
 import com.google.firebase.database.Exclude
+import com.google.firebase.database.ServerValue
 
 // Key UID, Data Below
 data class Friend (
@@ -15,7 +16,7 @@ data class Friend (
         var uid: String = "",
 
         @JvmField
-        var addedDate: Any? = null,
+        var addedDate: Any? = ServerValue.TIMESTAMP,
 
         @JvmField
         var minutesCalled: Int = 0

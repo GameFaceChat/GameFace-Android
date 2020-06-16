@@ -28,7 +28,7 @@ data class User(
         var friendRequestsSent: HashMap<String, FriendRequest> = HashMap(),
 
         @JvmField
-        var friends: Map<String, Friend>? = HashMap()
+        var friends: Map<String, Friend> = HashMap()
 
 
 ) {

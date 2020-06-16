@@ -127,6 +127,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource)
+        
         videoCapturer!!.startCapture(720, 480, 30)
 
         //create surface renderer, init it and add the renderer to the track
@@ -149,13 +150,13 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     private fun createPeerConnection() {
         Log.e(TAG, "createPeerConnection: $iceServers")
-        val rtcConfig = PeerConnection.RTCConfiguration(iceServers)
-        rtcConfig.tcpCandidatePolicy = PeerConnection.TcpCandidatePolicy.DISABLED
-        rtcConfig.bundlePolicy = PeerConnection.BundlePolicy.MAXBUNDLE
-        rtcConfig.rtcpMuxPolicy = PeerConnection.RtcpMuxPolicy.REQUIRE
-        rtcConfig.continualGatheringPolicy = PeerConnection.ContinualGatheringPolicy.GATHER_CONTINUALLY
-        // Use ECDSA encryption.
-        rtcConfig.keyType = PeerConnection.KeyType.ECDSA
+        val rtcConfig = PeerConnection.RTCConfiguration(iceServers).apply {
+            tcpCandidatePolicy = PeerConnection.TcpCandidatePolicy.DISABLED
+            bundlePolicy = PeerConnection.BundlePolicy.MAXBUNDLE
+            rtcpMuxPolicy = PeerConnection.RtcpMuxPolicy.REQUIRE
+            continualGatheringPolicy = PeerConnection.ContinualGatheringPolicy.GATHER_CONTINUALLY
+            keyType = PeerConnection.KeyType.ECDSA
+        }
         localPeer = peerConnectionFactory.createPeerConnection(rtcConfig, object : CustomPeerConnectionObserver("localPeerCreation") {
             override fun onIceCandidate(iceCandidate: IceCandidate) {
                 super.onIceCandidate(iceCandidate)

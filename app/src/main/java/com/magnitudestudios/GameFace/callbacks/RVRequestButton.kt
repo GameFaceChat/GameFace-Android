@@ -5,7 +5,9 @@
  *
  */
 
-package com.magnitudestudios.GameFace.common
+package com.magnitudestudios.GameFace.callbacks
 
-class SortedGenericRVAdapter {
+interface RVRequestButton {
+    fun acceptClicked(position: Int)
+    fun denyClicked(position: Int)
 }

@@ -19,6 +19,7 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:visibility="visible"
+        tools:visibility="gone"
         android:gravity="center">
         <ImageView
             android:layout_width="@dimen/large_icon_size"
@@ -47,8 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:queryHint="Search Friends"
+        android:iconifiedByDefault="false"
+        android:layout_margin="@dimen/layout_margin_small"
+        android:queryBackground="@null"
         app:defaultQueryHint="Search Friends"
-        android:visibility="gone"
+        android:background="@drawable/searchable_background"
+        tools:visibility="visible"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friends_list"
@@ -56,5 +61,5 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/row_friends"
         tools:itemCount="5"
-        android:visibility="gone" />
+        tools:visibility="visible"/>
 </LinearLayout>

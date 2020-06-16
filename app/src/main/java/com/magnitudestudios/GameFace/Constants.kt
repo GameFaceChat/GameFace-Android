@@ -36,4 +36,11 @@ object Constants {
     const val SIGN_IN_CLIENT = "SIGNED_IN_CLIENT"
 
     const val NOT_FINISHED = "NotFinished"
+
+    //Users states
+    const val STATE_DEFAULT = 0
+    const val STATE_REQUESTED = 1
+    const val STATE_FRIENDS = 2
+    const val STATE_OWN_PROFILE = 3
+
 }

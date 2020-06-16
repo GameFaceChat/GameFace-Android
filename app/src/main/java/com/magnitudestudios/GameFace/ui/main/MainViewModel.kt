@@ -41,23 +41,23 @@ class MainViewModel : ViewModel() {
     }
 
     val friends = Transformations.map(user) {
-        if (it.status == Status.SUCCESS && it.data != null) it.data.friends
-        else HashMap()
+        if (it.status == Status.SUCCESS && it.data != null) it.data.friends.values.toList()
+        else listOf()
     }
     val friendRequests = Transformations.map(user) {
-        if (it.status == Status.SUCCESS && it.data != null) it.data.friendRequests
-        else HashMap()
+        if (it.status == Status.SUCCESS && it.data != null) it.data.friendRequests.values.toList()
+        else listOf()
     }
     val friendRequestsSent = Transformations.map(user) {
-        if (it.status == Status.SUCCESS && it.data != null) it.data.friendRequestsSent
-        else HashMap()
+        if (it.status == Status.SUCCESS && it.data != null) it.data.friendRequestsSent.values.toList()
+        else listOf()
     }
     private var listener: ValueEventListener? = null
 
     fun signOutUser() {
         if (Firebase.auth.currentUser != null) {
             if (listener != null) {
-                Firebase.database.reference.child(Constants.USERS_PATH).child(Firebase.auth.currentUser?.uid!!).removeEventListener(listener!!)
+                FirebaseHelper.getCurrentUserRef().removeEventListener(listener!!)
             }
             Firebase.auth.signOut()
             user.postValue(Resource.success(null))
@@ -68,7 +68,7 @@ class MainViewModel : ViewModel() {
     private fun listenToUser() {
 
         if (Firebase.auth.currentUser != null) {
-            listener = Firebase.database.reference.child(Constants.USERS_PATH).child(Firebase.auth.currentUser?.uid!!)
+            listener = FirebaseHelper.getCurrentUserRef()
                     .addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) { user.postValue(Resource(Status.ERROR, null, p0.message)) }
                         override fun onDataChange(data: DataSnapshot) {

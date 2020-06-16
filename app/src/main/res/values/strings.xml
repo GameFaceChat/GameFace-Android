@@ -4,7 +4,7 @@
 
     <string name="app_name">GameFace</string>
     <string name="app_name_with_styling">Game<b>Face</b></string>
-    <string name="slogan">Video-calling made fun again.</string>
+    <string name="slogan">Take the party with you.</string>
 
     <string name="brand_name_1">Game</string>
     <string name="brand_name_2">Face</string>
@@ -41,6 +41,8 @@
     <string name="bio_input_hint">Bio</string>
     <string name="finish_signup">Finish Signup</string>
 
+    <string name="not_finished_setting_up">You have not finished signing up! Please log back in.</string>
+
     <!-- Bottom Nav View -->
     <string name="bottom_nav_home_title">Home</string>
     <string name="bottom_nav_profile_title">Profile</string>
@@ -56,6 +58,9 @@
     <string name="done_button">Done</string>
     <string name="users_send_request">Send Request</string>
     <string name="users_request_sent">Request Sent</string>
+    <string name="accept_request">Accept</string>
+    <string name="deny_request">Delete</string>
+    <string name="btn_edit_profile">Edit Profile</string>
 
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>
