@@ -17,3 +17,9 @@ jobs:
           command: echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
       - run:
           command: ./gradlew build
+
+workflows:
+  build:
+    jobs:
+      - build:
+          context: GameFaceContext
