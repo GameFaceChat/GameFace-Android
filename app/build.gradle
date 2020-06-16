@@ -6,6 +6,9 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
+    lintOptions {
+        abortOnError false
+    }
     defaultConfig {
         applicationId "com.magnitudestudios.GameFace"
         minSdkVersion 21
@@ -34,8 +37,8 @@ android {
             jvmTarget = "1.8"
         }
     }
-    viewBinding {
-        enabled = true
+    buildFeatures {
+        viewBinding = true
     }
 }
 
