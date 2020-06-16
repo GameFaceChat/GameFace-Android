@@ -61,8 +61,8 @@ class NotificationService : FirebaseMessagingService() {
         }
         val builder = NotificationCompat.Builder(this, "CHANNEL123")
                 .setSmallIcon(R.drawable.ic_add_friend)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
+                .setContentTitle("Friend Request")
+                .setContentText("You have a new friend request!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(resultPendingIntent)
                 .addAction(R.drawable.ic_add_friend, "Add Friend",

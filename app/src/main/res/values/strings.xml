@@ -58,6 +58,9 @@
     <string name="done_button">Done</string>
     <string name="users_send_request">Send Request</string>
     <string name="users_request_sent">Request Sent</string>
+    <string name="users_own_profile">You</string>
+    <string name="users_friend_profile">Friend</string>
+
     <string name="accept_request">Accept</string>
     <string name="deny_request">Delete</string>
     <string name="btn_edit_profile">Edit Profile</string>

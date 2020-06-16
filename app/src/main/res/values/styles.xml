@@ -26,6 +26,13 @@
         <item name="android:background">@drawable/accent_button</item>
     </style>
 
+    <style name="morphable_accent_button_theme">
+        <item name="textAllCaps">false</item>
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@drawable/morphable_btn_background</item>
+    </style>
+
     <style name="small_text">
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/darkGray</item>
@@ -129,7 +136,7 @@
         <item name="android:padding">@dimen/padding_large</item>
     </style>
 
-    <style name="signup_button" parent="accent_button_theme">
+    <style name="signup_button" parent="morphable_accent_button_theme">
         <item name="android:padding">@dimen/padding_medium</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textAlignment">center</item>
