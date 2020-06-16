@@ -44,15 +44,15 @@ android {
 
 dependencies {
     def lifecycle_version = "2.2.0"
-    def navigation_version = "2.3.0-beta01"
+    def navigation_version = "2.3.0-rc01"
     def ktor_version = "1.3.2"
     def camerax_version = "1.0.0-beta05"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.aar.app:google-webrtc:M74'
+    implementation group: 'org.webrtc', name: 'google-webrtc', version: '1.0.30039'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta6'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
 
     implementation 'com.google.firebase:firebase-analytics:17.4.3'
     implementation 'com.google.firebase:firebase-auth-ktx:19.3.1'
@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'com.google.firebase:firebase-common-ktx:19.3.0'
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha04"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
     testImplementation 'junit:junit:4.13'
@@ -88,10 +88,10 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha12"
 
 
-
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation "io.ktor:ktor-client-android:$ktor_version"
+    implementation 'com.github.florent37:shapeofview:1.4.7'
 
 }
 repositories {
