@@ -95,7 +95,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun sendForgotPassword(email: String) : LiveData<Resource<Boolean>> {
-        return liveData {
+        return liveData(Dispatchers.IO) {
             try {
                 Firebase.auth.sendPasswordResetEmail(email).await()
                 emit(Resource.success(true))
@@ -108,7 +108,7 @@ class LoginViewModel : ViewModel() {
 
     fun createUser(username: String, name: String, bio: String) {
         authenticated.postValue(Resource.loading(false))
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 FirebaseHelper.createProfile(Profile(Firebase.auth.currentUser?.uid!!, username, name, bio, "", 0, ServerValue.TIMESTAMP))
                 authenticated.postValue(Resource.success(true))

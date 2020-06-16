@@ -44,8 +44,8 @@ class LoginActivity : BasePermissionsActivity() {
             //Fully Authenticated
             if (it.status == Status.SUCCESS && it.data!!) goToMainActivity()
             //Loading
-            if (it.status == Status.LOADING) binding.progressBar.visibility = View.VISIBLE
-            else binding.progressBar.visibility = View.GONE
+//            if (it.status == Status.LOADING) binding.progressBar.visibility = View.VISIBLE
+//            else binding.progressBar.visibility = View.GONE
             //Error
             if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
         })

@@ -53,6 +53,11 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         binding.loginCardSigninwithgoogle.setOnClickListener(this)
         binding.forgotPassword.setOnClickListener(this)
         binding.loginCloseBtn.setOnClickListener(this)
+
+        viewModel.authenticated.observe(viewLifecycleOwner, Observer {
+            if (it.status == Status.LOADING) binding.loginSignButton.setLoading(true)
+            else binding.loginSignButton.setLoading(false)
+        })
     }
 
     private fun validate(): Boolean {

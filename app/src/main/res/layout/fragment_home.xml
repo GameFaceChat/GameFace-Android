@@ -30,18 +30,6 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.magnitudestudios.GameFace.views.MorphableButton
-        android:id="@+id/btn_morph"
-        android:layout_width="match_parent"
-        android:textAlignment="center"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:padding="@dimen/padding_huge"
-        app:layout_constraintBottom_toTopOf="@+id/goToCamera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialToolbar" />
-
     <Button
         android:id="@+id/goToCamera"
         android:layout_width="wrap_content"

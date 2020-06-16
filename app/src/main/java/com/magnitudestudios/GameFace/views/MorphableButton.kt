@@ -15,7 +15,9 @@ import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
+import android.view.animation.AnimationSet
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.appcompat.widget.AppCompatButton
@@ -26,6 +28,7 @@ import androidx.core.graphics.drawable.updateBounds
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.magnitudestudios.GameFace.R
 
 class MorphableButton @JvmOverloads constructor(
@@ -37,51 +40,56 @@ class MorphableButton @JvmOverloads constructor(
     private val drawable = ContextCompat.getDrawable(context, R.drawable.morphable_btn_background) as GradientDrawable
     private var animationInProgress = false
     private var mAnimatedDrawable: CircularAnimatedDrawable? = null
+
+
+    private lateinit var mAnimationSet: AnimatorSet
+    private var initialWidth = width
+
+    private var initialText = ""
+
     private enum class State {
         PROGRESS, IDLE
     }
 
     init {
         background = drawable
-        text = "SRIHARI"
+        ProcessLifecycleOwner.get().lifecycle.addObserver(this)
     }
 
-    fun startAnimation() {
-        if (state == State.PROGRESS) return
-        val initialWidth = width
-        val initialHeight = height
-        val initialCornerRadius = resources.getDimension(R.dimen.rounded_rect)
-
-        state = State.PROGRESS
+    private fun switchAnimation(fromWidth: Int,
+                                toWidth: Int,
+                                fromRadius: Float,
+                                toRadius: Float) {
         animationInProgress = true
-
+        Log.e("ANIMATION: ", "$fromWidth,$toWidth, $fromRadius, $toRadius")
         text = null
-        isClickable = false
 
-
-        val toWidth = initialHeight
         val cornerAnimation = ObjectAnimator.ofFloat(
                 drawable,
                 "cornerRadius",
-                initialCornerRadius,
-                1000.0f)
-        val widthAnimation = ValueAnimator.ofInt(initialWidth, toWidth);
+                fromRadius,
+                toRadius)
+        val widthAnimation = ValueAnimator.ofInt(fromWidth, toWidth);
         widthAnimation.addUpdateListener {
             updateLayoutParams { width = it.animatedValue as Int }
         }
 
-        val mAnimationSet = AnimatorSet().apply {
+        mAnimationSet = AnimatorSet().apply {
             duration = 300
             playTogether(cornerAnimation, widthAnimation)
         }
-        mAnimationSet.doOnEnd { animationInProgress = false}
+        mAnimationSet.doOnEnd {
+            animationInProgress = false
+            if (state == State.IDLE) text = initialText
+
+        }
         mAnimationSet.start()
     }
 
     private fun drawIntermediateProgress(canvas: Canvas) {
         if (mAnimatedDrawable == null || mAnimatedDrawable!!.isRunning) {
             mAnimatedDrawable = CircularAnimatedDrawable(this, 10f, Color.WHITE)
-            val offset = (width - height)/2
+            val offset = (width - height) / 2
             mAnimatedDrawable!!.updateBounds(offset, 0, width - offset, height)
             mAnimatedDrawable!!.callback = this
             mAnimatedDrawable!!.start()
@@ -92,20 +100,24 @@ class MorphableButton @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-//        if (state == State.PROGRESS && !animationInProgress) {
-//            canvas!!.drawArc(RectF(0f, 0f,100f,100f), 0f, 360f, true, paint)
+
         if (state == State.PROGRESS && !animationInProgress) drawIntermediateProgress(canvas!!)
-//        }
     }
 
     fun setLoading(boolean: Boolean) {
-        if (boolean) {
-            startAnimation()
-        }
-    }
-    @OnLifecycleEvent(androidx.lifecycle.Lifecycle.Event.ON_DESTROY)
-    fun dispose() {
         mAnimatedDrawable?.stop()
+        mAnimatedDrawable = null
+        if (boolean) {
+            initialWidth = width
+            initialText = text.toString()
+            switchAnimation(width, height, resources.getDimension(R.dimen.rounded_rect), 1000f)
+            state = State.PROGRESS
+            isClickable = false
+        } else {
+            state = State.IDLE
+            switchAnimation(width, initialWidth, 1000f, context.resources.getDimension(R.dimen.rounded_rect))
+            isClickable = true
+        }
     }
 
     class CircularAnimatedDrawable(val animView: View, val borderWidth: Float, arcColor: Int) : Drawable(), Animatable {
@@ -155,13 +167,17 @@ class MorphableButton @JvmOverloads constructor(
             paint.alpha = alpha
         }
 
-        override fun getOpacity(): Int { return PixelFormat.TRANSPARENT }
+        override fun getOpacity(): Int {
+            return PixelFormat.TRANSPARENT
+        }
 
         override fun setColorFilter(colorFilter: ColorFilter?) {
             paint.colorFilter = colorFilter
         }
 
-        override fun isRunning(): Boolean { return false }
+        override fun isRunning(): Boolean {
+            return false
+        }
 
         override fun start() {
             if (inProgress) return
@@ -206,7 +222,6 @@ class MorphableButton @JvmOverloads constructor(
                     invalidateSelf()
                 }
                 addListener {
-                    //toggleAppearingMode()
                     toggleSweep()
                 }
             }

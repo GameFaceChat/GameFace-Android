@@ -100,7 +100,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.magnitudestudios.GameFace.views.MorphableButton
             android:id="@+id/login_sign_button"
             style="@style/signup_button"
             android:layout_width="match_parent"

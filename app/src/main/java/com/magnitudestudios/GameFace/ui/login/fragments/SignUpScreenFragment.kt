@@ -58,9 +58,13 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
     }
 
     private fun signUpUser(email: String, password: String) {
+        binding.signupButtonSignup.setLoading(true)
         viewModel.signUpUserWithEmail(email, password).observe(this, Observer {
+            if (it.status != Status.LOADING) binding.signupButtonSignup.setLoading(false)
             if (it.status == Status.SUCCESS && it.data!!) findNavController().navigate(R.id.action_signUpScreenFragment_to_finishSignUpFragment)
-            else if (it.status == Status.ERROR) Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+            else if (it.status == Status.ERROR) {
+                Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
+            }
         })
     }
 

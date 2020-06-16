@@ -130,7 +130,9 @@
     </style>
 
     <style name="signup_button" parent="accent_button_theme">
+        <item name="android:padding">@dimen/padding_medium</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textAlignment">center</item>
     </style>
     
     <style name="terms_and_conditions" parent="start_text">

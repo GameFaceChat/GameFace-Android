@@ -18,14 +18,12 @@ import com.magnitudestudios.GameFace.databinding.FragmentHomeBinding
 
 class HomeFragment : BaseFragment() {
     lateinit var binding: FragmentHomeBinding
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnMorph.setOnClickListener { binding.btnMorph.startAnimation() }
         binding.goToCamera.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_cameraFragment)
         }

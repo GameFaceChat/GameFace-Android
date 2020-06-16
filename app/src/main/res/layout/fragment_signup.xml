@@ -153,7 +153,7 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.magnitudestudios.GameFace.views.MorphableButton
         android:id="@+id/signup_button_signup"
         style="@style/signup_button"
         android:layout_width="0dp"
