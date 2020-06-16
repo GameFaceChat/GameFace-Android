@@ -8,12 +8,12 @@ jobs:
     executor: android/android
         
     steps:
-       - run:
+      - checkout
+      - run:
           name: Export Google Services Json
           command: echo 'export GOOGLE_SERVICES_JSON="$GOOGLE_SERVICES_JSON"' >> $BASH_ENV
-       - run:
+      - run:
           name: Decode Google Services Json
           command: echo $GOOGLE_SERVICES_JSON | base64 -di > app/google-services.json
-      - checkout
       - run:
           command: ./gradlew build
