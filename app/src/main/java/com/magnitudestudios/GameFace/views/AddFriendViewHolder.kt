@@ -38,6 +38,7 @@ class AddFriendViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : Recy
 
     //0 = default | 1 = request sent | 2 = Friends  | 3 = Own Profile
     fun setState(state: Int = 0) {
+        this.state = state
         when (state) {
             Constants.STATE_DEFAULT -> {
                 mBinding.sendRequest.text = itemView.context.getText(R.string.users_send_request)
@@ -60,6 +61,8 @@ class AddFriendViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : Recy
             }
         }
     }
+    fun getState() : Int {return state}
+
 
 //    override fun onClick(v: View?) {
 //        if (v == mBinding.sendRequest) {

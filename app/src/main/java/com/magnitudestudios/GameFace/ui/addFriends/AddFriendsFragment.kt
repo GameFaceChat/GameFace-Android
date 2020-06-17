@@ -93,7 +93,7 @@ class AddFriendsFragment : Fragment() {
                 return AddFriendViewHolder(RowUsersBinding.inflate(inflater, parent, false), object : RVButtonClick {
                     override fun onClick(position: Int) {
                         val clicked = addAdapter.getitem(position)
-                        if (!viewModel.getFriendRequestedUIDs().contains(clicked.uid)) viewModel.sendFriendRequest(clicked)
+                        if (getHolderState(clicked.uid) == Constants.STATE_DEFAULT) viewModel.sendFriendRequest(clicked)
                     }
                     override fun onLongClick(position: Int) {}
 
@@ -105,17 +105,21 @@ class AddFriendsFragment : Fragment() {
                 holder as AddFriendViewHolder
                 Glide.with(holder.itemView.context).load("https://picsum.photos/300/300").circleCrop().into(holder.getImageView())
                 holder.bind(value)
-                when {
-                    viewModel.getFriendRequestedUIDs().contains(value.uid) -> holder.setState(Constants.STATE_REQUESTED)        //Already Requested
-                    viewModel.getFriendUIDs().contains(value.uid) -> holder.setState(Constants.STATE_FRIENDS) //Friends
-                    mainViewModel.user.value?.data?.uid == value.uid -> holder.setState(Constants.STATE_OWN_PROFILE)              //Is current user
-                    else -> holder.setState(Constants.STATE_DEFAULT)
-                }
+                holder.setState(getHolderState(value.uid))
             }
 
             override fun areItemsSame(item1: Profile, item2: Profile): Boolean { return item1.uid == item2.uid }
 
             override fun compareItems(item1: Profile, item2: Profile): Int { return item1.username.compareTo(item2.username) }
+
+            private fun getHolderState(uid: String) : Int {
+                return when {
+                    viewModel.getFriendRequestedUIDs().contains(uid) -> Constants.STATE_REQUESTED        //Already Requested
+                    viewModel.getFriendUIDs().contains(uid) -> Constants.STATE_FRIENDS                   //Friends
+                    mainViewModel.user.value?.data?.uid == uid -> Constants.STATE_OWN_PROFILE            //Is current user
+                    else -> Constants.STATE_DEFAULT
+                }
+            }
 
         }
     }
