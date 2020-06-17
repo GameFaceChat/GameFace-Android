@@ -34,7 +34,10 @@ class LoginViewModel : ViewModel() {
     val usernameExists = MutableLiveData<Resource<Boolean>>()
 
     init {
-        if (Firebase.auth.currentUser != null) authenticated.value = Resource.success(true)
+        if (Firebase.auth.currentUser != null) {
+            authenticated.value = Resource.success(true)
+            Log.e("ALREADY", "LOGGED IN with "+Firebase.auth.currentUser!!.email)
+        }
     }
 
     fun validateEmail(email: String): Boolean {

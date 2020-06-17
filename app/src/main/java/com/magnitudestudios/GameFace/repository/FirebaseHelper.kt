@@ -81,7 +81,7 @@ object FirebaseHelper {
     }
 
     suspend fun getUserByUID(uid: String): User? {
-        if (!exists(Constants.USERS_PATH, uid)) return null
+        if (Firebase.auth.currentUser == null || !exists(Constants.USERS_PATH, uid)) return null
         return suspendCoroutine { cont ->
             getUserRef(uid).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) = cont.resume(null)
@@ -95,7 +95,8 @@ object FirebaseHelper {
     }
 
     suspend fun getUserProfileByUID(uid: String): Profile? {
-        if (!exists(Constants.PROFILE_PATH, uid)) return null
+        Log.e("USER", "PROFILE")
+        if (Firebase.auth.currentUser == null || !exists(Constants.PROFILE_PATH, uid)) return null
         return suspendCoroutine { cont ->
             Firebase.database.reference
                     .child(Constants.PROFILE_PATH).child(uid)
@@ -126,7 +127,7 @@ object FirebaseHelper {
             reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
                     Log.e("ERROR AT EXISTS", p0.message)
-                    cont.cancel(p0.toException())
+                    cont.resume(false)
                 }
 
                 override fun onDataChange(data: DataSnapshot) = cont.resume(data.exists())

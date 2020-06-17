@@ -45,16 +45,15 @@ class MainActivity : BasePermissionsActivity() {
         viewModel.profile.observe(this, Observer {
             if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
             else if (it.status == Status.SUCCESS && it.data == null)  {
-                viewModel.signOutUser()
-                Toast.makeText(this, getString(R.string.not_finished_setting_up), Toast.LENGTH_LONG).show()
+                goToLogin(getString(R.string.not_finished_setting_up))
             }
         })
 //        goToCalling()
     }
 
-    private fun goToLogin() {
+    private fun goToLogin(text: String = "Signed Out") {
         viewModel.signOutUser()
-        Toast.makeText(this, "Signed Out", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         val i = Intent(this@MainActivity, LoginActivity::class.java)
         startActivity(i)
         finish()

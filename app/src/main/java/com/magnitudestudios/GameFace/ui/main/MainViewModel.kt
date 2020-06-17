@@ -29,7 +29,10 @@ import java.lang.Exception
 class MainViewModel : ViewModel() {
     val user: MutableLiveData<Resource<User>> = MutableLiveData()
     val profile: LiveData<Resource<Profile>> = liveData {
-        if (Firebase.auth.currentUser == null) emit(Resource(Status.SUCCESS, null, "Please Sign In"))
+        if (Firebase.auth.currentUser == null) {
+            emit(Resource(Status.SUCCESS, null, "Please Sign In"))
+            return@liveData
+        }
         try {
             val profile = FirebaseHelper.getUserProfileByUID(Firebase.auth.currentUser?.uid!!)
             if (profile == null) emit(Resource(Status.SUCCESS, null, "Profile Has Not Been Created"))
