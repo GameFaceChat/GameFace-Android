@@ -5,27 +5,28 @@
  *
  */
 
-package com.magnitudestudios.GameFace.ui.home
+package com.magnitudestudios.GameFace.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.magnitudestudios.GameFace.R
-import com.magnitudestudios.GameFace.bases.BaseFragment
-import com.magnitudestudios.GameFace.databinding.FragmentHomeBinding
+import com.magnitudestudios.GameFace.databinding.FragmentBottomNavBinding
 
-class HomeFragment : BaseFragment() {
-    lateinit var binding: FragmentHomeBinding
+class BottomContainerFragment : Fragment() {
+    private lateinit var bind: FragmentBottomNavBinding
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentHomeBinding.inflate(inflater)
-        return binding.root
+        bind = FragmentBottomNavBinding.inflate(inflater, container, false)
+        return bind.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.goToCamera.setOnClickListener {
-            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_bottomContainerFragment_to_cameraFragment)
-        }
+        val navHost = requireActivity().findNavController(R.id.containerNavHost)
+        bind.bottomNav.setupWithNavController(navHost)
+
     }
 }

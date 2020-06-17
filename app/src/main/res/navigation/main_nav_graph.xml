@@ -11,39 +11,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
     tools:ignore="UnusedNavigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/bottomContainerFragment">
 
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.magnitudestudios.GameFace.ui.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/shopFragment"
-        android:name="com.magnitudestudios.GameFace.ui.shop.ShopFragment"
-        android:label="ShopFragment"
-        tools:layout="@layout/fragment_shop"/>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.magnitudestudios.GameFace.ui.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_profileFragment_to_addFriendsFragment"
-            app:destination="@id/addFriendsFragment"
-            app:enterAnim="@anim/slide_from_bottom"
-            app:popExitAnim="@anim/slide_out_bottom" />
-        <action
-            android:id="@+id/action_profileFragment_to_takePhotoFragment"
-            app:destination="@id/takePhotoFragment"
-            app:enterAnim="@anim/slide_from_bottom"
-            app:popExitAnim="@anim/slide_out_bottom"
-            app:popUpTo="@id/profileFragment" />
-    </fragment>
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
@@ -59,4 +28,23 @@
         android:name="com.magnitudestudios.GameFace.ui.takePhoto.TakePhotoFragment"
         android:label="TakePhotoFragment"
         tools:layout="@layout/fragment_take_photo"/>
+    <fragment
+        android:id="@+id/bottomContainerFragment"
+        android:name="com.magnitudestudios.GameFace.ui.BottomContainerFragment"
+        android:label="BottomContainerFragment"
+        tools:layout="@layout/fragment_bottom_nav">
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_takePhotoFragment"
+            app:destination="@id/takePhotoFragment" />
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_addFriendsFragment"
+            app:destination="@id/addFriendsFragment"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom" />
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
+    </fragment>
 </navigation>

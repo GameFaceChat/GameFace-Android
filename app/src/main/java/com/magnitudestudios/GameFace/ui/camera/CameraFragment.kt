@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -81,7 +82,14 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         audioManager.isSpeakerphoneOn = true
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
 
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         startCamera()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
     }
 
     private fun addToIceServers(serverInformation: ServerInformation) {
@@ -361,6 +369,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         }
         return null
     }
+
+
 
     companion object {
         private const val TAG = "CAMERA"

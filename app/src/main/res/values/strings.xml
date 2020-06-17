@@ -40,7 +40,7 @@
     <string name="full_name_input_hint">Full Name</string>
     <string name="bio_input_hint">Bio</string>
     <string name="finish_signup">Finish Signup</string>
-
+    <string name="username_exists">Username already exists!</string>
     <string name="not_finished_setting_up">You have not finished signing up! Please log back in.</string>
 
     <!-- Bottom Nav View -->

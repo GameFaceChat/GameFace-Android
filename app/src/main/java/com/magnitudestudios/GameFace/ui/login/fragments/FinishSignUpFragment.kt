@@ -11,10 +11,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentFinishSigningUpBinding
+import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
 class FinishSignUpFragment : Fragment() {
@@ -32,7 +36,7 @@ class FinishSignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnFinishSignup.setOnClickListener {
-            if (validateDetails()) {
+            if (validateDetails() && viewModel.usernameExists.value?.data == false) {
                 viewModel.createUser(binding.signupUsernameInput.text.toString(), binding.fullNameInput.text.toString(),
                  binding.bioInput.text.toString())
             }
@@ -40,6 +44,14 @@ class FinishSignUpFragment : Fragment() {
         binding.profilePic.setOnClickListener {
 
         }
+        binding.signupUsernameInput.doAfterTextChanged {text ->
+            if (validateDetails()) viewModel.userNameExists(text.toString())
+        }
+
+        viewModel.usernameExists.observe(viewLifecycleOwner, Observer {
+            if (it.status == Status.SUCCESS && it.data!!) binding.signupUsernameInput.error = "Username already exists!"
+        })
+
     }
 
     private fun validateDetails(): Boolean {

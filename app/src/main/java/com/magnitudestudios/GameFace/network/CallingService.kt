@@ -7,9 +7,5 @@
 
 package com.magnitudestudios.GameFace.network
 
-import android.os.Build
-import android.telecom.ConnectionService
-import androidx.annotation.RequiresApi
-
 class CallingService {
 }

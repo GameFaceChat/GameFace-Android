@@ -15,6 +15,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -74,7 +75,7 @@ class FriendsFragment : Fragment() {
 
         })
         bind.addFriendsBtn.setOnClickListener {
-            parentFragment?.findNavController()?.navigate(R.id.action_profileFragment_to_addFriendsFragment)
+            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_bottomContainerFragment_to_addFriendsFragment)
         }
 
         super.onViewCreated(view, savedInstanceState)

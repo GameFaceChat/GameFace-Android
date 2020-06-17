@@ -22,6 +22,7 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.ActivityMainBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.ui.Calling.IncomingCall
 import com.magnitudestudios.GameFace.ui.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,14 +49,19 @@ class MainActivity : BasePermissionsActivity() {
                 Toast.makeText(this, getString(R.string.not_finished_setting_up), Toast.LENGTH_LONG).show()
             }
         })
-        val navhost = findNavController(R.id.mainNavHost)
-        binding.mainBottomNav.setupWithNavController(navhost)
+//        goToCalling()
     }
 
     private fun goToLogin() {
         viewModel.signOutUser()
         Toast.makeText(this, "Signed Out", Toast.LENGTH_LONG).show()
         val i = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(i)
+        finish()
+    }
+
+    private fun goToCalling() {
+        val i = Intent(this@MainActivity, IncomingCall::class.java)
         startActivity(i)
         finish()
     }

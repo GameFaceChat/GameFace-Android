@@ -64,7 +64,7 @@ class ProfileFragment : BaseFragment() {
         })
 
         bind.profilePic.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_takePhotoFragment)
+//            findNavController().navigate(R.id.action_profileFragment_to_takePhotoFragment)
         }
 
         TabLayoutMediator(bind.profileTabs, bind.viewpager) { tab, position ->

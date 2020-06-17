@@ -31,6 +31,8 @@ import kotlinx.coroutines.tasks.await
 class LoginViewModel : ViewModel() {
     val authenticated = MutableLiveData<Resource<Boolean>>()
 
+    val usernameExists = MutableLiveData<Resource<Boolean>>()
+
     init {
         if (Firebase.auth.currentUser != null) authenticated.value = Resource.success(true)
     }
@@ -122,6 +124,13 @@ class LoginViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun userNameExists(username: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            usernameExists.postValue(Resource.loading(false))
+            usernameExists.postValue(FirebaseHelper.usernameExists(username))
+        }
     }
 
     fun isFirebaseUserNull() : Boolean {

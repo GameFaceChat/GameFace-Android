@@ -27,28 +27,23 @@ import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.roundToInt
 
 object FirebaseHelper {
     private const val TAG = "FirebaseHelper"
 
-    fun getCurrentUserRef() : DatabaseReference {
-        return Firebase.database.reference
-                .child(Constants.USERS_PATH)
-                .child(Firebase.auth.currentUser!!.uid)
-    }
+    //Reusing Ref definitions
+    private fun getUserRef(uid: String): DatabaseReference = Firebase.database.reference.child(Constants.USERS_PATH).child(uid)
 
-    private fun getCurrentUserProfileRef() : DatabaseReference {
-        return Firebase.database.reference
-                .child(Constants.PROFILE_PATH)
-                .child(Firebase.auth.currentUser!!.uid)
-    }
+    fun getCurrentUserRef(): DatabaseReference = getUserRef(Firebase.auth.currentUser!!.uid)
 
-    private fun getUserRef(uid: String): DatabaseReference {
-        return Firebase.database.reference.child(Constants.USERS_PATH).child(uid)
-    }
+    private fun getProfileRef(uid: String) : DatabaseReference = Firebase.database.reference.child(Constants.PROFILE_PATH).child(uid)
 
+    private fun getCurrentUserProfileRef(): DatabaseReference = getProfileRef(Firebase.auth.currentUser!!.uid)
+
+    //User Functions
     fun createUser(user: User): Task<Void> {
         return getCurrentUserRef().setValue(user)
     }
@@ -89,15 +84,13 @@ object FirebaseHelper {
         if (!exists(Constants.USERS_PATH, uid)) return null
         return suspendCoroutine { cont ->
             getUserRef(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            cont.resume(null)
-                        }
+                override fun onCancelled(p0: DatabaseError) = cont.resume(null)
 
-                        override fun onDataChange(data: DataSnapshot) {
-                            val user = data.getValue(User::class.java)
-                            cont.resume(user)
-                        }
-                    })
+                override fun onDataChange(data: DataSnapshot) {
+                    val user = data.getValue(User::class.java)
+                    cont.resume(user)
+                }
+            })
         }
     }
 
@@ -107,9 +100,7 @@ object FirebaseHelper {
             Firebase.database.reference
                     .child(Constants.PROFILE_PATH).child(uid)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onCancelled(p0: DatabaseError) {
-                            cont.resume(null)
-                        }
+                        override fun onCancelled(p0: DatabaseError) = cont.resume(null)
 
                         override fun onDataChange(data: DataSnapshot) {
                             val userProfile = data.getValue(Profile::class.java)
@@ -138,9 +129,7 @@ object FirebaseHelper {
                     cont.cancel(p0.toException())
                 }
 
-                override fun onDataChange(data: DataSnapshot) {
-                    cont.resume(data.exists())
-                }
+                override fun onDataChange(data: DataSnapshot) = cont.resume(data.exists())
 
             })
         }
@@ -152,35 +141,26 @@ object FirebaseHelper {
         return suspendCancellableCoroutine { cont ->
             reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    Log.e("ERROR AT hasValue", p0.message)
                     cont.cancel(p0.toException())
                 }
-
-                override fun onDataChange(data: DataSnapshot) {
-                    cont.resume(data.value)
-                }
-
+                override fun onDataChange(data: DataSnapshot) = cont.resume(data.value)
             })
         }
     }
 
     suspend fun getProfilesByUsername(query: String): Resource<List<Profile>> {
-        Log.e("QUErY: ", query)
         return suspendCoroutine { cont ->
             Firebase.database.reference.child(Constants.PROFILE_PATH)
-                    .orderByChild("username")
+                    .orderByChild(Profile::username.name)
                     .startAt(query)
                     .endAt("${query}\uf8ff")
                     .limitToFirst(25)
                     .addListenerForSingleValueEvent(
                             object : ValueEventListener {
-                                override fun onCancelled(p0: DatabaseError) {
-                                    cont.resume(Resource.error(p0.message, null))
-                                }
+                                override fun onCancelled(p0: DatabaseError) = cont.resume(Resource.error(p0.message, null))
 
                                 override fun onDataChange(data: DataSnapshot) {
                                     val temp = mutableListOf<Profile>()
-                                    Log.e("HERE", data.toString())
                                     for (snap in data.children) {
                                         val profile = snap.getValue(Profile::class.java)
                                         if (profile != null) temp.add(profile)
@@ -190,6 +170,20 @@ object FirebaseHelper {
 
                             }
                     )
+        }
+    }
+
+    suspend fun usernameExists(username: String) : Resource<Boolean> {
+        return suspendCoroutine {
+            Firebase.database.reference
+                    .child(Constants.PROFILE_PATH)
+                    .orderByChild(Profile::username.name)
+                    .equalTo(username)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) = it.resume(Resource.error(p0.message, false))
+
+                        override fun onDataChange(p0: DataSnapshot) = it.resume(Resource.success(p0.exists()))
+                    })
         }
     }
 
