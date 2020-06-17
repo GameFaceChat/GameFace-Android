@@ -39,6 +39,10 @@ class LoginViewModel : ViewModel() {
         return email.isNotEmpty() && email.contains("@") && email.contains(".")
     }
 
+    fun resetUserStatus() {
+        authenticated.postValue(Resource.nothing(false))
+    }
+
     fun signUpUserWithEmail (email: String, password: String) : LiveData<Resource<Boolean>> {
         authenticated.value = Resource.loading(false)
         return liveData(Dispatchers.IO) {
@@ -74,7 +78,7 @@ class LoginViewModel : ViewModel() {
                     ))).await()
                     emit(Resource.success(false))
                 }
-            } catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseException) {
                 emit(Resource(Status.ERROR, false, e.localizedMessage))
             }
         }
@@ -87,7 +91,7 @@ class LoginViewModel : ViewModel() {
             try {
                 Firebase.auth.signInWithEmailAndPassword(email, password).await()
                 authenticated.postValue(Resource.success(true))
-            } catch (e: FirebaseAuthException) {
+            } catch (e: FirebaseException) {
                 Log.e("LoginViewModel: ", "Error when signing in user", e)
                 authenticated.postValue(Resource(Status.ERROR, false, e.localizedMessage))
             }

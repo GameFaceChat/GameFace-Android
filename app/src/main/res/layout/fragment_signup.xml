@@ -84,40 +84,24 @@
             android:layout_marginBottom="@dimen/layout_margin_huge"
             android:text="@string/sign_up_title" />
 
-<!--        <EditText-->
-<!--            android:id="@+id/signup_usernameInput"-->
-<!--            style="@style/signup_edittext"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_marginBottom="@dimen/layout_margin_large"-->
-<!--            android:layout_weight="1"-->
-<!--            android:autofillHints="username"-->
-<!--            android:drawableStart="@drawable/ic_person"-->
-<!--            android:hint="@string/username_input_hint"-->
-<!--            android:inputType="text" />-->
-
         <EditText
             android:id="@+id/signup_emailInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin_large"
-            android:layout_weight="1"
             android:autofillHints="email"
             android:drawableStart="@drawable/ic_mail"
             android:hint="@string/email_input_hint"
             android:importantForAutofill="auto"
             android:inputType="textEmailAddress" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.magnitudestudios.GameFace.views.CustomInputLayout
             android:id="@+id/signup_passwordLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin_large"
-            android:layout_weight="1"
-            app:boxBackgroundMode="none"
-            app:hintEnabled="false"
-            app:passwordToggleEnabled="true">
+            style="@style/input_layout_pwd">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_passwordInput"
@@ -128,17 +112,14 @@
                 android:hint="@string/password_input_hint"
                 android:importantForAutofill="no"
                 android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.magnitudestudios.GameFace.views.CustomInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.magnitudestudios.GameFace.views.CustomInputLayout
             android:id="@+id/signup_cPasswordLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:boxBackgroundMode="none"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin_large"
-            android:layout_weight="1"
-            app:hintEnabled="false"
-            app:passwordToggleEnabled="true">
+            style="@style/input_layout_pwd">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/signup_cPasswordInput"
@@ -149,7 +130,7 @@
                 android:hint="@string/cpassword_input_hint"
                 android:importantForAutofill="no"
                 android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.magnitudestudios.GameFace.views.CustomInputLayout>
 
     </LinearLayout>
 

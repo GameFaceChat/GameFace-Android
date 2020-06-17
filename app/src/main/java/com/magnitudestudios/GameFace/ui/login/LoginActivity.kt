@@ -47,7 +47,10 @@ class LoginActivity : BasePermissionsActivity() {
 //            if (it.status == Status.LOADING) binding.progressBar.visibility = View.VISIBLE
 //            else binding.progressBar.visibility = View.GONE
             //Error
-            if (it.status == Status.ERROR) Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+            if (it.status == Status.ERROR) {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                viewModel.resetUserStatus()
+            }
         })
     }
 

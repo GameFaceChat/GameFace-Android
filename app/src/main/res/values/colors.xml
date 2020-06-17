@@ -22,7 +22,7 @@
     <color name="greyed_text">#888888</color>
 
     <color name="bottom_nav_icon_unselected">#AABDBDBD</color>
-
+    <color name="transparent">#00000000</color>
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

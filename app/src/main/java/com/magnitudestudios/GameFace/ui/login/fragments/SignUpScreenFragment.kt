@@ -45,14 +45,20 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
         var valid = true
         if (!binding.signupEmailInput.text.toString().contains("@") || !binding.signupEmailInput.text.toString().contains(".")) {
             binding.signupEmailInput.error = getString(R.string.enter_valid_email)
+        } else {
+            binding.signupEmailInput.error = null
         }
         if (binding.signupPasswordInput.text.toString().length <= 5) {
             valid = false
             binding.signupPasswordLayout.error = getString(R.string.pwd_length)
+        } else {
+            binding.signupPasswordLayout.error = null
         }
         if (binding.signupPasswordInput.text.toString() != binding.signupCPasswordInput.text.toString()) {
             valid = false
             binding.signupCPasswordLayout.error = getString(R.string.pwd_must_match)
+        } else {
+            binding.signupCPasswordLayout.error = null
         }
         return valid
     }

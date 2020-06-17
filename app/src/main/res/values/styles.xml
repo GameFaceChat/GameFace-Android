@@ -132,12 +132,20 @@
         <item name="android:padding">@dimen/padding_edittext</item>
     </style>
 
+    <style name="input_layout_pwd">
+        <item name="hintEnabled">false</item>
+        <item name="errorTextColor">@color/white</item>
+        <item name="passwordToggleEnabled">true</item>
+        <item name="boxBackgroundMode">none</item>
+    </style>
+
+
     <style name="signup_bio" parent="signup_edittext">
         <item name="android:padding">@dimen/padding_large</item>
     </style>
 
     <style name="signup_button" parent="morphable_accent_button_theme">
-        <item name="android:padding">@dimen/padding_medium</item>
+        <item name="android:padding">@dimen/padding_large</item>
         <item name="android:textSize">@dimen/text_size_medium</item>
         <item name="android:textAlignment">center</item>
     </style>

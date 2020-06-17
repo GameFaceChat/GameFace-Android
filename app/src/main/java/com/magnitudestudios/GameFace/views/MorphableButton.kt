@@ -100,11 +100,11 @@ class MorphableButton @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
         if (state == State.PROGRESS && !animationInProgress) drawIntermediateProgress(canvas!!)
     }
 
     fun setLoading(boolean: Boolean) {
+        if (width == 0) return
         mAnimatedDrawable?.stop()
         mAnimatedDrawable = null
         if (boolean) {

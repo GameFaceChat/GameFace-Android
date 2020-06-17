@@ -69,9 +69,8 @@
             android:id="@+id/login_emailInput"
             style="@style/signup_edittext"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin_large"
-            android:layout_weight="1"
             android:autofillHints="email"
             android:drawableStart="@drawable/ic_mail"
             android:hint="@string/email_input_hint"
@@ -80,14 +79,11 @@
             app:layout_constraintEnd_toStartOf="@+id/login_guideline_horizontal_2"
             app:layout_constraintStart_toStartOf="@+id/login_guideline_horizontal_1" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.magnitudestudios.GameFace.views.CustomInputLayout
             android:id="@+id/login_passwordLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            app:boxBackgroundMode="none"
-            app:hintEnabled="false"
-            app:passwordToggleEnabled="true">
+            android:layout_height="wrap_content"
+            style="@style/input_layout_pwd">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_passwordInput"
@@ -98,18 +94,17 @@
                 android:hint="@string/password_input_hint"
                 android:importantForAutofill="no"
                 android:inputType="textPassword" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.magnitudestudios.GameFace.views.CustomInputLayout>
 
         <com.magnitudestudios.GameFace.views.MorphableButton
             android:id="@+id/login_sign_button"
             style="@style/signup_button"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/layout_margin_large"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:layout_marginEnd="@dimen/layout_margin_large"
-            android:layout_weight="1"
             android:text="@string/sign_in_button" />
 
         <androidx.appcompat.widget.AppCompatButton
