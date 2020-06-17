@@ -70,6 +70,7 @@
         <EditText
             android:id="@+id/signup_usernameInput"
             style="@style/signup_edittext"
+            android:digits="abcdefghijklmnopqrstuvwxyz0123456789_-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin_large"

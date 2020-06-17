@@ -37,10 +37,12 @@
     <!-- Almost Done -->
     <string name="almost_done_title">Finish Setting Up Your Account</string>
     <string name="username_input_hint">Username</string>
-    <string name="full_name_input_hint">Full Name</string>
+    <string name="full_name_input_hint">Name</string>
     <string name="bio_input_hint">Bio</string>
     <string name="finish_signup">Finish Signup</string>
     <string name="username_exists">Username already exists!</string>
+    <string name="username_no_spaces">Username cannot contain spaces</string>
+    <string name="username_bad_phrase">Username contains a word or phrase that cannot be used</string>
     <string name="not_finished_setting_up">You have not finished signing up! Please log back in.</string>
 
     <!-- Bottom Nav View -->
@@ -76,6 +78,19 @@
     <string name="pwd_length">Password must be at least 6 characters in length</string>
     <string name="pwd_must_match">Passwords must match</string>
     <string name="sign_up_failed">Sign Up Failed</string>
+
+    <string-array name="array_bad_words">
+        <item>shit</item>
+        <item>fuck</item>
+        <item>asshole</item>
+        <item>whore</item>
+        <item>nigga</item>
+        <item>nigger</item>
+        <item>cunt</item>
+        <item>bitch</item>
+        <item>faggit</item>
+        <item>faggot</item>
+    </string-array>
 
 
 
