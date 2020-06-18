@@ -7,6 +7,7 @@
 
 package com.magnitudestudios.GameFace.ui.addFriends
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -45,6 +46,7 @@ class AddFriendsViewModel : ViewModel() {
 
     fun sendFriendRequest(profile: Profile) {
         if (profile.uid != Firebase.auth.currentUser!!.uid) FirebaseHelper.sendFriendRequest(profile)
+        Log.d("HERE","NICe")
     }
 
     fun getFriendRequestedUIDs() : List<String> {
