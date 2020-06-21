@@ -102,7 +102,7 @@ class LoginScreenFragment : Fragment(), View.OnClickListener {
         if (viewModel.validateEmail(emailAddress)) {
             viewModel.sendForgotPassword(emailAddress).observe(this, Observer {
                 when (it.status) {
-                    Status.SUCCESS -> Toast.makeText(context, getString(R.string.pwd_reset_email_sent), Toast.LENGTH_SHORT).show()
+                    Status.SUCCESS -> Toast.makeText(context, getString(R.string.pwd_reset_email_sent, emailAddress), Toast.LENGTH_SHORT).show()
                     Status.ERROR -> Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
                     else -> Log.e(TAG, "Unknown Status " + it.status.name)
                 }
