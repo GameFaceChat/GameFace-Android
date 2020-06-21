@@ -94,6 +94,7 @@ class AddFriendsFragment : Fragment() {
                     override fun onClick(position: Int) {
                         val clicked = addAdapter.getitem(position)
                         if (getHolderState(clicked.uid) == Constants.STATE_DEFAULT) viewModel.sendFriendRequest(clicked)
+                        else if (getHolderState(clicked.uid) == Constants.STATE_REQUESTED) viewModel.deleteFriendRequest(clicked)
                     }
                     override fun onLongClick(position: Int) {}
 
