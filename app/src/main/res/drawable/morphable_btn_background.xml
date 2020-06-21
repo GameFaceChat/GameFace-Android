@@ -8,5 +8,5 @@
 
 <shape android:shape="rectangle" xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="@dimen/rounded_rect" />
-    <solid android:color="@color/colorAccent" />
+    <solid android:color="@color/color_accent_selector" />
 </shape>
