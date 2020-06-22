@@ -5,7 +5,7 @@
  *
  */
 
-package com.magnitudestudios.GameFace.ui.Calling
+package com.magnitudestudios.GameFace.ui.calling
 
 import android.os.Bundle
 import com.magnitudestudios.GameFace.R
