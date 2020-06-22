@@ -1,30 +1,7 @@
-<!--
-  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
-  ~ Unauthorized copying of this file, via any medium is prohibited
-  ~ All software is proprietary and confidential
-  ~
-  -->
-
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/huge_icon_size"
-    android:height="@dimen/huge_icon_size"
-    android:viewportWidth="130"
-    android:viewportHeight="130">
-  <path
-      android:pathData="M65,65m-63.5,0a63.5,63.5 0,1 1,127 0a63.5,63.5 0,1 1,-127 0"
-      android:strokeWidth="3"
-      android:fillColor="#ffffff"
-      android:strokeColor="#706E6E"/>
-  <path
-      android:pathData="M87.049,83h3.902v20h-3.902z"
-      android:fillColor="#888888"/>
-  <path
-      android:pathData="M79,94.951l0,-3.902l20,-0l0,3.902z"
-      android:fillColor="#888888"/>
-  <path
-      android:pathData="M58.927,85.435C53.686,85.435 48.438,85.457 43.197,85.423C40.162,85.407 37.507,84.454 35.586,81.957C34.489,80.535 33.951,78.877 33.89,77.118C33.727,72.33 34.181,67.604 36.04,63.135C37.418,59.814 39.495,57.121 43.197,56.107C45.045,55.603 46.719,55.598 48.36,56.874C50.544,58.571 53.03,59.736 55.752,60.33C59.784,61.214 63.553,60.397 67.126,58.47C68.167,57.905 69.192,57.283 70.133,56.561C71.258,55.698 72.463,55.654 73.762,55.878C77.223,56.471 79.563,58.515 81.182,61.522C82.951,64.81 83.646,68.388 83.954,72.05C84.099,73.809 84.223,75.595 84.066,77.342C83.601,82.332 80.034,85.412 74.842,85.429C69.539,85.446 64.23,85.435 58.927,85.435Z"
-      android:fillColor="#888888"/>
-  <path
-      android:pathData="M72.698,44.23C72.737,51.823 66.655,57.944 59.034,57.983C51.451,58.022 45.331,51.93 45.286,44.314C45.252,36.709 51.311,30.605 58.95,30.56C66.538,30.515 72.659,36.602 72.698,44.23Z"
-      android:fillColor="#888888"/>
+<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="@dimen/huge_icon_size" android:height="@dimen/huge_icon_size" android:viewportWidth="130" android:viewportHeight="130">
+    <path android:pathData="M1.5 65a63.5 63.5 0 1 1 127 0 63.5 63.5 0 1 1-127 0" android:strokeWidth="3" android:fillColor="#ffffff" android:strokeColor="#706E6E"/>
+    <path android:pathData="M87.049 83h3.902v20h-3.902z" android:fillColor="#888888"/>
+    <path android:pathData="M79 94.951v-3.902h20v3.902zm-20.073-9.516c-5.241 0-10.489 0.022-15.73-0.012-3.035-0.016-5.69-0.969-7.611-3.466-1.097-1.422-1.635-3.08-1.696-4.839-0.163-4.788 0.291-9.514 2.15-13.983 1.378-3.321 3.455-6.014 7.157-7.028 1.848-0.504 3.522-0.509 5.163 0.767 2.184 1.697 4.67 2.862 7.392 3.456 4.032 0.884 7.801 0.067 11.374-1.86 1.041-0.565 2.066-1.187 3.007-1.909 1.125-0.863 2.33-0.907 3.629-0.683 3.461 0.593 5.801 2.637 7.42 5.644 1.769 3.288 2.464 6.866 2.772 10.528 0.145 1.759 0.269 3.545 0.112 5.292-0.465 4.99-4.032 8.07-9.224 8.087-5.303 0.017-10.612 0.006-15.915 0.006z" android:fillColor="#888888"/>
+    <path android:pathData="M72.698 44.23c0.039 7.593-6.043 13.714-13.664 13.753-7.583 0.039-13.703-6.053-13.748-13.669-0.034-7.605 6.025-13.709 13.664-13.754 7.588-0.045 13.709 6.042 13.748 13.67z" android:fillColor="#888888"/>
 </vector>

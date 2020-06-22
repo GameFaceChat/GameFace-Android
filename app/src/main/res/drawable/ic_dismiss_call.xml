@@ -1,19 +1,5 @@
-<!--
-  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
-  ~ Unauthorized copying of this file, via any medium is prohibited
-  ~ All software is proprietary and confidential
-  ~
-  -->
-
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="70dp"
-    android:height="70dp"
-    android:viewportWidth="70"
-    android:viewportHeight="70">
-  <path
-      android:pathData="M12,36.5a23.5,22.5 0,1 0,47 0a23.5,22.5 0,1 0,-47 0z"
-      android:fillColor="#F25959"/>
-  <path
-      android:pathData="M35,0C15.645,0 0,15.645 0,35C0,54.355 15.645,70 35,70C54.355,70 70,54.355 70,35C70,15.645 54.355,0 35,0ZM50.05,50.05C48.685,51.415 46.48,51.415 45.115,50.05L35,39.935L24.885,50.05C23.52,51.415 21.315,51.415 19.95,50.05C18.585,48.685 18.585,46.48 19.95,45.115L30.065,35L19.95,24.885C18.585,23.52 18.585,21.315 19.95,19.95C21.315,18.585 23.52,18.585 24.885,19.95L35,30.065L45.115,19.95C46.48,18.585 48.685,18.585 50.05,19.95C51.415,21.315 51.415,23.52 50.05,24.885L39.935,35L50.05,45.115C51.38,46.445 51.38,48.685 50.05,50.05Z"
-      android:fillColor="#ffffff"/>
+<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="70dp" android:height="70dp" android:viewportWidth="70" android:viewportHeight="70">
+    <path android:pathData="M12 36.5a23.5 22.5 0 1 0 47 0 23.5 22.5 0 1 0-47 0z" android:fillColor="#F25959"/>
+    <path android:pathData="M35 0C15.645 0 0 15.645 0 35s15.645 35 35 35 35-15.645 35-35S54.355 0 35 0zm15.05 50.05c-1.365 1.365-3.57 1.365-4.935 0L35 39.935 24.885 50.05c-1.365 1.365-3.57 1.365-4.935 0-1.365-1.365-1.365-3.57 0-4.935L30.065 35 19.95 24.885c-1.365-1.365-1.365-3.57 0-4.935 1.365-1.365 3.57-1.365 4.935 0L35 30.065 45.115 19.95c1.365-1.365 3.57-1.365 4.935 0 1.365 1.365 1.365 3.57 0 4.935L39.935 35 50.05 45.115c1.33 1.33 1.33 3.57 0 4.935z" android:fillColor="#ffffff"/>
 </vector>

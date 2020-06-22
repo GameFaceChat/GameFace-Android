@@ -1,16 +1,4 @@
-<!--
-  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
-  ~ Unauthorized copying of this file, via any medium is prohibited
-  ~ All software is proprietary and confidential
-  ~
-  -->
-
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/icon_size"
-    android:height="@dimen/icon_size"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
-  <path
-      android:fillColor="#FF000000"
-      android:pathData="M30,24c4.42,0 8,-3.59 8,-8 0,-4.42 -3.58,-8 -8,-8s-8,3.58 -8,8c0,4.41 3.58,8 8,8zM12,20v-6L8,14v6L2,20v4h6v6h4v-6h6v-4h-6zM30,28c-5.33,0 -16,2.67 -16,8v4h32v-4c0,-5.33 -10.67,-8 -16,-8z"/>
+<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="@dimen/icon_size" android:height="@dimen/icon_size" android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#FF000000" android:pathData="M30 24c4.42 0 8-3.59 8-8 0-4.42-3.58-8-8-8s-8 3.58-8 8c0 4.41 3.58 8 8 8zm-18-4v-6H8v6H2v4h6v6h4v-6h6v-4h-6zm18 8c-5.33 0-16 2.67-16 8v4h32v-4c0-5.33-10.67-8-16-8z"/>
 </vector>

@@ -1,16 +1,4 @@
-<!--
-  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
-  ~ Unauthorized copying of this file, via any medium is prohibited
-  ~ All software is proprietary and confidential
-  ~
-  -->
-
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="@dimen/icon_size"
-    android:height="@dimen/icon_size"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
-  <path
-      android:fillColor="#FF000000"
-      android:pathData="M24,34c2.2,0 4,-1.8 4,-4s-1.8,-4 -4,-4 -4,1.8 -4,4 1.8,4 4,4zM36,16h-2v-4c0,-5.52 -4.48,-10 -10,-10S14,6.48 14,12v4h-2c-2.2,0 -4,1.8 -4,4v20c0,2.2 1.8,4 4,4h24c2.2,0 4,-1.8 4,-4L40,20c0,-2.2 -1.8,-4 -4,-4zM17.8,12c0,-3.42 2.78,-6.2 6.2,-6.2s6.2,2.78 6.2,6.2v4L17.8,16v-4zM36,40L12,40L12,20h24v20z"/>
+<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="@dimen/icon_size" android:height="@dimen/icon_size" android:viewportWidth="48" android:viewportHeight="48">
+    <path android:fillColor="#FF000000" android:pathData="M24 34c2.2 0 4-1.8 4-4s-1.8-4-4-4-4 1.8-4 4 1.8 4 4 4zm12-18h-2v-4c0-5.52-4.48-10-10-10S14 6.48 14 12v4h-2c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h24c2.2 0 4-1.8 4-4V20c0-2.2-1.8-4-4-4zm-18.2-4c0-3.42 2.78-6.2 6.2-6.2s6.2 2.78 6.2 6.2v4H17.8v-4zM36 40H12V20h24v20z"/>
 </vector>

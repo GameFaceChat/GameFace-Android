@@ -40,7 +40,7 @@ class MainActivity : BasePermissionsActivity() {
                 goToLogin(getString(R.string.not_finished_setting_up))
             }
         })
-//        goToCalling()
+        goToCalling()
     }
 
     private fun goToLogin(text: String = "Signed Out") {
