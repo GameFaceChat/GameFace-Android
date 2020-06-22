@@ -8,30 +8,92 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:background="@drawable/ic_background">
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.3" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/incoming_call_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_huge"
+        android:text="@string/incoming_call"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/large_text_white"
-        tools:text="John Smith" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:layout_width="0dp"
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/fullName"
+        style="@style/startscreen_text_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/signup_editext"
-        android:padding="@dimen/padding_large"
-        app:trackTint="@color/black"
-        android:gravity="center"
+        android:layout_marginTop="@dimen/layout_margin_huge"
+        app:layout_constraintEnd_toEndOf="@+id/profilePic"
+        app:layout_constraintStart_toStartOf="@+id/profilePic"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2"
+        tools:text="Srihari Vishnu" />
+
+    <TextView
+        android:id="@+id/username"
+        style="@style/large_text_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fullName"
+        tools:text="@string/username_input_hint" />
+
+    <ImageButton
+        android:id="@+id/accept_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/layout_margin_huge"
+        android:background="@drawable/ic_accept_call"
+        android:layout_marginStart="@dimen/layout_margin_medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.5"/>
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toEndOf="@+id/deny_call" />
+
+    <ImageButton
+        android:id="@+id/deny_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_dismiss_call"
+        android:layout_marginEnd="@dimen/layout_margin_medium"
+        android:layout_marginBottom="@dimen/layout_margin_huge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/accept_call"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,6 +67,9 @@
     <string name="deny_request">Delete</string>
     <string name="btn_edit_profile">Edit Profile</string>
 
+    <!-- Incoming Call -->
+    <string name="incoming_call">Incoming Video Call</string>
+
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>
     <string name="error_fetching_user">No user found! Please login</string>
@@ -78,6 +81,15 @@
     <string name="pwd_length">Password must be at least 6 characters in length</string>
     <string name="pwd_must_match">Passwords must match</string>
     <string name="sign_up_failed">Sign Up Failed</string>
+
+
+
+
+
+
+
+
+
 
     <string-array name="array_bad_words">
         <item>shit</item>

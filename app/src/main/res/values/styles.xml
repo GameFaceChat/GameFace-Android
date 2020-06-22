@@ -8,8 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:background">#8843464a</item> <!-- Or any transparency or color you need -->
+    <style name="Theme.AppCompat.Translucent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -70,6 +69,12 @@
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="huge_text_white">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_huge</item>
     </style>
 
     <!-- StartScreen -->
@@ -197,6 +202,11 @@
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColorHint">@color/lightGray</item>
         <item name="android:background">@drawable/searchable_background</item>
+    </style>
+
+    <!-- Incoming Call -->
+    <style name="incoming_call_title" parent="large_text_white">
+        <item name="android:fontFamily">@font/raleway_medium</item>
     </style>
 
 
