@@ -72,12 +72,7 @@ object FirebaseHelper {
 
     suspend fun updateDeviceToken(token: String) {
         if (Firebase.auth.currentUser == null) return
-        val updated = getUserByUID(Firebase.auth.currentUser?.uid!!)
-        if (updated != null) {
-            (updated.devicesID as ArrayList).add(token)
-            setUser(updated)
-            Log.e("UPDATED", "DEVICE TOKEN SUCESS")
-        }
+        getCurrentUserRef().child(User::devicesID.name).child(token).setValue(true).await()
     }
 
     suspend fun getUserByUID(uid: String): User? {

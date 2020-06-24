@@ -54,8 +54,8 @@ class LoginViewModel : ViewModel() {
             emit(Resource.loading(false))
             try {
                 Firebase.auth.createUserWithEmailAndPassword(email, password).await()
-                FirebaseHelper.createUser(User(Firebase.auth.uid!!, ServerValue.TIMESTAMP, mutableListOf(
-                        FirebaseHelper.getDeviceToken()
+                FirebaseHelper.createUser(User(Firebase.auth.uid!!, ServerValue.TIMESTAMP, hashMapOf(
+                        Pair(FirebaseHelper.getDeviceToken(), true)
                 ))).await()
                 emit(Resource.success(true))
 
@@ -78,8 +78,8 @@ class LoginViewModel : ViewModel() {
                 }
                 //New User (So send back false)
                 else {
-                    FirebaseHelper.createUser(User(Firebase.auth.uid!!, ServerValue.TIMESTAMP, mutableListOf(
-                            FirebaseHelper.getDeviceToken()
+                    FirebaseHelper.createUser(User(Firebase.auth.uid!!, ServerValue.TIMESTAMP, hashMapOf(
+                            Pair(FirebaseHelper.getDeviceToken(), true)
                     ))).await()
                     emit(Resource.success(false))
                 }
