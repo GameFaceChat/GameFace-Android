@@ -251,6 +251,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 //            SessionHelper.room("ROOM2", this@CameraFragment, mainViewModel.profile.value?.data?.username!!)
             if (args.roomID.isNotEmpty()) {
                 viewModel.joinRoom(args.roomID, this@CameraFragment)
+                onTryToStart()
             }
             if (args.callUserUID.isNotEmpty()) {
                 viewModel.createRoom(
@@ -258,8 +259,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
                         getString(R.string.backend_cloud_function_call),
                         mainViewModel.profile.value?.data!!,
                         args.callUserUID)
+                onTryToStart()
             }
-            onTryToStart()
         } catch (e: JsonParseException) {
             Log.e(TAG, "handleMessage: COULD NOT PARSE JSON: ${data.data}", e)
             connectionFailed("No Connection to Server")
