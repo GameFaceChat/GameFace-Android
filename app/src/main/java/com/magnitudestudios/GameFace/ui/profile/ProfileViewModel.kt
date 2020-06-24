@@ -48,7 +48,7 @@ class ProfileViewModel : ViewModel() {
 
     fun denyFriendRequest(uid: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            FirebaseHelper.deleteFriendRequest(uid)
+            FirebaseHelper.deleteFriendRequest(uid, true)
         }
     }
 }

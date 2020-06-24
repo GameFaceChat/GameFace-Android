@@ -202,14 +202,14 @@ object FirebaseHelper {
                 )
     }
 
-    suspend fun deleteFriendRequest(uid: String) {
+    suspend fun deleteFriendRequest(uid: String, gotFriendRequest: Boolean) {
         getCurrentUserRef()
-                .child(User::friendRequests.name)
+                .child(if (gotFriendRequest) User::friendRequests.name else User::friendRequestsSent.name)
                 .child(uid)
                 .removeValue().await()
 
         getUserRef(uid)
-                .child(User::friendRequestsSent.name)
+                .child(if (gotFriendRequest) User::friendRequestsSent.name else User::friendRequests.name)
                 .child(Firebase.auth.currentUser!!.uid)
                 .removeValue().await()
     }
@@ -223,7 +223,7 @@ object FirebaseHelper {
                 .child(User::friends.name)
                 .child(Firebase.auth.currentUser!!.uid)
                 .setValue(Friend(Firebase.auth.currentUser!!.uid))
-        deleteFriendRequest(uid)
+        deleteFriendRequest(uid, true)
     }
 
 }
