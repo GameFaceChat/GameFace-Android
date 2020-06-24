@@ -1,6 +1,7 @@
 <resources>
     <string name="google_oAuth_client_ID">1007588916864-ui8qdpimhdsauq5irh98qcsuqgvo63o2.apps.googleusercontent.com</string>
     <string name="backend_cloud_function">https://us-central1-gameface-chat.cloudfunctions.net/app/servers</string>
+    <string name="backend_cloud_function_call">https://us-central1-gameface-chat.cloudfunctions.net/app/call</string>
 
     <string name="app_name">GameFace</string>
     <string name="app_name_with_styling">Game<b>Face</b></string>
@@ -9,7 +10,13 @@
     <string name="brand_name_1">Game</string>
     <string name="brand_name_2">Face</string>
 
-    <string name="notification_channel_1">Friends</string>
+    <string name="friends_notification_ID">friendschannel</string>
+    <string name="friends_notification_channel">Friends</string>
+    <string name="friends_notification_description">Notifications related to your friends</string>
+
+    <string name="calling_notification_ID">callschannel</string>
+    <string name="calling_notification_channel">Calls</string>
+    <string name="calling_notification_description">Calls: Alerts and badges</string>
 
     <!-- Start Screen -->
     <string name="sign_up_with_google">Sign up with Google</string>
@@ -68,7 +75,7 @@
     <string name="btn_edit_profile">Edit Profile</string>
 
     <!-- Incoming Call -->
-    <string name="incoming_call">Incoming Video Call</string>
+    <string name="incoming_call">It\'s Game Time!</string>
 
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>

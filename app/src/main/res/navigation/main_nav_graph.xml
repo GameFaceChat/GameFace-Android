@@ -17,7 +17,16 @@
         android:id="@+id/cameraFragment"
         android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
         android:label="CameraFragment"
-        tools:layout="@layout/fragment_camera"/>
+        tools:layout="@layout/fragment_camera">
+        <argument
+            android:name="callUserUID"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="roomID"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
     <fragment
         android:id="@+id/addFriendsFragment"
         android:name="com.magnitudestudios.GameFace.ui.addFriends.AddFriendsFragment"

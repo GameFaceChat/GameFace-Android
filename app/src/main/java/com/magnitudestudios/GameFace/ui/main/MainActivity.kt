@@ -9,14 +9,17 @@ package com.magnitudestudios.GameFace.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.magnitudestudios.GameFace.bases.BasePermissionsActivity
+import androidx.navigation.findNavController
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.databinding.ActivityMainBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Status
-import com.magnitudestudios.GameFace.ui.calling.IncomingCall
+import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.login.LoginActivity
 
 
@@ -40,8 +43,16 @@ class MainActivity : BasePermissionsActivity() {
                 goToLogin(getString(R.string.not_finished_setting_up))
             }
         })
-        goToCalling()
+        val extras = intent.extras
+        if (extras != null && extras.containsKey(Constants.CALL_KEY) && extras.containsKey(Constants.ROOM_ID_KEY) && savedInstanceState == null) {
+            Log.e("HERE", intent.getStringExtra(Constants.ROOM_ID_KEY)!!)
+            val action = BottomContainerFragmentDirections
+                    .actionBottomContainerFragmentToCameraFragment("", extras.getString(Constants.ROOM_ID_KEY) ?: "")
+            findNavController(R.id.mainNavHost).navigate(action)
+        }
+        Log.e("VERSION", " " + Integer.valueOf(android.os.Build.VERSION.SDK_INT))
     }
+
 
     private fun goToLogin(text: String = "Signed Out") {
         viewModel.signOutUser()
@@ -51,10 +62,12 @@ class MainActivity : BasePermissionsActivity() {
         finish()
     }
 
+
     private fun goToCalling() {
-        val i = Intent(this@MainActivity, IncomingCall::class.java)
-        startActivity(i)
-        finish()
+//        val i = Intent(this@MainActivity, IncomingCall::class.java)
+//        startActivity(i)
+//        finish()
+
     }
 
     companion object {

@@ -23,6 +23,7 @@ object Constants {
     const val USERS_PATH = "users"
     const val CONNECT_PATH = "connection"
     const val PROFILE_PATH = "profiles"
+    const val MEMBERS_PATH = "members"
 
     const val SENT_PROFILES_PATH = "friendRequestsSent"
 
@@ -33,6 +34,9 @@ object Constants {
     const val ANSWER_KEY = "ANSWER"
     const val ICE_CANDIDATE_KEY = "ICECANDIDATE"
 
+    const val CALLING_KEY = "CALLING"
+    const val UNAVAILABLE_KEY = "UNAVAILABLE"
+
     const val SIGN_IN_CLIENT = "SIGNED_IN_CLIENT"
 
     const val NOT_FINISHED = "NotFinished"
@@ -42,5 +46,12 @@ object Constants {
     const val STATE_REQUESTED = 1
     const val STATE_FRIENDS = 2
     const val STATE_OWN_PROFILE = 3
+
+    //Notification Vibration Pattern
+    val VIBRATE_PATTERN = longArrayOf(1000, 1000, 1000, 1000, 1000, 100, 400)
+
+    //Intent Constants
+    const val CALL_KEY = "GO_TO_CALLING"
+    const val ROOM_ID_KEY = "ROOM_ID"
 
 }

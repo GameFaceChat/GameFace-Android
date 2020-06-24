@@ -17,14 +17,12 @@ import com.magnitudestudios.GameFace.databinding.RowUsersBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import java.lang.IllegalStateException
 
-class AddFriendViewHolder(bind: RowUsersBinding, listener: RVButtonClick) : RecyclerView.ViewHolder(bind.root) {
-    private val mBinding = bind
-    private val mListener = listener
+class AddFriendViewHolder(private val mBinding: RowUsersBinding, private val listener: RVButtonClick) : RecyclerView.ViewHolder(mBinding.root) {
     private var state = Constants.STATE_DEFAULT
     init {
-        mBinding.sendRequest.setOnClickListener { mListener.onClick(adapterPosition) }
+        mBinding.sendRequest.setOnClickListener { listener.onClick(adapterPosition) }
         mBinding.sendRequest.setOnLongClickListener {
-            mListener.onLongClick(adapterPosition)
+            listener.onLongClick(adapterPosition)
             return@setOnLongClickListener true
         }
     }
