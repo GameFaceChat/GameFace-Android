@@ -194,8 +194,9 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/login_btn_signup"
+        android:id="@+id/loginTxvTermsAndConditions"
         style="@style/terms_and_conditions"
+        android:textColorLink="@color/white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/layout_margin_medium"

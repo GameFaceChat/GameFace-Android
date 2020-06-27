@@ -149,6 +149,7 @@
 
     <TextView
         android:id="@+id/signup_txv_terms"
+        android:textColorLink="@color/white"
         style="@style/terms_and_conditions"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
