@@ -35,7 +35,9 @@
         tools:layout="@layout/fragment_bottom_nav">
         <action
             android:id="@+id/action_bottomContainerFragment_to_takePhotoFragment"
-            app:destination="@id/takePhotoFragment" />
+            app:destination="@id/takePhotoFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/slide_out_to_right" />
         <action
             android:id="@+id/action_bottomContainerFragment_to_addFriendsFragment"
             app:destination="@id/addFriendsFragment"

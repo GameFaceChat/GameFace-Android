@@ -7,16 +7,24 @@
 
 package com.magnitudestudios.GameFace.ui.login.fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentFinishSigningUpBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Status
@@ -46,6 +54,7 @@ class FinishSignUpFragment : Fragment() {
         }
 
         binding.profilePic.setOnClickListener {
+            findNavController().navigate(R.id.action_finishSignUpFragment_to_takePhotoFragment2)
         }
 
         binding.signupUsernameInput.doAfterTextChanged {text ->
@@ -54,6 +63,16 @@ class FinishSignUpFragment : Fragment() {
 
         viewModel.usernameExists.observe(viewLifecycleOwner, Observer {
             if (it.status == Status.SUCCESS && it.data!!) binding.signupUsernameInput.error = getString(R.string.username_exists)
+        })
+
+        viewModel.profilePicUri.observe(viewLifecycleOwner, Observer {
+            if (it != null) Glide.with(this).load(it).circleCrop().into(binding.profilePic)
+
+        })
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
+            if (it != null) viewModel.setProfilePicUri(it)
+            else Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show()
         })
 
     }

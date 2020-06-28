@@ -5,7 +5,7 @@ import android.Manifest
 object Constants {
     const val ALL_PERMISSIONS = 101
     const val STATE_COMPLETED = 200
-    const val STATE_URL_FAILED = 201
+    const val STATE_URL_FAILED = 500
     const val STATE_CONNECTED = 1
     const val STATE_FAILED = -1
     const val STATE_DISCONNECTED = -2
@@ -43,4 +43,6 @@ object Constants {
     const val STATE_FRIENDS = 2
     const val STATE_OWN_PROFILE = 3
 
+    //Keys
+    const val GOT_PHOTO_KEY = "gotPhotoFromUser"
 }

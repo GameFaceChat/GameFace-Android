@@ -7,6 +7,7 @@
 
 package com.magnitudestudios.GameFace.ui.login
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.*
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -18,6 +19,7 @@ import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ktx.database
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.Helper.Status
@@ -33,10 +35,12 @@ class LoginViewModel : ViewModel() {
 
     val usernameExists = MutableLiveData<Resource<Boolean>>()
 
+    val profilePicUri = MutableLiveData<Uri>()
+
     init {
         if (Firebase.auth.currentUser != null) {
             authenticated.value = Resource.success(true)
-            Log.e("ALREADY", "LOGGED IN with "+Firebase.auth.currentUser!!.email)
+            Log.e("ALREADY", "LOGGED IN with " + Firebase.auth.currentUser!!.email)
         }
     }
 
@@ -48,7 +52,7 @@ class LoginViewModel : ViewModel() {
         authenticated.postValue(Resource.nothing(false))
     }
 
-    fun signUpUserWithEmail (email: String, password: String) : LiveData<Resource<Boolean>> {
+    fun signUpUserWithEmail(email: String, password: String): LiveData<Resource<Boolean>> {
         authenticated.value = Resource.loading(false)
         return liveData(Dispatchers.IO) {
             emit(Resource.loading(false))
@@ -66,7 +70,8 @@ class LoginViewModel : ViewModel() {
             authenticated.postValue(Resource.nothing(false))
         }
     }
-    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) : LiveData<Resource<Boolean>> {
+
+    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?): LiveData<Resource<Boolean>> {
         val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
         return liveData(Dispatchers.IO) {
             try {
@@ -90,7 +95,7 @@ class LoginViewModel : ViewModel() {
     }
 
 
-    fun signInWithEmail (email: String, password: String) {
+    fun signInWithEmail(email: String, password: String) {
         authenticated.value = Resource.loading(false)
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -103,7 +108,7 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun sendForgotPassword(email: String) : LiveData<Resource<Boolean>> {
+    fun sendForgotPassword(email: String): LiveData<Resource<Boolean>> {
         return liveData(Dispatchers.IO) {
             try {
                 Firebase.auth.sendPasswordResetEmail(email).await()
@@ -118,12 +123,25 @@ class LoginViewModel : ViewModel() {
     fun createUser(username: String, name: String, bio: String) {
         authenticated.postValue(Resource.loading(false))
         viewModelScope.launch(Dispatchers.IO) {
-            try {
-                FirebaseHelper.createProfile(Profile(Firebase.auth.currentUser?.uid!!, username, name, bio, "", 0, ServerValue.TIMESTAMP))
-                authenticated.postValue(Resource.success(true))
-            } catch (e: FirebaseException) {
-                Log.e("FirebaseHelper", "Create User failed", e.cause)
-                authenticated.postValue(Resource(Status.ERROR, false, e.localizedMessage))
+            var profileUrl = ""
+            var error = false
+            if (profilePicUri.value != null) {
+                val value = FirebaseHelper.setProfilePic(profilePicUri.value!!)
+                if (value.status == Status.SUCCESS && value.data != null) {
+                    profileUrl = value.data.toString()
+                } else {
+                    authenticated.postValue(Resource.error(value.message, false))
+                    error = true
+                }
+            }
+            if (!error) {
+                try {
+                    FirebaseHelper.createProfile(Profile(Firebase.auth.currentUser?.uid!!, username, name, bio, profileUrl, 0, ServerValue.TIMESTAMP))
+                    authenticated.postValue(Resource.success(true))
+                } catch (e: FirebaseException) {
+                    Log.e("FirebaseHelper", "Create User failed", e.cause)
+                    authenticated.postValue(Resource(Status.ERROR, false, e.localizedMessage))
+                }
             }
         }
 
@@ -136,10 +154,13 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun isFirebaseUserNull() : Boolean {
+    fun isFirebaseUserNull(): Boolean {
         return Firebase.auth.currentUser == null
     }
 
+    fun setProfilePicUri(uri: String) {
+        profilePicUri.postValue(Uri.parse(uri))
+    }
 
 
 }
