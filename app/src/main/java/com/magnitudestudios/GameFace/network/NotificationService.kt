@@ -8,25 +8,24 @@
 package com.magnitudestudios.GameFace.network
 
 
-import android.app.Activity
 import android.app.PendingIntent
-import android.app.TaskStackBuilder
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
+import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
-import com.magnitudestudios.GameFace.ui.login.LoginActivity
-import com.magnitudestudios.GameFace.ui.main.MainActivity
+import com.magnitudestudios.GameFace.ui.calling.IncomingCall
 import kotlinx.coroutines.*
 import java.lang.Exception
-import java.util.*
+import kotlin.random.Random
 
 class NotificationService : FirebaseMessagingService() {
     private val serviceJob = Job()
@@ -52,28 +51,54 @@ class NotificationService : FirebaseMessagingService() {
         for (a in p0.data) {
             Log.e("Got Data", "${a.key} : ${a.value}")
         }
-        val intent = Intent(this, MainActivity::class.java)
-        val resultPendingIntent: PendingIntent? = TaskStackBuilder.create(this).run {
-            // Add the intent, which inflates the back stack
-            addNextIntentWithParentStack(intent)
-            // Get the PendingIntent containing the entire back stack
-            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        if (!validateMessage(p0)) return
+        when (p0.data["type"]) {
+            "CALL" -> receiveCall(p0.data)
+            "NOTIFICATION" -> showNotification(p0.data)
         }
-        val builder = NotificationCompat.Builder(this, "CHANNEL123")
-                .setSmallIcon(R.drawable.ic_add_friend)
-                .setContentTitle("Friend Request")
-                .setContentText("You have a new friend request!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(resultPendingIntent)
-                .addAction(R.drawable.ic_add_friend, "Add Friend",
-                        resultPendingIntent)
-        // Called during activity
+    }
+
+    private fun receiveCall(data: Map<String, String>) {
+        val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
+            putExtra(SendCall::roomID.name, data["roomID"])
+            putExtra(Profile::username.name, data["fromUsername"])
+            putExtra(Profile::name.name, data["fromName"])
+            putExtra(Profile::uid.name, data["fromUID"])
+        }
+
+        val fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
+                fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle("Incoming Video Call")
+                        .setContentText(data["fromUsername"])
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_CALL)
+                        .setVibrate(Constants.VIBRATE_PATTERN)
+                        .setFullScreenIntent(fullScreenPendingIntent, true)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         with(NotificationManagerCompat.from(this)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(Random().nextInt(10000000), builder.build())
+            notify(Random.nextInt(), notificationBuilder.build())
         }
-//        Toast.makeText(applicationContext, "Got a notification", Toast.LENGTH_LONG).show()
-        Log.e("Received Message", "NICE")
+    }
+
+    private fun showNotification(data: Map<String, String>) {
+        val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.friends_notification_ID))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(data["title"])
+                .setContentText(data["body"])
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+
+        with(NotificationManagerCompat.from(this)) {
+            notify(Random.nextInt(), notificationBuilder.build())
+        }
+    }
+
+    private fun validateMessage(message: RemoteMessage) : Boolean {
+        if (message.data.isEmpty() || !message.data.containsKey("type")) return false
+        return true
     }
 
     override fun onMessageSent(p0: String) {
