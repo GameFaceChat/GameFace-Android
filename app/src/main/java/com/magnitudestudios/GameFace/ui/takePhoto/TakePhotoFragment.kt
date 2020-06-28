@@ -7,8 +7,13 @@
 
 package com.magnitudestudios.GameFace.ui.takePhoto
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.Rational
+import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +22,7 @@ import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -24,6 +30,9 @@ import com.google.common.util.concurrent.ListenableFuture
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.databinding.FragmentTakePhotoBinding
 import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.OutputStream
 import java.util.concurrent.Executor
 
 class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
@@ -68,7 +77,8 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     }
     private fun bindPreview(cameraProvider : ProcessCameraProvider) {
         cameraProvider.unbindAll()
-        val preview : Preview = Preview.Builder().build()
+        val preview : Preview = Preview.Builder()
+                .build()
         captureInstance = ImageCapture.Builder()
                 .setTargetRotation(bind.previewView.display.rotation)
                 .build()
@@ -85,6 +95,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
     private fun takePicture() {
         if (captureInstance == null) return
+
         val savedFile = File.createTempFile("tempProfilePic", ".jpg", requireContext().cacheDir);
         val outputFileOptions = ImageCapture.OutputFileOptions.Builder(savedFile).build()
         captureInstance?.takePicture(outputFileOptions,this, object : ImageCapture.OnImageSavedCallback {
@@ -92,6 +103,10 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
                 activity?.runOnUiThread {
                     bind.testImage.visibility = View.VISIBLE
                     Log.e("IMAGE", savedFile.toUri().toString())
+//                    bind.testImage.setImageURI(savedFile.toUri())
+                    Log.e("INITIAL SIZE: ", savedFile.length().toString())
+                    compressImage(savedFile)
+                    Log.e("FINAL SIZE: ", savedFile.length().toString())
                     bind.testImage.setImageURI(savedFile.toUri())
                     findNavController().previousBackStackEntry?.savedStateHandle?.set(Constants.GOT_PHOTO_KEY, savedFile.toUri().toString())
                     findNavController().navigateUp()
@@ -113,4 +128,35 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     override fun execute(command: Runnable) {
         command.run()
     }
+
+
+    private fun compressImage(file: File?) {
+        if (file == null) return
+
+        val options = BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+            inSampleSize = 4
+        }
+        var inputStream = FileInputStream(file)
+        BitmapFactory.decodeStream(inputStream, null, options)
+        inputStream.close()
+
+        val SIZE = 95
+
+        var scale = 1
+        while (options.outWidth / scale / 2 >= SIZE && options.outHeight / scale / 2 >= SIZE) scale *=2
+
+        val options2 = BitmapFactory.Options().apply { inSampleSize = scale }
+        inputStream = FileInputStream(file)
+
+        val compressed = BitmapFactory.decodeStream(inputStream, null, options2)
+        val newDimen = if (compressed!!.width < compressed.height) compressed.width else compressed.height
+        val resized: Bitmap? = Bitmap.createBitmap(compressed, 0,0,compressed.width, compressed.width)
+
+        inputStream.close()
+
+        file.createNewFile()
+        resized?.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(file))
+    }
+
 }

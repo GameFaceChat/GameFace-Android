@@ -27,7 +27,13 @@
         android:id="@+id/takePhotoFragment"
         android:name="com.magnitudestudios.GameFace.ui.takePhoto.TakePhotoFragment"
         android:label="TakePhotoFragment"
-        tools:layout="@layout/fragment_take_photo"/>
+        tools:layout="@layout/fragment_take_photo">
+        <action
+            android:id="@+id/action_takePhotoFragment_to_cropPhotoFragment"
+            app:destination="@id/cropPhotoFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
     <fragment
         android:id="@+id/bottomContainerFragment"
         android:name="com.magnitudestudios.GameFace.ui.BottomContainerFragment"
@@ -48,5 +54,15 @@
             app:destination="@id/cameraFragment"
             app:enterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/cropPhotoFragment"
+        android:name="com.magnitudestudios.GameFace.ui.takePhoto.CropPhotoFragment"
+        android:label="CropPhotoFragment"
+        tools:layout="@layout/fragment_crop_pfp">
+        <argument
+            android:name="PhotoUri"
+            app:argType="string"
+            android:defaultValue=""/>
     </fragment>
 </navigation>
