@@ -10,17 +10,26 @@ package com.magnitudestudios.GameFace.views
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.databinding.RowFriendsBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 
-class FriendViewHolder(bind: RowFriendsBinding) : RecyclerView.ViewHolder(bind.root) {
-    private val mBinding = bind
-    fun getImageView(): ImageView {
-        return mBinding.profile.profilePic
+class FriendViewHolder(val bind: RowFriendsBinding, listener: RVButtonClick) : RecyclerView.ViewHolder(bind.root) {
+    init {
+        bind.callButton.setOnClickListener { listener.onClick(adapterPosition) }
+        bind.callButton.setOnLongClickListener {
+            listener.onLongClick(adapterPosition)
+            return@setOnLongClickListener true
+        }
     }
+
+    fun getImageView(): ImageView {
+        return bind.profile.profilePic
+    }
+
     fun bind(data: Profile) {
-        mBinding.profile.username.text = data.username
-        mBinding.profile.fullName.text = data.name
+        bind.profile.username.text = data.username
+        bind.profile.fullName.text = data.name
     }
 
 }

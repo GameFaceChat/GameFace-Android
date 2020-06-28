@@ -16,15 +16,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentFriendsBinding
 import com.magnitudestudios.GameFace.databinding.RowFriendsBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
+import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
 import com.magnitudestudios.GameFace.views.FriendViewHolder
 
@@ -89,7 +90,15 @@ class FriendsFragment : Fragment() {
         mAdapter = object : SortedRVAdapter<Profile>(Profile::class.java) {
             override fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
-                return FriendViewHolder(RowFriendsBinding.inflate(inflater, parent, false))
+                return FriendViewHolder(RowFriendsBinding.inflate(inflater, parent, false), object : RVButtonClick {
+                    override fun onClick(position: Int) {
+                        val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCameraFragment(mAdapter.getitem(position).uid)
+                        activity?.findNavController(R.id.mainNavHost)?.navigate(action)
+                    }
+
+                    override fun onLongClick(position: Int) {}
+
+                })
             }
 
             override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
