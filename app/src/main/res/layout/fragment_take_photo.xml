@@ -48,7 +48,7 @@
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
         android:background="@drawable/back_arrow"
-        android:backgroundTint="@color/button_no_bgnd_text"
+        android:backgroundTint="@color/button_to_transparent"
         android:layout_margin="@dimen/layout_margin_large"
         style="@style/Widget.AppCompat.ActionButton"
         android:elevation="2dp"
