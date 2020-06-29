@@ -7,32 +7,27 @@
 
 package com.magnitudestudios.GameFace.ui.takePhoto
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import android.util.Rational
-import android.util.Size
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.TextureViewMeteringPointFactory
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.common.util.concurrent.ListenableFuture
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.databinding.FragmentTakePhotoBinding
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.OutputStream
 import java.util.concurrent.Executor
 
 class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
@@ -42,6 +37,8 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private lateinit var cameraProvider: ProcessCameraProvider
     private var captureInstance: ImageCapture? = null
     private var orientation = CameraSelector.LENS_FACING_FRONT
+    private var camera: Camera?=null
+    private var cameraSelector: CameraSelector? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,8 +68,12 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
         bind.cameraCaptureButton.setOnClickListener {
             takePicture()
-            Toast.makeText(context, "Capturing Image", Toast.LENGTH_SHORT).show()
         }
+
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(Constants.GOT_PHOTO_KEY, it)
+            findNavController().navigateUp()
+        })
 
     }
     private fun bindPreview(cameraProvider : ProcessCameraProvider) {
@@ -83,14 +84,14 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
                 .setTargetRotation(bind.previewView.display.rotation)
                 .build()
 
-        val cameraSelector : CameraSelector = CameraSelector.Builder()
+        cameraSelector = CameraSelector.Builder()
                 .requireLensFacing(orientation)
                 .build()
 
         preview.setSurfaceProvider(bind.previewView.createSurfaceProvider())
 
-        var camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector, preview, captureInstance)
-
+        camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview, captureInstance)
+        setUpTapToFocus()
     }
 
     private fun takePicture() {
@@ -101,15 +102,8 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         captureInstance?.takePicture(outputFileOptions,this, object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 activity?.runOnUiThread {
-                    bind.testImage.visibility = View.VISIBLE
-                    Log.e("IMAGE", savedFile.toUri().toString())
-//                    bind.testImage.setImageURI(savedFile.toUri())
-                    Log.e("INITIAL SIZE: ", savedFile.length().toString())
-                    compressImage(savedFile)
-                    Log.e("FINAL SIZE: ", savedFile.length().toString())
-                    bind.testImage.setImageURI(savedFile.toUri())
-                    findNavController().previousBackStackEntry?.savedStateHandle?.set(Constants.GOT_PHOTO_KEY, savedFile.toUri().toString())
-                    findNavController().navigateUp()
+                    val action = TakePhotoFragmentDirections.actionTakePhotoFragmentToCropPhotoFragment(savedFile.toUri().toString())
+                    findNavController().navigate(action)
                 }
             }
 
@@ -120,6 +114,25 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
             }
         })
     }
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setUpTapToFocus() {
+        if (camera == null || cameraSelector == null) return
+        bind.previewView.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                if (event.action != MotionEvent.ACTION_UP) {
+                    return true
+                }
+                val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+                val point = factory.createPoint(event.x, event.y)
+                val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
+                camera!!.cameraControl.startFocusAndMetering(action)
+                return true
+            }
+
+        })
+
+    }
+
 
     override fun getCameraXConfig(): CameraXConfig {
         return Camera2Config.defaultConfig()
@@ -129,34 +142,5 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         command.run()
     }
 
-
-    private fun compressImage(file: File?) {
-        if (file == null) return
-
-        val options = BitmapFactory.Options().apply {
-            inJustDecodeBounds = true
-            inSampleSize = 4
-        }
-        var inputStream = FileInputStream(file)
-        BitmapFactory.decodeStream(inputStream, null, options)
-        inputStream.close()
-
-        val SIZE = 95
-
-        var scale = 1
-        while (options.outWidth / scale / 2 >= SIZE && options.outHeight / scale / 2 >= SIZE) scale *=2
-
-        val options2 = BitmapFactory.Options().apply { inSampleSize = scale }
-        inputStream = FileInputStream(file)
-
-        val compressed = BitmapFactory.decodeStream(inputStream, null, options2)
-        val newDimen = if (compressed!!.width < compressed.height) compressed.width else compressed.height
-        val resized: Bitmap? = Bitmap.createBitmap(compressed, 0,0,compressed.width, compressed.width)
-
-        inputStream.close()
-
-        file.createNewFile()
-        resized?.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(file))
-    }
 
 }

@@ -189,6 +189,7 @@ object FirebaseHelper {
     }
 
     suspend fun setProfilePic(image: Uri): Resource<Uri?> {
+        if (Firebase.auth.currentUser == null) return Resource.error("User must sign in", null)
         return try {
             val uri = Firebase.storage
                     .reference

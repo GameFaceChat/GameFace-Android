@@ -70,7 +70,7 @@
         android:label="CropPhotoFragment"
         tools:layout="@layout/fragment_crop_pfp">
         <argument
-            android:name="PhotoUri"
+            android:name="photoUri"
             app:argType="string"
             android:defaultValue=""/>
     </fragment>

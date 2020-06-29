@@ -54,7 +54,7 @@ class FinishSignUpFragment : Fragment() {
         }
 
         binding.profilePic.setOnClickListener {
-            findNavController().navigate(R.id.action_finishSignUpFragment_to_takePhotoFragment2)
+            findNavController().navigate(R.id.action_finishSignUpFragment_to_takePhotoFragment)
         }
 
         binding.signupUsernameInput.doAfterTextChanged {text ->

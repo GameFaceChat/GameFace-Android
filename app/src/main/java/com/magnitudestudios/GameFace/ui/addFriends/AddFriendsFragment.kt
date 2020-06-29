@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentAddFriendsBinding
@@ -104,7 +105,11 @@ class AddFriendsFragment : Fragment() {
             override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
                 val value = addAdapter.getitem(position)
                 holder as AddFriendViewHolder
-                Glide.with(holder.itemView.context).load("https://picsum.photos/300/300").circleCrop().into(holder.getImageView())
+                Glide.with(holder.itemView.context)
+                        .load(value.profilePic)
+                        .circleCrop()
+                        .placeholder(R.drawable.ic_camera_btn)
+                        .into(holder.getImageView())
                 holder.bind(value)
                 holder.setState(getHolderState(value.uid))
             }

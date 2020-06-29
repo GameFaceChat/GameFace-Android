@@ -8,6 +8,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -17,13 +18,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/raleway_bold"
         android:text="Profile Photo"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="@+id/cancel_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/done_btn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/cancel_button"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,15 +42,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.takusemba.cropme.CropLayout
+        android:id="@+id/cropLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/layout_margin_large"
+        app:cropme_custom_shape_layout="@layout/support_simple_spinner_dropdown_item"
         app:cropme_background_alpha="80%"
-        app:cropme_frame_height_percent="80%"
-        app:cropme_frame_width_percent="80%"
+        app:cropme_frame_height_percent="90%"
+        app:cropme_frame_width_percent="90%"
         app:cropme_max_scale="2.0"
         app:cropme_overlay_shape="circle"
         app:cropme_with_border="true"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/cancel_button">
+    </com.takusemba.cropme.CropLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
