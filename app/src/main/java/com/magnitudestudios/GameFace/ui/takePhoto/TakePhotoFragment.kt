@@ -18,7 +18,6 @@ import android.widget.Toast
 import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.view.TextureViewMeteringPointFactory
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -26,6 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.common.util.concurrent.ListenableFuture
 import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentTakePhotoBinding
 import java.io.File
 import java.util.concurrent.Executor
@@ -40,6 +40,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private var camera: Camera?=null
     private var cameraSelector: CameraSelector? = null
 
+    private var torch = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentTakePhotoBinding.inflate(inflater, container, false)
@@ -68,6 +69,15 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
         bind.cameraCaptureButton.setOnClickListener {
             takePicture()
+        }
+
+        bind.flashBtn.setOnClickListener {
+            if (camera == null) return@setOnClickListener
+            torch = !torch
+            if (torch) bind.flashBtn.background = requireContext().getDrawable(R.drawable.baseline_flash_on_black_24dp)
+            else bind.flashBtn.background = requireContext().getDrawable(R.drawable.baseline_flash_off_black_24dp)
+
+            camera!!.cameraControl.enableTorch(torch)
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {

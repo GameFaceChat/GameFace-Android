@@ -44,6 +44,17 @@
         app:layout_constraintStart_toEndOf="@+id/camera_capture_button" />
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/flash_btn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/baseline_flash_off_black_24dp"
+        android:backgroundTint="@color/transparent_white_selector"
+        android:layout_margin="@dimen/layout_margin_large"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_btn"
         android:layout_width="@dimen/icon_size"
         android:layout_height="@dimen/icon_size"
@@ -55,5 +66,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
