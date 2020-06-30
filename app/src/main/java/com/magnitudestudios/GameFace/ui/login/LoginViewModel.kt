@@ -8,6 +8,7 @@
 package com.magnitudestudios.GameFace.ui.login
 
 import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.*
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.FirebaseException
@@ -41,7 +42,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun validateEmail(email: String): Boolean {
-        return email.isNotEmpty() && email.contains("@") && email.contains(".")
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     fun resetUserStatus() {
