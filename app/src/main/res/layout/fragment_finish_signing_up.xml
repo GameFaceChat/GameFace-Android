@@ -104,7 +104,7 @@
             android:maxLength="300"/>
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.magnitudestudios.GameFace.views.MorphableButton
         android:id="@+id/btn_finish_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
