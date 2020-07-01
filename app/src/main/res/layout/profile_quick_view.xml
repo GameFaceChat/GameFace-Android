@@ -41,6 +41,7 @@
     <TextView
         android:id="@+id/fullName"
         android:maxLines="1"
+        android:textColor="@color/md_grey_500"
         style="@style/small_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
