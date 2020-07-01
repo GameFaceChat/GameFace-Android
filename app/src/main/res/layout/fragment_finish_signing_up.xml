@@ -73,6 +73,7 @@
             android:digits="abcdefghijklmnopqrstuvwxyz0123456789_-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:autofillHints="username"
             android:drawableStart="@drawable/ic_person"
@@ -82,6 +83,7 @@
         <EditText
             android:id="@+id/full_nameInput"
             style="@style/signup_edittext"
+            android:lines="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin_large"
