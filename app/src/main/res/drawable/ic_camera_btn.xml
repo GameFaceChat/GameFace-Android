@@ -5,18 +5,10 @@
   ~
   -->
 
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="50dp"
-    android:height="50dp"
-    android:viewportWidth="50"
-    android:viewportHeight="50">
-  <path
-      android:pathData="M25,25m-25,0a25,25 0,1 1,50 0a25,25 0,1 1,-50 0"
-      android:fillColor="@color/camera_btn_color"/>
-  <path
-      android:pathData="M25,29C27.2091,29 29,27.2091 29,25C29,22.7909 27.2091,21 25,21C22.7909,21 21,22.7909 21,25C21,27.2091 22.7909,29 25,29Z"
-      android:fillColor="#000000"/>
-  <path
-      android:pathData="M21.25,12.5L18.9625,15H15C13.6187,15 12.5,16.1187 12.5,17.5V32.5C12.5,33.8813 13.6187,35 15,35H35C36.3813,35 37.5,33.8813 37.5,32.5V17.5C37.5,16.1187 36.3813,15 35,15H31.0375L28.75,12.5H21.25ZM25,31.25C21.55,31.25 18.75,28.45 18.75,25C18.75,21.55 21.55,18.75 25,18.75C28.45,18.75 31.25,21.55 31.25,25C31.25,28.45 28.45,31.25 25,31.25Z"
-      android:fillColor="#000000"/>
-</vector>
+<shape android:shape="oval"
+    android:thickness="@dimen/icon_size"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/transparent_white_selector"/>
+    <stroke android:color="@color/white" android:width="1dp"/>
+    <size android:height="@dimen/huge_icon_size" android:width="@dimen/huge_icon_size"/>
+</shape>

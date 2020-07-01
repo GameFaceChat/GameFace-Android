@@ -16,10 +16,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
@@ -53,31 +56,33 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     private lateinit var audioSource: AudioSource
     private lateinit var localAudioTrack: AudioTrack
 
-    private lateinit var binding: FragmentCameraBinding
+    private lateinit var bind: FragmentCameraBinding
 
     private lateinit var audioManager: AudioManager
 
-    private lateinit var viewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var viewModel: CameraViewModel
 
+    private val args: CameraFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentCameraBinding.inflate(inflater)
-        viewModel = activity?.run {
+        bind = FragmentCameraBinding.inflate(inflater)
+        iceServers = ArrayList()
+        mainViewModel = activity?.run {
             ViewModelProvider(this).get(MainViewModel::class.java)
         }!!
-        return binding.root
+        viewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
+        create()
+        return bind.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iceServers = ArrayList()
-        binding.connectButton.setOnClickListener(this)
-        binding.disconnectButton.setOnClickListener(this)
         rootEglBase = EglBase.create()
-        binding.localVideo.init(rootEglBase.eglBaseContext, null)
-        binding.remoteVideo.init(rootEglBase.eglBaseContext, null)
-        binding.localVideo.setZOrderMediaOverlay(true)
-        binding.remoteVideo.setZOrderMediaOverlay(false)
+        bind.localVideo.init(rootEglBase.eglBaseContext, null)
+        bind.remoteVideo.init(rootEglBase.eglBaseContext, null)
+        bind.localVideo.setZOrderMediaOverlay(true)
+        bind.remoteVideo.setZOrderMediaOverlay(false)
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
@@ -135,23 +140,21 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource)
-        
+
         videoCapturer!!.startCapture(720, 480, 30)
 
         //create surface renderer, init it and add the renderer to the track
-        binding.localVideo.setMirror(true)
-        binding.localVideo.setEnableHardwareScaler(true)
-        binding.remoteVideo.setEnableHardwareScaler(true)
-        localVideoTrack.addSink(binding.localVideo)
+        bind.localVideo.setMirror(true)
+        bind.localVideo.setEnableHardwareScaler(true)
+        bind.remoteVideo.setEnableHardwareScaler(true)
+        localVideoTrack.addSink(bind.localVideo)
     }
 
     private fun create() {
         Log.e(TAG, "call: " + "CALLING")
         iceServers = ArrayList()
-        binding.progressBar.visibility = View.VISIBLE
-        lifecycleScope.launch(Dispatchers.IO) {
-            getIceServers()
-        }
+        bind.progressBar.visibility = View.VISIBLE
+        lifecycleScope.launch(Dispatchers.IO) { getIceServers() }
     }
 
     // Try moving getting ice servers before creating room
@@ -181,6 +184,22 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         stream.addTrack(localAudioTrack)
         stream.addTrack(localVideoTrack)
         localPeer!!.addStream(stream)
+
+        sdpConstraints = MediaConstraints()
+        sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
+        sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
+
+        if (SessionHelper.initiator) {
+            localPeer!!.createOffer(object : CustomSdpObserver("localCreateOffer") {
+                override fun onCreateSuccess(sessionDescription: SessionDescription) {
+                    super.onCreateSuccess(sessionDescription)
+                    Log.d(TAG, "onCreateSuccess234: " + sessionDescription.description)
+                    localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocalDesc"), sessionDescription)
+                    //Send to peer
+                    SessionHelper.sendOffer(sessionDescription)
+                }
+            }, sdpConstraints)
+        }
     }
 
     private fun onTryToStart() {
@@ -198,10 +217,10 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         //we have remote video stream. add to the renderer.
         activity?.runOnUiThread {
             val videoTrack = stream.videoTracks[0]
-            binding.progressBar.visibility = View.GONE
+            bind.progressBar.visibility = View.GONE
             try {
                 transitionConnected()
-                videoTrack.addSink(binding.remoteVideo)
+                videoTrack.addSink(bind.remoteVideo)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -210,12 +229,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     private fun transitionConnected() {
 //        binding.remoteVideo.visibility = View.VISIBLE
-        binding.localVideo.setCalling()
+        bind.localVideo.setCalling()
     }
 
     private fun transitionDisconnected() {
 //        binding.remoteVideo.visibility = View.GONE
-        binding.localVideo.setLocal()
+        bind.localVideo.setLocal()
     }
 
     private suspend fun getIceServers() {
@@ -229,16 +248,28 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
             val serverInformation = gson.fromJson(data.data, ServerInformation::class.java)
             serverInformation.printAll()
             addToIceServers(serverInformation)
-            SessionHelper.call("ROOM2", this@CameraFragment, viewModel.profile.value?.data?.username!!)
-            onTryToStart()
+//            SessionHelper.room("ROOM2", this@CameraFragment, mainViewModel.profile.value?.data?.username!!)
+            if (args.roomID.isNotEmpty()) {
+                viewModel.joinRoom(args.roomID, this@CameraFragment)
+                onTryToStart()
+            }
+            if (args.callUserUID.isNotEmpty()) {
+                viewModel.createRoom(
+                        this@CameraFragment,
+                        getString(R.string.backend_cloud_function_call),
+                        mainViewModel.profile.value?.data!!,
+                        args.callUserUID)
+                onTryToStart()
+            }
         } catch (e: JsonParseException) {
             Log.e(TAG, "handleMessage: COULD NOT PARSE JSON: ${data.data}", e)
             connectionFailed("No Connection to Server")
         }
     }
+
     private fun connectionFailed(message: String? = null) {
         activity?.runOnUiThread {
-            binding.progressBar.visibility = View.GONE
+            bind.progressBar.visibility = View.GONE
             if (!message.isNullOrEmpty()) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
     }
@@ -261,8 +292,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         hangUp()
         try {
             videoCapturer?.stopCapture()
-            binding.remoteVideo.release()
-            binding.remoteVideo.release()
+            bind.remoteVideo.release()
+            bind.remoteVideo.release()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }
@@ -270,9 +301,9 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.connectButton -> create()
+//            R.id.connectButton -> create()
 //            R.id.connectButton -> transitionConnected()
-            R.id.disconnectButton -> hangUp()
+//            R.id.disconnectButton -> hangUp()
 //            R.id.disconnectButton -> transitionDisconnected()
         }
     }
@@ -290,18 +321,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     override fun onCreateRoom() {
         //Send offer
         Log.e(TAG, "CREATED ROOM")
-        sdpConstraints = MediaConstraints()
-        sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
-        sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
-        localPeer!!.createOffer(object : CustomSdpObserver("localCreateOffer") {
-            override fun onCreateSuccess(sessionDescription: SessionDescription) {
-                super.onCreateSuccess(sessionDescription)
-                Log.d(TAG, "onCreateSuccess234: " + sessionDescription.description)
-                localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocalDesc"), sessionDescription)
-                //Send to peer
-                SessionHelper.sendOffer(sessionDescription)
-            }
-        }, sdpConstraints)
+//        create()
     }
 
     override fun offerReceived(session: SessionInfoPOJO) {
@@ -333,7 +353,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun participantLeft(s: String?) {
         Log.e(TAG, "participantLeft: $s")
-        Toast.makeText(context, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show()
         hangUp()
     }
 
@@ -342,7 +362,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     }
 
     override fun onLeftRoom() {
-        binding.progressBar.visibility = View.GONE
+        bind.progressBar.visibility = View.GONE
         Toast.makeText(context, "Left Room", Toast.LENGTH_SHORT).show()
     }
 
@@ -369,7 +389,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         }
         return null
     }
-
 
 
     companion object {

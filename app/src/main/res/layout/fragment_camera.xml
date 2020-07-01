@@ -17,15 +17,14 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/bottomBar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <org.webrtc.SurfaceViewRenderer
             android:id="@+id/remoteVideo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:ignore="MissingConstraints" />
+            android:layout_height="match_parent" />
 
         <com.magnitudestudios.GameFace.views.MovableSurfaceView
             android:id="@+id/localVideo"
@@ -46,33 +45,4 @@
         app:layout_constraintStart_toStartOf="@+id/videoLayout"
         app:layout_constraintTop_toTopOf="@+id/videoLayout" />
 
-    <LinearLayout
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <Button
-            android:id="@+id/connectButton"
-            android:layout_width="0dp"
-            android:background="@drawable/connect_background"
-            android:textColor="@android:color/white"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:text="Connect" />
-
-        <Button
-            android:id="@+id/disconnectButton"
-            android:background="@drawable/disconnect_background"
-            android:textColor="@android:color/white"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:text="Disconnect" />
-
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

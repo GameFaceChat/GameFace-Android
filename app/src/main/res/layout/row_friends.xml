@@ -16,6 +16,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/call_button"
             android:layout_width="@dimen/large_icon_size"
             android:layout_height="@dimen/large_icon_size"
             android:background="@drawable/ic_phone_48px"

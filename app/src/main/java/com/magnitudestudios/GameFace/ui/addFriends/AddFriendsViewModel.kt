@@ -7,6 +7,7 @@
 
 package com.magnitudestudios.GameFace.ui.addFriends
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -15,6 +16,7 @@ import com.magnitudestudios.GameFace.pojo.UserInfo.FriendRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AddFriendsViewModel : ViewModel() {
     private val queryString: MutableLiveData<String> = MutableLiveData()
@@ -45,6 +47,16 @@ class AddFriendsViewModel : ViewModel() {
 
     fun sendFriendRequest(profile: Profile) {
         if (profile.uid != Firebase.auth.currentUser!!.uid) FirebaseHelper.sendFriendRequest(profile)
+    }
+
+    fun deleteFriendRequest(profile: Profile) {
+        Log.e("HERE", "FIRST")
+        if (profile.uid in getFriendRequestedUIDs()) {
+            Log.e("HERE", "SECOND")
+            viewModelScope.launch(Dispatchers.IO) {
+                FirebaseHelper.deleteFriendRequest(profile.uid, false)
+            }
+        }
     }
 
     fun getFriendRequestedUIDs() : List<String> {

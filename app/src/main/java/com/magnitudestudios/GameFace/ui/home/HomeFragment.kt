@@ -24,8 +24,5 @@ class HomeFragment : BaseFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.goToCamera.setOnClickListener {
-            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_bottomContainerFragment_to_cameraFragment)
-        }
     }
 }
