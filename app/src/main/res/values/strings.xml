@@ -74,6 +74,8 @@
     <string name="deny_request">Delete</string>
     <string name="btn_edit_profile">Edit Profile</string>
 
+    <!-- Crop Fragment -->
+
     <!-- Incoming Call -->
     <string name="incoming_call">It\'s Game Time!</string>
 
@@ -88,6 +90,7 @@
     <string name="pwd_length">Password must be at least 6 characters in length</string>
     <string name="pwd_must_match">Passwords must match</string>
     <string name="sign_up_failed">Sign Up Failed</string>
+    <string name="cropping_failed">Cropping Failed. Please Try Again.</string>
 
 
 

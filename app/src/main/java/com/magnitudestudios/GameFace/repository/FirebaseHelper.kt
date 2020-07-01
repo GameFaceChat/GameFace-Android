@@ -7,9 +7,12 @@
 
 package com.magnitudestudios.GameFace.repository
 
+import android.net.Uri
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +21,7 @@ import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.UserInfo.Friend
@@ -39,7 +43,7 @@ object FirebaseHelper {
 
     fun getCurrentUserRef(): DatabaseReference = getUserRef(Firebase.auth.currentUser!!.uid)
 
-    private fun getProfileRef(uid: String) : DatabaseReference = Firebase.database.reference.child(Constants.PROFILE_PATH).child(uid)
+    private fun getProfileRef(uid: String): DatabaseReference = Firebase.database.reference.child(Constants.PROFILE_PATH).child(uid)
 
     private fun getCurrentUserProfileRef(): DatabaseReference = getProfileRef(Firebase.auth.currentUser!!.uid)
 
@@ -139,6 +143,7 @@ object FirebaseHelper {
                 override fun onCancelled(p0: DatabaseError) {
                     cont.cancel(p0.toException())
                 }
+
                 override fun onDataChange(data: DataSnapshot) = cont.resume(data.value)
             })
         }
@@ -169,7 +174,7 @@ object FirebaseHelper {
         }
     }
 
-    suspend fun usernameExists(username: String) : Resource<Boolean> {
+    suspend fun usernameExists(username: String): Resource<Boolean> {
         return suspendCoroutine {
             Firebase.database.reference
                     .child(Constants.PROFILE_PATH)
@@ -181,6 +186,22 @@ object FirebaseHelper {
                         override fun onDataChange(p0: DataSnapshot) = it.resume(Resource.success(p0.exists()))
                     })
         }
+    }
+
+    suspend fun setProfilePic(image: Uri): Resource<Uri?> {
+        if (Firebase.auth.currentUser == null) return Resource.error("User must sign in", null)
+        return try {
+            val uri = Firebase.storage
+                    .reference
+                    .child("${Constants.USERS_PATH}/${Firebase.auth.currentUser!!.uid}/${Profile::profilePic.name}")
+                    .putFile(image).await().storage.downloadUrl.await()
+            Resource.success(uri)
+        } catch (e: FirebaseException) {
+            Log.e("FirebaseHelper", e.message, e)
+            Resource.error(e.message, null)
+        }
+
+
     }
 
     fun sendFriendRequest(toUser: Profile) {

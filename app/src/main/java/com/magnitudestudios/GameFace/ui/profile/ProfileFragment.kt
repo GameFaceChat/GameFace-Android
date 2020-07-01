@@ -8,19 +8,15 @@
 package com.magnitudestudios.GameFace.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.tabs.TabLayoutMediator
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
@@ -51,20 +47,21 @@ class ProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         bind.viewpager.adapter = ProfileTabAdapter(this)
 
-        val url = "https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&q=70&fm=webp"
-        Glide.with(this).load(url)
-                .placeholder(R.drawable.ic_add_profile_pic)
-                .fallback(R.drawable.ic_add_profile_pic)
-                .circleCrop()
-                .into(bind.profilePic)
         mainViewModel.profile.observe(viewLifecycleOwner, Observer {
             if (it == null) bind.displayUsername.text = "Loading..."
-            else bind.displayUsername.text = it.data?.username
-            if (it != null) bind.displayName.text = it.data?.name
+            else {
+                bind.displayUsername.text = it.data?.username
+                bind.displayName.text = it.data?.name
+                Glide.with(this).load(mainViewModel.profile.value?.data?.profilePic)
+                        .placeholder(R.drawable.ic_add_profile_pic)
+                        .fallback(R.drawable.ic_add_profile_pic)
+                        .circleCrop()
+                        .into(bind.profilePic)
+            }
         })
 
         bind.profilePic.setOnClickListener {
-//            findNavController().navigate(R.id.action_profileFragment_to_takePhotoFragment)
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_takePhotoFragment)
         }
 
         TabLayoutMediator(bind.profileTabs, bind.viewpager) { tab, position ->
@@ -77,6 +74,11 @@ class ProfileFragment : BaseFragment() {
         }.attach()
 
         //Observe for friend request changes
+        observeFriends()
+
+    }
+
+    private fun observeFriends() {
         mainViewModel.friendRequests.observe(viewLifecycleOwner, Observer { it ->
             viewModel.getRequestProfiles(it.map { it.friendUID } as MutableList<String>)
         })
@@ -94,8 +96,6 @@ class ProfileFragment : BaseFragment() {
                 bind.profileTabs.getTabAt(2)?.removeBadge()
             }
         })
-
-
     }
 
     class ProfileTabAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
@@ -110,7 +110,6 @@ class ProfileFragment : BaseFragment() {
             }
         }
     }
-
 
 
 }

@@ -58,9 +58,10 @@ class FriendRequestsFragment : Fragment() {
             }
 
             override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
-                (holder as FriendRequestViewHolder).bind(this.getitem(position))
+                val value = this.getitem(position)
+                (holder as FriendRequestViewHolder).bind(value)
                 Glide.with(this@FriendRequestsFragment)
-                        .load("https://picsum.photos/300/300")
+                        .load(value.profilePic)
                         .circleCrop()
                         .into(holder.getImageView())
             }

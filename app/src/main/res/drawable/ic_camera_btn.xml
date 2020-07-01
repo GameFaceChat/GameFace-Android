@@ -1,6 +1,14 @@
-<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="50dp" android:height="50dp" android:viewportWidth="50" android:viewportHeight="50">
-    <path android:pathData="M0 25a25 25 0 1 1 50 0 25 25 0 1 1-50 0" android:fillColor="@color/camera_btn_color"/>
-    <path android:pathData="M25 29c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" android:fillColor="#000000"/>
-    <path android:pathData="M21.25 12.5L18.962 15H15c-1.381 0-2.5 1.119-2.5 2.5v15c0 1.381 1.119 2.5 2.5 2.5h20c1.381 0 2.5-1.119 2.5-2.5v-15c0-1.381-1.119-2.5-2.5-2.5h-3.962l-2.288-2.5h-7.5zM25 31.25c-3.45 0-6.25-2.8-6.25-6.25s2.8-6.25 6.25-6.25 6.25 2.8 6.25 6.25-2.8 6.25-6.25 6.25z" android:fillColor="#000000"/>
-</vector>
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<shape android:shape="oval"
+    android:thickness="@dimen/icon_size"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/transparent_white_selector"/>
+    <stroke android:color="@color/white" android:width="1dp"/>
+    <size android:height="@dimen/huge_icon_size" android:width="@dimen/huge_icon_size"/>
+</shape>

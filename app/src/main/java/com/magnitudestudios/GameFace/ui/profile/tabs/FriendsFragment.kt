@@ -104,7 +104,11 @@ class FriendsFragment : Fragment() {
             override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
                 val value = mAdapter.getitem(position)
                 holder as FriendViewHolder
-                Glide.with(holder.itemView.context).load("https://randomuser.me/api/portraits/med/men/75.jpg").circleCrop().into(holder.getImageView())
+                Glide.with(holder.itemView.context)
+                        .load(value.profilePic)
+                        .placeholder(R.drawable.ic_camera_btn)
+                        .circleCrop()
+                        .into(holder.getImageView())
                 holder.bind(value)
             }
 
