@@ -35,16 +35,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("termsAndConditions")?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gamefacechat.com/terms-and-conditions")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.termsAndConditionsLink))))
             return@setOnPreferenceClickListener true
         }
 
         findPreference<Preference>("privacyPolicy")?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gamefacechat.com/privacy-policy")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacyPolicyLink))))
             return@setOnPreferenceClickListener true
         }
         findPreference<Preference>("aboutUs")?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gamefacechat.com/")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.website))))
             return@setOnPreferenceClickListener true
         }
     }
