@@ -7,6 +7,8 @@
 
 package com.magnitudestudios.GameFace.ui.main
 
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -51,6 +53,13 @@ class MainActivity : BasePermissionsActivity() {
             findNavController(R.id.mainNavHost).navigate(action)
         }
         Log.e("VERSION", " " + Integer.valueOf(android.os.Build.VERSION.SDK_INT))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Cancel Notifications
+        val nMgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nMgr.cancelAll()
     }
 
 
