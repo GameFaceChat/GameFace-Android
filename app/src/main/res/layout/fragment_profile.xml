@@ -50,7 +50,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:fontFamily="@font/raleway_semibold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/settings_btn"
             app:layout_constraintStart_toEndOf="@+id/profile_pic"
             app:layout_constraintTop_toTopOf="@+id/profile_pic"
             tools:text="@string/username_input_hint" />
@@ -84,6 +84,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_pic" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/settings_btn"
+            style="@style/Widget.AppCompat.ActionButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_settings_icon"
+            android:layout_margin="@dimen/layout_margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
