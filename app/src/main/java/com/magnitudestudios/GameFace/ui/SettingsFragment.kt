@@ -44,7 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             return@setOnPreferenceClickListener true
         }
         findPreference<Preference>("aboutUs")?.setOnPreferenceClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.website))))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.aboutUs))))
             return@setOnPreferenceClickListener true
         }
     }
