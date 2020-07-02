@@ -63,6 +63,11 @@
             app:destination="@id/cameraFragment"
             app:enterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom" />
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"
@@ -74,4 +79,8 @@
             app:argType="string"
             android:defaultValue=""/>
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.magnitudestudios.GameFace.ui.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

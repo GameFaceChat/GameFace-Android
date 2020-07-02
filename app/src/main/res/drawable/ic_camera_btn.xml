@@ -1,13 +1,5 @@
-<!--
-  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
-  ~ Unauthorized copying of this file, via any medium is prohibited
-  ~ All software is proprietary and confidential
-  ~
-  -->
-
-<shape android:shape="oval"
-    android:thickness="@dimen/icon_size"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<shape android:shape="oval" android:thickness="@dimen/icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/transparent_white_selector"/>
     <stroke android:color="@color/white" android:width="1dp"/>
     <size android:height="@dimen/huge_icon_size" android:width="@dimen/huge_icon_size"/>

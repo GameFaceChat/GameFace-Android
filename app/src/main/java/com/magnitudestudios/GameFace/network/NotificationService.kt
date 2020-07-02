@@ -98,6 +98,8 @@ class NotificationService : FirebaseMessagingService() {
 
     private fun validateMessage(message: RemoteMessage) : Boolean {
         if (message.data.isEmpty() || !message.data.containsKey("type")) return false
+        else if (Firebase.auth.currentUser == null) return false
+        else if (!message.data.containsKey("toUID") || message.data["toUID"] != Firebase.auth.currentUser?.uid) return false
         return true
     }
 
