@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimaryLight">#7c51b7</color>
     <color name="colorPrimary">#643E97</color>
-    <color name="colorPrimaryDark">#5d19b5</color>
+    <color name="colorPrimaryDark">#54347f</color>
+    <color name="colorAccentLight">#00b1bc</color>
     <color name="colorAccent">#00A1AB</color>
-    <color name="colorAccentLight">#00bcc9</color>
+    <color name="colorAccentDark">#008189</color>
 
     <color name="dividerColour">#33643E97</color>
 
@@ -23,6 +25,7 @@
 
     <color name="bottom_nav_icon_unselected">#AABDBDBD</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_white">#AAFFFFFF</color>
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

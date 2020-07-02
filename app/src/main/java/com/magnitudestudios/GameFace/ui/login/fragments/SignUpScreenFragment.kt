@@ -51,7 +51,7 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
 
     private fun validateDetails(): Boolean {
         var valid = true
-        if (!binding.signupEmailInput.text.toString().contains("@") || !binding.signupEmailInput.text.toString().contains(".")) {
+        if (!viewModel.validateEmail(binding.signupEmailInput.text.toString())) {
             binding.signupEmailInput.error = getString(R.string.enter_valid_email)
         } else {
             binding.signupEmailInput.error = null

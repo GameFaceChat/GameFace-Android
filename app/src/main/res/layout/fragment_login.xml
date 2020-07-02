@@ -39,7 +39,7 @@
         android:id="@+id/login_close_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/button_no_bgnd_text"
+        android:backgroundTint="@color/button_to_transparent"
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/ic_close_black_24dp"
         app:layout_constraintTop_toTopOf="parent" />

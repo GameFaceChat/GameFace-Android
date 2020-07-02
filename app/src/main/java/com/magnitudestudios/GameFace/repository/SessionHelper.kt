@@ -26,11 +26,11 @@ import org.webrtc.SessionDescription
 
 object SessionHelper {
     private var groupMembers = 0
-    var username = ""
+    var uid = ""
     private var childEventListener: ChildEventListener? = null
     var currentRoom: String? = null
         private set
-    var started: Boolean
+    var started: Boolean = false
     var initiator: Boolean
 
     private const val TAG = "SessionHelper"
@@ -46,7 +46,7 @@ object SessionHelper {
                     Log.e(TAG, "onChildAdded: NULL MESSAGE")
                     return
                 }
-                if (emitMessage.userID == username) {
+                if (emitMessage.userID == uid) {
                     return
                 }
                 val gson = Gson()
@@ -72,48 +72,55 @@ object SessionHelper {
                 Log.e(TAG, "onCancelled: " + databaseError.message)
             }
         }
-        Firebase.database.getReference("rooms").child(currentRoom!!).addChildEventListener(childEventListener!!)
+        Firebase.database.getReference(Constants.ROOMS_PATH).child(currentRoom!!).child(Constants.CONNECT_PATH).addChildEventListener(childEventListener!!)
     }
 
     private fun sendMessage(type: String, data: Any?): Task<Void?> {
-        return Firebase.database.reference.child("rooms").child(currentRoom!!).push().setValue(EmitMessage(username, type, data))
+        return Firebase.database.reference
+                .child(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+                .child(Constants.CONNECT_PATH)
+                .push().setValue(EmitMessage(uid, type, data))
     }
 
-    private fun createRoom(callback: RoomCallback) {
+    suspend fun createRoom(callback: RoomCallback, uid: String) : String {
         initiator = true
-        sendMessage(Constants.JOINED_KEY, username).addOnCompleteListener {
-            callback.onCreateRoom()
-            readMessage(callback)
-        }
+        this.uid = uid
+        currentRoom = Firebase.database.reference.child(Constants.ROOMS_PATH).push().key
+        addToMembers(this.uid)
+        sendMessage(Constants.JOINED_KEY, this.uid).await()
+        callback.onCreateRoom()
+        readMessage(callback)
+        return currentRoom!!
     }
 
-    private fun joinRoom(callback: RoomCallback) {
+    suspend fun joinRoom(roomName: String, callback: RoomCallback, uid: String) : String {
         initiator = false
-        sendMessage(Constants.JOINED_KEY, username).addOnCompleteListener {
-            callback.onJoinedRoom(true)
-            readMessage(callback)
-        }
+        this.uid = uid
+        currentRoom = roomName
+        addToMembers(this.uid)
+        sendMessage(Constants.JOINED_KEY, uid).await()
+        callback.onJoinedRoom(true)
+        readMessage(callback)
+        return roomName
     }
 
-
-    suspend fun call(roomName: String, callback: RoomCallback, username: String) {
-        currentRoom = roomName
-        groupMembers += 1
-        this.username = username
-        if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
-            joinRoom(callback)
-        } else {
-            createRoom(callback)
-        }
+    suspend fun addToMembers(uid: String) {
+        Firebase.database.reference
+                .child(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+                .child(Constants.MEMBERS_PATH)
+                .child(uid)
+                .setValue(Constants.JOINED_KEY).await()
     }
 
     suspend fun leaveRoom(callback: RoomCallback) {
         if (currentRoom != null && childEventListener != null) {
-            Firebase.database.getReference("rooms").child(currentRoom!!).removeEventListener(childEventListener!!)
+            Firebase.database.getReference(Constants.ROOMS_PATH).child(currentRoom!!).removeEventListener(childEventListener!!)
             childEventListener = null
             if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
                 try {
-                    sendMessage(Constants.LEFT_KEY, username).await()
+                    sendMessage(Constants.LEFT_KEY, uid).await()
                     callback.onLeftRoom()
                     if (groupMembers == 1) closeRoom()
                     groupMembers = 0
@@ -147,7 +154,7 @@ object SessionHelper {
     }
 
     init {
-        started = false
         initiator = false
     }
+
 }

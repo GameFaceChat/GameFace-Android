@@ -19,7 +19,7 @@ data class User(
         var created: Any? = null,
 
         @JvmField
-        var devicesID: List<String> = mutableListOf(),
+        var devicesID: HashMap<String, Boolean> = HashMap(),
 
         @JvmField
         var friendRequests: HashMap<String, FriendRequest> = HashMap(),

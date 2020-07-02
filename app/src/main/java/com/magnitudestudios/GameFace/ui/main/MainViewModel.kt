@@ -93,7 +93,7 @@ class MainViewModel : ViewModel() {
 
     fun checkDevice() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (!user.value?.data?.devicesID?.contains(FirebaseHelper.getDeviceToken())!!) {
+            if (!user.value?.data?.devicesID?.containsKey(FirebaseHelper.getDeviceToken())!!) {
                 FirebaseHelper.updateDeviceToken(FirebaseHelper.getDeviceToken())
             }
         }

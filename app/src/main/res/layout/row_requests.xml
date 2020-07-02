@@ -12,9 +12,16 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <include android:id="@+id/profile" layout="@layout/profile_quick_view"/>
+    <include
+        android:id="@+id/profile"
+        layout="@layout/profile_quick_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -36,13 +43,12 @@
             android:id="@+id/deny_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_margin_very_small"
             android:backgroundTint="@color/colorAccent"
             android:fontFamily="@font/raleway"
             android:text="@string/deny_request"
             android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:layout_marginEnd="@dimen/layout_margin_very_small"
-            />
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
