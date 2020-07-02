@@ -7,11 +7,14 @@
 
 package com.magnitudestudios.GameFace.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
@@ -30,12 +33,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
             mainViewModel.signOutUser()
             return@setOnPreferenceClickListener true
         }
+
+        findPreference<Preference>("termsAndConditions")?.setOnPreferenceClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.termsAndConditionsLink))))
+            return@setOnPreferenceClickListener true
+        }
+
+        findPreference<Preference>("privacyPolicy")?.setOnPreferenceClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacyPolicyLink))))
+            return@setOnPreferenceClickListener true
+        }
+        findPreference<Preference>("aboutUs")?.setOnPreferenceClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.aboutUs))))
+            return@setOnPreferenceClickListener true
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mainViewModel = activity?.run { ViewModelProvider(this).get(MainViewModel::class.java) }!!
         val layout = super.onCreateView(inflater, container, savedInstanceState)
         val viewWithToolbar = LinearLayout(context)
+        viewWithToolbar.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
         viewWithToolbar.orientation = LinearLayout.VERTICAL
         toolbar = ToolbarBackBinding.inflate(inflater, container, false)
         toolbar.title.text = TITLE
