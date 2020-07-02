@@ -57,6 +57,8 @@
             android:id="@+id/action_bottomContainerFragment_to_addFriendsFragment"
             app:destination="@id/addFriendsFragment"
             app:enterAnim="@anim/slide_from_bottom"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
             app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/action_bottomContainerFragment_to_cameraFragment"
@@ -66,8 +68,10 @@
         <action
             android:id="@+id/action_bottomContainerFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
-            app:enterAnim="@anim/slide_from_bottom"
-            app:popExitAnim="@anim/slide_out_bottom" />
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"

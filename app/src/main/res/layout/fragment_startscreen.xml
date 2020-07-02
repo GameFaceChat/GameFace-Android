@@ -162,9 +162,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/layout_margin_small"
         android:text="@string/already_have_account"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/startscreen_txv_terms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/startscreen_card_signupwithemail" />
+
+    <TextView
+        android:id="@+id/startscreen_txv_terms"
+        style="@style/terms_and_conditions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/terms_and_conditions_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="@dimen/layout_margin_large"
+        app:layout_constraintEnd_toStartOf="@+id/startscreen_guideline_horizontal_2"
+        app:layout_constraintStart_toStartOf="@+id/startscreen_guideline_horizontal_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
