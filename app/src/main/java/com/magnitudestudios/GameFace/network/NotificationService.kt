@@ -23,6 +23,7 @@ import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.ui.calling.IncomingCall
+import com.magnitudestudios.GameFace.ui.main.MainActivity
 import kotlinx.coroutines.*
 import java.lang.Exception
 import kotlin.random.Random
@@ -70,33 +71,38 @@ class NotificationService : FirebaseMessagingService() {
                 fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("Incoming Video Call")
-                        .setContentText(data["fromUsername"])
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setCategory(NotificationCompat.CATEGORY_CALL)
-                        .setVibrate(Constants.VIBRATE_PATTERN)
-                        .setFullScreenIntent(fullScreenPendingIntent, true)
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setSmallIcon(R.drawable.logo_simple_rainbow)
+                .setContentTitle("Incoming Video Call")
+                .setContentText("From: "+ data["fromUsername"])
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setVibrate(Constants.VIBRATE_PATTERN)
+                .setFullScreenIntent(fullScreenPendingIntent, true)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
         with(NotificationManagerCompat.from(this)) {
-            notify(Random.nextInt(), notificationBuilder.build())
+            notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
         }
     }
 
     private fun showNotification(data: Map<String, String>) {
+        val pendingIntent = PendingIntent.getActivity(this, 1, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.friends_notification_ID))
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo_simple_rainbow)
                 .setContentTitle(data["title"])
                 .setContentText(data["body"])
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_SOCIAL)
+                .setContentIntent(pendingIntent)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(Random.nextInt(), notificationBuilder.build())
+            notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
         }
     }
 
-    private fun validateMessage(message: RemoteMessage) : Boolean {
+    private fun validateMessage(message: RemoteMessage): Boolean {
         if (message.data.isEmpty() || !message.data.containsKey("type")) return false
         return true
     }
