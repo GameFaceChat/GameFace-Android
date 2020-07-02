@@ -8,7 +8,13 @@
 package com.magnitudestudios.GameFace.ui.login.fragments
 
 import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -55,6 +61,7 @@ class StartScreenFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
+        termsAndPrivacy()
     }
 
     private fun onClickSignWithGoogle() {
@@ -78,6 +85,25 @@ class StartScreenFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(context, "Sign in failed", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    private fun termsAndPrivacy() {
+        binding.startscreenTxvTerms.movementMethod = LinkMovementMethod.getInstance()
+        binding.startscreenTxvTerms.highlightColor = Color.TRANSPARENT
+        val ss = SpannableString(getString(R.string.terms_and_conditions_text))
+        val termsConditions: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.termsAndConditionsLink))))
+            }
+        }
+        val privacyPolicy = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacyPolicyLink))))
+            }
+        }
+        ss.setSpan(termsConditions, ss.indexOf("Terms"), ss.indexOf("Conditions")+10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(privacyPolicy, ss.indexOf("Privacy"), ss.indexOf("Policy") + 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.startscreenTxvTerms.text = ss
     }
 
     override fun onClick(v: View) {
