@@ -7,8 +7,15 @@
 
 package com.magnitudestudios.GameFace.ui.login.fragments
 
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +28,7 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentSignupBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
+
 
 class SignUpScreenFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentSignupBinding
@@ -38,7 +46,7 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         binding.signupButtonSignup.setOnClickListener(this)
         binding.signupCloseBtn.setOnClickListener(this)
-
+        termsAndPrivacy()
     }
 
     private fun validateDetails(): Boolean {
@@ -72,6 +80,25 @@ class SignUpScreenFragment : Fragment(), View.OnClickListener {
                 Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
             }
         })
+    }
+
+    private fun termsAndPrivacy() {
+        binding.signupTxvTerms.movementMethod = LinkMovementMethod.getInstance()
+        binding.signupTxvTerms.highlightColor = Color.TRANSPARENT
+        val ss = SpannableString(getString(R.string.terms_and_conditions_text))
+        val termsConditions: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.termsAndConditionsLink))))
+            }
+        }
+        val privacyPolicy = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacyPolicyLink))))
+            }
+        }
+        ss.setSpan(termsConditions, ss.indexOf("Terms"), ss.indexOf("Conditions")+10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(privacyPolicy, ss.indexOf("Privacy"), ss.indexOf("Policy") + 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.signupTxvTerms.text = ss
     }
 
     override fun onClick(v: View) {

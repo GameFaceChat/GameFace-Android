@@ -3,6 +3,10 @@
     <string name="backend_cloud_function">https://us-central1-gameface-chat.cloudfunctions.net/app/servers</string>
     <string name="backend_cloud_function_call">https://us-central1-gameface-chat.cloudfunctions.net/app/call</string>
 
+    <string name="termsAndConditionsLink">https://www.gamefacechat.com/terms-and-conditions</string>
+    <string name="privacyPolicyLink">https://www.gamefacechat.com/privacy-policy</string>
+
+
     <string name="app_name">GameFace</string>
     <string name="app_name_with_styling">Game<b>Face</b></string>
     <string name="slogan">Take the party with you.</string>
