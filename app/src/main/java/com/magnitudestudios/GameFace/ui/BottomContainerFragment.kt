@@ -16,16 +16,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentBottomNavBinding
+import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
 class BottomContainerFragment : Fragment() {
     private lateinit var bind: FragmentBottomNavBinding
+    private lateinit var mainViewModel: MainViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentBottomNavBinding.inflate(inflater, container, false)
+        mainViewModel = activity?.run { ViewModelProvider(this).get(MainViewModel::class.java) }!!
         return bind.root
     }
 
