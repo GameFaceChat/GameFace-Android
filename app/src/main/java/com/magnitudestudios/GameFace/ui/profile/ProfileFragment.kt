@@ -64,6 +64,10 @@ class ProfileFragment : BaseFragment() {
             activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_takePhotoFragment)
         }
 
+        bind.settingsBtn.setOnClickListener {
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_settingsFragment)
+        }
+
         TabLayoutMediator(bind.profileTabs, bind.viewpager) { tab, position ->
             when (position) {
                 0 -> tab.icon = context?.getDrawable(R.drawable.ic_person)
