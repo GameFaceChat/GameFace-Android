@@ -7,13 +7,14 @@
 
 package com.magnitudestudios.GameFace.ui.addFriends
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -33,6 +34,7 @@ import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.views.AddFriendViewHolder
 
+
 class AddFriendsFragment : Fragment() {
     private lateinit var bind: FragmentAddFriendsBinding
     private lateinit var mainViewModel: MainViewModel
@@ -51,7 +53,7 @@ class AddFriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (!viewModel.getQueryString().isNullOrEmpty()) bind.searchBarLayout.searchEditText.setText(viewModel.getQueryString())
         bind.doneBtn.setOnClickListener { findNavController().popBackStack() }
-
+        bind.searchBarLayout.searchEditText.requestFocus()
         initAdapter()
 
         bind.usersList.apply {
@@ -80,7 +82,22 @@ class AddFriendsFragment : Fragment() {
             }
         })
 
+        bind.usersList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                hideKeyboard()
+            }
+        })
+
     }
+
+    fun hideKeyboard() {
+        val imm: InputMethodManager = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity?.currentFocus
+        if (view == null) view = View(activity)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
 
     private fun redrawList() {
         bind.usersList.adapter = null
