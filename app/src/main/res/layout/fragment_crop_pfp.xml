@@ -78,10 +78,11 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/flip_btn"
-        android:layout_marginTop="@dimen/layout_margin_large"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_large"
         android:background="@drawable/ic_flip"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/rightBtn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/leftBtn"
