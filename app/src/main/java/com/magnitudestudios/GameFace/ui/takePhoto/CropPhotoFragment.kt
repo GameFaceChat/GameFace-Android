@@ -69,6 +69,7 @@ class CropPhotoFragment : Fragment() {
             bind.cropLayout.rotateImage(-90f)
         }
         bind.rightBtn.setOnClickListener { bind.cropLayout.rotateImage(90f) }
+        bind.flipBtn.setOnClickListener { bind.cropLayout.flipImage() }
     }
 
 }

@@ -188,6 +188,17 @@ class CropLayout @JvmOverloads constructor(
     invalidate()
   }
 
+  fun flipImage() {
+    val bitmapOrg = (cropImageView.drawable as BitmapDrawable).bitmap
+    val matrix = Matrix()
+    matrix.postScale(-1f, 1f, bitmapOrg.width/2f, bitmapOrg.height/2f)
+
+    val flippedBitmap = Bitmap.createBitmap(bitmapOrg, 0, 0, bitmapOrg.width, bitmapOrg.height, matrix, true)
+    setBitmap(flippedBitmap)
+    bitmapOrg.recycle()
+    invalidate()
+  }
+
   /**
    * Crop the image and returns the result via [OnCropListener].
    *
