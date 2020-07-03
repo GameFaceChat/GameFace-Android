@@ -64,6 +64,11 @@ class CropPhotoFragment : Fragment() {
             }
 
         })
+
+        bind.leftBtn.setOnClickListener {
+            bind.cropLayout.rotateImage(-90f)
+        }
+        bind.rightBtn.setOnClickListener { bind.cropLayout.rotateImage(90f) }
     }
 
 }

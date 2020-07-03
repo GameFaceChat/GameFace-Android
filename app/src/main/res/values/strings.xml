@@ -81,6 +81,9 @@
     <string name="btn_edit_profile">Edit Profile</string>
 
     <!-- Crop Fragment -->
+    <string name="crop_done_btn">Done</string>
+    <string name="crop_cancel_btn">Cancel</string>
+    <string name="crop_title">Profile Photo</string>
 
     <!-- Incoming Call -->
     <string name="incoming_call">It\'s Game Time!</string>
