@@ -56,35 +56,35 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toBottomOf="@+id/cancel_button" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/leftBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/ic_rotate_left"
+        app:layout_constraintEnd_toStartOf="@+id/flip_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/flip_btn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/rightBtn"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_rotate_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/flip_btn"
+        app:layout_constraintTop_toTopOf="@+id/flip_btn" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/flip_btn"
         android:layout_marginTop="@dimen/layout_margin_large"
-        android:text="Left"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_flip"
         app:layout_constraintEnd_toStartOf="@+id/rightBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cropLayout" />
-
-    <Button
-        android:id="@+id/rightBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/leftBtn"
-        app:layout_constraintTop_toTopOf="@+id/leftBtn" />
-
-    <Button
-        android:id="@+id/flip_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Flip"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/layout_margin_large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leftBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/cropLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
