@@ -11,6 +11,10 @@ import android.view.SurfaceHolder
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import org.webrtc.SurfaceViewRenderer
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 class MovableSurfaceView : SurfaceViewRenderer {
     var dX = 0f
@@ -24,7 +28,7 @@ class MovableSurfaceView : SurfaceViewRenderer {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
 
     private val parentDimens: Unit
-        private get() {
+        get() {
             maxwidth = (parent as View).width.toFloat()
             maxheight = (parent as View).height.toFloat()
             Log.e("INIT", "initView: $maxwidth $maxheight")
@@ -53,7 +57,7 @@ class MovableSurfaceView : SurfaceViewRenderer {
 
     private fun setDimensionsSmallScreen() {
         parentDimens
-        scaleAnimator(width.toFloat(), maxwidth / 3, height.toFloat(), maxheight / 3)
+        scaleAnimator(width.toFloat(), maxwidth / 4, height.toFloat(), maxheight / 4)
     }
 
     private fun setDimensionsFullScreen() {
@@ -62,8 +66,8 @@ class MovableSurfaceView : SurfaceViewRenderer {
     }
 
     private fun scaleAnimator(startX: Float, endX: Float, startY: Float, endY: Float) {
-        val pvhX = PropertyValuesHolder.ofInt("x", Math.round(startX), Math.round(endX))
-        val pvhY = PropertyValuesHolder.ofInt("y", Math.round(startY), Math.round(endY))
+        val pvhX = PropertyValuesHolder.ofInt("x", startX.roundToInt(), endX.roundToInt())
+        val pvhY = PropertyValuesHolder.ofInt("y", startY.roundToInt(), endY.roundToInt())
         val animator = ValueAnimator.ofPropertyValuesHolder(pvhX, pvhY)
         animator.addUpdateListener { animation: ValueAnimator ->
             val layoutParams = layoutParams
@@ -92,8 +96,8 @@ class MovableSurfaceView : SurfaceViewRenderer {
                 dY = this.y - event.rawY
             }
             MotionEvent.ACTION_MOVE -> animate()
-                    .translationX(Math.max(0f, Math.min(event.rawX + dX, maxwidth - width)))
-                    .translationY(Math.max(0f, Math.min(event.rawY + dY, maxheight - height)))
+                    .translationX(max(0f, min(event.rawX + dX, maxwidth - width)))
+                    .translationY(max(0f, min(event.rawY + dY, maxheight - height)))
                     .setDuration(0)
                     .setInterpolator(AccelerateDecelerateInterpolator())
                     .start()
@@ -116,7 +120,7 @@ class MovableSurfaceView : SurfaceViewRenderer {
     }
 
     private fun closeEnough(n1: Float, n2: Float): Boolean {
-        return Math.abs(n1 - n2) < 10
+        return abs(n1 - n2) < 10
     }
 
     private fun reposition(event: MotionEvent?, vararg args: Float) {
