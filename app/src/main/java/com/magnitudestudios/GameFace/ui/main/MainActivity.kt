@@ -45,14 +45,18 @@ class MainActivity : BasePermissionsActivity() {
                 goToLogin(getString(R.string.not_finished_setting_up))
             }
         })
-        val extras = intent.extras
-        if (extras != null && extras.containsKey(Constants.CALL_KEY) && extras.containsKey(Constants.ROOM_ID_KEY) && savedInstanceState == null) {
+        if (savedInstanceState == null) checkIntent(intent)
+        Log.e("VERSION", " " + Integer.valueOf(android.os.Build.VERSION.SDK_INT))
+    }
+
+    private fun checkIntent(intent: Intent?) {
+        val extras = intent?.extras
+        if (extras != null && extras.containsKey(Constants.CALL_KEY) && extras.containsKey(Constants.ROOM_ID_KEY)) {
             Log.e("HERE", intent.getStringExtra(Constants.ROOM_ID_KEY)!!)
             val action = BottomContainerFragmentDirections
                     .actionBottomContainerFragmentToCameraFragment("", extras.getString(Constants.ROOM_ID_KEY) ?: "")
             findNavController(R.id.mainNavHost).navigate(action)
         }
-        Log.e("VERSION", " " + Integer.valueOf(android.os.Build.VERSION.SDK_INT))
     }
 
     override fun onResume() {
@@ -62,7 +66,6 @@ class MainActivity : BasePermissionsActivity() {
         nMgr.cancelAll()
     }
 
-
     private fun goToLogin(text: String = "Signed Out") {
         viewModel.signOutUser()
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
@@ -71,12 +74,9 @@ class MainActivity : BasePermissionsActivity() {
         finish()
     }
 
-
-    private fun goToCalling() {
-//        val i = Intent(this@MainActivity, IncomingCall::class.java)
-//        startActivity(i)
-//        finish()
-
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        checkIntent(intent)
     }
 
     companion object {

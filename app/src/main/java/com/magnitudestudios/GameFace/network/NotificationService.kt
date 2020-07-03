@@ -65,6 +65,7 @@ class NotificationService : FirebaseMessagingService() {
             putExtra(Profile::username.name, data["fromUsername"])
             putExtra(Profile::name.name, data["fromName"])
             putExtra(Profile::uid.name, data["fromUID"])
+            putExtra(Profile::profilePic.name, data["fromProfilePic"])
         }
 
         val fullScreenPendingIntent = PendingIntent.getActivity(this, 0,

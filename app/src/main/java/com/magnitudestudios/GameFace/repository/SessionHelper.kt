@@ -72,7 +72,11 @@ object SessionHelper {
                 Log.e(TAG, "onCancelled: " + databaseError.message)
             }
         }
-        Firebase.database.getReference(Constants.ROOMS_PATH).child(currentRoom!!).child(Constants.CONNECT_PATH).addChildEventListener(childEventListener!!)
+        Firebase.database
+                .getReference(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+                .child(Constants.CONNECT_PATH)
+                .addChildEventListener(childEventListener!!)
     }
 
     private fun sendMessage(type: String, data: Any?): Task<Void?> {
@@ -116,7 +120,11 @@ object SessionHelper {
 
     suspend fun leaveRoom(callback: RoomCallback) {
         if (currentRoom != null && childEventListener != null) {
-            Firebase.database.getReference(Constants.ROOMS_PATH).child(currentRoom!!).removeEventListener(childEventListener!!)
+            Firebase.database.getReference(Constants.ROOMS_PATH)
+                    .child(currentRoom!!)
+                    .child(Constants.CONNECT_PATH)
+                    .removeEventListener(childEventListener!!)
+            Log.e("REMOVED","LISTENER")
             childEventListener = null
             if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
                 try {

@@ -171,7 +171,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         localPeer = peerConnectionFactory.createPeerConnection(rtcConfig, object : CustomPeerConnectionObserver("localPeerCreation") {
             override fun onIceCandidate(iceCandidate: IceCandidate) {
                 super.onIceCandidate(iceCandidate)
-                Log.e(TAG, "onIceCandidate: " + iceCandidate.sdp)
                 SessionHelper.addIceCandidate(iceCandidate)
             }
 
@@ -180,6 +179,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
                 gotRemoteStream(mediaStream)
             }
         })
+
         val stream = peerConnectionFactory.createLocalMediaStream("102")
         stream.addTrack(localAudioTrack)
         stream.addTrack(localVideoTrack)
@@ -315,6 +315,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.e("DESTROYING", "DESTROYED")
         disconnect()
     }
 
@@ -353,7 +354,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun participantLeft(s: String?) {
         Log.e(TAG, "participantLeft: $s")
-        Toast.makeText(activity, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "PARTICIPANT LEFT", Toast.LENGTH_SHORT).show()
         hangUp()
     }
 
@@ -388,6 +389,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
             }
         }
         return null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disconnect()
+        rootEglBase.release()
     }
 
 

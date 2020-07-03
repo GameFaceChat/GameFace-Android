@@ -39,6 +39,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -7,45 +7,47 @@ import org.webrtc.PeerConnection.*
 open class CustomPeerConnectionObserver(logTag: String) : Observer {
     private var logTag : String = this.javaClass.canonicalName + " " + logTag
     override fun onSignalingChange(signalingState: SignalingState) {
-        Log.d(logTag, "onSignalingChange() called with: signalingState = [$signalingState]")
+        Log.e(logTag, "onSignalingChange() called with: signalingState = [$signalingState]")
     }
 
     override fun onIceConnectionChange(iceConnectionState: IceConnectionState) {
-        Log.d(logTag, "onIceConnectionChange() called with: iceConnectionState = [$iceConnectionState]")
+        Log.e(logTag, "onIceConnectionChange() called with: iceConnectionState = [$iceConnectionState]")
     }
 
     override fun onIceConnectionReceivingChange(b: Boolean) {
-        Log.d(logTag, "onIceConnectionReceivingChange() called with: b = [$b]")
+        Log.e(logTag, "onIceConnectionReceivingChange() called with: b = [$b]")
     }
 
     override fun onIceGatheringChange(iceGatheringState: IceGatheringState) {
-        Log.d(logTag, "onIceGatheringChange() called with: iceGatheringState = [$iceGatheringState]")
+        Log.e(logTag, "onIceGatheringChange() called with: iceGatheringState = [$iceGatheringState]")
     }
 
     override fun onIceCandidate(iceCandidate: IceCandidate) {
-        Log.d(logTag, "onIceCandidate() called with: iceCandidate = [$iceCandidate]")
+        Log.e(logTag, "onIceCandidate() called with: iceCandidate = [$iceCandidate]")
     }
 
     override fun onIceCandidatesRemoved(iceCandidates: Array<IceCandidate>) {
-        Log.d(logTag, "onIceCandidatesRemoved() called with: iceCandidates = [$iceCandidates]")
+        Log.e(logTag, "onIceCandidatesRemoved() called with: iceCandidates = [$iceCandidates]")
     }
 
     override fun onAddStream(mediaStream: MediaStream) {
-        Log.d(logTag, "onAddStream() called with: mediaStream = [$mediaStream]")
+        Log.e(logTag, "onAddStream() called with: mediaStream = [$mediaStream]")
     }
 
     override fun onRemoveStream(mediaStream: MediaStream) {
-        Log.d(logTag, "onRemoveStream() called with: mediaStream = [$mediaStream]")
+        Log.e(logTag, "onRemoveStream() called with: mediaStream = [$mediaStream]")
     }
 
     override fun onDataChannel(dataChannel: DataChannel) {
-        Log.d(logTag, "onDataChannel() called with: dataChannel = [$dataChannel]")
+        Log.e(logTag, "onDataChannel() called with: dataChannel = [$dataChannel]")
     }
 
     override fun onRenegotiationNeeded() {
-        Log.d(logTag, "onRenegotiationNeeded() called")
+        Log.e(logTag, "onRenegotiationNeeded() called")
     }
 
-    override fun onAddTrack(rtpReceiver: RtpReceiver, mediaStreams: Array<MediaStream>) {}
+    override fun onAddTrack(rtpReceiver: RtpReceiver, mediaStreams: Array<MediaStream>) {
+        Log.e(logTag, "onAddTrack() called with: rtpReceiver = [$rtpReceiver] and [$mediaStreams]")
+    }
 
 }
