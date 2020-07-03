@@ -32,8 +32,8 @@ class GameFace : Application() {
                     NotificationManager.IMPORTANCE_HIGH).apply {
                         description = getString(R.string.calling_notification_description)
                         vibrationPattern = Constants.VIBRATE_PATTERN
+                        lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
                     }
-            callsChannel.lockscreenVisibility = NotificationCompat.VISIBILITY_PUBLIC
 
             // Register the channel with the system
             val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

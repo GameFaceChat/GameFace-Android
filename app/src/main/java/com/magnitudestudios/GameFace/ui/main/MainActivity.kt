@@ -7,6 +7,8 @@
 
 package com.magnitudestudios.GameFace.ui.main
 
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -57,6 +59,13 @@ class MainActivity : BasePermissionsActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        //Cancel Notifications
+        val nMgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        nMgr.cancelAll()
+    }
+    
     private fun goToLogin(text: String = "Signed Out") {
         viewModel.signOutUser()
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()

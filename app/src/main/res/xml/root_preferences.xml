@@ -18,5 +18,19 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="About">
+        <Preference
+            app:key="termsAndConditions"
+            app:title="Terms and Conditions" />
+
+        <Preference
+            app:key="privacyPolicy"
+            app:title="Privacy Policy" />
+
+        <Preference
+            app:key="aboutUs"
+            app:title="About Us" />
+    </PreferenceCategory>
+
 
 </PreferenceScreen>
