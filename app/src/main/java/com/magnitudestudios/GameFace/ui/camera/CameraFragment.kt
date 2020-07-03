@@ -180,6 +180,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
                 gotRemoteStream(mediaStream)
             }
         })
+
         val stream = peerConnectionFactory.createLocalMediaStream("102")
         stream.addTrack(localAudioTrack)
         stream.addTrack(localVideoTrack)
