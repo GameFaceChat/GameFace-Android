@@ -17,13 +17,14 @@ import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class AddFriendsViewModel : ViewModel() {
     private val queryString: MutableLiveData<String> = MutableLiveData()
 
     val results = Transformations.switchMap(queryString) {str ->
         liveData(Dispatchers.IO) {
-            emit(FirebaseHelper.getProfilesByUsername(str))
+            emit(FirebaseHelper.getProfilesByUsername(str.toLowerCase(Locale.ROOT)))
         }
     }
 
