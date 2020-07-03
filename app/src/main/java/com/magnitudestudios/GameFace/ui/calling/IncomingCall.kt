@@ -9,6 +9,7 @@ package com.magnitudestudios.GameFace.ui.calling
 
 import android.content.Intent
 import android.os.Bundle
+import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BasePermissionsActivity
@@ -28,6 +29,11 @@ class IncomingCall : BasePermissionsActivity() {
 
         bind.username.text = intent.getStringExtra(Profile::username.name)
         bind.fullName.text = intent.getStringExtra(Profile::name.name)
+        Glide.with(this)
+                .load(intent.getStringExtra(Profile::profilePic.name))
+                .error(R.drawable.ic_add_profile_pic)
+                .circleCrop()
+                .into(bind.profilePic)
 
         bind.acceptCall.setOnClickListener {
             val toMainActivity = Intent(this, MainActivity::class.java)

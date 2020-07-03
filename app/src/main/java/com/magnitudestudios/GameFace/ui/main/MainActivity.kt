@@ -65,7 +65,7 @@ class MainActivity : BasePermissionsActivity() {
         val nMgr = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         nMgr.cancelAll()
     }
-    
+
     private fun goToLogin(text: String = "Signed Out") {
         viewModel.signOutUser()
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
