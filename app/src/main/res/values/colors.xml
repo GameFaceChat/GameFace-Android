@@ -26,6 +26,7 @@
     <color name="bottom_nav_icon_unselected">#AABDBDBD</color>
     <color name="transparent">#00000000</color>
     <color name="transparent_white">#AAFFFFFF</color>
+    <color name="very_transparent_white">#88FFFFFF</color>
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

@@ -1,0 +1,5 @@
+<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<vector android:height="@dimen/icon_size" android:viewportHeight="512" android:viewportWidth="512" android:width="@dimen/icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/color_primary_selector" android:pathData="M256 0C115.4 0 0 115.4 0 256s115.4 256 256 256 256-115.4 256-256S396.6 0 256 0z"/>
+    <path android:fillColor="#FFFFFF" android:pathData="M121.1 269.5c7.5 0 13.5-6 13.5-13.5 0-67.1 54.3-121.4 121.4-121.4 67.1 0 121.4 54.3 121.4 121.4S323.1 377.4 256 377.4c-20.9 0-41.5-5.4-59.6-15.7l15.2-15.2c5.3-5.3 5.3-13.8 0-19.1-2.5-2.5-6-3.9-9.5-3.9h-54c-7.5 0-13.5 6-13.5 13.5v54c0 7.5 6 13.5 13.5 13.5 3.6 0 7-1.4 9.5-4l19-19c23.7 15.1 51.3 23 79.4 22.9 82 0 148.4-66.5 148.4-148.4 0-82-66.5-148.4-148.4-148.4-82 0-148.4 66.5-148.4 148.4 0 7.5 6 13.5 13.5 13.5z"/>
+</vector>

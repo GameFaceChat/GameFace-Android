@@ -91,12 +91,13 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
     implementation "androidx.camera:camera-view:1.0.0-alpha13"
 
-    implementation 'com.github.takusemba:cropme:2.0.5'
-
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation "io.ktor:ktor-client-android:$ktor_version"
     implementation 'com.github.florent37:shapeofview:1.4.7'
+
+    implementation "androidx.dynamicanimation:dynamicanimation-ktx:1.0.0-alpha03"
+
 
 }
 repositories {
