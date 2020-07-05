@@ -84,7 +84,7 @@ class ProfileFragment : BaseFragment() {
 
     private fun observeFriends() {
         mainViewModel.friendRequests.observe(viewLifecycleOwner, Observer { it ->
-            viewModel.getRequestProfiles(it.map { it.friendUID } as MutableList<String>)
+            viewModel.setRequestUIDs(it.map { it.friendUID } as MutableList<String>)
         })
 
         mainViewModel.friends.observe(viewLifecycleOwner, Observer { friend ->
