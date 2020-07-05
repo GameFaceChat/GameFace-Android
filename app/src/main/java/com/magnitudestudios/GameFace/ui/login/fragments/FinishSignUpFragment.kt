@@ -38,7 +38,7 @@ class FinishSignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        Glide.with(this).load(R.drawable.ic_add_profile_pic).into(binding.profilePic)       //To fix svg on older devices
         binding.btnFinishSignup.setOnClickListener {
             if (validateDetails() && viewModel.usernameExists.value?.data == false) {
                 viewModel.createUser(binding.signupUsernameInput.text.toString(), binding.fullNameInput.text.toString(),
@@ -64,7 +64,11 @@ class FinishSignUpFragment : Fragment() {
         })
 
         viewModel.profilePicUri.observe(viewLifecycleOwner, Observer {
-            if (it != null) Glide.with(this).load(it).circleCrop().into(binding.profilePic)
+            Glide.with(this)
+                    .load(it)
+                    .placeholder(R.drawable.ic_add_profile_pic)
+                    .error(R.drawable.ic_add_profile_pic)
+                    .circleCrop().into(binding.profilePic)
 
         })
 
