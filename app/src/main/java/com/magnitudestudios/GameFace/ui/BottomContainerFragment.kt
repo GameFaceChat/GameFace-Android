@@ -7,22 +7,26 @@
 
 package com.magnitudestudios.GameFace.ui
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentBottomNavBinding
+import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
+import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class BottomContainerFragment : Fragment() {
     private lateinit var bind: FragmentBottomNavBinding
@@ -37,9 +41,17 @@ class BottomContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val navHost = requireActivity().findNavController(R.id.containerNavHost)
         bind.bottomNav.setupWithNavController(navHost)
-//        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")?.observe(viewLifecycleOwner, Observer {
-//            if (it != null) Toast.makeText(context, it, Toast.LENGTH_LONG).show()
-//            else Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show()
-//        })
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                lifecycleScope.launch(Dispatchers.IO) {
+                    FirebaseHelper.setProfilePic(Uri.parse(it))
+                    mainViewModel.profile.postValue(Resource.success(mainViewModel.profile.value?.data?.apply {
+                        profilePic = it
+                    }))
+                    FirebaseHelper.updateUserProfile(mutableMapOf(Profile::profilePic.name to it))
+                }
+            }
+            else Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show()
+        })
     }
 }

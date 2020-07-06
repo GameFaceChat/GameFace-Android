@@ -11,13 +11,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.DialogEditProfileBinding
+import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
 class EditProfileFragment : BottomSheetDialogFragment() {
@@ -33,15 +37,17 @@ class EditProfileFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val usernameOriginal = mainViewModel.profile.value?.data?.username ?: ""
         val bioOriginal = mainViewModel.profile.value?.data?.bio ?: ""
         val nameOriginal = mainViewModel.profile.value?.data?.name ?: ""
         //Init Text Values With Current Values
-        bind.username.setText(mainViewModel.profile.value?.data?.username)
+        bind.username.setText(usernameOriginal)
         bind.name.setText(nameOriginal)
         bind.bio.setText(bioOriginal)
         bind.saveBtn.isEnabled = false
 
         //Update Viewmodel
+        viewModel.setUsername(usernameOriginal)
         viewModel.setOriginalName(nameOriginal)
         viewModel.setOriginalBio(bioOriginal)
 
@@ -58,11 +64,35 @@ class EditProfileFragment : BottomSheetDialogFragment() {
             bind.saveBtn.isEnabled = it
         })
 
+        viewModel.savingProgress.observe(viewLifecycleOwner, Observer {
+            if (it.status == Status.LOADING) bind.progressBar.visibility = View.VISIBLE
+            else bind.progressBar.visibility = View.GONE
+            if (it.status == Status.ERROR) Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+            if (it.status == Status.SUCCESS) {
+                activity?.findNavController(R.id.mainNavHost)?.navigateUp()
+                mainViewModel.profile.value  = Resource.success(mainViewModel.profile.value?.data?.apply {
+                    name = viewModel.getName()
+                    bio = viewModel.getBio()
+                })
+                Toast.makeText(context, "Saved Profile", Toast.LENGTH_SHORT).show()
+            }
+        })
+
         bind.profilePic.setOnClickListener {
             activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_editProfileFragment_to_takePhotoFragment)
         }
+        bind.changePfp.setOnClickListener {
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_editProfileFragment_to_takePhotoFragment)
+        }
+        Glide.with(this)
+                .load(mainViewModel.profile.value?.data?.profilePic)
+                .error(R.drawable.ic_add_profile_pic)
+                .circleCrop()
+                .into(bind.profilePic)
         //Finish
         bind.cancelBtn.setOnClickListener { dismiss() }
-        bind.saveBtn.setOnClickListener { viewModel.save() }
+        bind.saveBtn.setOnClickListener {
+            viewModel.save()
+        }
     }
 }
