@@ -16,13 +16,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
@@ -136,12 +134,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
         //Create a VideoSource instance
         localVideoTrack = peerConnectionFactory.createVideoTrack("100", videoSource)
-
+        videoSource.adaptOutputFormat(720, 480, 30)
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource)
 
-        videoCapturer!!.startCapture(720, 480, 30)
+        videoCapturer?.startCapture(720, 480, 30)
 
         //create surface renderer, init it and add the renderer to the track
         bind.localVideo.setMirror(true)
@@ -183,18 +181,18 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         val stream = peerConnectionFactory.createLocalMediaStream("102")
         stream.addTrack(localAudioTrack)
         stream.addTrack(localVideoTrack)
-        localPeer!!.addStream(stream)
+        localPeer?.addStream(stream)
 
         sdpConstraints = MediaConstraints()
         sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
         sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
 
         if (SessionHelper.initiator) {
-            localPeer!!.createOffer(object : CustomSdpObserver("localCreateOffer") {
+            localPeer?.createOffer(object : CustomSdpObserver("localCreateOffer") {
                 override fun onCreateSuccess(sessionDescription: SessionDescription) {
                     super.onCreateSuccess(sessionDescription)
                     Log.d(TAG, "onCreateSuccess234: " + sessionDescription.description)
-                    localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocalDesc"), sessionDescription)
+                    localPeer?.setLocalDescription(CustomSdpObserver("localSetLocalDesc"), sessionDescription)
                     //Send to peer
                     SessionHelper.sendOffer(sessionDescription)
                 }
@@ -228,12 +226,10 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     }
 
     private fun transitionConnected() {
-//        binding.remoteVideo.visibility = View.VISIBLE
         bind.localVideo.setCalling()
     }
 
     private fun transitionDisconnected() {
-//        binding.remoteVideo.visibility = View.GONE
         bind.localVideo.setLocal()
     }
 
@@ -328,8 +324,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     override fun offerReceived(session: SessionInfoPOJO) {
         //Received offer
         Log.e(TAG, "offerReceived: " + session.description)
-        localPeer!!.setRemoteDescription(CustomSdpObserver("gotOffer"), SessionDescription(SessionDescription.Type.fromCanonicalForm(session.type!!.toLowerCase(Locale.getDefault())), session.description))
-        localPeer!!.createAnswer(object : CustomSdpObserver("localCreateAns") {
+        localPeer?.setRemoteDescription(CustomSdpObserver("gotOffer"), SessionDescription(SessionDescription.Type.fromCanonicalForm(session.type!!.toLowerCase(Locale.getDefault())), session.description))
+        localPeer?.createAnswer(object : CustomSdpObserver("localCreateAns") {
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 super.onCreateSuccess(sessionDescription)
                 localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocal"), sessionDescription)
@@ -340,7 +336,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun answerReceived(session: SessionInfoPOJO?) {
         Log.e(TAG, "answerReceived: $session")
-        localPeer!!.setRemoteDescription(CustomSdpObserver("localSetRemote"), SessionDescription(SessionDescription.Type.fromCanonicalForm(session?.type!!.toLowerCase(Locale.getDefault())), session.description))
+        localPeer?.setRemoteDescription(CustomSdpObserver("localSetRemote"), SessionDescription(SessionDescription.Type.fromCanonicalForm(session?.type!!.toLowerCase(Locale.getDefault())), session.description))
     }
 
     override fun newParticipantJoined(s: String?) {
@@ -349,7 +345,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun iceServerReceived(iceCandidate: IceCandidatePOJO) {
         Log.e(TAG, "iceServerReceived: ")
-        localPeer!!.addIceCandidate(IceCandidate(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp))
+        localPeer?.addIceCandidate(IceCandidate(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp))
     }
 
     override fun participantLeft(s: String?) {
@@ -373,9 +369,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         for (deviceName in deviceNames) {
             if (enumerator.isFrontFacing(deviceName)) {
                 val videoCapturer: VideoCapturer? = enumerator.createCapturer(deviceName, null)
-                if (videoCapturer != null) {
-                    return videoCapturer
-                }
+                if (videoCapturer != null) return videoCapturer
             }
         }
 
@@ -383,9 +377,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         for (deviceName in deviceNames) {
             if (!enumerator.isFrontFacing(deviceName)) {
                 val videoCapturer: VideoCapturer? = enumerator.createCapturer(deviceName, null)
-                if (videoCapturer != null) {
-                    return videoCapturer
-                }
+                if (videoCapturer != null) return videoCapturer
             }
         }
         return null
