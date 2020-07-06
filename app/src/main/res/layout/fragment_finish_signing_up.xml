@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:autofillHints="name"
-            android:maxLength="50"
+            android:maxLength="@integer/max_username_length"
             android:digits="abcdefghijklmnopqrstuvwxyz0123456789_-"
             android:drawableStart="@drawable/ic_person"
             android:nextFocusDown="@id/full_nameInput"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:autofillHints="name"
-            android:maxLength="50"
+            android:maxLength="@integer/max_name_length"
             android:drawableStart="@drawable/ic_account_circle_48px"
             android:hint="@string/full_name_input_hint"
             android:inputType="textPersonName" />
@@ -103,7 +103,7 @@
             android:gravity="start|top"
             android:hint="@string/bio_input_hint"
             android:inputType="textMultiLine"
-            android:maxLength="300" />
+            android:maxLength="@integer/max_bio_length" />
     </LinearLayout>
 
     <com.magnitudestudios.GameFace.views.MorphableButton

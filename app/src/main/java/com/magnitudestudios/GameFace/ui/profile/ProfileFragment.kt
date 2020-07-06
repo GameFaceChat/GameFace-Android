@@ -61,7 +61,7 @@ class ProfileFragment : BaseFragment() {
         })
 
         bind.profilePic.setOnClickListener {
-            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_takePhotoFragment)
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_editProfileFragment)
         }
 
         bind.settingsBtn.setOnClickListener {
@@ -79,6 +79,10 @@ class ProfileFragment : BaseFragment() {
 
         //Observe for friend request changes
         observeFriends()
+
+        bind.editProfile.setOnClickListener {
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_editProfileFragment)
+        }
 
     }
 

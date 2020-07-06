@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:maxHeight="500dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/profilePic"
+            android:layout_width="@dimen/huge_icon_size"
+            android:layout_height="@dimen/huge_icon_size"
+            android:layout_marginTop="@dimen/layout_margin_medium"
+            android:background="#00000000"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_add_profile_pic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/changePfp"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/change_pfp"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="@+id/profilePic"
+            app:layout_constraintStart_toStartOf="@+id/profilePic"
+            app:layout_constraintTop_toBottomOf="@+id/profilePic" />
+
+        <GridLayout
+            android:id="@+id/textFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/changePfp">
+
+            <TextView
+                android:id="@+id/username_title"
+                style="@style/bold_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/username_input_hint"
+                android:textSize="@dimen/text_size_small" />
+
+            <com.magnitudestudios.GameFace.views.CustomInputLayout
+                android:id="@+id/usernameLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="1"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="@dimen/layout_margin_small"
+                android:padding="@dimen/padding_small"
+                app:boxBackgroundMode="none"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/username"
+                    style="@style/editTextNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:background="#00000000"
+                    android:hint="@string/username_input_hint"
+                    android:maxLength="@integer/max_username_length" />
+            </com.magnitudestudios.GameFace.views.CustomInputLayout>
+
+            <TextView
+                android:id="@+id/name_title"
+                style="@style/bold_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="1"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/full_name_input_hint"
+                android:textSize="@dimen/text_size_small" />
+
+            <com.magnitudestudios.GameFace.views.CustomInputLayout
+                android:id="@+id/nameLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="2"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="@dimen/layout_margin_small"
+                android:padding="@dimen/padding_small"
+                app:boxBackgroundMode="none"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
+                    style="@style/editTextNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/full_name_input_hint"
+                    android:maxLength="@integer/max_name_length" />
+            </com.magnitudestudios.GameFace.views.CustomInputLayout>
+
+            <TextView
+                android:id="@+id/bio_title"
+                style="@style/bold_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/layout_margin_medium"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/bio_input_hint"
+                android:textSize="@dimen/text_size_small" />
+
+            <com.magnitudestudios.GameFace.views.CustomInputLayout
+                android:id="@+id/bioLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="2"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="@dimen/layout_margin_small"
+                android:padding="@dimen/padding_small"
+                app:boxBackgroundMode="none"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bio"
+                    style="@style/editTextNormal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:gravity="top"
+                    android:hint="@string/bio_input_hint"
+                    android:inputType="textMultiLine"
+                    android:maxLength="@integer/max_bio_length" />
+            </com.magnitudestudios.GameFace.views.CustomInputLayout>
+        </GridLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/saveBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/color_primary_selector"
+            android:text="@string/save_btn"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/layout_margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cancelBtn"
+            app:layout_constraintTop_toBottomOf="@id/textFields" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/md_grey_200"
+            android:text="@string/cancel_profile_edit"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/saveBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
