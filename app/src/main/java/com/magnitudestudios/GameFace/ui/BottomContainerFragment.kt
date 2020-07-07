@@ -9,6 +9,7 @@ package com.magnitudestudios.GameFace.ui
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,7 @@ import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentBottomNavBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
@@ -44,14 +46,18 @@ class BottomContainerFragment : Fragment() {
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    FirebaseHelper.setProfilePic(Uri.parse(it))
-                    mainViewModel.profile.postValue(Resource.success(mainViewModel.profile.value?.data?.apply {
-                        profilePic = it
-                    }))
-                    FirebaseHelper.updateUserProfile(mutableMapOf(Profile::profilePic.name to it))
+                    val remoteUri = FirebaseHelper.setProfilePic(Uri.parse(it))
+                    if (remoteUri.status == Status.SUCCESS){
+                        mainViewModel.profile.postValue(Resource.success(mainViewModel.profile.value?.data?.apply {
+                            profilePic = remoteUri.data.toString()
+                        }))
+                        FirebaseHelper.updateUserProfile(mutableMapOf(Profile::profilePic.name to remoteUri.data.toString()))
+                    } else {
+                        Log.e("Bottom Container", remoteUri.message ?: "ERROR")
+                        Toast.makeText(requireContext(), "Something unexpected happened!", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-            else Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show()
         })
     }
 }
