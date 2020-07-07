@@ -34,7 +34,7 @@
             android:adjustViewBounds="true"
             android:background="#00000000"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_add_profile_pic"
+            android:src="@drawable/profile_placeholder"
             app:layout_constraintHeight_percent="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
