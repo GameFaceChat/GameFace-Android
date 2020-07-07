@@ -123,7 +123,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
                 .setTargetAspectRatio(screenAspectRatio)
                 .setTargetRotation(bind.previewView.display.rotation)
                 .build()
-
+        if (flash) captureInstance?.flashMode = ImageCapture.FLASH_MODE_ON
         cameraSelector = CameraSelector.Builder()
                 .requireLensFacing(orientation)
                 .build()
