@@ -60,7 +60,7 @@ object FirebaseHelper {
         return getCurrentUserProfileRef().setValue(profile)
     }
 
-    suspend fun updateUser(values: MutableMap<String, Any>): Boolean {
+    suspend fun updateUserProfile(values: MutableMap<String, Any>): Boolean {
         return try {
             getCurrentUserProfileRef().updateChildren(values).await()
             true
