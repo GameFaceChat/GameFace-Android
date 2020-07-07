@@ -14,15 +14,24 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
 fun RequestManager.loadProfile(url: String, target: ImageButton) {
+    if (url.isEmpty()) {
+        this.load(R.drawable.ic_add_profile_pic).into(target)
+        return
+    }
     this.load(url)
-            .error(R.drawable.ic_user_placeholder)
-            .transition(DrawableTransitionOptions.withCrossFade())
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .placeholder(R.drawable.profile_placeholder)
+            .error(R.drawable.ic_add_profile_pic)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .circleCrop()
             .into(target)
 }
 
 fun RequestManager.loadProfile(url: String, target: ImageView) {
+    if (url.isEmpty()) {
+        this.load(R.drawable.ic_user_placeholder).into(target)
+        return
+    }
     this.load(url)
             .error(R.drawable.ic_user_placeholder)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
