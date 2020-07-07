@@ -55,30 +55,19 @@
                 android:padding="@dimen/padding_medium"
                 android:text="@string/username_input_hint"
                 android:textSize="@dimen/text_size_small" />
-
-            <com.magnitudestudios.GameFace.views.CustomInputLayout
-                android:id="@+id/usernameLayout"
+            <TextView
+                android:id="@+id/username"
+                style="@style/editTextNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                tools:text="username"
+                android:ellipsize="end"
                 android:layout_row="1"
+                android:layout_marginEnd="@dimen/layout_margin_small"
                 android:layout_column="2"
                 android:layout_columnWeight="1"
-                android:layout_marginEnd="@dimen/layout_margin_small"
-                android:padding="@dimen/padding_small"
-                app:boxBackgroundMode="none"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username"
-                    style="@style/editTextNormal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="name"
-                    android:background="#00000000"
-                    android:hint="@string/username_input_hint"
-                    android:maxLength="@integer/max_username_length" />
-            </com.magnitudestudios.GameFace.views.CustomInputLayout>
-
+                android:background="#00000000"
+                android:maxLength="@integer/max_username_length" />
             <TextView
                 android:id="@+id/name_title"
                 style="@style/bold_text"
