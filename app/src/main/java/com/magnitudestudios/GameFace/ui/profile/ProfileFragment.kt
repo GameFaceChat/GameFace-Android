@@ -48,20 +48,17 @@ class ProfileFragment : BaseFragment() {
         bind.viewpager.adapter = ProfileTabAdapter(this)
 
         mainViewModel.profile.observe(viewLifecycleOwner, Observer {
-            if (it == null) bind.displayUsername.text = "Loading..."
-            else {
-                bind.displayUsername.text = it.data?.username
-                bind.displayName.text = it.data?.name
-                Glide.with(this).load(mainViewModel.profile.value?.data?.profilePic)
-                        .placeholder(R.drawable.ic_add_profile_pic)
-                        .fallback(R.drawable.ic_add_profile_pic)
-                        .circleCrop()
-                        .into(bind.profilePic)
-            }
+            bind.displayUsername.text = it.data?.username
+            bind.displayName.text = it.data?.name
+            Glide.with(this).load(mainViewModel.profile.value?.data?.profilePic)
+                    .placeholder(R.drawable.ic_add_profile_pic)
+                    .fallback(R.drawable.ic_add_profile_pic)
+                    .circleCrop()
+                    .into(bind.profilePic)
         })
 
         bind.profilePic.setOnClickListener {
-            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_takePhotoFragment)
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_editProfileFragment)
         }
 
         bind.settingsBtn.setOnClickListener {
@@ -79,6 +76,10 @@ class ProfileFragment : BaseFragment() {
 
         //Observe for friend request changes
         observeFriends()
+
+        bind.editProfile.setOnClickListener {
+            activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_editProfileFragment)
+        }
 
     }
 

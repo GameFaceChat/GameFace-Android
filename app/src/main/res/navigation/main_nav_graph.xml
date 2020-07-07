@@ -51,11 +51,6 @@
         android:label="BottomContainerFragment"
         tools:layout="@layout/fragment_bottom_nav">
         <action
-            android:id="@+id/action_bottomContainerFragment_to_takePhotoFragment"
-            app:destination="@id/takePhotoFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:popExitAnim="@anim/slide_out_to_right" />
-        <action
             android:id="@+id/action_bottomContainerFragment_to_addFriendsFragment"
             app:destination="@id/addFriendsFragment"
             app:enterAnim="@anim/slide_from_bottom"
@@ -74,6 +69,9 @@
             app:exitAnim="@anim/none"
             app:popEnterAnim="@anim/none"
             app:popExitAnim="@anim/slide_out_to_right" />
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"
@@ -89,4 +87,18 @@
         android:id="@+id/settingsFragment"
         android:name="com.magnitudestudios.GameFace.ui.SettingsFragment"
         android:label="SettingsFragment" />
+    <dialog
+        android:id="@+id/editProfileFragment"
+        android:name="com.magnitudestudios.GameFace.ui.profile.editProfile.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/dialog_edit_profile">
+        <action
+            android:id="@+id/action_editProfileFragment_to_takePhotoFragment"
+            app:destination="@id/takePhotoFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popUpTo="@id/editProfileFragment" />
+    </dialog>
 </navigation>
