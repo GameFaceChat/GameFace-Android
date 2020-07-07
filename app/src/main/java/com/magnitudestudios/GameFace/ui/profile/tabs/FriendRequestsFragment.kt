@@ -18,10 +18,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RVRequestButton
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentFriendRequestsBinding
 import com.magnitudestudios.GameFace.databinding.RowRequestsBinding
+import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
 import com.magnitudestudios.GameFace.views.FriendRequestViewHolder
@@ -60,10 +62,7 @@ class FriendRequestsFragment : Fragment() {
             override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
                 val value = this.getitem(position)
                 (holder as FriendRequestViewHolder).bind(value)
-                Glide.with(this@FriendRequestsFragment)
-                        .load(value.profilePic)
-                        .circleCrop()
-                        .into(holder.getImageView())
+                Glide.with(this@FriendRequestsFragment).loadProfile(value.profilePic, holder.getImageView())
             }
 
             override fun areItemsSame(item1: Profile, item2: Profile): Boolean {
@@ -77,7 +76,6 @@ class FriendRequestsFragment : Fragment() {
 
         //Set up recyclerview
         bind.friendRequestList.apply {
-            layoutManager = LinearLayoutManager(context)
             adapter = requestAdapter
 
         }
