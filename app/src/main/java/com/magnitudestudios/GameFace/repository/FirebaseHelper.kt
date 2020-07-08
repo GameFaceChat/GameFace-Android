@@ -9,13 +9,8 @@ package com.magnitudestudios.GameFace.repository
 
 import android.net.Uri
 import android.util.Log
-import androidx.core.app.ActivityCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -30,10 +25,9 @@ import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
+import java.io.File
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.roundToInt
 
 object FirebaseHelper {
     private const val TAG = "FirebaseHelper"
@@ -195,6 +189,7 @@ object FirebaseHelper {
                     .reference
                     .child("${Constants.USERS_PATH}/${Firebase.auth.currentUser!!.uid}/${Profile::profilePic.name}")
                     .putFile(image).await().storage.downloadUrl.await()
+            try { File(image.path!!).delete()} catch (e: Exception) {Log.e("Set Profile Pic", "Cache delete failed", e)}
             Resource.success(uri)
         } catch (e: FirebaseException) {
             Log.e("FirebaseHelper", e.message, e)

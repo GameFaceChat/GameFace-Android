@@ -10,10 +10,7 @@ package com.magnitudestudios.GameFace.utils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
+import java.io.*
 
 fun compressImage(file: File?) {
     if (file == null) throw (FileNotFoundException("File not Found in TakePhotoFragment"))
