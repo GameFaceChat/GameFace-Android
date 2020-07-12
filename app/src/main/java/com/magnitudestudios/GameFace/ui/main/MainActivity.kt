@@ -68,6 +68,7 @@ class MainActivity : BasePermissionsActivity() {
 
     private fun goToLogin(text: String = "Signed Out") {
         viewModel.signOutUser()
+        cacheDir.deleteRecursively()
         Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         val i = Intent(this@MainActivity, LoginActivity::class.java)
         startActivity(i)

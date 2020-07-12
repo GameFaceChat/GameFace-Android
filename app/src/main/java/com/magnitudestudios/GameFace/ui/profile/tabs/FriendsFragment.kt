@@ -24,6 +24,7 @@ import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentFriendsBinding
 import com.magnitudestudios.GameFace.databinding.RowFriendsBinding
+import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
@@ -104,11 +105,7 @@ class FriendsFragment : Fragment() {
             override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
                 val value = mAdapter.getitem(position)
                 holder as FriendViewHolder
-                Glide.with(holder.itemView.context)
-                        .load(value.profilePic)
-                        .placeholder(R.drawable.ic_camera_btn)
-                        .circleCrop()
-                        .into(holder.getImageView())
+                Glide.with(holder.itemView.context).loadProfile(value.profilePic, holder.getImageView())
                 holder.bind(value)
             }
 

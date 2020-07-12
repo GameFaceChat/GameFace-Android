@@ -80,6 +80,8 @@
     <string name="deny_request">Delete</string>
     <string name="btn_edit_profile">Edit Profile</string>
 
+    <string name="change_pfp">Change Profile Photo</string>
+
     <!-- Crop Fragment -->
     <string name="crop_done_btn">Done</string>
     <string name="crop_cancel_btn">Cancel</string>
@@ -129,6 +131,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="save_btn">Save</string>
+    <string name="cancel_profile_edit">Cancel</string>
 
 
 </resources>

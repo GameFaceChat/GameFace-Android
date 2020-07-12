@@ -51,9 +51,7 @@ class CropPhotoFragment : Fragment() {
             }
 
             override fun onSuccess(bitmap: Bitmap) {
-                val savedFile = File(Uri.parse(args.photoUri).path!!)
-
-                Log.e("INITIAL SIZE ", savedFile.length().toString())
+                val savedFile = File.createTempFile("tempProfilePic", ".jpg", requireContext().cacheDir)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(savedFile))
                 Log.e("After Crop ", savedFile.length().toString())
                 compressImage(savedFile)
@@ -65,9 +63,7 @@ class CropPhotoFragment : Fragment() {
 
         })
 
-        bind.leftBtn.setOnClickListener {
-            bind.cropLayout.rotateImage(-90f)
-        }
+        bind.leftBtn.setOnClickListener { bind.cropLayout.rotateImage(-90f) }
         bind.rightBtn.setOnClickListener { bind.cropLayout.rotateImage(90f) }
         bind.flipBtn.setOnClickListener { bind.cropLayout.flipImage() }
     }

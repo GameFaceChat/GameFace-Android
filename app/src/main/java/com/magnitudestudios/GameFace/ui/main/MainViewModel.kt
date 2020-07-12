@@ -26,20 +26,7 @@ import java.lang.Exception
 
 class MainViewModel : ViewModel() {
     val user: MutableLiveData<Resource<User>> = MutableLiveData()
-    val profile: LiveData<Resource<Profile>> = liveData {
-        if (Firebase.auth.currentUser == null) {
-            emit(Resource(Status.SUCCESS, null, "Please Sign In"))
-            return@liveData
-        }
-        try {
-            val profile = FirebaseHelper.getUserProfileByUID(Firebase.auth.currentUser?.uid!!)
-            if (profile == null) emit(Resource(Status.SUCCESS, null, "Profile Has Not Been Created"))
-            else emit(Resource.success(profile))
-        } catch (e: FirebaseException) {
-            Log.e("ERROR GETTING PROFILE", e.message, e)
-            emit(Resource.error(e.localizedMessage, null))
-        }
-    }
+    val profile: MutableLiveData<Resource<Profile>> = MutableLiveData()
 
     val friends = Transformations.map(user) {
         if (it.status == Status.SUCCESS && it.data != null) it.data.friends.values.toList()
@@ -74,7 +61,6 @@ class MainViewModel : ViewModel() {
                         override fun onCancelled(p0: DatabaseError) { user.postValue(Resource(Status.ERROR, null, p0.message)) }
                         override fun onDataChange(data: DataSnapshot) {
                             try {
-                                Log.e("MainViewModel","Got User data: "+ data.value.toString())
                                 val userModel = data.getValue(User::class.java)
                                 user.postValue(Resource.success(userModel))
                             } catch (e: Exception)  {
@@ -97,8 +83,25 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    private fun getProfile() {
+        viewModelScope.launch {
+            if (Firebase.auth.currentUser == null) {
+                profile.postValue(Resource(Status.SUCCESS, null, "Please Sign In"))
+            }
+            try {
+                val remoteProfile = FirebaseHelper.getUserProfileByUID(Firebase.auth.currentUser?.uid!!)
+                if (remoteProfile == null) profile.postValue(Resource(Status.SUCCESS, null, "Profile Has Not Been Created"))
+                else profile.postValue(Resource.success(remoteProfile))
+            } catch (e: FirebaseException) {
+                Log.e("ERROR GETTING PROFILE", e.message, e)
+                profile.postValue(Resource.error(e.localizedMessage, null))
+            }
+        }
+    }
+
     init {
         listenToUser()
+        getProfile()
     }
 
 }
