@@ -14,19 +14,24 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
+import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.ui.calling.IncomingCall
 import com.magnitudestudios.GameFace.ui.main.MainActivity
+import io.ktor.client.engine.callContext
 import kotlinx.coroutines.*
 import java.lang.Exception
-import kotlin.random.Random
 
 class NotificationService : FirebaseMessagingService() {
     private val serviceJob = Job()
@@ -60,27 +65,38 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     private fun receiveCall(data: Map<String, String>) {
-        val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
-            putExtra(SendCall::roomID.name, data["roomID"])
-            putExtra(Profile::username.name, data["fromUsername"])
-            putExtra(Profile::name.name, data["fromName"])
-            putExtra(Profile::uid.name, data["fromUID"])
-            putExtra(Profile::profilePic.name, data["fromProfilePic"])
+        val roomID = data["roomID"] ?: error("NO ROOM FOUND")
+        serviceScope.launch(Dispatchers.Main) {
+            val profiles = withContext(Dispatchers.IO) {
+                val memberData = FirebaseHelper.getValue(Constants.ROOMS_PATH, roomID, Constants.MEMBERS_PATH) ?: return@withContext null
+                val members = memberData.children.mapNotNull {
+                    it.getValue(Member::class.java)
+                }
+                FirebaseHelper.getUserProfilesByUID(members.map { it.uid })
+            }
+            if (profiles != null) launchCall(roomID, profiles)
         }
+    }
 
+    private fun launchCall(roomID: String, members: List<Profile>) {
+        val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
+            putExtra(Member::roomID.name, roomID)
+            putExtra(Constants.ROOM_MEMBERS_KEY, Gson().toJson(members))
+        }
         val fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
                 fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
                 .setSmallIcon(R.drawable.logo_simple_rainbow)
                 .setContentTitle("Incoming Video Call")
-                .setContentText("From: "+ data["fromUsername"])
+                .setContentText("From: "+ members.joinToString(",") { it.username })
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setVibrate(Constants.VIBRATE_PATTERN)
                 .setFullScreenIntent(fullScreenPendingIntent, true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true)
+
         with(NotificationManagerCompat.from(this)) {
             notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
         }

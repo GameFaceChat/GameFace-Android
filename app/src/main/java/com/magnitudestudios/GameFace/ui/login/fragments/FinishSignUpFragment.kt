@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentFinishSigningUpBinding
-import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
 class FinishSignUpFragment : Fragment() {

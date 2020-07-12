@@ -9,11 +9,8 @@ package com.magnitudestudios.GameFace.ui.profile
 
 import androidx.lifecycle.*
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
-import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
-import com.magnitudestudios.GameFace.repository.SessionHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

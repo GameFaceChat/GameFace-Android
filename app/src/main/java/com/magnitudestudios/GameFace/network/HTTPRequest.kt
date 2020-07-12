@@ -10,16 +10,12 @@ package com.magnitudestudios.GameFace.network
 import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.gson.Gson
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
-import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.ClientRequestException
-import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.request.post
 import kotlinx.coroutines.tasks.await
 
 
@@ -39,19 +35,19 @@ object HTTPRequest {
 
     }
 
-    suspend fun callUser(url:String, sendCall: SendCall) {
-        val idToken = Firebase.auth.currentUser?.getIdToken(true)?.await()?.token ?: return
-        val client = HttpClient(Android)
-        try {
-            Log.e("JSON", Gson().toJson(sendCall))
-            client.post<Unit>(url) {
-                header("authorization", "Bearer $idToken")
-                header("Content-Type", "application/json")
-                body = Gson().toJson(sendCall)
-            }
-        }
-        catch (e : ClientRequestException) {
-            Log.e("EXCEPTION POST", e.message, e)
-        }
-    }
+//    suspend fun callUser(url:String, sendCall: SendCall) {
+//        val idToken = Firebase.auth.currentUser?.getIdToken(true)?.await()?.token ?: return
+//        val client = HttpClient(Android)
+//        try {
+//            Log.e("JSON", Gson().toJson(sendCall))
+//            client.post<Unit>(url) {
+//                header("authorization", "Bearer $idToken")
+//                header("Content-Type", "application/json")
+//                body = Gson().toJson(sendCall)
+//            }
+//        }
+//        catch (e : ClientRequestException) {
+//            Log.e("EXCEPTION POST", e.message, e)
+//        }
+//    }
 }

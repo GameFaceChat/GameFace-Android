@@ -5,11 +5,10 @@
  *
  */
 
-package com.magnitudestudios.GameFace.pojo.Helper
+package com.magnitudestudios.GameFace.pojo.EnumClasses
 
-enum class Status {
-    SUCCESS,
-    ERROR,
-    LOADING,
-    NOTHING,
+enum class MemberStatus {
+    CALLING,
+    UNAVAILABLE,
+    ACCEPTED
 }

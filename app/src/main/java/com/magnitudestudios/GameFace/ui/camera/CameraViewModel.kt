@@ -12,34 +12,33 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
-import com.magnitudestudios.GameFace.network.HTTPRequest
-import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
+import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.repository.SessionHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CameraViewModel : ViewModel() {
-    val connectedRoom = MutableLiveData<String>()
+    private val connectedRoom = MutableLiveData<String>()
+
+    private val members = MutableLiveData<Member>()
 
     fun setConnectedRoom(name: String) {
         connectedRoom.postValue(name)
     }
 
-    fun createRoom(callback: RoomCallback, url: String, profile: Profile, vararg calls : String ) {
-        viewModelScope.launch {
+    fun createRoom(callback: RoomCallback, vararg calls: String) {
+        viewModelScope.launch(Dispatchers.IO) {
             val roomID = SessionHelper.createRoom(callback, Firebase.auth.uid!!)
             connectedRoom.postValue(roomID)
-            calls.forEach {call ->
-                HTTPRequest.callUser(url, SendCall(profile, call, roomID))
+            calls.forEach { user ->
+                SessionHelper.addMember(uid = user, roomID = roomID)
             }
         }
     }
 
     fun joinRoom(roomID: String, callback: RoomCallback) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.Unconfined) {
             connectedRoom.postValue(SessionHelper.joinRoom(roomID, callback, Firebase.auth.uid!!))
         }
     }

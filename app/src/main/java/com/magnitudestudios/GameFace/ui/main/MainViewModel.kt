@@ -14,12 +14,10 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
-import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import kotlinx.coroutines.Dispatchers

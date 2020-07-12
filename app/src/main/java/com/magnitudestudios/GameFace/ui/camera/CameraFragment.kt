@@ -26,7 +26,7 @@ import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
 import com.magnitudestudios.GameFace.network.HTTPRequest
-import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
 import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
@@ -76,6 +76,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
         rootEglBase = EglBase.create()
         bind.localVideo.init(rootEglBase.eglBaseContext, null)
         bind.remoteVideo.init(rootEglBase.eglBaseContext, null)
@@ -83,9 +85,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         bind.remoteVideo.setZOrderMediaOverlay(false)
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
+        audioManager.isBluetoothScoOn = true
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
-
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
         startCamera()
     }
@@ -252,8 +253,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
             if (args.callUserUID.isNotEmpty()) {
                 viewModel.createRoom(
                         this@CameraFragment,
-                        getString(R.string.backend_cloud_function_call),
-                        mainViewModel.profile.value?.data!!,
                         args.callUserUID)
                 onTryToStart()
             }

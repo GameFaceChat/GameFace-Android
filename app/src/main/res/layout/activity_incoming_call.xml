@@ -52,25 +52,31 @@
 
     <TextView
         android:id="@+id/fullName"
-        style="@style/startscreen_text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_margin_huge"
-        app:layout_constraintEnd_toEndOf="@+id/profilePic"
-        app:layout_constraintStart_toStartOf="@+id/profilePic"
-        app:layout_constraintTop_toBottomOf="@+id/guideline2"
-        tools:text="Srihari Vishnu" />
-
-    <TextView
-        android:id="@+id/username"
         style="@style/large_text_white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="@string/incoming_video_call_from"
+        android:layout_marginTop="@dimen/layout_margin_huge"
+        android:layout_marginStart="@dimen/layout_margin_medium"
+        android:layout_marginEnd="@dimen/layout_margin_medium"
+        app:layout_constraintEnd_toEndOf="@+id/profilePic"
+        app:layout_constraintStart_toStartOf="@+id/profilePic"
+        app:layout_constraintTop_toBottomOf="@+id/guideline2"
+        tools:text="Incoming Video Call From:" />
+
+    <TextView
+        android:id="@+id/username"
+        style="@style/normal_text_white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/layout_margin_small"
+        android:layout_margin="@dimen/layout_margin_medium"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fullName"
-        tools:text="@string/username_input_hint" />
+        tools:text="srihariv, matthewd, rohitbompallli" />
 
     <ImageButton
         android:id="@+id/accept_call"

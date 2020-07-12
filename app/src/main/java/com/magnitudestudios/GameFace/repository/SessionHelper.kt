@@ -9,6 +9,7 @@ package com.magnitudestudios.GameFace.repository
 
 import android.util.Log
 import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,8 +18,11 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
+import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import com.magnitudestudios.GameFace.pojo.VideoCall.EmitMessage
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
+import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
 import kotlinx.coroutines.tasks.await
 import org.webrtc.IceCandidate
@@ -87,35 +91,26 @@ object SessionHelper {
                 .push().setValue(EmitMessage(uid, type, data))
     }
 
-    suspend fun createRoom(callback: RoomCallback, uid: String) : String {
+    suspend fun createRoom(callback: RoomCallback, uid: String): String {
         initiator = true
         this.uid = uid
         currentRoom = Firebase.database.reference.child(Constants.ROOMS_PATH).push().key
-        addToMembers(this.uid)
+        addMember(uid, currentRoom!!)
         sendMessage(Constants.JOINED_KEY, this.uid).await()
         callback.onCreateRoom()
         readMessage(callback)
         return currentRoom!!
     }
 
-    suspend fun joinRoom(roomName: String, callback: RoomCallback, uid: String) : String {
+    suspend fun joinRoom(roomName: String, callback: RoomCallback, uid: String): String {
         initiator = false
         this.uid = uid
         currentRoom = roomName
-        addToMembers(this.uid)
+        addMember(this.uid, roomName)
         sendMessage(Constants.JOINED_KEY, uid).await()
         callback.onJoinedRoom(true)
         readMessage(callback)
         return roomName
-    }
-
-    suspend fun addToMembers(uid: String) {
-        Firebase.database.reference
-                .child(Constants.ROOMS_PATH)
-                .child(currentRoom!!)
-                .child(Constants.MEMBERS_PATH)
-                .child(uid)
-                .setValue(Constants.JOINED_KEY).await()
     }
 
     suspend fun leaveRoom(callback: RoomCallback) {
@@ -124,7 +119,7 @@ object SessionHelper {
                     .child(currentRoom!!)
                     .child(Constants.CONNECT_PATH)
                     .removeEventListener(childEventListener!!)
-            Log.e("REMOVED","LISTENER")
+            Log.e("REMOVED", "LISTENER")
             childEventListener = null
             if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
                 try {
@@ -140,7 +135,7 @@ object SessionHelper {
         }
     }
 
-    suspend fun closeRoom() : Boolean {
+    suspend fun closeRoom(): Boolean {
         return try {
             Firebase.database.reference.child(Constants.ROOMS_PATH).child(currentRoom!!).removeValue().await()
             true
@@ -159,6 +154,19 @@ object SessionHelper {
 
     fun addIceCandidate(iceCandidate: IceCandidate) {
         sendMessage(Constants.ICE_CANDIDATE_KEY, IceCandidatePOJO(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp, iceCandidate.serverUrl))
+    }
+
+    fun addMember(uid: String, roomID: String) {
+        Firebase.database.reference
+                .child(Constants.ROOMS_PATH)
+                .child(roomID)
+                .child(Constants.MEMBERS_PATH)
+                .child(uid)
+                .setValue(Member(uid = uid, roomID = roomID))
+    }
+
+    suspend fun getAllMembers(roomID: String) {
+        FirebaseHelper.getValue()
     }
 
     init {

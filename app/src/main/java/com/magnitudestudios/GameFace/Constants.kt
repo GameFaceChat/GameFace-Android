@@ -25,7 +25,7 @@ object Constants {
     const val PROFILE_PATH = "profiles"
     const val MEMBERS_PATH = "members"
 
-    const val SENT_PROFILES_PATH = "friendRequestsSent"
+    const val ROOM_MEMBERS_KEY = "room_members"
 
     //Firebase signalling keywords
     const val JOINED_KEY = "JOINED"

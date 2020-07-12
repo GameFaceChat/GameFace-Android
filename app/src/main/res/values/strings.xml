@@ -87,6 +87,7 @@
 
     <!-- Incoming Call -->
     <string name="incoming_call">It\'s Game Time!</string>
+    <string name="incoming_video_call_from">Incoming Video Call From:</string>
 
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>
