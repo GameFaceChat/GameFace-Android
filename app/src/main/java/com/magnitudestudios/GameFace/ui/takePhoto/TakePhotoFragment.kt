@@ -15,6 +15,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.GestureDetector
+import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -38,6 +40,7 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
+
 class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private val TAG = "TakePhotoFragment"
     private lateinit var bind: FragmentTakePhotoBinding
@@ -49,7 +52,9 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private var camera: Camera? = null
     private var cameraSelector: CameraSelector? = null
 
-    private var torch = false
+    private lateinit var mGestureDetector: GestureDetector
+
+    private var flash = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentTakePhotoBinding.inflate(inflater, container, false)
@@ -62,13 +67,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         getCameraProvider()
 
         bind.switchCamera.setOnClickListener {
-            orientation = if (orientation == CameraSelector.LENS_FACING_FRONT) CameraSelector.LENS_FACING_BACK
-            else CameraSelector.LENS_FACING_FRONT
-            try {
-                setUpCamera(cameraProvider)
-            } catch (e: Exception) {
-                Log.e("TakePhotoFragment", e.message, e)
-            }
+            switchCamera()
         }
 
         bind.backBtn.setOnClickListener {
@@ -81,11 +80,16 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
         bind.flashBtn.setOnClickListener {
             if (camera == null) return@setOnClickListener
-            torch = !torch
-            if (torch) bind.flashBtn.background = requireContext().getDrawable(R.drawable.baseline_flash_on_black_24dp)
-            else bind.flashBtn.background = requireContext().getDrawable(R.drawable.baseline_flash_off_black_24dp)
+            flash = !flash
+            if (flash) {
+                bind.flashBtn.background = requireContext().getDrawable(R.drawable.baseline_flash_on_black_24dp)
+                captureInstance?.flashMode = ImageCapture.FLASH_MODE_ON
+            }
+            else {
+                bind.flashBtn.background = requireContext().getDrawable(R.drawable.baseline_flash_off_black_24dp)
+                captureInstance?.flashMode = ImageCapture.FLASH_MODE_OFF
+            }
 
-            camera!!.cameraControl.enableTorch(torch)
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
@@ -123,7 +127,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
                 .setTargetAspectRatio(screenAspectRatio)
                 .setTargetRotation(bind.previewView.display.rotation)
                 .build()
-
+        if (flash) captureInstance?.flashMode = ImageCapture.FLASH_MODE_ON
         cameraSelector = CameraSelector.Builder()
                 .requireLensFacing(orientation)
                 .build()
@@ -132,9 +136,20 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview, captureInstance)
             setUpTapToFocus()
+            mGestureDetector = GestureDetector(requireContext(), GestureListener())
+            bind.previewView.setOnTouchListener { _, event -> mGestureDetector.onTouchEvent(event) }
         } catch (e: Exception) {
+
             Log.e(TAG, "Camera setup failed", e)
         }
+    }
+
+    private fun switchCamera() {
+        orientation = if (orientation == CameraSelector.LENS_FACING_FRONT) CameraSelector.LENS_FACING_BACK
+        else CameraSelector.LENS_FACING_FRONT
+        try {
+            setUpCamera(cameraProvider)
+        } catch (e: Exception) {Log.e("TakePhotoFragment", e.message, e)}
     }
 
     private fun takePicture() {
@@ -190,7 +205,6 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
     }
 
-
     private fun onError() {
         Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
         findNavController().navigateUp()
@@ -211,6 +225,27 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
             return AspectRatio.RATIO_4_3
         }
         return AspectRatio.RATIO_16_9
+    }
+
+    inner class GestureListener : SimpleOnGestureListener() {
+        override fun onDown(e: MotionEvent): Boolean {
+            return true
+        }
+
+        override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
+            if (cameraSelector == null) return true
+            val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+            val point = factory.createPoint(event.x, event.y)
+            val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
+            camera?.cameraControl?.startFocusAndMetering(action)
+            return true
+        }
+
+        // event when double tap occurs
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            switchCamera()
+            return true
+        }
     }
 
 

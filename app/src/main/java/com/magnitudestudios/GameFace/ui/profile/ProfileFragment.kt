@@ -17,10 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.tabs.TabLayoutMediator
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentProfileBinding
+import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
@@ -50,11 +53,7 @@ class ProfileFragment : BaseFragment() {
         mainViewModel.profile.observe(viewLifecycleOwner, Observer {
             bind.displayUsername.text = it.data?.username
             bind.displayName.text = it.data?.name
-            Glide.with(this).load(mainViewModel.profile.value?.data?.profilePic)
-                    .placeholder(R.drawable.ic_add_profile_pic)
-                    .fallback(R.drawable.ic_add_profile_pic)
-                    .circleCrop()
-                    .into(bind.profilePic)
+            Glide.with(this).loadProfile(mainViewModel.profile.value?.data?.profilePic ?: "", bind.profilePic)
         })
 
         bind.profilePic.setOnClickListener {

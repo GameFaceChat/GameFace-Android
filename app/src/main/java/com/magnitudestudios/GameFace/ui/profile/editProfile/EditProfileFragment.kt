@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.DialogEditProfileBinding
+import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
@@ -84,15 +85,9 @@ class EditProfileFragment : BottomSheetDialogFragment() {
         bind.changePfp.setOnClickListener {
             activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_editProfileFragment_to_takePhotoFragment)
         }
-        Glide.with(this)
-                .load(mainViewModel.profile.value?.data?.profilePic)
-                .error(R.drawable.ic_add_profile_pic)
-                .circleCrop()
-                .into(bind.profilePic)
+        Glide.with(this).loadProfile(mainViewModel.profile.value?.data?.profilePic ?: "", bind.profilePic)
         //Finish
         bind.cancelBtn.setOnClickListener { dismiss() }
-        bind.saveBtn.setOnClickListener {
-            viewModel.save()
-        }
+        bind.saveBtn.setOnClickListener { viewModel.save() }
     }
 }
