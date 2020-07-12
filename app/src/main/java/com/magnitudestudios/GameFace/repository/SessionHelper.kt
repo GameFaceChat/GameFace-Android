@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
+import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import com.magnitudestudios.GameFace.pojo.VideoCall.EmitMessage
@@ -167,6 +168,24 @@ object SessionHelper {
 
     suspend fun getAllMembers(roomID: String) {
         FirebaseHelper.getValue()
+    }
+
+    private fun updateMemberStatus(uid: String, roomID: String, status: MemberStatus) {
+        Firebase.database.reference
+                .child(Constants.ROOMS_PATH)
+                .child(roomID)
+                .child(Constants.MEMBERS_PATH)
+                .child(uid)
+                .child(Member::memberStatus.name)
+                .setValue(status.name)
+    }
+
+    fun denyCall(uid: String, roomID: String){
+        updateMemberStatus(uid, roomID, MemberStatus.UNAVAILABLE)
+    }
+
+    fun acceptCall(uid: String, roomID: String) {
+        updateMemberStatus(uid, roomID, MemberStatus.ACCEPTED)
     }
 
     init {

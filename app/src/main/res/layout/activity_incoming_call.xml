@@ -51,7 +51,7 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/fullName"
+        android:id="@+id/callTitle"
         style="@style/large_text_white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
         tools:text="Incoming Video Call From:" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/usernames"
         style="@style/normal_text_white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fullName"
+        app:layout_constraintTop_toBottomOf="@id/callTitle"
         tools:text="srihariv, matthewd, rohitbompallli" />
 
     <ImageButton
