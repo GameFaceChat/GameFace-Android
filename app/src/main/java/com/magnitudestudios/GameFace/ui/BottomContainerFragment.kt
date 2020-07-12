@@ -43,21 +43,32 @@ class BottomContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val navHost = requireActivity().findNavController(R.id.containerNavHost)
         bind.bottomNav.setupWithNavController(navHost)
+        //Handle Profile Pic changes
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 lifecycleScope.launch(Dispatchers.IO) {
-                    val remoteUri = FirebaseHelper.setProfilePic(Uri.parse(it))
+                    //Get the uri from cropped photo
+                    val uri = Uri.parse(it)
+                    //Uri after saving to firebase
+                    val remoteUri = FirebaseHelper.setProfilePic(uri)
+                    //Successful save
                     if (remoteUri.status == Status.SUCCESS){
                         mainViewModel.profile.postValue(Resource.success(mainViewModel.profile.value?.data?.apply {
                             profilePic = remoteUri.data.toString()
                         }))
                         FirebaseHelper.updateUserProfile(mutableMapOf(Profile::profilePic.name to remoteUri.data.toString()))
-                    } else {
+                        Log.e("SAVED", "Saved new pfp")
+                    }
+                    else {  //Error occurred while uploading
                         Log.e("Bottom Container", remoteUri.message ?: "ERROR")
-                        Toast.makeText(requireContext(), "Something unexpected happened!", Toast.LENGTH_SHORT).show()
+                        activity?.runOnUiThread {
+                            Toast.makeText(requireContext(), "Something unexpected happened!", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
+                findNavController().currentBackStackEntry?.savedStateHandle?.set(Constants.GOT_PHOTO_KEY, null)
             }
         })
+
     }
 }

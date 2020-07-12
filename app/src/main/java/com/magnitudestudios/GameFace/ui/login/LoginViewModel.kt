@@ -30,6 +30,7 @@ import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.io.File
 
 class LoginViewModel : ViewModel() {
     val authenticated = MutableLiveData<Resource<Boolean>>()

@@ -8,7 +8,11 @@
 package com.magnitudestudios.GameFace.ui.takePhoto
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.GestureDetector
@@ -40,12 +44,12 @@ import kotlin.math.min
 class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private val TAG = "TakePhotoFragment"
     private lateinit var bind: FragmentTakePhotoBinding
-    private lateinit var cameraProviderFuture : ListenableFuture<ProcessCameraProvider>
+    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
     private lateinit var cameraProvider: ProcessCameraProvider
     private var captureInstance: ImageCapture? = null
     private var orientation = CameraSelector.LENS_FACING_FRONT
-    private var camera: Camera?=null
+    private var camera: Camera? = null
     private var cameraSelector: CameraSelector? = null
 
     private lateinit var mGestureDetector: GestureDetector
@@ -102,7 +106,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun setUpCamera(cameraProvider : ProcessCameraProvider) {
+    private fun setUpCamera(cameraProvider: ProcessCameraProvider) {
         cameraProvider.unbindAll()      //Unbind all for now
         // Get screen metrics used to setup camera for full screen resolution
         val metrics = DisplayMetrics().also { bind.previewView.display.getRealMetrics(it) }
@@ -113,7 +117,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
         val rotation = bind.previewView.display.rotation
 
-        val preview : Preview = Preview.Builder()
+        val preview: Preview = Preview.Builder()
                 .setTargetAspectRatio(screenAspectRatio)
                 .setTargetRotation(rotation)
                 .build()
@@ -131,10 +135,11 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         preview.setSurfaceProvider(bind.previewView.createSurfaceProvider())
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview, captureInstance)
+            setUpTapToFocus()
             mGestureDetector = GestureDetector(requireContext(), GestureListener())
             bind.previewView.setOnTouchListener { _, event -> mGestureDetector.onTouchEvent(event) }
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
+
             Log.e(TAG, "Camera setup failed", e)
         }
     }
@@ -154,25 +159,55 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
             isReversedHorizontal = orientation == CameraSelector.LENS_FACING_FRONT
         }
 
-        // Create output options object which contains file + metadata
-        val savedFile = File.createTempFile("tempProfilePic", ".jpg", requireContext().cacheDir);
-        val outputFileOptions = ImageCapture.OutputFileOptions.Builder(savedFile)
-                .setMetadata(metadata)
-                .build()
-        captureInstance?.takePicture(outputFileOptions,this, object : ImageCapture.OnImageSavedCallback {
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, System.currentTimeMillis().toString())
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.MediaColumns.DATE_TAKEN, System.currentTimeMillis())
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/${getString(R.string.app_name)}")
+            }
+        }
+
+        val outputFileOptions = ImageCapture.OutputFileOptions.Builder(requireContext().applicationContext.contentResolver,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                .setMetadata(metadata).build()
+        captureInstance?.takePicture(outputFileOptions, this, object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 activity?.runOnUiThread {
-                    val action = TakePhotoFragmentDirections.actionTakePhotoFragmentToCropPhotoFragment(savedFile.toUri().toString())
+                    val action = TakePhotoFragmentDirections.actionTakePhotoFragmentToCropPhotoFragment(outputFileResults.savedUri.toString())
                     findNavController().navigate(action)
                 }
             }
 
             override fun onError(exception: ImageCaptureException) {
-                Log.e("TakePhotoFragment", exception.message, exception)
-                Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
-                findNavController().navigateUp()
+                activity?.runOnUiThread {
+                    Log.e("TakePhotoFragment", exception.message, exception)
+                    onError()
+                }
             }
         })
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setUpTapToFocus() {
+        if (camera == null || cameraSelector == null) return
+        bind.previewView.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                if (event.action != MotionEvent.ACTION_UP) return true
+                val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+                val point = factory.createPoint(event.x, event.y)
+                val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
+                camera!!.cameraControl.startFocusAndMetering(action)
+                return true
+            }
+
+        })
+
+    }
+
+    private fun onError() {
+        Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
+        findNavController().navigateUp()
     }
 
 
@@ -186,7 +221,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
     private fun aspectRatio(width: Int, height: Int): Int {
         val previewRatio = max(width, height).toDouble() / min(width, height)
-        if (abs(previewRatio - (4.0/3.0)) <= abs(previewRatio - (16.0/9.0))) {
+        if (abs(previewRatio - (4.0 / 3.0)) <= abs(previewRatio - (16.0 / 9.0))) {
             return AspectRatio.RATIO_4_3
         }
         return AspectRatio.RATIO_16_9

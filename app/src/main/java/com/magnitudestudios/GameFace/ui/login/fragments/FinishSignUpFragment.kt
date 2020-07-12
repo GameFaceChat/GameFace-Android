@@ -73,8 +73,10 @@ class FinishSignUpFragment : Fragment() {
         })
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
-            if (it != null) viewModel.setProfilePicUri(it)
-            else Toast.makeText(context, "ERROR", Toast.LENGTH_LONG).show()
+            if (it != null) {
+                viewModel.setProfilePicUri(it)
+                findNavController().currentBackStackEntry?.savedStateHandle?.set(Constants.GOT_PHOTO_KEY, null)
+            }
         })
 
     }

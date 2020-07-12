@@ -51,9 +51,7 @@ class CropPhotoFragment : Fragment() {
             }
 
             override fun onSuccess(bitmap: Bitmap) {
-                val savedFile = File(Uri.parse(args.photoUri).path!!)
-
-                Log.e("INITIAL SIZE ", savedFile.length().toString())
+                val savedFile = File.createTempFile("tempProfilePic", ".jpg", requireContext().cacheDir)
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, FileOutputStream(savedFile))
                 Log.e("After Crop ", savedFile.length().toString())
                 compressImage(savedFile)
