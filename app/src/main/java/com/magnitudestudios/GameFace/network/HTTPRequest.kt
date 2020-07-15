@@ -20,11 +20,11 @@ import kotlinx.coroutines.tasks.await
 
 
 object HTTPRequest {
-    suspend fun getServers(url:String) : Resource<String?> {
+    suspend fun getServers() : Resource<String?> {
         val idToken = Firebase.auth.currentUser?.getIdToken(true)?.await()?.token ?: return Resource.error("Invalid Token", null)
         val client = HttpClient(Android)
         return try {
-            val s = client.get<String>(url) {
+            val s = client.get<String>("https://us-central1-gameface-chat.cloudfunctions.net/app/servers") {
                 header("authorization", "Bearer $idToken")
             }
             Resource.success(s)

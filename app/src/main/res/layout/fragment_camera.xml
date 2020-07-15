@@ -16,13 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:background="@android:color/darker_gray"
+        android:background="@color/darkGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
 
         <org.webrtc.SurfaceViewRenderer
             android:id="@+id/remoteVideo"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
@@ -30,8 +31,7 @@
             android:id="@+id/localVideo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:ignore="MissingConstraints"
-            />
+            tools:ignore="MissingConstraints" />
 
     </FrameLayout>
 
@@ -44,5 +44,16 @@
         app:layout_constraintEnd_toEndOf="@+id/videoLayout"
         app:layout_constraintStart_toStartOf="@+id/videoLayout"
         app:layout_constraintTop_toTopOf="@+id/videoLayout" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_member"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/large_icon_size"
+        android:layout_margin="@dimen/layout_margin_large"
+        android:background="@drawable/ic_add_friend"
+        android:backgroundTint="@color/button_to_transparent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

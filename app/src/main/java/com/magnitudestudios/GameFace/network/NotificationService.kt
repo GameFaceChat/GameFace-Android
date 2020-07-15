@@ -83,7 +83,7 @@ class NotificationService : FirebaseMessagingService() {
             putExtra(Member::roomID.name, roomID)
             putExtra(Constants.ROOM_MEMBERS_KEY, Gson().toJson(members))
         }
-        val fullScreenPendingIntent = PendingIntent.getActivity(this, 0,
+        val fullScreenPendingIntent = PendingIntent.getActivity(this, 1,
                 fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))

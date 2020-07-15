@@ -19,8 +19,6 @@ import com.google.gson.Gson
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
-import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.pojo.UserInfo.User
 import com.magnitudestudios.GameFace.pojo.VideoCall.EmitMessage
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
@@ -32,7 +30,7 @@ import org.webrtc.SessionDescription
 object SessionHelper {
     private var groupMembers = 0
     var uid = ""
-    private var childEventListener: ChildEventListener? = null
+    private var connectionListener: ChildEventListener? = null
     var currentRoom: String? = null
         private set
     var started: Boolean = false
@@ -41,9 +39,9 @@ object SessionHelper {
     private const val TAG = "SessionHelper"
 
 
-    fun readMessage(callback: RoomCallback) {
+    fun listenForMessages(callback: RoomCallback) {
         if (currentRoom == null) return
-        childEventListener = object : ChildEventListener {
+        connectionListener = object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                 Log.e(TAG, "DATA: " + dataSnapshot.value)
                 val emitMessage = dataSnapshot.getValue(EmitMessage::class.java)
@@ -51,22 +49,20 @@ object SessionHelper {
                     Log.e(TAG, "onChildAdded: NULL MESSAGE")
                     return
                 }
-                if (emitMessage.userID == uid) {
-                    return
-                }
+                if (emitMessage.fromUID == uid || (emitMessage.toUID != uid && emitMessage.toUID != Constants.ALL_MEMBERS)) return
                 val gson = Gson()
                 when (emitMessage.type) {
                     Constants.JOINED_KEY -> {
-                        callback.newParticipantJoined(emitMessage.userID)
+                        callback.newParticipantJoined(emitMessage.fromUID)
                         groupMembers += 1
                     }
                     Constants.LEFT_KEY -> {
-                        callback.participantLeft(emitMessage.userID)
+                        callback.participantLeft(emitMessage.fromUID)
                         groupMembers -= 1
                     }
-                    Constants.OFFER_KEY -> callback.offerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
-                    Constants.ANSWER_KEY -> callback.answerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
-                    Constants.ICE_CANDIDATE_KEY -> callback.iceServerReceived(gson.fromJson(gson.toJsonTree(emitMessage.data), IceCandidatePOJO::class.java))
+                    Constants.OFFER_KEY -> callback.offerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
+                    Constants.ANSWER_KEY -> callback.answerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
+                    Constants.ICE_CANDIDATE_KEY -> callback.iceServerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), IceCandidatePOJO::class.java))
                 }
             }
 
@@ -81,25 +77,26 @@ object SessionHelper {
                 .getReference(Constants.ROOMS_PATH)
                 .child(currentRoom!!)
                 .child(Constants.CONNECT_PATH)
-                .addChildEventListener(childEventListener!!)
+                .addChildEventListener(connectionListener!!)
     }
 
-    private fun sendMessage(type: String, data: Any?): Task<Void?> {
+
+
+    private fun sendMessage(toUID: String, type: String, data: Any?): Task<Void?> {
         return Firebase.database.reference
                 .child(Constants.ROOMS_PATH)
                 .child(currentRoom!!)
                 .child(Constants.CONNECT_PATH)
-                .push().setValue(EmitMessage(uid, type, data))
+                .push().setValue(EmitMessage(uid, toUID, type, data))
     }
 
     suspend fun createRoom(callback: RoomCallback, uid: String): String {
         initiator = true
         this.uid = uid
         currentRoom = Firebase.database.reference.child(Constants.ROOMS_PATH).push().key
-        addMember(uid, currentRoom!!)
-        sendMessage(Constants.JOINED_KEY, this.uid).await()
-        callback.onCreateRoom()
-        readMessage(callback)
+        addMember(uid, currentRoom!!, MemberStatus.ACCEPTED)
+        sendMessage(Constants.ALL_MEMBERS, Constants.JOINED_KEY, this.uid).await()
+        listenForMessages(callback)
         return currentRoom!!
     }
 
@@ -107,24 +104,23 @@ object SessionHelper {
         initiator = false
         this.uid = uid
         currentRoom = roomName
-        addMember(this.uid, roomName)
-        sendMessage(Constants.JOINED_KEY, uid).await()
-        callback.onJoinedRoom(true)
-        readMessage(callback)
+        sendMessage(Constants.ALL_MEMBERS, Constants.JOINED_KEY, uid).await()
+        listenForMessages(callback)
+        updateMemberStatus(uid, roomName, MemberStatus.ACCEPTED)
         return roomName
     }
 
     suspend fun leaveRoom(callback: RoomCallback) {
-        if (currentRoom != null && childEventListener != null) {
+        if (currentRoom != null && connectionListener != null) {
             Firebase.database.getReference(Constants.ROOMS_PATH)
                     .child(currentRoom!!)
                     .child(Constants.CONNECT_PATH)
-                    .removeEventListener(childEventListener!!)
+                    .removeEventListener(connectionListener!!)
             Log.e("REMOVED", "LISTENER")
-            childEventListener = null
+            connectionListener = null
             if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
                 try {
-                    sendMessage(Constants.LEFT_KEY, uid).await()
+                    sendMessage(Constants.ALL_MEMBERS, Constants.LEFT_KEY, uid).await()
                     callback.onLeftRoom()
                     if (groupMembers == 1) closeRoom()
                     groupMembers = 0
@@ -145,29 +141,25 @@ object SessionHelper {
         }
     }
 
-    fun sendOffer(session: SessionDescription) {
-        sendMessage(Constants.OFFER_KEY, SessionInfoPOJO(session.type.toString(), session.description))
+    fun sendOffer(session: SessionDescription, toUID: String) {
+        sendMessage(toUID, Constants.OFFER_KEY, SessionInfoPOJO(session.type.toString(), session.description))
     }
 
-    fun sendAnswer(session: SessionDescription) {
-        sendMessage(Constants.ANSWER_KEY, SessionInfoPOJO(session.type.toString(), session.description))
+    fun sendAnswer(session: SessionDescription, toUID: String) {
+        sendMessage(toUID, Constants.ANSWER_KEY, SessionInfoPOJO(session.type.toString(), session.description))
     }
 
-    fun addIceCandidate(iceCandidate: IceCandidate) {
-        sendMessage(Constants.ICE_CANDIDATE_KEY, IceCandidatePOJO(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp, iceCandidate.serverUrl))
+    fun sendIceCandidate(iceCandidate: IceCandidate, toUID: String) {
+        sendMessage(toUID, Constants.ICE_CANDIDATE_KEY, IceCandidatePOJO(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp, iceCandidate.serverUrl))
     }
 
-    fun addMember(uid: String, roomID: String) {
+    fun addMember(uid: String, roomID: String, memberStatus: MemberStatus = MemberStatus.CALLING) {
         Firebase.database.reference
                 .child(Constants.ROOMS_PATH)
                 .child(roomID)
                 .child(Constants.MEMBERS_PATH)
                 .child(uid)
-                .setValue(Member(uid = uid, roomID = roomID))
-    }
-
-    suspend fun getAllMembers(roomID: String) {
-        FirebaseHelper.getValue()
+                .setValue(Member(uid = uid, roomID = roomID, memberStatus = memberStatus.name))
     }
 
     private fun updateMemberStatus(uid: String, roomID: String, status: MemberStatus) {
@@ -178,6 +170,16 @@ object SessionHelper {
                 .child(uid)
                 .child(Member::memberStatus.name)
                 .setValue(status.name)
+    }
+
+    suspend fun getAllMembers(roomID: String) : List<Member> {
+        val members = mutableListOf<Member>()
+        FirebaseHelper.getValue(Constants.ROOMS_PATH, roomID, Constants.MEMBERS_PATH)?.children?.forEach {data ->
+            data.getValue(Member::class.java)?.let {
+                if (it.uid != Firebase.auth.currentUser!!.uid) members.add(it)
+            }
+        }
+        return members
     }
 
     fun denyCall(uid: String, roomID: String){

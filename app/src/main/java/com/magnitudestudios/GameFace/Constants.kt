@@ -34,6 +34,8 @@ object Constants {
     const val ANSWER_KEY = "ANSWER"
     const val ICE_CANDIDATE_KEY = "ICECANDIDATE"
 
+    const val ALL_MEMBERS = "ALL"
+
     const val CALLING_KEY = "CALLING"
     const val UNAVAILABLE_KEY = "UNAVAILABLE"
 
