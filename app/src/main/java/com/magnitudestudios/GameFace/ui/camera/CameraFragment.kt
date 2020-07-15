@@ -7,7 +7,6 @@
 
 package com.magnitudestudios.GameFace.ui.camera
 
-import android.app.AlertDialog
 import android.content.Context
 import android.media.AudioManager
 import android.os.Bundle

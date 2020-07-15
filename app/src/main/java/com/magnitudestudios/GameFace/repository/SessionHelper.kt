@@ -29,12 +29,10 @@ import org.webrtc.SessionDescription
 
 object SessionHelper {
     private var groupMembers = 0
-    var uid = ""
+    var uid = Firebase.auth.currentUser?.uid
     private var connectionListener: ChildEventListener? = null
     var currentRoom: String? = null
         private set
-    var started: Boolean = false
-    var initiator: Boolean
 
     private const val TAG = "SessionHelper"
 
@@ -87,11 +85,10 @@ object SessionHelper {
                 .child(Constants.ROOMS_PATH)
                 .child(currentRoom!!)
                 .child(Constants.CONNECT_PATH)
-                .push().setValue(EmitMessage(uid, toUID, type, data))
+                .push().setValue(EmitMessage(uid!!, toUID, type, data))
     }
 
     suspend fun createRoom(callback: RoomCallback, uid: String): String {
-        initiator = true
         this.uid = uid
         currentRoom = Firebase.database.reference.child(Constants.ROOMS_PATH).push().key
         addMember(uid, currentRoom!!, MemberStatus.ACCEPTED)
@@ -101,7 +98,6 @@ object SessionHelper {
     }
 
     suspend fun joinRoom(roomName: String, callback: RoomCallback, uid: String): String {
-        initiator = false
         this.uid = uid
         currentRoom = roomName
         sendMessage(Constants.ALL_MEMBERS, Constants.JOINED_KEY, uid).await()
@@ -188,10 +184,6 @@ object SessionHelper {
 
     fun acceptCall(uid: String, roomID: String) {
         updateMemberStatus(uid, roomID, MemberStatus.ACCEPTED)
-    }
-
-    init {
-        initiator = false
     }
 
 }

@@ -176,7 +176,6 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         viewModelScope.launch {
             SessionHelper.leaveRoom(this@CameraViewModel)
         }
-        SessionHelper.started = false
     }
 
 
