@@ -48,6 +48,12 @@
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
 
+    <style name="light_small_text">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/lightGray</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
     <style name="normal_text">
         <item name="android:fontFamily">@font/raleway</item>
         <item name="android:textColor">@color/darkGray</item>

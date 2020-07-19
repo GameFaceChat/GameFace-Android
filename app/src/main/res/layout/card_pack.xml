@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<LinearLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_large"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        app:cardCornerRadius="15dp">
+        <ImageView
+            android:id="@+id/packImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@color/lightGray"
+            android:scaleType="fitXY"
+            tools:src="@tools:sample/backgrounds/scenic"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        style="@style/small_text"
+        android:layout_marginTop="@dimen/padding_very_small"
+        tools:text="Sample Title"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_size_tiny"
+        style="@style/light_small_text"
+        android:layout_marginTop="@dimen/padding_very_small"
+        tools:text="Description"/>
+
+</LinearLayout>

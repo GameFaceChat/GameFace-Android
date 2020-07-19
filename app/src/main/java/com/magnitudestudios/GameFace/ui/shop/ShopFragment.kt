@@ -11,19 +11,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentShopBinding
 
 class ShopFragment : BaseFragment() {
 
-    lateinit var binding:FragmentShopBinding
+    lateinit var bind:FragmentShopBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentShopBinding.inflate(inflater)
-        return binding.root
+        bind = FragmentShopBinding.inflate(inflater)
+        return bind.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        val text = "Srihari is the best in the whole world \n"
+        var dummy = ""
+        for (x in 1..10) {
+            dummy += text
+        }
+//        bind.dummy.text = dummy
+//
+//        Glide.with(this).load("https://wallpaperaccess.com/full/181630.jpg")
+//                .into(bind.showcase)
+
     }
 }

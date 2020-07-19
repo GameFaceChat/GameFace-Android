@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/md_grey_300">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/showcaseFlipper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/layout_margin_large"
+        android:background="@color/darkGray"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/download_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/primary_button_theme"
+        android:layout_marginTop="@dimen/layout_margin_very_small"
+        android:drawableStart="@drawable/baseline_arrow_circle_down_white_24dp"
+        android:drawablePadding="@dimen/padding_medium"
+        android:padding="@dimen/padding_large"
+        android:text="Download"
+        app:layout_constraintEnd_toStartOf="@+id/info_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/showcaseFlipper"
+        app:layout_constraintTop_toBottomOf="@+id/showcaseFlipper" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/info_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/lightGray"
+        android:drawableStart="@drawable/baseline_arrow_circle_down_white_24dp"
+        android:drawablePadding="@dimen/padding_medium"
+        android:padding="@dimen/padding_large"
+        style="@style/accent_button_theme"
+        android:text="More Info"
+        android:layout_marginBottom="@dimen/layout_margin_small"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/showcaseFlipper"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/download_btn"
+        app:layout_constraintTop_toTopOf="@+id/download_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
