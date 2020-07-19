@@ -86,10 +86,11 @@ class NotificationService : FirebaseMessagingService() {
         val fullScreenPendingIntent = PendingIntent.getActivity(this, 1,
                 fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val formattedMembers = members.filter { it.uid != Firebase.auth.uid }.joinToString(", ") { it.username }
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
                 .setSmallIcon(R.drawable.logo_simple_rainbow)
                 .setContentTitle("Incoming Video Call")
-                .setContentText("From: "+ members.joinToString(",") { it.username })
+                .setContentText("From: $formattedMembers")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
                 .setVibrate(Constants.VIBRATE_PATTERN)
