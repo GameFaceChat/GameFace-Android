@@ -8,6 +8,7 @@
 package com.magnitudestudios.GameFace.ui.camera
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
@@ -78,7 +79,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
     }
 
     fun onIceCandidate(uid: String, iceCandidate: IceCandidate) {
-        SessionHelper.sendIceCandidate(iceCandidate, uid)
+        if (!SessionHelper.currentRoom.isNullOrEmpty()) SessionHelper.sendIceCandidate(iceCandidate, uid)
     }
 
 
@@ -152,21 +153,28 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
     }
 
     override fun participantLeft(uid: String) {
-        connections.value?.remove(uid)
+        removeParticipant(uid)
+        Log.e("PARTICIPANT LEFT", "UID: $uid")
     }
 
     override fun onLeftRoom() {
 
     }
 
+    @Synchronized
+    fun removeParticipant(uid: String) {
+        connections.value!!.remove(uid)
+    }
+
+    @Synchronized
     fun hangUp() {
         if (connections.value == null) return
         val peers = connections.value!!.keys
         for (uid in peers) {
             try {
                 connections.value!![uid]?.close()
-                connections.value!![uid]?.close()
-                connections.value!!.remove(uid)
+                removeParticipant(uid)
+                connections.notifyObserver()
             } catch (e: Exception) {
                 e.printStackTrace()
             }

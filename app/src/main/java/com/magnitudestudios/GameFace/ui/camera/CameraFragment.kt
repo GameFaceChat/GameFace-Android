@@ -29,7 +29,7 @@ import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
-import com.magnitudestudios.GameFace.views.MovableSurfaceView
+import com.magnitudestudios.GameFace.views.MemberScreen
 import org.webrtc.*
 
 class CameraFragment : BaseFragment(), View.OnClickListener {
@@ -41,7 +41,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var audioConstraints: MediaConstraints
     private lateinit var videoConstraints: MediaConstraints
     private lateinit var sdpConstraints: MediaConstraints
-//    private var iceServers: ArrayList<PeerConnection.IceServer> = ArrayList();
     private lateinit var rootEglBase: EglBase
     private lateinit var audioSource: AudioSource
 
@@ -52,7 +51,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var viewModel: CameraViewModel
 
-    private var videoViews = hashMapOf<String, MovableSurfaceView>()
+    private var videoViews = hashMapOf<String, MemberScreen>()
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -73,11 +72,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
 
-        bind.localVideo.init(rootEglBase.eglBaseContext, null)
-        bind.remoteVideo.init(rootEglBase.eglBaseContext, null)
-
-        bind.localVideo.setZOrderMediaOverlay(true)
-        bind.remoteVideo.setZOrderMediaOverlay(false)
+        bind.localVideo.initialize(rootEglBase, true)
 
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
@@ -128,7 +123,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
 
     private fun observeNewPeers() {
         viewModel.newPeer.observe(viewLifecycleOwner, Observer {
-            if (!it.isNullOrEmpty()) {
+            if (!it.isNullOrEmpty() && it != Firebase.auth.currentUser!!.uid) {
                 createPeerConnection(it)
                 if (Firebase.auth.currentUser?.uid!! > it) viewModel.initiateConnection(it)
             }
@@ -166,11 +161,10 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         videoCapturer?.startCapture(720, 480, 30)
 
         //create surface renderer, init it and add the renderer to the track
-        bind.localVideo.setMirror(true)
-        bind.localVideo.setEnableHardwareScaler(true)
-        bind.remoteVideo.setEnableHardwareScaler(true)
+        bind.localVideo.surface.setMirror(true)
+        bind.localVideo.surface.setEnableHardwareScaler(true)
 
-        localVideoTrack.addSink(bind.localVideo)
+        localVideoTrack.addSink(bind.localVideo.surface)
     }
 
     private fun createPeerConnection(uid: String) {
@@ -188,6 +182,13 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 viewModel.onIceCandidate(peerUID, iceCandidate)
             }
 
+            override fun onIceConnectionChange(iceConnectionState: PeerConnection.IceConnectionState) {
+                super.onIceConnectionChange(iceConnectionState)
+                activity?.runOnUiThread {
+                    updateConnectionStatus(peerUID, iceConnectionState)
+                }
+            }
+
             override fun onAddStream(mediaStream: MediaStream) {
                 super.onAddStream(mediaStream)
                 gotPeerStream(peerUID, mediaStream)
@@ -203,36 +204,73 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    //For UI updates for each participant
+    private fun updateConnectionStatus(uid: String, iceConnectionState: PeerConnection.IceConnectionState) {
+        when (iceConnectionState) {
+            PeerConnection.IceConnectionState.NEW -> {
+                getScreen(uid)
+            }
+            PeerConnection.IceConnectionState.CHECKING -> {
+                videoViews[uid]?.setLoading(true)
+            }
+            PeerConnection.IceConnectionState.CONNECTED, PeerConnection.IceConnectionState.COMPLETED -> {
+                videoViews[uid]?.setLoading(false)
+            }
+            PeerConnection.IceConnectionState.DISCONNECTED -> {
+                videoViews[uid]?.setDisconnected()
+            }
+            PeerConnection.IceConnectionState.CLOSED, PeerConnection.IceConnectionState.FAILED -> {
+                removePeer(uid)
+            }
+        }
+    }
+
+    @Synchronized
+    private fun removePeer(uid: String) {
+        videoViews[uid]?.surface?.release()
+        Log.e("REMOVING VIEW: ", uid)
+        bind.root.removeView(videoViews[uid])
+        videoViews.remove(uid)
+        viewModel.removeParticipant(uid)
+
+        if (videoViews.isEmpty()) transitionDisconnected()
+    }
+
+
     private fun gotPeerStream(peerUID: String, stream: MediaStream ) {
         Log.e(TAG, "gotRemoteStream: " + "GOT REMOTE STREAM")
         //we have remote video stream. add to the renderer.
         activity?.runOnUiThread {
             val videoTrack = stream.videoTracks[0]
-            val videoView : MovableSurfaceView
-            if (!videoViews.containsKey(peerUID)) {
-                val params = FrameLayout.LayoutParams(400, 700)
-                videoView = MovableSurfaceView(context).apply {
-                    setZOrderMediaOverlay(true)
-                    layoutParams = params
-                    init(rootEglBase.eglBaseContext, null)
-                }
-                videoViews[peerUID] = videoView
-                bind.root.addView(videoView)
-
-            } else {
-                videoView = videoViews[peerUID]!!
-            }
             try {
-                videoTrack.addSink(videoView)
+                videoTrack.addSink(getScreen(peerUID).surface)
+                transitionConnected()
             } catch (e: Exception) {
                 e.printStackTrace()
+                connectionFailed("Error getting stream")
             }
-            transitionConnected()
         }
     }
 
+    private fun getScreen(peerUID: String) : MemberScreen {
+        val videoView : MemberScreen
+        if (!videoViews.containsKey(peerUID)) {
+            val params = FrameLayout.LayoutParams(400, 700)
+            videoView = MemberScreen(requireContext()).apply {
+                initialize(rootEglBase, true)
+                layoutParams = params
+            }
+            videoViews[peerUID] = videoView
+            bind.root.addView(videoView)
+
+        } else {
+            videoView = videoViews[peerUID]!!
+        }
+        return videoView
+    }
+
+
     private fun transitionConnected() {
-        bind.progressBar.visibility = View.GONE
         bind.localVideo.setCalling()
     }
 
@@ -241,11 +279,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun setLoading(b: Boolean) {
-        bind.progressBar.visibility = if (b) View.VISIBLE else View.GONE
+        bind.localVideo.setLoading(b)
+
     }
     private fun connectionFailed(message: String? = null) {
         activity?.runOnUiThread {
-            bind.progressBar.visibility = View.GONE
             if (!message.isNullOrEmpty()) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
     }
@@ -255,8 +293,9 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         transitionDisconnected()
         try {
             videoCapturer?.stopCapture()
-            bind.remoteVideo.release()
-            bind.localVideo.release()
+            bind.localVideo.surface.release()
+            localAudioTrack.dispose()
+            localVideoTrack.dispose()
         } catch (e: InterruptedException) {
             e.printStackTrace()
         }

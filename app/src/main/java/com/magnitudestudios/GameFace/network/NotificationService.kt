@@ -27,6 +27,7 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.SessionHelper
 import com.magnitudestudios.GameFace.ui.calling.IncomingCall
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 import io.ktor.client.engine.callContext
@@ -68,13 +69,10 @@ class NotificationService : FirebaseMessagingService() {
         val roomID = data["roomID"] ?: error("NO ROOM FOUND")
         serviceScope.launch(Dispatchers.Main) {
             val profiles = withContext(Dispatchers.IO) {
-                val memberData = FirebaseHelper.getValue(Constants.ROOMS_PATH, roomID, Constants.MEMBERS_PATH) ?: return@withContext null
-                val members = memberData.children.mapNotNull {
-                    it.getValue(Member::class.java)
-                }
+                val members = SessionHelper.getAllMembers(roomID)
                 FirebaseHelper.getUserProfilesByUID(members.map { it.uid })
             }
-            if (profiles != null) launchCall(roomID, profiles)
+            if (profiles.isNotEmpty()) launchCall(roomID, profiles)
         }
     }
 
