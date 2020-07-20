@@ -23,7 +23,7 @@ import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.FragmentBottomNavBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
-import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.ui.main.MainViewModel

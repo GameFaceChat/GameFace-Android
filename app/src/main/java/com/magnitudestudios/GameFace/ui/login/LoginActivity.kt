@@ -9,20 +9,17 @@ package com.magnitudestudios.GameFace.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.firebase.auth.FirebaseAuth
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.databinding.ActivityLoginBinding
-import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 
 

@@ -33,7 +33,7 @@ object FirebaseHelper {
     private const val TAG = "FirebaseHelper"
 
     //Reusing Ref definitions
-    private fun getUserRef(uid: String): DatabaseReference = Firebase.database.reference.child(Constants.USERS_PATH).child(uid)
+    fun getUserRef(uid: String): DatabaseReference = Firebase.database.reference.child(Constants.USERS_PATH).child(uid)
 
     fun getCurrentUserRef(): DatabaseReference = getUserRef(Firebase.auth.currentUser!!.uid)
 
@@ -129,7 +129,7 @@ object FirebaseHelper {
         }
     }
 
-    suspend fun getValue(vararg path: String): Any? {
+    suspend fun getValue(vararg path: String): DataSnapshot? {
         var reference = Firebase.database.reference
         for (s in path) reference = reference.child(s)
         return suspendCancellableCoroutine { cont ->
@@ -138,7 +138,7 @@ object FirebaseHelper {
                     cont.cancel(p0.toException())
                 }
 
-                override fun onDataChange(data: DataSnapshot) = cont.resume(data.value)
+                override fun onDataChange(data: DataSnapshot) = cont.resume(data)
             })
         }
     }

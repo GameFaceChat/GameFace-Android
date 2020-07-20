@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        style="@style/normal_text_white"
+        android:background="@color/colorPrimary"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="@dimen/padding_large"
+        android:text="Add Members"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/callFriendsList"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        tools:listitem="@layout/row_friends"/>
+
+</LinearLayout>
