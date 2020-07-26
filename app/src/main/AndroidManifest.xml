@@ -51,7 +51,6 @@
             android:name=".ui.calling.IncomingCall"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Translucent"
             />
 
         <service

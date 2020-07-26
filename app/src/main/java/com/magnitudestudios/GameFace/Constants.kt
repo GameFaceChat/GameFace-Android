@@ -32,6 +32,7 @@ object Constants {
     const val TRUTH_OR_DARE_PATH = "truth_or_dare"
 
     const val SENT_PROFILES_PATH = "friendRequestsSent"
+    const val ROOM_MEMBERS_KEY = "room_members"
 
     //Firebase signalling keywords
     const val JOINED_KEY = "JOINED"
@@ -39,6 +40,8 @@ object Constants {
     const val OFFER_KEY = "OFFER"
     const val ANSWER_KEY = "ANSWER"
     const val ICE_CANDIDATE_KEY = "ICECANDIDATE"
+
+    const val ALL_MEMBERS = "ALL"
 
     const val CALLING_KEY = "CALLING"
     const val UNAVAILABLE_KEY = "UNAVAILABLE"

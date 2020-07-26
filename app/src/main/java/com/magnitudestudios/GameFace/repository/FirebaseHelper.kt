@@ -33,7 +33,7 @@ object FirebaseHelper {
         }
     }
 
-    suspend fun getValue(vararg path: String): Any? {
+    suspend fun getValue(vararg path: String): DataSnapshot? {
         var reference = Firebase.database.reference
         for (s in path) reference = reference.child(s)
         return suspendCancellableCoroutine { cont ->
@@ -42,7 +42,7 @@ object FirebaseHelper {
                     cont.cancel(p0.toException())
                 }
 
-                override fun onDataChange(data: DataSnapshot) = cont.resume(data.value)
+                override fun onDataChange(data: DataSnapshot) = cont.resume(data)
             })
         }
     }

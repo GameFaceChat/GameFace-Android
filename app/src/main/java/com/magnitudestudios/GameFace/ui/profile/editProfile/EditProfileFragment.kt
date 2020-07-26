@@ -22,7 +22,7 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.DialogEditProfileBinding
 import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
-import com.magnitudestudios.GameFace.pojo.Helper.Status
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
 class EditProfileFragment : BottomSheetDialogFragment() {

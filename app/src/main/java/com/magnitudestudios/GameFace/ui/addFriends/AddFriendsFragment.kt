@@ -29,8 +29,8 @@ import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentAddFriendsBinding
 import com.magnitudestudios.GameFace.databinding.RowUsersBinding
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.loadProfile
-import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.views.AddFriendViewHolder

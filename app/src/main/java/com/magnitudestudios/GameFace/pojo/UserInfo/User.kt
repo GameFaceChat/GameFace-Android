@@ -10,6 +10,7 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 import androidx.annotation.NonNull
 import com.google.firebase.database.Exclude
 import com.magnitudestudios.GameFace.pojo.Shop.Pack
+import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 
 data class User(
         @JvmField

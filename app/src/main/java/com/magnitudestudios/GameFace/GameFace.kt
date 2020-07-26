@@ -7,11 +7,13 @@ import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class GameFace : Application() {
     override fun onCreate() {
         super.onCreate()
-        //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        Firebase.database.setPersistenceEnabled(true)
         createNotificationChannel()
     }
 

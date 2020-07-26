@@ -26,6 +26,9 @@
             android:name="roomID"
             app:argType="string"
             android:defaultValue=""/>
+        <action
+            android:id="@+id/action_cameraFragment_to_addMembersDialog"
+            app:destination="@id/addMembersDialog" />
     </fragment>
     <fragment
         android:id="@+id/addFriendsFragment"
@@ -121,4 +124,9 @@
             android:name="packItem"
             app:argType="string" />
     </fragment>
+    <dialog
+        android:id="@+id/addMembersDialog"
+        android:name="com.magnitudestudios.GameFace.ui.camera.addMembers.AddMembersDialog"
+        android:label="AddMembersDialog"
+        />
 </navigation>

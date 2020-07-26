@@ -7,6 +7,8 @@
 
 package com.magnitudestudios.GameFace.pojo.Helper
 
+import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
+
 
 /**
  * A generic class that holds a value with its loading status.

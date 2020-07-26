@@ -57,12 +57,4 @@ class ProfileViewModel : ViewModel() {
             UserRepository.deleteFriendRequest(uid, true)
         }
     }
-
-    fun callUser(userProfile: Profile, toUID: String, url: String, callback: RoomCallback) {
-//        viewModelScope.launch {
-//            val roomID = SessionHelper.createRoom(callback, userProfile.uid)
-//            HTTPRequest.callUser(url, SendCall(userProfile, toUID, roomID))
-//        }
-
-    }
 }
