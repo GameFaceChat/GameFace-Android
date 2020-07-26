@@ -303,7 +303,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             bind.localVideo.surface.release()
             localAudioTrack.dispose()
             localVideoTrack.dispose()
-        } catch (e: InterruptedException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
