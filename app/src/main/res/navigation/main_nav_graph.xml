@@ -72,6 +72,13 @@
         <action
             android:id="@+id/action_bottomContainerFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_cardPackDetailsFragment"
+            app:destination="@id/cardPackDetailsFragment"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
+            app:popExitAnim="@anim/fade_out"
+            app:enterAnim="@anim/fade_in"/>
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"
@@ -101,4 +108,17 @@
             app:popExitAnim="@anim/slide_out_to_right"
             app:popUpTo="@id/editProfileFragment" />
     </dialog>
+
+    <fragment
+        android:id="@+id/cardPackDetailsFragment"
+        android:name="com.magnitudestudios.GameFace.ui.shop.details.CardPackDetailsFragment"
+        android:label="CardPackDetailsFragment"
+        tools:layout="@layout/fragment_pack_details">
+        <argument
+            android:name="imageUri"
+            app:argType="string" />
+        <argument
+            android:name="packItem"
+            app:argType="string" />
+    </fragment>
 </navigation>

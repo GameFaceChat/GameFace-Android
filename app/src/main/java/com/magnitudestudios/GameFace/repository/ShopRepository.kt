@@ -7,6 +7,7 @@
 
 package com.magnitudestudios.GameFace.repository
 
+import android.util.Log
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -39,6 +40,7 @@ object ShopRepository {
         }
     }
     suspend fun getCharadesItems(): List<ShopItem> {
+        Log.e("GETTING", "CHARADES")
         return getItems(Constants.CHARADES_PATH)
     }
 

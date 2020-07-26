@@ -10,15 +10,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/fragment_shop_scene"
-    app:showPaths="true">
+    app:layoutDescription="@xml/fragment_shop_scene">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <androidx.viewpager2.widget.ViewPager2
+    <View
         android:id="@+id/showcaseFlipper"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,6 +21,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:id="@+id/search_shop"
+        android:queryHint="Search Shop"
+        android:layout_margin="@dimen/layout_margin_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/showcase_buttons"
@@ -58,6 +59,26 @@
             android:padding="@dimen/padding_large"
             android:text="More Info" />
     </LinearLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/shop_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Installed" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Earn" />
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -65,80 +86,13 @@
         android:layout_height="0dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/showcaseFlipper">
+        app:layout_constraintTop_toBottomOf="@id/shop_tabs">
 
-        <LinearLayout
-            android:id="@+id/shopLayout"
+        <FrameLayout
+            android:id="@+id/shopContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/profile_tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:icon="@drawable/ic_person" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:icon="@drawable/ic_people_48px" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:icon="@drawable/ic_mail" />
-            </com.google.android.material.tabs.TabLayout>
-
-            <TextView
-                style="@style/small_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large"
-                android:text="@string/shop_charades_title" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/charadesItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/card_pack" />
-
-            <TextView
-                style="@style/small_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large"
-                android:text="@string/shop_truth_or_dare_title"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/tOrDItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/card_pack" />
-
-            <TextView
-                style="@style/small_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/padding_large"
-                android:text="@string/shop_would_you_rather_title" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/wouldYouRatherItems"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/card_pack" />
-        </LinearLayout>
+            />
 
     </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -135,6 +135,7 @@
     <string name="shop_charades_title">Charades</string>
     <string name="shop_truth_or_dare_title">Truth or Dare</string>
     <string name="shop_would_you_rather_title">Would You Rather</string>
+    <string name="download_btn">Purchase</string>
 
 
 </resources>

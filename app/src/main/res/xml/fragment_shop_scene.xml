@@ -9,17 +9,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ConstraintSet android:id="@+id/start">
-<!--        <Constraint-->
-<!--            android:id="@+id/shop_tabs"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:visibility="gone" />-->
         <Constraint
+            android:id="@+id/shop_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/showcaseFlipper" />
+
+        <Constraint
             android:id="@+id/showcase_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/layout_margin_small"
             app:layout_constraintBottom_toBottomOf="@+id/showcaseFlipper" />
+        <Constraint
+            android:id="@+id/search_shop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -34,11 +41,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
         <Constraint
+            android:id="@+id/showcase_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:alpha="0"
-            android:id="@+id/showcase_buttons"
             app:layout_constraintBottom_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/shop_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent" />
     </ConstraintSet>
 
     <Transition

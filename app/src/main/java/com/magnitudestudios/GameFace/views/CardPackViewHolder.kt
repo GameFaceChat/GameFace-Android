@@ -7,19 +7,19 @@
 
 package com.magnitudestudios.GameFace.views
 
-import android.util.Log
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.callbacks.SharedItemClicked
 import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 
-class CardPackViewHolder(val binding: CardPackBinding) : RecyclerView.ViewHolder(binding.root) {
+class CardPackViewHolder(val binding: CardPackBinding, val listener: SharedItemClicked) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: ShopItem) {
         binding.packName.text = item.name
-        binding.packDescription.text = ""
+//        binding.packDescription.text = ""
 
         Glide.with(itemView)
                 .load(item.imgURL)
@@ -34,17 +34,25 @@ class CardPackViewHolder(val binding: CardPackBinding) : RecyclerView.ViewHolder
                     v.alpha = 0.5f
                     v.scaleX = 0.9f
                     v.scaleY = 0.9f
+                    return@setOnTouchListener true
+                }
+                MotionEvent.ACTION_CANCEL -> {
+                    v.animate().alpha(1.0f).scaleX(1.0f).scaleY(1.0f).setDuration(200).start()
+                    return@setOnTouchListener false
                 }
                 MotionEvent.ACTION_UP -> {
                     v.animate().alpha(1.0f).scaleX(1.0f).scaleY(1.0f).setDuration(200).start()
                     v.performClick()
+                    return@setOnTouchListener false
                 }
-                else -> v.animate().alpha(1.0f).scaleX(1.0f).scaleY(1.0f).setDuration(200).start()
+//                else -> v.animate().alpha(1.0f).scaleX(1.0f).scaleY(1.0f).setDuration(200).start()
             }
             return@setOnTouchListener true
         }
         itemView.setOnClickListener {
-            Log.e("CLICKED", "$adapterPosition")
+            listener.onClick(adapterPosition, binding.packImage)
         }
+
+        binding.packImage.transitionName = item.imgURL
     }
 }
