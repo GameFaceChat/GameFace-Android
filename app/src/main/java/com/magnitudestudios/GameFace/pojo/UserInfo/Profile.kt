@@ -45,4 +45,33 @@ data class Profile(
                 }
         }
 
+        override fun equals(other: Any?): Boolean {
+                if (this === other) return true
+                if (javaClass != other?.javaClass) return false
+
+                other as Profile
+
+                if (uid != other.uid) return false
+                if (username != other.username) return false
+                if (name != other.name) return false
+                if (bio != other.bio) return false
+                if (profilePic != other.profilePic) return false
+                if (score != other.score) return false
+                if (lastLogin != other.lastLogin) return false
+
+                return true
+        }
+
+        override fun hashCode(): Int {
+                var result = uid.hashCode()
+                result = 31 * result + username.hashCode()
+                result = 31 * result + name.hashCode()
+                result = 31 * result + bio.hashCode()
+                result = 31 * result + profilePic.hashCode()
+                result = 31 * result + score
+                result = 31 * result + (lastLogin?.hashCode() ?: 0)
+                return result
+        }
+
+
 }

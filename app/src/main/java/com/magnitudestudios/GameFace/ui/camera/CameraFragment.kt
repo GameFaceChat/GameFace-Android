@@ -16,13 +16,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
@@ -32,7 +30,7 @@ import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
 import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
-import com.magnitudestudios.GameFace.repository.SessionHelper
+import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
 import com.magnitudestudios.GameFace.utils.CustomSdpObserver
@@ -171,7 +169,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         localPeer = peerConnectionFactory.createPeerConnection(rtcConfig, object : CustomPeerConnectionObserver("localPeerCreation") {
             override fun onIceCandidate(iceCandidate: IceCandidate) {
                 super.onIceCandidate(iceCandidate)
-                SessionHelper.addIceCandidate(iceCandidate)
+                SessionRepository.addIceCandidate(iceCandidate)
             }
 
             override fun onAddStream(mediaStream: MediaStream) {
@@ -189,14 +187,14 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
         sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveAudio", "true"))
         sdpConstraints.mandatory.add(MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true"))
 
-        if (SessionHelper.initiator) {
+        if (SessionRepository.initiator) {
             localPeer!!.createOffer(object : CustomSdpObserver("localCreateOffer") {
                 override fun onCreateSuccess(sessionDescription: SessionDescription) {
                     super.onCreateSuccess(sessionDescription)
                     Log.d(TAG, "onCreateSuccess234: " + sessionDescription.description)
                     localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocalDesc"), sessionDescription)
                     //Send to peer
-                    SessionHelper.sendOffer(sessionDescription)
+                    SessionRepository.sendOffer(sessionDescription)
                 }
             }, sdpConstraints)
         }
@@ -205,9 +203,9 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
     private fun onTryToStart() {
         activity?.runOnUiThread {
             Log.e(TAG, "onTryToStart: " + "TRYING TO START")
-            if (!SessionHelper.started) {
+            if (!SessionRepository.started) {
                 createPeerConnection()
-                SessionHelper.started = true
+                SessionRepository.started = true
             }
         }
     }
@@ -282,9 +280,9 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
             e.printStackTrace()
         }
         lifecycleScope.launch {
-            SessionHelper.leaveRoom(this@CameraFragment)
+            SessionRepository.leaveRoom(this@CameraFragment)
         }
-        SessionHelper.started = false
+        SessionRepository.started = false
         transitionDisconnected()
     }
 
@@ -333,7 +331,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener, RoomCallback {
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 super.onCreateSuccess(sessionDescription)
                 localPeer!!.setLocalDescription(CustomSdpObserver("localSetLocal"), sessionDescription)
-                SessionHelper.sendAnswer(sessionDescription)
+                SessionRepository.sendAnswer(sessionDescription)
             }
         }, MediaConstraints())
     }

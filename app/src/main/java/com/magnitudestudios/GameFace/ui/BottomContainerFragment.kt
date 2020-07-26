@@ -25,7 +25,7 @@ import com.magnitudestudios.GameFace.databinding.FragmentBottomNavBinding
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.Helper.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,13 +50,13 @@ class BottomContainerFragment : Fragment() {
                     //Get the uri from cropped photo
                     val uri = Uri.parse(it)
                     //Uri after saving to firebase
-                    val remoteUri = FirebaseHelper.setProfilePic(uri)
+                    val remoteUri = UserRepository.setProfilePic(uri)
                     //Successful save
                     if (remoteUri.status == Status.SUCCESS){
                         mainViewModel.profile.postValue(Resource.success(mainViewModel.profile.value?.data?.apply {
                             profilePic = remoteUri.data.toString()
                         }))
-                        FirebaseHelper.updateUserProfile(mutableMapOf(Profile::profilePic.name to remoteUri.data.toString()))
+                        UserRepository.updateUserProfile(mutableMapOf(Profile::profilePic.name to remoteUri.data.toString()))
                         Log.e("SAVED", "Saved new pfp")
                     }
                     else {  //Error occurred while uploading

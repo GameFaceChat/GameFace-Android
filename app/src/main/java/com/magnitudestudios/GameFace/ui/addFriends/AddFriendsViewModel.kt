@@ -14,7 +14,7 @@ import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.pojo.UserInfo.Friend
 import com.magnitudestudios.GameFace.pojo.UserInfo.FriendRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
@@ -24,7 +24,7 @@ class AddFriendsViewModel : ViewModel() {
 
     val results = Transformations.switchMap(queryString) {str ->
         liveData(Dispatchers.IO) {
-            emit(FirebaseHelper.getProfilesByUsername(str.toLowerCase(Locale.ROOT)))
+            emit(UserRepository.getProfilesByUsername(str.toLowerCase(Locale.ROOT)))
         }
     }
 
@@ -47,7 +47,7 @@ class AddFriendsViewModel : ViewModel() {
     }
 
     fun sendFriendRequest(profile: Profile) {
-        if (profile.uid != Firebase.auth.currentUser!!.uid) FirebaseHelper.sendFriendRequest(profile)
+        if (profile.uid != Firebase.auth.currentUser!!.uid) UserRepository.sendFriendRequest(profile)
     }
 
     fun deleteFriendRequest(profile: Profile) {
@@ -55,7 +55,7 @@ class AddFriendsViewModel : ViewModel() {
         if (profile.uid in getFriendRequestedUIDs()) {
             Log.e("HERE", "SECOND")
             viewModelScope.launch(Dispatchers.IO) {
-                FirebaseHelper.deleteFriendRequest(profile.uid, false)
+                UserRepository.deleteFriendRequest(profile.uid, false)
             }
         }
     }

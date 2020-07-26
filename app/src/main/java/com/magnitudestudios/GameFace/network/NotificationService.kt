@@ -21,12 +21,11 @@ import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import com.magnitudestudios.GameFace.ui.calling.IncomingCall
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 import kotlinx.coroutines.*
 import java.lang.Exception
-import kotlin.random.Random
 
 class NotificationService : FirebaseMessagingService() {
     private val serviceJob = Job()
@@ -37,7 +36,7 @@ class NotificationService : FirebaseMessagingService() {
 
             serviceScope.launch {
                 if (Firebase.auth.currentUser != null) {
-                    FirebaseHelper.updateDeviceToken(token)
+                    UserRepository.updateDeviceToken(token)
                 }
             }
         } catch (e: Exception) {

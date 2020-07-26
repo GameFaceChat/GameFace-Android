@@ -12,13 +12,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
-import com.magnitudestudios.GameFace.repository.SessionHelper
-import kotlinx.coroutines.Dispatchers
+import com.magnitudestudios.GameFace.repository.SessionRepository
 import kotlinx.coroutines.launch
 
 class CameraViewModel : ViewModel() {
@@ -30,7 +28,7 @@ class CameraViewModel : ViewModel() {
 
     fun createRoom(callback: RoomCallback, url: String, profile: Profile, vararg calls : String ) {
         viewModelScope.launch {
-            val roomID = SessionHelper.createRoom(callback, Firebase.auth.uid!!)
+            val roomID = SessionRepository.createRoom(callback, Firebase.auth.uid!!)
             connectedRoom.postValue(roomID)
             calls.forEach {call ->
                 HTTPRequest.callUser(url, SendCall(profile, call, roomID))
@@ -40,7 +38,7 @@ class CameraViewModel : ViewModel() {
 
     fun joinRoom(roomID: String, callback: RoomCallback) {
         viewModelScope.launch {
-            connectedRoom.postValue(SessionHelper.joinRoom(roomID, callback, Firebase.auth.uid!!))
+            connectedRoom.postValue(SessionRepository.joinRoom(roomID, callback, Firebase.auth.uid!!))
         }
     }
 
@@ -51,7 +49,7 @@ class CameraViewModel : ViewModel() {
 //    }
 
     fun isInitiator() : Boolean {
-        return SessionHelper.initiator
+        return SessionRepository.initiator
     }
 
 

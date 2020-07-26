@@ -9,11 +9,8 @@ package com.magnitudestudios.GameFace.ui.profile
 
 import androidx.lifecycle.*
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
-import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.pojo.VideoCall.SendCall
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
-import com.magnitudestudios.GameFace.repository.SessionHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -27,7 +24,7 @@ class ProfileViewModel : ViewModel() {
 
     val requestProfiles = Transformations.switchMap(requestUIDs) {
         liveData {
-            emit(FirebaseHelper.getUserProfilesByUID(it))
+            emit(UserRepository.getUserProfilesByUID(it))
         }
     }
 
@@ -37,7 +34,7 @@ class ProfileViewModel : ViewModel() {
 
     fun getFriendProfiles(uids: List<String>) {
         viewModelScope.launch(Dispatchers.IO) {
-            friendProfiles.postValue(FirebaseHelper.getUserProfilesByUID(uids))
+            friendProfiles.postValue(UserRepository.getUserProfilesByUID(uids))
         }
     }
     
@@ -51,13 +48,13 @@ class ProfileViewModel : ViewModel() {
 
     fun acceptFriendRequest(uid: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            FirebaseHelper.acceptFriendRequest(uid)
+            UserRepository.acceptFriendRequest(uid)
         }
     }
 
     fun denyFriendRequest(uid: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            FirebaseHelper.deleteFriendRequest(uid, true)
+            UserRepository.deleteFriendRequest(uid, true)
         }
     }
 

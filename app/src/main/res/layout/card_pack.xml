@@ -5,42 +5,45 @@
   ~
   -->
 
-<LinearLayout android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/padding_large"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:padding="@dimen/padding_large">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="125dp"
         android:layout_height="125dp"
         app:cardCornerRadius="15dp">
+
         <ImageView
             android:id="@+id/packImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@color/lightGray"
             android:scaleType="fitXY"
-            tools:src="@tools:sample/backgrounds/scenic"/>
+            android:src="@color/lightGray"
+            tools:src="@tools:sample/backgrounds/scenic" />
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
+        android:id="@+id/pack_name"
+        style="@style/small_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        style="@style/small_text"
         android:layout_marginTop="@dimen/padding_very_small"
-        tools:text="Sample Title"/>
+        android:textAlignment="center"
+        tools:text="Sample Title" />
 
     <TextView
+        android:id="@+id/pack_description"
+        style="@style/light_small_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_very_small"
         android:textAlignment="center"
         android:textSize="@dimen/text_size_tiny"
-        style="@style/light_small_text"
-        android:layout_marginTop="@dimen/padding_very_small"
-        tools:text="Description"/>
+        tools:text="Description" />
 
 </LinearLayout>
