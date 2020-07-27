@@ -15,7 +15,9 @@ data class ShopItem constructor(
         val date_released : String = "",
         val price : Int = 0,
         val installs: Int = 0,
-        val sample_question: String = ""
+        val sample_question: String = "",
+        val order : Int = 0,
+        val version_number : Int = 0
 ) {
     override fun equals(other: Any?): Boolean {
         if (other !is ShopItem) return false
@@ -26,7 +28,9 @@ data class ShopItem constructor(
                 this.date_released == other.date_released &&
                 this.price == other.price &&
                 this.installs == other.installs &&
-                this.sample_question == other.sample_question
+                this.sample_question == other.sample_question &&
+                this.order == other.order &&
+                this.version_number == other.version_number
     }
 
     override fun hashCode(): Int {
@@ -35,9 +39,11 @@ data class ShopItem constructor(
         result = 31 * result + content.hashCode()
         result = 31 * result + imgURL.hashCode()
         result = 31 * result + date_released.hashCode()
-        result = 31 * result + price
-        result = 31 * result + installs
+        result = 31 * result + price.hashCode()
+        result = 31 * result + installs.hashCode()
         result = 31 * result + sample_question.hashCode()
+        result = 31 * result + order.hashCode()
+        result = 31 * result + version_number.hashCode()
         return result
     }
 

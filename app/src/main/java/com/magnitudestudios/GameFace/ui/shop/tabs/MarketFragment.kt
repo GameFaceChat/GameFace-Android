@@ -86,6 +86,8 @@ class MarketFragment : Fragment() {
         }
 
         override fun compareItems(item1: ShopItem, item2: ShopItem): Int {
+            if (item1.order != item2.order) return item1.order - item2.order
+            if (item1.installs != item1.installs) return item1.installs - item2.installs
             return item1.name.compareTo(item2.name)
         }
     }
