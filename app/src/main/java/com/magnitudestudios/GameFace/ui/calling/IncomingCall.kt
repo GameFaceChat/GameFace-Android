@@ -21,7 +21,7 @@ import com.magnitudestudios.GameFace.bases.BasePermissionsActivity
 import com.magnitudestudios.GameFace.databinding.ActivityIncomingCallBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
-import com.magnitudestudios.GameFace.repository.SessionHelper
+import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 
 class IncomingCall : BasePermissionsActivity() {
@@ -54,12 +54,12 @@ class IncomingCall : BasePermissionsActivity() {
         bind.usernames.text = memberProfiles.joinToString(",") { it.username }
 
         bind.denyCall.setOnClickListener {
-            SessionHelper.denyCall(Firebase.auth.currentUser!!.uid, roomID)
+            SessionRepository.denyCall(Firebase.auth.currentUser!!.uid, roomID)
             finish()
         }
 
         bind.acceptCall.setOnClickListener {
-            SessionHelper.acceptCall(Firebase.auth.currentUser!!.uid, roomID)
+            SessionRepository.acceptCall(Firebase.auth.currentUser!!.uid, roomID)
             val toMainActivity = Intent(this, MainActivity::class.java)
             toMainActivity.putExtra(Constants.ROOM_ID_KEY, roomID)
             toMainActivity.putExtra(Constants.CALL_KEY, "true")

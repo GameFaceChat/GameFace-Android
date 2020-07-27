@@ -27,7 +27,7 @@ import kotlinx.coroutines.tasks.await
 import org.webrtc.IceCandidate
 import org.webrtc.SessionDescription
 
-object SessionHelper {
+object SessionRepository {
     private var groupMembers = 0
     var uid = Firebase.auth.currentUser?.uid
     private var connectionListener: ChildEventListener? = null

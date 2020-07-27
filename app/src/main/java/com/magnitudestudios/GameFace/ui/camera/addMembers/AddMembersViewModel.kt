@@ -12,6 +12,7 @@ import androidx.lifecycle.*
 import com.magnitudestudios.GameFace.pojo.UserInfo.Friend
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 
 class AddMembersViewModel : ViewModel() {
@@ -21,7 +22,7 @@ class AddMembersViewModel : ViewModel() {
     var friendProfiles = Transformations.switchMap(friends) {
         liveData(Dispatchers.IO) {
             Log.e("GETTING PROFILES", "NICE")
-            if (!friends.value.isNullOrEmpty()) emit(FirebaseHelper.getUserProfilesByUID(friends.value!!.map { it.uid }))
+            if (!friends.value.isNullOrEmpty()) emit(UserRepository.getUserProfilesByUID(friends.value!!.map { it.uid }))
         }
     }
 

@@ -9,28 +9,19 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 
 import androidx.annotation.NonNull
 import com.google.firebase.database.Exclude
+import com.magnitudestudios.GameFace.pojo.Shop.Pack
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 
 data class User(
         @JvmField
         @NonNull
         var uid: String = "",
-
-        @JvmField
         var created: Any? = null,
-
-        @JvmField
         var devicesID: HashMap<String, Boolean> = HashMap(),
-
-        @JvmField
         var friendRequests: HashMap<String, FriendRequest> = HashMap(),
-
-        @JvmField
         var friendRequestsSent: HashMap<String, FriendRequest> = HashMap(),
-
-        @JvmField
-        var friends: Map<String, Friend> = HashMap()
-
+        var friends: Map<String, Friend> = HashMap(),
+        var packs : Map<String, Pack> = HashMap()
 ) {
         @Exclude
         fun getCreated(): Long? {

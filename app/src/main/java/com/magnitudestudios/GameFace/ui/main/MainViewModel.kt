@@ -15,7 +15,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
@@ -45,7 +45,7 @@ class MainViewModel : ViewModel() {
     fun signOutUser() {
         if (Firebase.auth.currentUser != null) {
             if (listener != null) {
-                FirebaseHelper.getCurrentUserRef().removeEventListener(listener!!)
+                UserRepository.getCurrentUserRef().removeEventListener(listener!!)
             }
             Firebase.auth.signOut()
             user.postValue(Resource.success(null))
@@ -56,7 +56,7 @@ class MainViewModel : ViewModel() {
     private fun listenToUser() {
 
         if (Firebase.auth.currentUser != null) {
-            listener = FirebaseHelper.getCurrentUserRef()
+            listener = UserRepository.getCurrentUserRef()
                     .addValueEventListener(object : ValueEventListener {
                         override fun onCancelled(p0: DatabaseError) { user.postValue(Resource(Status.ERROR, null, p0.message)) }
                         override fun onDataChange(data: DataSnapshot) {
@@ -77,8 +77,8 @@ class MainViewModel : ViewModel() {
 
     fun checkDevice() {
         viewModelScope.launch(Dispatchers.IO) {
-            if (!user.value?.data?.devicesID?.containsKey(FirebaseHelper.getDeviceToken())!!) {
-                FirebaseHelper.updateDeviceToken(FirebaseHelper.getDeviceToken())
+            if (!user.value?.data?.devicesID?.containsKey(UserRepository.getDeviceToken())!!) {
+                UserRepository.updateDeviceToken(UserRepository.getDeviceToken())
             }
         }
     }
@@ -89,7 +89,7 @@ class MainViewModel : ViewModel() {
                 profile.postValue(Resource(Status.SUCCESS, null, "Please Sign In"))
             }
             try {
-                val remoteProfile = FirebaseHelper.getUserProfileByUID(Firebase.auth.currentUser?.uid!!)
+                val remoteProfile = UserRepository.getUserProfileByUID(Firebase.auth.currentUser?.uid!!)
                 if (remoteProfile == null) profile.postValue(Resource(Status.SUCCESS, null, "Profile Has Not Been Created"))
                 else profile.postValue(Resource.success(remoteProfile))
             } catch (e: FirebaseException) {

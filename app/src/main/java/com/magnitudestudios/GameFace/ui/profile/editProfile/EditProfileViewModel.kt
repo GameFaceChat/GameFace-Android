@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
+import com.magnitudestudios.GameFace.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class EditProfileViewModel : ViewModel() {
@@ -63,7 +63,7 @@ class EditProfileViewModel : ViewModel() {
     fun save() {
         savingProgress.value = Resource.loading(false)
         viewModelScope.launch {
-            if (FirebaseHelper.updateUserProfile(mutableMapOf(Profile::name.name to getName(), Profile::bio.name to getBio()))) {
+            if (UserRepository.updateUserProfile(mutableMapOf(Profile::name.name to getName(), Profile::bio.name to getBio()))) {
                 savingProgress.postValue(Resource.success(true))
             }
             else savingProgress.postValue(Resource.error("Could not save profile", false))

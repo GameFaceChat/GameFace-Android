@@ -133,6 +133,10 @@
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="save_btn">Save</string>
     <string name="cancel_profile_edit">Cancel</string>
+    <string name="shop_charades_title">Charades</string>
+    <string name="shop_truth_or_dare_title">Truth or Dare</string>
+    <string name="shop_would_you_rather_title">Would You Rather</string>
+    <string name="download_btn">Purchase</string>
 
 
 </resources>

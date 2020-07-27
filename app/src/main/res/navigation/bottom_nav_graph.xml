@@ -20,10 +20,12 @@
         android:id="@+id/shopFragment"
         android:name="com.magnitudestudios.GameFace.ui.shop.ShopFragment"
         android:label="ShopFragment"
-        tools:layout="@layout/fragment_shop"/>
+        tools:layout="@layout/fragment_shop">
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.magnitudestudios.GameFace.ui.profile.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/>
+
 </navigation>

@@ -21,10 +21,17 @@ object Constants {
     //Firebase paths
     const val ROOMS_PATH = "rooms"
     const val USERS_PATH = "users"
+    const val STORE_PATH = "store"
+
     const val CONNECT_PATH = "connection"
     const val PROFILE_PATH = "profiles"
     const val MEMBERS_PATH = "members"
 
+    const val CHARADES_PATH = "charades"
+    const val WOULD_YOU_RATHER_PATH = "would_you_rather"
+    const val TRUTH_OR_DARE_PATH = "truth_or_dare"
+
+    const val SENT_PROFILES_PATH = "friendRequestsSent"
     const val ROOM_MEMBERS_KEY = "room_members"
 
     //Firebase signalling keywords

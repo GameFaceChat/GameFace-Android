@@ -23,7 +23,7 @@ import com.magnitudestudios.GameFace.notifyObserver
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.VideoCall.*
-import com.magnitudestudios.GameFace.repository.SessionHelper
+import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.utils.CustomSdpObserver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -79,7 +79,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
     }
 
     fun onIceCandidate(uid: String, iceCandidate: IceCandidate) {
-        if (!SessionHelper.currentRoom.isNullOrEmpty()) SessionHelper.sendIceCandidate(iceCandidate, uid)
+        if (!SessionRepository.currentRoom.isNullOrEmpty()) SessionRepository.sendIceCandidate(iceCandidate, uid)
     }
 
 
@@ -92,14 +92,14 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 super.onCreateSuccess(sessionDescription)
                 peer.setLocalDescription(CustomSdpObserver("setLocalDesc"), sessionDescription)
-                SessionHelper.sendOffer(sessionDescription, toUID = uid)
+                SessionRepository.sendOffer(sessionDescription, toUID = uid)
             }
         }, sdpConstraints)
     }
 
     fun createRoom(vararg calls: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val roomID = SessionHelper.createRoom(this@CameraViewModel, Firebase.auth.uid!!)
+            val roomID = SessionRepository.createRoom(this@CameraViewModel, Firebase.auth.uid!!)
             connectedRoom.postValue(roomID)
             connectionStatus.postValue(Resource.success(true))
             calls.forEach {
@@ -110,13 +110,13 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     fun addMember(uid: String, roomID : String? = connectedRoom.value) {
         if (!roomID.isNullOrEmpty()) {
-            SessionHelper.addMember(uid, roomID)
+            SessionRepository.addMember(uid, roomID)
         }
     }
 
     fun joinRoom(roomID: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            connectedRoom.postValue(SessionHelper.joinRoom(roomID, this@CameraViewModel, Firebase.auth.uid!!))
+            connectedRoom.postValue(SessionRepository.joinRoom(roomID, this@CameraViewModel, Firebase.auth.uid!!))
             connectionStatus.postValue(Resource.success(true))
 //            members.postValue(SessionHelper.getAllMembers(roomID))
         }
@@ -132,7 +132,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
             override fun onCreateSuccess(sessionDescription: SessionDescription) {
                 super.onCreateSuccess(sessionDescription)
                 connections.value!![fromUID]!!.setLocalDescription(CustomSdpObserver("localSetLocal"), sessionDescription)
-                SessionHelper.sendAnswer(sessionDescription, fromUID)
+                SessionRepository.sendAnswer(sessionDescription, fromUID)
             }
         }, MediaConstraints())
     }
@@ -147,6 +147,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
     override fun newParticipantJoined(uid: String) {
         newPeer.value = uid
     }
+
 
     override fun iceServerReceived(fromUID: String, iceCandidate: IceCandidatePOJO) {
         connections.value!![fromUID]?.addIceCandidate(IceCandidate(iceCandidate.sdpMid, iceCandidate.sdpMLineIndex, iceCandidate.sdp))
@@ -182,7 +183,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         connectionStatus.value = Resource.nothing()
 
         viewModelScope.launch {
-            SessionHelper.leaveRoom(this@CameraViewModel)
+            SessionRepository.leaveRoom(this@CameraViewModel)
         }
     }
 

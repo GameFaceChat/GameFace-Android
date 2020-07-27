@@ -21,12 +21,19 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
+import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
+import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
+import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
+import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
+import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
 import com.magnitudestudios.GameFace.views.MemberScreen
@@ -296,7 +303,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             bind.localVideo.surface.release()
             localAudioTrack.dispose()
             localVideoTrack.dispose()
-        } catch (e: InterruptedException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

@@ -14,10 +14,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -26,13 +22,11 @@ import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
-import com.magnitudestudios.GameFace.repository.FirebaseHelper
-import com.magnitudestudios.GameFace.repository.SessionHelper
+import com.magnitudestudios.GameFace.repository.SessionRepository
+import com.magnitudestudios.GameFace.repository.UserRepository
 import com.magnitudestudios.GameFace.ui.calling.IncomingCall
 import com.magnitudestudios.GameFace.ui.main.MainActivity
-import io.ktor.client.engine.callContext
 import kotlinx.coroutines.*
-import java.lang.Exception
 
 class NotificationService : FirebaseMessagingService() {
     private val serviceJob = Job()
@@ -43,7 +37,7 @@ class NotificationService : FirebaseMessagingService() {
 
             serviceScope.launch {
                 if (Firebase.auth.currentUser != null) {
-                    FirebaseHelper.updateDeviceToken(token)
+                    UserRepository.updateDeviceToken(token)
                 }
             }
         } catch (e: Exception) {
@@ -69,8 +63,8 @@ class NotificationService : FirebaseMessagingService() {
         val roomID = data["roomID"] ?: error("NO ROOM FOUND")
         serviceScope.launch(Dispatchers.Main) {
             val profiles = withContext(Dispatchers.IO) {
-                val members = SessionHelper.getAllMembers(roomID)
-                FirebaseHelper.getUserProfilesByUID(members.map { it.uid })
+                val members = SessionRepository.getAllMembers(roomID)
+                UserRepository.getUserProfilesByUID(members.map { it.uid })
             }
             if (profiles.isNotEmpty()) launchCall(roomID, profiles)
         }

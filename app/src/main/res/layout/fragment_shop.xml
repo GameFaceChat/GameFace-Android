@@ -1,19 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
   ~ Unauthorized copying of this file, via any medium is prohibited
   ~ All software is proprietary and confidential
   ~
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:layoutDescription="@xml/fragment_shop_scene">
 
-    <include
-        android:id="@+id/appbarLayout"
-        layout="@layout/app_top_search_bar"/>
+    <View
+        android:id="@+id/showcaseFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/darkGray"
+        app:layout_constraintDimensionRatio="2:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <SearchView
+        android:id="@+id/search_shop"
+        android:queryHint="Search Shop"
+        android:layout_margin="@dimen/layout_margin_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/showcase_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/download_btn"
+            style="@style/primary_button_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_margin_medium"
+            android:drawableStart="@drawable/baseline_arrow_circle_down_white_24dp"
+            android:drawablePadding="@dimen/padding_medium"
+            android:padding="@dimen/padding_large"
+            android:text="Download" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/info_btn"
+            style="@style/accent_button_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layout_margin_medium"
+            android:backgroundTint="@color/lightGray"
+            android:drawableStart="@drawable/baseline_arrow_circle_down_white_24dp"
+            android:drawablePadding="@dimen/padding_medium"
+            android:padding="@dimen/padding_large"
+            android:text="More Info" />
+    </LinearLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/shop_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Shop" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Installed" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Earn" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/shop_tabs">
+
+        <FrameLayout
+            android:id="@+id/shopContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.motion.widget.MotionLayout>
+

@@ -8,6 +8,16 @@
 package com.magnitudestudios.GameFace.ui.shop
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import com.magnitudestudios.GameFace.repository.ShopRepository
+import kotlinx.coroutines.Dispatchers
 
 class ShopViewModel : ViewModel() {
+    val charadesItems = liveData(Dispatchers.IO) { emit(ShopRepository.getCharadesItems()) }
+
+    val wouldYouRatherItems = liveData(Dispatchers.IO) { emit(ShopRepository.getWouldYouRatherItems()) }
+
+    val tOrDItems = liveData(Dispatchers.IO){ emit(ShopRepository.getTorDItems()) }
+
+
 }
