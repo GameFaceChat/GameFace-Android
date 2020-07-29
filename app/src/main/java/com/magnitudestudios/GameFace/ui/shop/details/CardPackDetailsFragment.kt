@@ -27,8 +27,6 @@ class CardPackDetailsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-
-
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentPackDetailsBinding.inflate(inflater, container, false)
@@ -45,8 +43,13 @@ class CardPackDetailsFragment : Fragment() {
             Glide.with(this).load(imageTransition).into(this)
         }
         bind.title.text = packItem.name
-        bind.sampleQuestionText.text = packItem.sample_question
+        bind.sampleQuestionText.text = if (packItem.samples.isNotEmpty()) packItem.samples.first() else {
+            bind.sampleQuestion.visibility = View.GONE
+            ""
+        }
         bind.description.text = packItem.description
+
+        bind.price.text = packItem.price.toString()
 
 
     }
