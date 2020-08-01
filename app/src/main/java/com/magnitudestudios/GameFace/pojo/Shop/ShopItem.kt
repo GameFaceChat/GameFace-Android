@@ -11,11 +11,12 @@ data class ShopItem constructor(
         val name: String = "GameFacePack",
         val description: String = "",
         val content : String = "",
+        val contentB : String = "",
         val imgURL : String = "",
         val date_released : String = "",
         val price : Int = 0,
         val installs: Int = 0,
-        val sample_question: String = "",
+        val samples: List<String> = listOf(),
         val order : Int = 0,
         val version_number : Int = 0
 ) {
@@ -28,7 +29,7 @@ data class ShopItem constructor(
                 this.date_released == other.date_released &&
                 this.price == other.price &&
                 this.installs == other.installs &&
-                this.sample_question == other.sample_question &&
+                this.samples == other.samples &&
                 this.order == other.order &&
                 this.version_number == other.version_number
     }
@@ -41,7 +42,7 @@ data class ShopItem constructor(
         result = 31 * result + date_released.hashCode()
         result = 31 * result + price.hashCode()
         result = 31 * result + installs.hashCode()
-        result = 31 * result + sample_question.hashCode()
+        result = 31 * result + samples.hashCode()
         result = 31 * result + order.hashCode()
         result = 31 * result + version_number.hashCode()
         return result

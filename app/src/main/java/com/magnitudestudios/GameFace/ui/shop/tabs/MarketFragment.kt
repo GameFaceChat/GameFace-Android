@@ -70,7 +70,9 @@ class MarketFragment : Fragment() {
                     val clickedItem = Gson().toJson(getitem(position))
                     val extras = FragmentNavigatorExtras(view to view.transitionName)
                     val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCardPackDetailsFragment(view.transitionName, clickedItem)
-                    activity?.findNavController(R.id.mainNavHost)?.navigate(action, extras)
+                    try {
+                        activity?.findNavController(R.id.mainNavHost)?.navigate(action, extras)
+                    } catch (e: Exception){}
                 }
 
             })
