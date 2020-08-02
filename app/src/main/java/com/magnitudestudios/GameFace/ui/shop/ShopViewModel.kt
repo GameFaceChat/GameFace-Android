@@ -19,5 +19,5 @@ class ShopViewModel : ViewModel() {
 
     val tOrDItems = liveData(Dispatchers.IO){ emit(ShopRepository.getTorDItems()) }
 
-
+    val showcaseItems = liveData(Dispatchers.IO) { emit(ShopRepository.getShowcaseItems()) }
 }

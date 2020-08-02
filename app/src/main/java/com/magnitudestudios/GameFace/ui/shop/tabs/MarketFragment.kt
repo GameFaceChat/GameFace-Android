@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -25,10 +24,12 @@ import com.magnitudestudios.GameFace.callbacks.SharedItemClicked
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.databinding.FragmentMarketItemsBinding
+import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.shop.ShopViewModel
 import com.magnitudestudios.GameFace.views.CardPackViewHolder
+import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
 
 class MarketFragment : Fragment() {
     lateinit var bind : FragmentMarketItemsBinding
@@ -45,10 +46,10 @@ class MarketFragment : Fragment() {
         bind.charadesItems.adapter = ShopRowAdapter()
         bind.tOrDItems.adapter = ShopRowAdapter()
         bind.wouldYouRatherItems.adapter = ShopRowAdapter()
-        observeCharades()
+        observeItems()
     }
 
-    private fun observeCharades() {
+    private fun observeItems() {
         viewModel.charadesItems.observe(viewLifecycleOwner, Observer {
             (bind.charadesItems.adapter as ShopRowAdapter).replaceAll(it ?: listOf())
         })
