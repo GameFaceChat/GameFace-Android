@@ -7,17 +7,14 @@
 
 package com.magnitudestudios.GameFace.views
 
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.magnitudestudios.GameFace.callbacks.RVRequestButton
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
-import com.magnitudestudios.GameFace.databinding.RowRequestsBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShowCaseItem
-import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 
 class ShowCaseItemViewHolder(private val bind: ItemShowcaseBinding) : RecyclerView.ViewHolder(bind.root) {
     fun bind(item: ShowCaseItem) {
-        Glide.with(itemView).load(item.image).into(bind.showcaseImage)
+        Glide.with(itemView).load(item.image).transition(DrawableTransitionOptions.withCrossFade()).into(bind.showcaseImage)
     }
 }
