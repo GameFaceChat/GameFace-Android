@@ -9,9 +9,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/lightGray"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lightGray">
 
     <com.magnitudestudios.GameFace.views.MemberScreen
         android:id="@+id/localVideo"
@@ -29,5 +29,38 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mute_audio"
+        android:layout_width="50dp"
+        android:layout_height="@dimen/large_icon_size"
+        android:background="@drawable/ic_mute_audio"
+        app:layout_constraintBottom_toBottomOf="@+id/hangup"
+        app:layout_constraintEnd_toStartOf="@+id/hangup"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hangup" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/mute_video"
+        android:layout_width="50dp"
+        android:layout_height="@dimen/large_icon_size"
+        android:background="@drawable/ic_mute_video"
+        android:layout_marginBottom="@dimen/layout_margin_huge"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/hangup" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/hangup"
+        android:layout_width="50dp"
+        android:layout_height="@dimen/large_icon_size"
+        android:background="@drawable/ic_dismiss_call"
+        app:layout_constraintBottom_toBottomOf="@+id/mute_video"
+        app:layout_constraintEnd_toStartOf="@+id/mute_video"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mute_audio"
+        app:layout_constraintTop_toTopOf="@+id/mute_video" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

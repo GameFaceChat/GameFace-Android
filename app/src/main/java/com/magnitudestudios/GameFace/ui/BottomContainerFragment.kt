@@ -7,6 +7,7 @@
 
 package com.magnitudestudios.GameFace.ui
 
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.navigation.findNavController
@@ -46,6 +50,22 @@ class BottomContainerFragment : Fragment() {
         view.doOnPreDraw { startPostponedEnterTransition() }
         val navHost = requireActivity().findNavController(R.id.containerNavHost)
         bind.bottomNav.setupWithNavController(navHost)
+//        bind.bottomNav.setOnNavigationItemSelectedListener {
+//            if (it.itemId == R.id.homeFragment) {
+//                bind.bottomNav.background = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.transparent))
+//                bind.bottomNav.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.transparent))
+//                bind.containerNavHost.updateLayoutParams {
+//                    height = ViewGroup.LayoutParams.MATCH_PARENT
+//                }
+//            }
+//            else {
+//                bind.bottomNav.background = ColorDrawable(ContextCompat.getColor(requireContext(), R.color.colorAccent))
+//                bind.containerNavHost.updateLayoutParams {
+//                    height = 0
+//                }
+//            }
+//            return@setOnNavigationItemSelectedListener true
+//        }
         //Handle Profile Pic changes
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Constants.GOT_PHOTO_KEY)?.observe(viewLifecycleOwner, Observer {
             if (it != null) {

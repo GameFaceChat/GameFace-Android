@@ -8,21 +8,74 @@
 package com.magnitudestudios.GameFace.ui.home
 
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.Log
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import com.magnitudestudios.GameFace.R
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import com.google.common.util.concurrent.ListenableFuture
+import com.magnitudestudios.GameFace.aspectRatio
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentHomeBinding
 
 class HomeFragment : BaseFragment() {
-    lateinit var binding: FragmentHomeBinding
+    companion object {
+        private const val TAG = "HomeFragment"
+    }
+    lateinit var bind: FragmentHomeBinding
+
+    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
+
+    private lateinit var cameraProvider: ProcessCameraProvider
+    private var orientation = CameraSelector.LENS_FACING_FRONT
+    private var camera: Camera? = null
+    private var cameraSelector: CameraSelector? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentHomeBinding.inflate(inflater)
-        return binding.root
+        bind = FragmentHomeBinding.inflate(inflater)
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        return bind.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        cameraProviderFuture.addListener(Runnable {
+            cameraProvider = cameraProviderFuture.get()
+            setUpCamera(cameraProvider)
+        }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    private fun setUpCamera(cameraProvider: ProcessCameraProvider) {
+        cameraProvider.unbindAll()      //Unbind all for now
+        // Get screen metrics used to setup camera for full screen resolution
+        val metrics = DisplayMetrics().also { bind.previewCamera.display.getRealMetrics(it) }
+        Log.d(TAG, "Screen metrics: ${metrics.widthPixels} x ${metrics.heightPixels}")
+
+        val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
+        Log.d(TAG, "Preview aspect ratio: $screenAspectRatio")
+
+        val rotation = bind.previewCamera.display.rotation
+
+        val preview: Preview = Preview.Builder()
+                .setTargetAspectRatio(screenAspectRatio)
+                .setTargetRotation(rotation)
+                .build()
+
+        cameraSelector = CameraSelector.Builder()
+                .requireLensFacing(orientation)
+                .build()
+
+        preview.setSurfaceProvider(bind.previewCamera.createSurfaceProvider())
+        try {
+            camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview)
+        } catch (e: Exception) {
+            Log.e(TAG, "Camera setup failed", e)
+        }
     }
 }

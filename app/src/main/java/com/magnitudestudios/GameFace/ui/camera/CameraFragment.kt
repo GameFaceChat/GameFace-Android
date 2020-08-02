@@ -42,14 +42,19 @@ import org.webrtc.*
 class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
     private var videoCapturer: VideoCapturer? = null
+
     private lateinit var videoSource: VideoSource
+    private lateinit var audioSource: AudioSource
+
     private lateinit var localAudioTrack: AudioTrack
     private lateinit var localVideoTrack: VideoTrack
+
+    private var localStream : MediaStream? = null
+
     private lateinit var audioConstraints: MediaConstraints
     private lateinit var videoConstraints: MediaConstraints
-    private lateinit var sdpConstraints: MediaConstraints
+
     private lateinit var rootEglBase: EglBase
-    private lateinit var audioSource: AudioSource
 
     private lateinit var bind: FragmentCameraBinding
 
@@ -94,6 +99,23 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         bind.addMember.setOnClickListener {
             findNavController().navigate(R.id.action_cameraFragment_to_addMembersDialog)
         }
+
+        bind.muteAudio.setOnClickListener {
+            localStream?.let {
+                it.audioTracks.first().setEnabled(!it.audioTracks.first().enabled())
+            }
+        }
+
+        bind.muteVideo.setOnClickListener {
+            localStream?.let {
+                it.videoTracks.first().setEnabled(!it.videoTracks.first().enabled())
+            }
+        }
+
+        bind.hangup.setOnClickListener {
+            disconnect()
+        }
+
     }
 
     override fun onPause() {
@@ -161,6 +183,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         //Create a VideoSource instance
         localVideoTrack = peerConnectionFactory.createVideoTrack("100", videoSource)
         videoSource.adaptOutputFormat(720, 480, 30)
+
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource)
@@ -172,6 +195,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         bind.localVideo.surface.setEnableHardwareScaler(true)
 
         localVideoTrack.addSink(bind.localVideo.surface)
+
+        localStream = peerConnectionFactory.createLocalMediaStream("102").apply {
+            addTrack(localAudioTrack)
+            addTrack(localVideoTrack)
+        }
+
     }
 
     private fun createPeerConnection(uid: String) {
@@ -202,13 +231,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             }
         })
 
-        val stream = peerConnectionFactory.createLocalMediaStream("102")
-        stream.addTrack(localAudioTrack)
-        stream.addTrack(localVideoTrack)
         peer?.let {
-            it.addStream(stream)
+            it.addStream(localStream)
             viewModel.addPeer(uid, it)
         }
+
+
     }
 
     //For UI updates for each participant
@@ -301,8 +329,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         try {
             videoCapturer?.stopCapture()
             bind.localVideo.surface.release()
-            localAudioTrack.dispose()
-            localVideoTrack.dispose()
+            localStream?.dispose()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -345,6 +372,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         disconnect()
+        bind.localVideo.surface.release()
         rootEglBase.release()
     }
 

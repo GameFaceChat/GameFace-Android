@@ -9,6 +9,8 @@
 
     <color name="dividerColour">#33643E97</color>
 
+    <color name="colorPrimaryTranslucent">#AA643E97</color>
+
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

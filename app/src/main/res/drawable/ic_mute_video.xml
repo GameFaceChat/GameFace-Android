@@ -1,0 +1,13 @@
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<vector android:height="@dimen/icon_size" android:viewportHeight="300"
+    android:viewportWidth="300" android:width="@dimen/icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/button_to_transparent" android:pathData="M150,150m-150,0a150,150 0,1 1,300 0a150,150 0,1 1,-300 0"/>
+    <path android:fillColor="@color/dark_grey_selector" android:pathData="M225.474,119.725C222.703,118.065 219.14,117.914 216.232,119.325L192.154,130.939V118.365C192.154,113.339 188.075,109.382 182.887,109.382H126.534L105.498,85.241C102.15,81.406 96.227,80.892 92.259,84.142C88.3,87.389 87.805,93.118 91.158,96.955L194.502,215.265C196.36,217.391 199.007,218.483 201.677,218.483C203.819,218.483 205.975,217.774 207.741,216.328C211.7,213.081 212.134,207.337 208.781,203.499L192.154,184.534V178.601L216.196,190.215C217.522,190.857 218.995,191.175 220.431,191.175C222.146,191.175 223.949,190.72 225.458,189.815C228.225,188.158 230,185.229 230,182.074V127.466C230,124.311 228.24,121.383 225.474,119.725Z"/>
+    <path android:fillColor="@color/dark_grey_selector" android:pathData="M70,118.365V191.175C70,196.201 74.35,200.295 79.538,200.295H159.771L79.193,109.3C74.136,109.443 70,113.429 70,118.365Z"/>
+</vector>
