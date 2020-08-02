@@ -49,12 +49,29 @@ class HomeFragment : BaseFragment() {
             cameraProvider = cameraProviderFuture.get()
             setUpCamera(cameraProvider)
         }, ContextCompat.getMainExecutor(requireContext()))
+
+        bind.gameButton.setOnClickListener {
+
+        }
     }
 
-    private fun setUpCamera(cameraProvider: ProcessCameraProvider) {
+    override fun onResume() {
+        super.onResume()
+        bind.root.transitionToEnd()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bind.root.transitionToStart()
+    }
+
+    private fun setUpCamera(cameraProvider: ProcessCameraProvider) : Boolean {
         cameraProvider.unbindAll()      //Unbind all for now
         // Get screen metrics used to setup camera for full screen resolution
-        val metrics = DisplayMetrics().also { bind.previewCamera.display.getRealMetrics(it) }
+        val metrics = DisplayMetrics().also {
+            if (bind.previewCamera.display != null) bind.previewCamera.display.getRealMetrics(it)
+            else return false
+        }
         Log.d(TAG, "Screen metrics: ${metrics.widthPixels} x ${metrics.heightPixels}")
 
         val screenAspectRatio = aspectRatio(metrics.widthPixels, metrics.heightPixels)
@@ -74,8 +91,10 @@ class HomeFragment : BaseFragment() {
         preview.setSurfaceProvider(bind.previewCamera.createSurfaceProvider())
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview)
+            return true
         } catch (e: Exception) {
             Log.e(TAG, "Camera setup failed", e)
         }
+        return false
     }
 }

@@ -15,6 +15,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
