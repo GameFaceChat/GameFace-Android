@@ -7,7 +7,6 @@
 
 package com.magnitudestudios.GameFace.views
 
-import android.animation.Animator
 import android.animation.PropertyValuesHolder
 import android.animation.ValueAnimator
 import android.content.Context
@@ -20,18 +19,19 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ProgressBar
 import androidx.cardview.widget.CardView
+import androidx.core.animation.doOnEnd
 import org.webrtc.EglBase
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-class MemberScreen @JvmOverloads constructor(
+class MovableScreen @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
         styleAttr: Int = 0) : CardView(context, attributeSet, styleAttr) {
 
-    val surface: MovableSurfaceView = MovableSurfaceView(context).apply {
+    val surface: CustomSurfaceView = CustomSurfaceView(context).apply {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     }
 
@@ -46,6 +46,8 @@ class MemberScreen @JvmOverloads constructor(
     private var dY = 0f
     var maxwidth = 0f
     var maxheight = 0f
+
+    private var animInProgress = false
 
     private var stateConnected = false
     private var stateFull = true
@@ -81,18 +83,20 @@ class MemberScreen @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        if (event == null) return false
+        if (event == null || stateFull || animInProgress) return false
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 dX = this.x - event.rawX
                 dY = this.y - event.rawY
             }
-            MotionEvent.ACTION_MOVE -> animate()
-                    .translationX(max(0f, min(event.rawX + dX, maxwidth - width)))
-                    .translationY(max(0f, min(event.rawY + dY, maxheight - height)))
-                    .setDuration(0)
-                    .setInterpolator(AccelerateDecelerateInterpolator())
-                    .start()
+            MotionEvent.ACTION_MOVE -> {
+                animate()
+                        .translationX(max(0f, min(event.rawX + dX, maxwidth - width)))
+                        .translationY(max(0f, min(event.rawY + dY, maxheight - height)))
+                        .setDuration(0)
+                        .setInterpolator(AccelerateDecelerateInterpolator())
+                        .start()
+            }
             MotionEvent.ACTION_UP -> {
                 Log.e("Event", "onTouchEvent: " + (event.eventTime - event.downTime))
                 if (event.eventTime - event.downTime < 100 && stateConnected
@@ -168,7 +172,11 @@ class MemberScreen @JvmOverloads constructor(
             setLayoutParams(layoutParams)
             invalidate()
         }
+        animator.doOnEnd {
+            animInProgress = false
+        }
         animator.duration = 300
+        animInProgress = true
         animator.start()
     }
 

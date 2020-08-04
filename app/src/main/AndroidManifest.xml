@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -52,6 +53,12 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             />
+
+<!--        <activity-->
+<!--            android:name=".ui.camera.CameraActivity"-->
+<!--            android:configChanges="orientation"-->
+<!--            android:supportsPictureInPicture="true"-->
+<!--            />-->
 
         <service
             android:name=".network.NotificationService"

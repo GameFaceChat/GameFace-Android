@@ -19,37 +19,38 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.gson.Gson
-import com.google.gson.JsonParseException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentCameraBinding
-import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
-import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
-import com.magnitudestudios.GameFace.pojo.VideoCall.ServerInformation
-import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
-import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver
-import com.magnitudestudios.GameFace.views.MemberScreen
+import com.magnitudestudios.GameFace.views.MovableScreen
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.webrtc.*
 
 class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
     private var videoCapturer: VideoCapturer? = null
+
     private lateinit var videoSource: VideoSource
+    private lateinit var audioSource: AudioSource
+
     private lateinit var localAudioTrack: AudioTrack
     private lateinit var localVideoTrack: VideoTrack
+
+    private var localStream : MediaStream? = null
+
     private lateinit var audioConstraints: MediaConstraints
     private lateinit var videoConstraints: MediaConstraints
-    private lateinit var sdpConstraints: MediaConstraints
+
     private lateinit var rootEglBase: EglBase
-    private lateinit var audioSource: AudioSource
 
     private lateinit var bind: FragmentCameraBinding
 
@@ -58,7 +59,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mainViewModel: MainViewModel
     private lateinit var viewModel: CameraViewModel
 
-    private var videoViews = hashMapOf<String, MemberScreen>()
+    private var videoViews = hashMapOf<String, MovableScreen>()
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -78,7 +79,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-
         bind.localVideo.initialize(rootEglBase, true)
 
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -90,10 +90,35 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         observeConnection()
         observeIceConnection()
         observeNewPeers()
+        bind.root.setOnClickListener {
+            lifecycleScope.launch {
+                bind.callingControls.animate().setDuration(5000).alpha(1.0f)
+                delay(5000)
+                bind.callingControls.animate().setDuration(5000).alpha(0f)
+            }
+        }
+        bind.callingControls.setOnClickListener {Log.e("CLICKED","CLICKED")}
 
         bind.addMember.setOnClickListener {
             findNavController().navigate(R.id.action_cameraFragment_to_addMembersDialog)
         }
+
+        bind.muteAudio.setOnClickListener {
+            localStream?.let {
+                it.audioTracks.first().setEnabled(!it.audioTracks.first().enabled())
+            }
+        }
+
+        bind.muteVideo.setOnClickListener {
+            localStream?.let {
+                it.videoTracks.first().setEnabled(!it.videoTracks.first().enabled())
+            }
+        }
+
+        bind.hangup.setOnClickListener {
+            disconnect(true)
+        }
+
     }
 
     override fun onPause() {
@@ -161,6 +186,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         //Create a VideoSource instance
         localVideoTrack = peerConnectionFactory.createVideoTrack("100", videoSource)
         videoSource.adaptOutputFormat(720, 480, 30)
+
         //create an AudioSource instance
         audioSource = peerConnectionFactory.createAudioSource(audioConstraints)
         localAudioTrack = peerConnectionFactory.createAudioTrack("101", audioSource)
@@ -172,6 +198,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         bind.localVideo.surface.setEnableHardwareScaler(true)
 
         localVideoTrack.addSink(bind.localVideo.surface)
+
+        localStream = peerConnectionFactory.createLocalMediaStream("102").apply {
+            addTrack(localAudioTrack)
+            addTrack(localVideoTrack)
+        }
+
     }
 
     private fun createPeerConnection(uid: String) {
@@ -202,13 +234,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             }
         })
 
-        val stream = peerConnectionFactory.createLocalMediaStream("102")
-        stream.addTrack(localAudioTrack)
-        stream.addTrack(localVideoTrack)
         peer?.let {
-            it.addStream(stream)
+            it.addStream(localStream)
             viewModel.addPeer(uid, it)
         }
+
+
     }
 
     //For UI updates for each participant
@@ -221,10 +252,14 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 videoViews[uid]?.setLoading(true)
             }
             PeerConnection.IceConnectionState.CONNECTED, PeerConnection.IceConnectionState.COMPLETED -> {
+                if (stillConnectedMembers()) bind.chronometer.start()
+                else bind.chronometer.stop()
                 videoViews[uid]?.setLoading(false)
             }
             PeerConnection.IceConnectionState.DISCONNECTED -> {
                 videoViews[uid]?.setDisconnected()
+                if (stillConnectedMembers()) bind.chronometer.start()
+                else bind.chronometer.stop()
             }
             PeerConnection.IceConnectionState.CLOSED, PeerConnection.IceConnectionState.FAILED -> {
                 removePeer(uid)
@@ -232,11 +267,20 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    private fun stillConnectedMembers() : Boolean {
+        viewModel.connections.value?.forEach {
+            if (it.value.iceConnectionState() == PeerConnection.IceConnectionState.COMPLETED || it.value.iceConnectionState() == PeerConnection.IceConnectionState.CONNECTED) {
+                return true
+            }
+        }
+        return false
+    }
+
     @Synchronized
     private fun removePeer(uid: String) {
         videoViews[uid]?.surface?.release()
         Log.e("REMOVING VIEW: ", uid)
-        bind.root.removeView(videoViews[uid])
+        bind.frameLayout.removeView(videoViews[uid])
         videoViews.remove(uid)
         viewModel.removeParticipant(uid)
 
@@ -259,16 +303,16 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun getScreen(peerUID: String) : MemberScreen {
-        val videoView : MemberScreen
+    private fun getScreen(peerUID: String) : MovableScreen {
+        val videoView : MovableScreen
         if (!videoViews.containsKey(peerUID)) {
             val params = FrameLayout.LayoutParams(400, 700)
-            videoView = MemberScreen(requireContext()).apply {
+            videoView = MovableScreen(requireContext()).apply {
                 initialize(rootEglBase, true)
                 layoutParams = params
             }
             videoViews[peerUID] = videoView
-            bind.root.addView(videoView)
+            bind.frameLayout.addView(videoView)
 
         } else {
             videoView = videoViews[peerUID]!!
@@ -295,16 +339,18 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    private fun disconnect() {
+    private fun disconnect(userDefined: Boolean = false) {
         viewModel.hangUp()
         transitionDisconnected()
         try {
             videoCapturer?.stopCapture()
             bind.localVideo.surface.release()
-            localAudioTrack.dispose()
-            localVideoTrack.dispose()
+            localStream?.dispose()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+        if (userDefined) {
+            findNavController().popBackStack()
         }
     }
 
@@ -345,6 +391,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         disconnect()
+        bind.localVideo.surface.release()
         rootEglBase.release()
     }
 

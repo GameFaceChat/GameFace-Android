@@ -9,6 +9,7 @@ package com.magnitudestudios.GameFace
 
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.camera.core.AspectRatio
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -25,6 +26,9 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 fun RequestManager.loadProfile(url: String, target: ImageButton) {
     if (url.isEmpty()) {
@@ -56,4 +60,12 @@ fun RequestManager.loadProfile(url: String, target: ImageView) {
 
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
+}
+
+fun aspectRatio(width: Int, height: Int): Int {
+    val previewRatio = max(width, height).toDouble() / min(width, height)
+    if (abs(previewRatio - (4.0 / 3.0)) <= abs(previewRatio - (16.0 / 9.0))) {
+        return AspectRatio.RATIO_4_3
+    }
+    return AspectRatio.RATIO_16_9
 }
