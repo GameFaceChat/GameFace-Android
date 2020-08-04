@@ -20,8 +20,7 @@ data class User(
         var devicesID: HashMap<String, Boolean> = HashMap(),
         var friendRequests: HashMap<String, FriendRequest> = HashMap(),
         var friendRequestsSent: HashMap<String, FriendRequest> = HashMap(),
-        var friends: Map<String, Friend> = HashMap(),
-        var packs : Map<String, Pack> = HashMap()
+        var friends: Map<String, Friend> = HashMap()
 ) {
         @Exclude
         fun getCreated(): Long? {

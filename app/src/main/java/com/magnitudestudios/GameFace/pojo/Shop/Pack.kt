@@ -7,6 +7,8 @@
 
 package com.magnitudestudios.GameFace.pojo.Shop
 
-class Pack {
-
-}
+class Pack (
+        val id : String = "",
+        val type : String = "",
+        val version : Int = -1
+)

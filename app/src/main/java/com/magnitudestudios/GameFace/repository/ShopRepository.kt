@@ -7,19 +7,26 @@
 
 package com.magnitudestudios.GameFace.repository
 
+import android.content.Context
 import android.util.Log
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.DiffUtil
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
+import com.google.gson.JsonParseException
 import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.genericType
+import com.magnitudestudios.GameFace.pojo.Shop.Pack
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 object ShopRepository {
-
     private suspend fun getItems(path: String): List<ShopItem> {
         return suspendCancellableCoroutine {
             Firebase.database.reference
@@ -54,7 +61,42 @@ object ShopRepository {
     fun getDefaultsItems() {}
 
     fun loadPack() {}
-    fun getInstalledPacks() {}
-    fun getOwnedPacks() {}
+    fun getLocalPacks(context : Context) : List<Pack> {
+        val toDeserialize = PreferenceManager.getDefaultSharedPreferences(context).getString(Constants.INSTALLED_PACKS_KEY, "")
+        return try {
+            Gson().fromJson<List<Pack>>(toDeserialize,genericType<List<Pack>>())
+        }
+        catch (e: Exception) {
+            Log.e("GET_INSTALLED", e.message, e)
+            listOf()
+        }
+    }
+
+    suspend fun fetchRemotePacks() : List<Pack> {
+        val all = mutableListOf<Pack?>()
+        if (Firebase.auth.currentUser?.uid == null) return listOf()
+        FirebaseHelper.getValue(Constants.OWNED_PACKS, Firebase.auth.currentUser!!.uid)?.children?.forEach {
+            all.add(it.getValue(Pack::class.java))
+        }
+        return all.filterNotNull()
+    }
+
+    suspend fun verifyPacks(context: Context) : List<Pack> {
+        val remotePacks = fetchRemotePacks()
+        val localPacks = getLocalPacks(context).toSet()
+
+        val toFetch = mutableListOf<Pack>()
+        remotePacks.forEach {
+            if (!localPacks.contains(it)) toFetch.add(it)
+        }
+
+        return toFetch
+    }
+
+    suspend fun downloadAll(toDownload : List<Pack>) {
+        toDownload.forEach {
+            
+        }
+    }
 
 }

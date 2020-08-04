@@ -17,6 +17,8 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.ktor.utils.io.core.ExperimentalIoApi
 import io.ktor.utils.io.core.withBuffer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -57,3 +59,6 @@ fun RequestManager.loadProfile(url: String, target: ImageView) {
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
+
+inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
+
