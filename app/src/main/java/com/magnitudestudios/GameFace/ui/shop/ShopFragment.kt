@@ -13,11 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.doOnPreDraw
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
@@ -25,18 +28,26 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.databinding.FragmentShopBinding
+import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
+import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.profile.ProfileFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.PersonalFragment
 import com.magnitudestudios.GameFace.ui.shop.tabs.MarketFragment
 import com.magnitudestudios.GameFace.views.CardPackViewHolder
+import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class ShopFragment : BaseFragment() {
 
@@ -64,6 +75,36 @@ class ShopFragment : BaseFragment() {
 
         })
         replaceFragment(0)
+
+        viewModel.showcaseItems.observe(viewLifecycleOwner, Observer {
+            bind.showcaseFlipper.adapter = ShowCaseAdapter()
+        })
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            while (isActive) {
+                delay(5000)
+                bind.showcaseFlipper.currentItem = (bind.showcaseFlipper.currentItem + 1) % (viewModel.showcaseItems.value?.size ?: 1)
+            }
+        }
+
+        bind.infoBtn.setOnClickListener {
+            Log.e("GEttING", "ITEM1")
+            if (viewModel.showcaseItems.value == null) return@setOnClickListener
+            Log.e("GEttING", "ITEM")
+            viewModel.selectedShowcaseItem.value = viewModel.showcaseItems.value!![bind.showcaseFlipper.currentItem]
+        }
+
+        viewModel.selectedShowcase.observe(viewLifecycleOwner, Observer {
+            Log.e("GOT", "SHOPITEM: ${it?.name}")
+            if (it == null) return@Observer
+            viewModel.selectedShowcaseItem.value = null
+            val clickedItem = Gson().toJson(it)
+            val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCardPackDetailsFragment(it.imgURL, clickedItem)
+            try {
+                activity?.findNavController(R.id.mainNavHost)?.navigate(action)
+            } catch (e: Exception){Log.e("SELECTEDSHOWCASE", e.message, e)}
+        })
+
     }
 
     fun replaceFragment(position: Int) {
@@ -74,5 +115,19 @@ class ShopFragment : BaseFragment() {
             else -> MarketFragment()
         }
         childFragmentManager.beginTransaction().replace(R.id.shopContainer, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
+    }
+
+    inner class ShowCaseAdapter : RecyclerView.Adapter<ShowCaseItemViewHolder>() {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowCaseItemViewHolder {
+            return ShowCaseItemViewHolder(ItemShowcaseBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        }
+
+        override fun getItemCount(): Int {
+            return viewModel.showcaseItems.value?.size ?: 0
+        }
+
+        override fun onBindViewHolder(holder: ShowCaseItemViewHolder, position: Int) {
+            holder.bind(viewModel.showcaseItems.value!![position])
+        }
     }
 }
