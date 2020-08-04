@@ -8,6 +8,7 @@
 package com.magnitudestudios.GameFace.repository
 
 import android.util.Log
+import com.google.firebase.FirebaseException
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -74,7 +75,13 @@ object ShopRepository {
     }
     fun getDefaultsItems() {}
 
-    fun loadPack() {}
+    suspend fun loadPack(gameType : String, packName : String) : ShopItem? {
+        return try {FirebaseHelper.getValue(Constants.STORE_PATH, gameType, packName)?.getValue(ShopItem::class.java)}
+        catch (e : Exception) {
+            Log.e("LOAD PACK", e.message, e)
+            null
+        }
+    }
     fun getInstalledPacks() {}
     fun getOwnedPacks() {}
 

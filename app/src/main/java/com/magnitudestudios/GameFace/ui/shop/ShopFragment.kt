@@ -20,6 +20,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SortedList
@@ -27,6 +28,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.gson.Gson
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
@@ -34,6 +36,7 @@ import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.databinding.FragmentShopBinding
 import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
+import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.profile.ProfileFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
@@ -83,6 +86,24 @@ class ShopFragment : BaseFragment() {
                 bind.showcaseFlipper.currentItem = (bind.showcaseFlipper.currentItem + 1) % (viewModel.showcaseItems.value?.size ?: 1)
             }
         }
+
+        bind.infoBtn.setOnClickListener {
+            Log.e("GEttING", "ITEM1")
+            if (viewModel.showcaseItems.value == null) return@setOnClickListener
+            Log.e("GEttING", "ITEM")
+            viewModel.selectedShowcaseItem.value = viewModel.showcaseItems.value!![bind.showcaseFlipper.currentItem]
+        }
+
+        viewModel.selectedShowcase.observe(viewLifecycleOwner, Observer {
+            Log.e("GOT", "SHOPITEM: ${it?.name}")
+            if (it == null) return@Observer
+            viewModel.selectedShowcaseItem.value = null
+            val clickedItem = Gson().toJson(it)
+            val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCardPackDetailsFragment(it.imgURL, clickedItem)
+            try {
+                activity?.findNavController(R.id.mainNavHost)?.navigate(action)
+            } catch (e: Exception){Log.e("SELECTEDSHOWCASE", e.message, e)}
+        })
 
     }
 
