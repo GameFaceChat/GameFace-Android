@@ -6,61 +6,113 @@
   ~
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightGray">
+    android:background="@color/darkGray"
+    app:layoutDescription="@xml/fragment_camera_scene">
 
-    <com.magnitudestudios.GameFace.views.MemberScreen
-        android:id="@+id/localVideo"
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_member"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/large_icon_size"
-        android:layout_margin="@dimen/layout_margin_large"
-        android:background="@drawable/ic_add_friend"
-        android:backgroundTint="@color/button_to_transparent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.magnitudestudios.GameFace.views.MovableScreen
+            android:id="@+id/localVideo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/mute_audio"
-        android:layout_width="50dp"
-        android:layout_height="@dimen/large_icon_size"
-        android:background="@drawable/ic_mute_audio"
-        app:layout_constraintBottom_toBottomOf="@+id/hangup"
-        app:layout_constraintEnd_toStartOf="@+id/hangup"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hangup" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/mute_video"
-        android:layout_width="50dp"
-        android:layout_height="@dimen/large_icon_size"
-        android:background="@drawable/ic_mute_video"
-        android:layout_marginBottom="@dimen/layout_margin_huge"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <LinearLayout
+        android:id="@+id/topBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/callingControls"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/hangup" />
+        android:padding="@dimen/padding_large"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#E03D3939">
+        <View
+            android:id="@+id/indicator"
+            android:layout_width="40dp"
+            android:layout_height="5dp"
+            android:background="@drawable/widget_bottom_nav"
+            />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/hangup"
-        android:layout_width="50dp"
-        android:layout_height="@dimen/large_icon_size"
-        android:background="@drawable/ic_dismiss_call"
-        app:layout_constraintBottom_toBottomOf="@+id/mute_video"
-        app:layout_constraintEnd_toStartOf="@+id/mute_video"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/mute_audio"
-        app:layout_constraintTop_toTopOf="@+id/mute_video" />
+        <Chronometer
+            android:id="@+id/chronometer"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            style="@style/small_text_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/callingControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E03D3939">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/gameButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/layout_margin_medium"
+            android:background="@drawable/ic_dice_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mute_audio"
+            android:layout_width="@dimen/call_control_size"
+            android:layout_height="@dimen/call_control_size"
+            android:layout_marginTop="@dimen/layout_margin_medium"
+            android:layout_marginBottom="@dimen/layout_margin_huge"
+            android:background="@drawable/ic_mute_audio"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/mute_video"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gameButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/mute_video"
+            android:layout_width="@dimen/call_control_size"
+            android:layout_height="@dimen/call_control_size"
+            android:layout_marginTop="@dimen/layout_margin_medium"
+            android:layout_marginBottom="@dimen/layout_margin_huge"
+            android:background="@drawable/ic_mute_video"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/mute_audio"
+            app:layout_constraintTop_toBottomOf="@+id/gameButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/hangup"
+            android:layout_width="@dimen/call_control_size"
+            android:layout_height="@dimen/call_control_size"
+            android:background="@drawable/ic_dismiss_call"
+            app:layout_constraintBottom_toBottomOf="@+id/gameButton"
+            app:layout_constraintEnd_toStartOf="@+id/gameButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/gameButton" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/add_member"
+            android:layout_width="@dimen/call_control_size"
+            android:layout_height="@dimen/call_control_size"
+            android:background="@drawable/ic_add_member"
+            app:layout_constraintBottom_toBottomOf="@+id/gameButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/gameButton"
+            app:layout_constraintTop_toTopOf="@+id/gameButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

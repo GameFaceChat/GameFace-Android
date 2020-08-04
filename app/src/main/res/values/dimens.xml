@@ -39,6 +39,7 @@
     <dimen name="bottom_nav_icon_size">32dp</dimen>
     <dimen name="large_icon_size">50dp</dimen>
     <dimen name="huge_icon_size">100dp</dimen>
+    <dimen name="call_control_size">60dp</dimen>
 
 
 </resources>

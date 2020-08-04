@@ -54,6 +54,12 @@
             android:screenOrientation="portrait"
             />
 
+<!--        <activity-->
+<!--            android:name=".ui.camera.CameraActivity"-->
+<!--            android:configChanges="orientation"-->
+<!--            android:supportsPictureInPicture="true"-->
+<!--            />-->
+
         <service
             android:name=".network.NotificationService"
             android:exported="false"

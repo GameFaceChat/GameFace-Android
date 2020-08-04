@@ -1,0 +1,18 @@
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<vector android:height="30dp" android:viewportHeight="60"
+    android:viewportWidth="60" android:width="30dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#ffffff" android:pathData="M30,30m-30,0a30,30 0,1 1,60 0a30,30 0,1 1,-60 0"/>
+    <path android:fillColor="#643E97" android:pathData="M40.1764,38.3077h1.8011v9.2308h-1.8011z"/>
+    <path android:fillColor="#643E97" android:pathData="M36.4615,43.8236l0,-1.8011l9.2308,-0l0,1.8011z"/>
+    <group>
+        <clip-path android:pathData="M14.3077,13.8462h25.8462v25.8462h-25.8462z"/>
+        <path android:fillColor="#643E97" android:pathData="M27.1972,39.4313C24.778,39.4313 22.3562,39.4416 19.937,39.4261C18.5362,39.4184 17.3111,38.979 16.4245,37.8262C15.9179,37.1698 15.6698,36.4047 15.6414,35.5931C15.5664,33.3833 15.7758,31.2019 16.6339,29.1393C17.2697,27.6067 18.2286,26.3635 19.937,25.8956C20.79,25.663 21.5628,25.6604 22.32,26.2497C23.328,27.0329 24.4756,27.5705 25.7317,27.8444C27.5927,28.2528 29.3321,27.8755 30.9811,26.9863C31.4618,26.7253 31.9348,26.4384 32.369,26.105C32.8885,25.707 33.4442,25.6863 34.0439,25.7897C35.6412,26.0636 36.7215,27.007 37.4685,28.395C38.2852,29.9121 38.6057,31.5637 38.7479,33.2541C38.8151,34.0656 38.8719,34.8901 38.7996,35.6965C38.585,37.9994 36.9386,39.421 34.5427,39.4287C32.0951,39.4365 29.6449,39.4313 27.1972,39.4313Z"/>
+        <path android:fillColor="#643E97" android:pathData="M33.5529,20.4137C33.571,23.9184 30.7641,26.7434 27.2464,26.7615C23.7468,26.7796 20.9219,23.9675 20.9012,20.4524C20.8857,16.9425 23.6822,14.1253 27.2076,14.1046C30.7098,14.0839 33.5348,16.8934 33.5529,20.4137Z"/>
+    </group>
+</vector>
