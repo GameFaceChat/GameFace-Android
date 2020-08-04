@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.SurfaceHolder
 import org.webrtc.SurfaceViewRenderer
 
-class MovableSurfaceView : SurfaceViewRenderer {
+class CustomSurfaceView : SurfaceViewRenderer {
 
     constructor(context: Context?) : super(context) {}
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}

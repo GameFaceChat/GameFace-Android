@@ -32,6 +32,8 @@ object Constants {
     const val WOULD_YOU_RATHER_PATH = "would_you_rather"
     const val TRUTH_OR_DARE_PATH = "truth_or_dare"
 
+    const val SHOWCASE_PATH = "showcase"
+
     const val SENT_PROFILES_PATH = "friendRequestsSent"
     const val ROOM_MEMBERS_KEY = "room_members"
 

@@ -33,6 +33,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.common.util.concurrent.ListenableFuture
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.aspectRatio
 import com.magnitudestudios.GameFace.databinding.FragmentTakePhotoBinding
 import java.io.File
 import java.util.concurrent.Executor
@@ -217,14 +218,6 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
     override fun execute(command: Runnable) {
         command.run()
-    }
-
-    private fun aspectRatio(width: Int, height: Int): Int {
-        val previewRatio = max(width, height).toDouble() / min(width, height)
-        if (abs(previewRatio - (4.0 / 3.0)) <= abs(previewRatio - (16.0 / 9.0))) {
-            return AspectRatio.RATIO_4_3
-        }
-        return AspectRatio.RATIO_16_9
     }
 
     inner class GestureListener : SimpleOnGestureListener() {

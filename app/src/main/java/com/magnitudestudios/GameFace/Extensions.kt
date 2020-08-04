@@ -9,24 +9,15 @@ package com.magnitudestudios.GameFace
 
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.camera.core.AspectRatio
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.ktor.utils.io.core.ExperimentalIoApi
-import io.ktor.utils.io.core.withBuffer
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 fun RequestManager.loadProfile(url: String, target: ImageButton) {
     if (url.isEmpty()) {
@@ -62,3 +53,10 @@ fun <T> MutableLiveData<T>.notifyObserver() {
 
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
+fun aspectRatio(width: Int, height: Int): Int {
+    val previewRatio = max(width, height).toDouble() / min(width, height)
+    if (abs(previewRatio - (4.0 / 3.0)) <= abs(previewRatio - (16.0 / 9.0))) {
+        return AspectRatio.RATIO_4_3
+    }
+    return AspectRatio.RATIO_16_9
+}

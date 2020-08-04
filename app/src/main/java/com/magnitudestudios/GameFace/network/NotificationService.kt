@@ -10,6 +10,7 @@ package com.magnitudestudios.GameFace.network
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -70,6 +71,7 @@ class NotificationService : FirebaseMessagingService() {
         }
     }
 
+    //Launch the call notification
     private fun launchCall(roomID: String, members: List<Profile>) {
         val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
             putExtra(Member::roomID.name, roomID)
@@ -93,8 +95,10 @@ class NotificationService : FirebaseMessagingService() {
         with(NotificationManagerCompat.from(this)) {
             notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
         }
+//        startForeground(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
 
+    //For a general Notification
     private fun showNotification(data: Map<String, String>) {
         val pendingIntent = PendingIntent.getActivity(this, 1, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.friends_notification_ID))
@@ -112,14 +116,11 @@ class NotificationService : FirebaseMessagingService() {
         }
     }
 
+    //Make sure message has all the necessary components
     private fun validateMessage(message: RemoteMessage): Boolean {
         if (message.data.isEmpty() || !message.data.containsKey("type")) return false
         else if (Firebase.auth.currentUser == null) return false
         else if (!message.data.containsKey("toUID") || message.data["toUID"] != Firebase.auth.currentUser?.uid) return false
         return true
-    }
-
-    override fun onMessageSent(p0: String) {
-        super.onMessageSent(p0)
     }
 }
