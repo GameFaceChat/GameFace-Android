@@ -12,15 +12,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
+import androidx.work.*
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentPackDetailsBinding
+import com.magnitudestudios.GameFace.network.DownloadSinglePack
+import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
+import kotlinx.coroutines.launch
 
-class CardPackDetailsFragment : Fragment() {
+class CardPackDetailsFragment : BaseFragment() {
     private lateinit var bind: FragmentPackDetailsBinding
     val args: CardPackDetailsFragmentArgs by navArgs()
     lateinit var packItem : ShopItem
@@ -37,7 +45,6 @@ class CardPackDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val imageTransition = args.imageUri
-        Log.e("TRANSITION", imageTransition)
         bind.packImage.apply {
             transitionName = imageTransition
             Glide.with(this).load(imageTransition).into(this)
@@ -51,6 +58,31 @@ class CardPackDetailsFragment : Fragment() {
 
         bind.price.text = packItem.price.toString()
 
-
+        bind.purchaseBtn.setOnClickListener {
+            val downloadTask = OneTimeWorkRequestBuilder<DownloadSinglePack>().setInputData(
+                    workDataOf(DownloadSinglePack.SHOP_ITEM_KEY to Gson().toJson(packItem))
+            ).build()
+            val id = downloadTask.id
+            WorkManager.getInstance(requireActivity().applicationContext).enqueue(downloadTask)
+            WorkManager.getInstance(requireActivity().applicationContext).getWorkInfoByIdLiveData(id).observe(viewLifecycleOwner, Observer {
+                when (it.state) {
+                    WorkInfo.State.SUCCEEDED -> {
+                        Toast.makeText(requireContext(), "${packItem.name} finished downloading", Toast.LENGTH_LONG).show()
+                        bind.purchaseBtn.setLoading(false)
+                    }
+                    WorkInfo.State.RUNNING -> {
+                        bind.purchaseBtn.setLoading(true)
+                    }
+                    WorkInfo.State.FAILED -> {
+                        bind.purchaseBtn.setLoading(false)
+                        Toast.makeText(requireContext(), "Purchase Failed", Toast.LENGTH_LONG).show()
+                        Log.e("Failed Purchase", it.outputData.getString(DownloadSinglePack.ERROR) ?: "")
+                    }
+                    else -> {
+                        bind.purchaseBtn.setLoading(false)
+                    }
+                }
+            })
+        }
     }
 }

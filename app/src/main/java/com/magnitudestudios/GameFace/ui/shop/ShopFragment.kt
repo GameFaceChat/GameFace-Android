@@ -41,6 +41,7 @@ import com.magnitudestudios.GameFace.ui.profile.ProfileFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.PersonalFragment
+import com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment
 import com.magnitudestudios.GameFace.ui.shop.tabs.MarketFragment
 import com.magnitudestudios.GameFace.views.CardPackViewHolder
 import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
@@ -78,7 +79,7 @@ class ShopFragment : BaseFragment() {
             bind.showcaseFlipper.adapter = ShowCaseAdapter()
         })
 
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launchWhenCreated{
             while (isActive) {
                 delay(5000)
                 bind.showcaseFlipper.currentItem = (bind.showcaseFlipper.currentItem + 1) % (viewModel.showcaseItems.value?.size ?: 1)
@@ -108,6 +109,7 @@ class ShopFragment : BaseFragment() {
     fun replaceFragment(position: Int) {
         val fragment = when (position) {
             0 -> MarketFragment()
+            1 -> InstalledFragment()
 //            1 -> FriendsFragment()
 //            2 -> FriendRequestsFragment()
             else -> MarketFragment()

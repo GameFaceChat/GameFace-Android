@@ -14,23 +14,6 @@
     app:startDestination="@id/bottomContainerFragment">
 
     <fragment
-        android:id="@+id/cameraFragment"
-        android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
-        android:label="CameraFragment"
-        tools:layout="@layout/fragment_camera">
-        <argument
-            android:name="callUserUID"
-            app:argType="string"
-            android:defaultValue="" />
-        <argument
-            android:name="roomID"
-            app:argType="string"
-            android:defaultValue=""/>
-        <action
-            android:id="@+id/action_cameraFragment_to_addMembersDialog"
-            app:destination="@id/addMembersDialog" />
-    </fragment>
-    <fragment
         android:id="@+id/addFriendsFragment"
         android:name="com.magnitudestudios.GameFace.ui.addFriends.AddFriendsFragment"
         android:label="AddFriendsFragment"
@@ -62,9 +45,11 @@
             app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/action_bottomContainerFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit" />
+            app:destination="@id/videoCallGraph"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/action_bottomContainerFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
@@ -124,9 +109,37 @@
             android:name="packItem"
             app:argType="string" />
     </fragment>
-    <dialog
-        android:id="@+id/addMembersDialog"
-        android:name="com.magnitudestudios.GameFace.ui.camera.addMembers.AddMembersDialog"
-        android:label="AddMembersDialog"
-        />
+    <navigation android:id="@+id/videoCallGraph"
+        app:startDestination="@id/cameraFragment">
+        <argument
+            android:name="callUserUID"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="roomID"
+            android:defaultValue=""
+            app:argType="string" />
+        <fragment
+            android:id="@+id/cameraFragment"
+            android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
+            android:label="CameraFragment"
+            tools:layout="@layout/fragment_camera">
+            <argument
+                android:name="callUserUID"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="roomID"
+                android:defaultValue=""
+                app:argType="string" />
+            <action
+                android:id="@+id/action_cameraFragment_to_addMembersDialog"
+                app:destination="@id/addMembersDialog" />
+        </fragment>
+        <dialog
+            android:id="@+id/addMembersDialog"
+            android:name="com.magnitudestudios.GameFace.ui.camera.addMembers.AddMembersDialog"
+            android:label="AddMembersDialog"
+            tools:layout="@layout/add_members_dialog"/>
+    </navigation>
 </navigation>

@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.R
@@ -57,7 +58,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var audioManager: AudioManager
 
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var viewModel: CameraViewModel
+    private val viewModel: CameraViewModel by navGraphViewModels(R.id.videoCallGraph)
 
     private var videoViews = hashMapOf<String, MovableScreen>()
 
@@ -70,7 +71,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         mainViewModel = activity?.run {
             ViewModelProvider(this).get(MainViewModel::class.java)
         }!!
-        viewModel = activity?.run { ViewModelProvider(this).get(CameraViewModel::class.java) }!!
         rootEglBase = EglBase.create()
         return bind.root
     }

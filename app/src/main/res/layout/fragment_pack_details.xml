@@ -72,10 +72,12 @@
                 tools:src="@tools:sample/avatars" />
         </com.google.android.material.card.MaterialCardView>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.magnitudestudios.GameFace.views.MorphableButton
             android:id="@+id/purchase_btn"
             style="@style/primary_button_theme"
+            android:padding="@dimen/padding_large"
             android:layout_width="150dp"
+            android:textAlignment="center"
             android:layout_height="wrap_content"
             android:text="@string/download_btn"
             android:layout_marginTop="@dimen/layout_margin_large"

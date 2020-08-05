@@ -7,6 +7,8 @@
 
 package com.magnitudestudios.GameFace.pojo.Shop
 
+import com.google.firebase.database.Exclude
+
 data class ShopItem constructor(
         val name: String = "GameFacePack",
         val description: String = "",
@@ -18,7 +20,11 @@ data class ShopItem constructor(
         val installs: Int = 0,
         val samples: List<String> = listOf(),
         val order : Int = 0,
-        val version_number : Int = 0
+        val version_number : Int = 0,
+        @Exclude
+        var type : String = "",
+        @Exclude
+        var id : String = ""
 ) {
     override fun equals(other: Any?): Boolean {
         if (other !is ShopItem) return false

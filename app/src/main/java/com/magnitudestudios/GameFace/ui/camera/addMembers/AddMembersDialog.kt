@@ -14,10 +14,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.AddMembersDialogBinding
@@ -31,13 +33,12 @@ import com.magnitudestudios.GameFace.views.FriendViewHolder
 class AddMembersDialog : BottomSheetDialogFragment() {
     private lateinit var bind : AddMembersDialogBinding
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var viewModel: CameraViewModel
+    private val viewModel: CameraViewModel by navGraphViewModels(R.id.videoCallGraph)
     private lateinit var membersModel: AddMembersViewModel
 
     private lateinit var friendsAdapter : SortedRVAdapter<Profile>
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = AddMembersDialogBinding.inflate(inflater, container, false)
-        viewModel = activity?.run { ViewModelProvider(this).get(CameraViewModel::class.java)}!!
         mainViewModel = activity?.run { ViewModelProvider(this).get(MainViewModel::class.java) }!!
         membersModel = ViewModelProvider(this).get(AddMembersViewModel::class.java)
         return bind.root

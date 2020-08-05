@@ -7,8 +7,15 @@
 
 package com.magnitudestudios.GameFace.pojo.Shop
 
-class Pack (
+import com.google.firebase.database.ServerValue
+
+open class RemotePackInfo (
         val id : String = "",
         val type : String = "",
-        val version : Int = -1
-)
+        val purchasedDate : Any? = ServerValue.TIMESTAMP
+) {
+    fun getPurchasedTime() : Long? {
+        return if (purchasedDate is Long) purchasedDate
+        else null
+    }
+}
