@@ -77,7 +77,7 @@ class FriendsFragment : Fragment() {
 
         })
         bind.addFriendsBtn.setOnClickListener {
-            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_bottomContainerFragment_to_addFriendsFragment)
+            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_friendContainerFragment_to_addFriendsFragment)
         }
 
         super.onViewCreated(view, savedInstanceState)
