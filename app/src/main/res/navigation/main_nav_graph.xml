@@ -67,6 +67,13 @@
             app:popEnterAnim="@anim/none"
             app:popExitAnim="@anim/fade_out"
             app:enterAnim="@anim/fade_in"/>
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_friendContainerFragment"
+            app:destination="@id/friendContainerFragment"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:enterAnim="@anim/slide_in_from_left"/>
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"
@@ -142,4 +149,9 @@
             android:label="AddMembersDialog"
             tools:layout="@layout/add_members_dialog"/>
     </navigation>
+    <fragment
+        android:id="@+id/friendContainerFragment"
+        android:name="com.magnitudestudios.GameFace.ui.profile.tabs.FriendContainerFragment"
+        android:label="FriendContainerFragment"
+        tools:layout="@layout/friends_container_screen"/>
 </navigation>

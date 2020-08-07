@@ -50,14 +50,14 @@ class DownloadSinglePack(context: Context, params: WorkerParameters) : Coroutine
         val item = Gson().fromJson(inputData.getString(SHOP_ITEM_KEY), ShopItem::class.java)
         if (item == null) Log.e("NULL", "ITEM")
         setProgress(workDataOf(Progress to 10))
-        val result = HTTPRequest.downloadPack(applicationContext, item)
+        val result = HTTPRequest.downloadPack(applicationContext, item.id, item.type)
         setProgress(workDataOf(Progress to 75))
-        ShopRepository.addToRemotePacks(RemotePackInfo(item.name, item.type))
+        ShopRepository.addToRemotePacks(RemotePackInfo(item.id, item.type))
         setProgress(workDataOf(Progress to 100))
         if (result.status == Status.ERROR) {
-            return@withContext Result.failure(workDataOf("ERROR" to result.message))
+            return@withContext Result.failure(workDataOf(ERROR to result.message))
         }
-        return@withContext Result.success(workDataOf("RESULT" to Gson().toJson(result.data)))
+        return@withContext Result.success(workDataOf(RESULT to Gson().toJson(result.data)))
     }
 
 }

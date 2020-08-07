@@ -22,6 +22,7 @@
 
     <color name="darkGray">#5c5c5c</color>
     <color name="lightGray">#b5b3b3</color>
+    <color name="grayDisabled">#995c5c5c</color>
 
     <color name="greyed_text">#888888</color>
 

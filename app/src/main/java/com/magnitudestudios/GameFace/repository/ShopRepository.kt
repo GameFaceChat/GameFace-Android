@@ -26,10 +26,7 @@ import com.magnitudestudios.GameFace.pojo.Shop.RemotePackInfo
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import com.magnitudestudios.GameFace.pojo.Shop.ShowCaseItem
 import com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 
 object ShopRepository {
@@ -157,21 +154,14 @@ object ShopRepository {
     suspend fun downloadAll(context: Context, toDownload : List<RemotePackInfo>) : Resource<List<RemotePackInfo>> {
         val failed = mutableListOf<RemotePackInfo>()
         toDownload.forEach {remotePack ->
-            val item = getShopItem(remotePack.type, remotePack.id)
-            if (item != null) {
-                val downloadResult = HTTPRequest.downloadPack(context, item)
-                when (downloadResult.status) {
-                    Status.ERROR -> {
-                        Log.e("DOWNLOAD ERROR", downloadResult.message.toString())
-                        failed.add(remotePack)
-                    }
-                    Status.SUCCESS -> addToLocalPacks(context, downloadResult.data!!)
-                    else -> Log.e("UNKNOWN", "UNKNOWN DOWNLOAD RESULT")
+            val downloadResult = HTTPRequest.downloadPack(context, remotePack.id, remotePack.type)
+            when (downloadResult.status) {
+                Status.ERROR -> {
+                    Log.e("DOWNLOAD ERROR", downloadResult.message.toString())
+                    failed.add(remotePack)
                 }
-            }
-            else {
-                Log.e("DOWNLOAD ERROR", "SHOP ITEM NULL: Could not download ${remotePack.id}")
-                failed.add(remotePack)
+                Status.SUCCESS -> addToLocalPacks(context, downloadResult.data!!)
+                else -> Log.e("UNKNOWN", "UNKNOWN DOWNLOAD RESULT")
             }
         }
         return if (failed.isEmpty()) Resource.success(null)

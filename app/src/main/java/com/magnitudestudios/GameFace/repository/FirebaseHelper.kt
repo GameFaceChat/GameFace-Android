@@ -8,6 +8,7 @@
 package com.magnitudestudios.GameFace.repository
 
 import android.util.Log
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseException
@@ -65,5 +66,9 @@ object FirebaseHelper {
             reference.setValue(value).await()
             ""
         } catch (e : DatabaseException) {e.message.toString()}
+    }
+
+    suspend fun getIDToken() : String? {
+        return Firebase.auth.currentUser?.getIdToken(true)?.await()?.token
     }
 }

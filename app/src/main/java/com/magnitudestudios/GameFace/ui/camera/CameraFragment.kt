@@ -233,7 +233,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 gotPeerStream(peerUID, mediaStream)
             }
         })
-
         peer?.let {
             it.addStream(localStream)
             viewModel.addPeer(uid, it)
