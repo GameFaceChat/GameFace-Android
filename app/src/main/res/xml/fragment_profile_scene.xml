@@ -52,7 +52,7 @@
             android:maxLength="@integer/max_bio_length"
             app:layout_constraintEnd_toStartOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile_pic"
-            app:layout_constraintTop_toBottomOf="@+id/statsLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
         <Constraint
             android:id="@+id/edit_profile"
             android:layout_width="0dp"
@@ -64,16 +64,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/statsLayout"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintWidth_percent="0.5">
+            <Transform android:rotationX="100" />
+        </Constraint>
+        <Constraint
+            android:id="@+id/statsLayout"
+            layout="@layout/stats_layout"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/layout_margin_small"
+            app:layout_constraintTop_toBottomOf="@id/profile_pic">
+            <Transform android:scaleY="0"  android:rotationX="100"/>
+        </Constraint>
 
         <Constraint
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/layout_margin_medium"
+            android:layout_marginTop="@dimen/layout_margin_very_small"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/statsLayout" />
+            app:layout_constraintTop_toBottomOf="@id/profile_pic" />
     </ConstraintSet>
 
     <Transition
@@ -81,6 +91,7 @@
         app:constraintSetStart="@+id/start">
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/scrollView" />
+            app:touchAnchorId="@id/scrollView"
+            />
     </Transition>
 </MotionScene>

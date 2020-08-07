@@ -64,11 +64,14 @@ class CardPackDetailsFragment : BaseFragment() {
             ""
         }
         bind.description.text = packItem.description
-
-        bind.price.text = if (packItem.price == 0) getString(string.free_price) else packItem.price.toString()
+        if (packItem.price == 0) {
+            bind.price.text = getString(string.free_price)
+            bind.purchaseBtn.text = getString(string.download_btn)
+        } else {
+            bind.price.text = packItem.price.toString()
+        }
 
         bind.purchaseBtn.setOnClickListener {
-
             purchaseAndDownload()
         }
     }

@@ -79,7 +79,7 @@
             android:layout_width="150dp"
             android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:text="@string/download_btn"
+            android:text="@string/purchase_btn"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:layout_marginBottom="@dimen/layout_margin_large"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -14,7 +14,7 @@
     android:layout_height="wrap_content">
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/display_friends"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -39,7 +39,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/display_packs"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
@@ -65,7 +65,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/games_won"
-        style="@style/Widget.AppCompat.Button.Borderless"
+        style="@style/button_white_text_no_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLines="1"
