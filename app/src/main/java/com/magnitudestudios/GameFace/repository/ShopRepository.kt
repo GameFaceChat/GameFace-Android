@@ -80,6 +80,10 @@ object ShopRepository {
         return getItems(Constants.WOULD_YOU_RATHER_PATH)
     }
 
+    suspend fun getNumberOfRemotePacks() : Int {
+         return FirebaseHelper.getValue(Constants.OWNED_PACKS, Firebase.auth.currentUser?.uid!!, "number")?.getValue(Integer::class.java)?.toInt() ?: 0
+    }
+
     suspend fun getShowcaseItems() : List<ShowCaseItem> {
         return suspendCancellableCoroutine {
             Firebase.database.reference
@@ -117,7 +121,7 @@ object ShopRepository {
     private suspend fun fetchRemotePacks() : List<RemotePackInfo> {
         val all = mutableListOf<RemotePackInfo?>()
         if (Firebase.auth.currentUser?.uid == null) return listOf()
-        FirebaseHelper.getValue(Constants.OWNED_PACKS, Firebase.auth.currentUser!!.uid)?.children?.forEach {
+        FirebaseHelper.getValue(Constants.OWNED_PACKS, Firebase.auth.currentUser!!.uid, Constants.REMOTE_PACKS_KEY)?.children?.forEach {
             all.add(it.getValue(RemotePackInfo::class.java))
         }
         return all.filterNotNull()
@@ -130,10 +134,6 @@ object ShopRepository {
                 .edit()
                 .putString(Constants.INSTALLED_PACKS_KEY, Gson().toJson(newArr))
                 .apply()
-    }
-
-    suspend fun addToRemotePacks(pack : RemotePackInfo) : String {
-        return FirebaseHelper.pushValue(pack, Constants.OWNED_PACKS, Firebase.auth.currentUser!!.uid)
     }
 
     //Returns a list of packs that need downloading from server

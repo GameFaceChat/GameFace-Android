@@ -65,7 +65,7 @@ object Constants {
     val VIBRATE_PATTERN = longArrayOf(1000, 1000, 1000, 1000, 1000, 100, 400)
 
     const val INSTALLED_PACKS_KEY = "installedPacksLocal"
-
+    const val REMOTE_PACKS_KEY = "packs"
     //Intent Constants
     const val CALL_KEY = "GO_TO_CALLING"
     const val ROOM_ID_KEY = "ROOM_ID"

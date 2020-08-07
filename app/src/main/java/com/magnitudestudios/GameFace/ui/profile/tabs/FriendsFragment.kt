@@ -93,7 +93,7 @@ class FriendsFragment : Fragment() {
                 val inflater = LayoutInflater.from(parent.context)
                 return FriendViewHolder(RowFriendsBinding.inflate(inflater, parent, false), object : RVButtonClick {
                     override fun onClick(position: Int) {
-                        val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCameraFragment(mAdapter.getitem(position).uid)
+                        val action = FriendContainerFragmentDirections.actionFriendContainerFragmentToVideoCallGraph(mAdapter.getitem(position).uid)
                         activity?.findNavController(R.id.mainNavHost)?.navigate(action)
                     }
 

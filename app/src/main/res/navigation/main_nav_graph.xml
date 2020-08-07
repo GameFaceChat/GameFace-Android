@@ -153,5 +153,9 @@
         android:id="@+id/friendContainerFragment"
         android:name="com.magnitudestudios.GameFace.ui.profile.tabs.FriendContainerFragment"
         android:label="FriendContainerFragment"
-        tools:layout="@layout/friends_container_screen"/>
+        tools:layout="@layout/friends_container_screen">
+        <action
+            android:id="@+id/action_friendContainerFragment_to_videoCallGraph"
+            app:destination="@id/videoCallGraph" />
+    </fragment>
 </navigation>

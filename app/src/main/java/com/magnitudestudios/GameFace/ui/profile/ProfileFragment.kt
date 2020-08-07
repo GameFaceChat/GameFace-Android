@@ -57,6 +57,10 @@ class ProfileFragment : BaseFragment() {
             bind.statsLayout.displayFriends.text = it.size.toString()
         })
 
+        viewModel.numberOfInstalledPacks.observe(viewLifecycleOwner, Observer {
+            bind.statsLayout.displayPacks.text = it.toString()
+        })
+
         bind.profilePic.setOnClickListener {
             activity?.findNavController(R.id.mainNavHost)?.navigate(R.id.action_bottomContainerFragment_to_editProfileFragment)
         }

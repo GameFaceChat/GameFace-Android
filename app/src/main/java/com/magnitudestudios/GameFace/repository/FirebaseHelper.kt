@@ -42,7 +42,8 @@ object FirebaseHelper {
         return suspendCancellableCoroutine { cont ->
             reference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(p0: DatabaseError) {
-                    cont.cancel(p0.toException())
+                    Log.e("ERROR", p0.message, p0.toException())
+                    cont.resume(null)
                 }
 
                 override fun onDataChange(data: DataSnapshot) = cont.resume(data)
