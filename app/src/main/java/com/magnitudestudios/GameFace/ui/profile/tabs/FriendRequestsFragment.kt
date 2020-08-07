@@ -30,12 +30,12 @@ import com.magnitudestudios.GameFace.views.FriendRequestViewHolder
 
 class FriendRequestsFragment : Fragment() {
     private lateinit var bind: FragmentFriendRequestsBinding
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var viewModel: FriendsViewModel
     private lateinit var requestAdapter: SortedRVAdapter<Profile>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentFriendRequestsBinding.inflate(inflater, container, false)
-        viewModel = activity?.run { ViewModelProvider(this).get(ProfileViewModel::class.java) }!!
+        viewModel = activity?.run { ViewModelProvider(this).get(FriendsViewModel::class.java) }!!
         return bind.root
     }
 

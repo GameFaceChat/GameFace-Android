@@ -22,6 +22,7 @@ object Constants {
     const val ROOMS_PATH = "rooms"
     const val USERS_PATH = "users"
     const val STORE_PATH = "store"
+    const val OWNED_PACKS = "owned_packs"
 
     const val CONNECT_PATH = "connection"
     const val PROFILE_PATH = "profiles"
@@ -63,6 +64,8 @@ object Constants {
     //Notification Vibration Pattern
     val VIBRATE_PATTERN = longArrayOf(1000, 1000, 1000, 1000, 1000, 100, 400)
 
+    const val INSTALLED_PACKS_KEY = "installedPacksLocal"
+    const val REMOTE_PACKS_KEY = "packs"
     //Intent Constants
     const val CALL_KEY = "GO_TO_CALLING"
     const val ROOM_ID_KEY = "ROOM_ID"

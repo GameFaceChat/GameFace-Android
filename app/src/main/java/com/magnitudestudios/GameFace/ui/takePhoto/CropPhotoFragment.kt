@@ -21,13 +21,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentCropPfpBinding
 import com.magnitudestudios.GameFace.utils.compressImage
 import com.takusemba.cropme.OnCropListener
 import java.io.File
 import java.io.FileOutputStream
 
-class CropPhotoFragment : Fragment() {
+class CropPhotoFragment : BaseFragment() {
     private lateinit var bind: FragmentCropPfpBinding
 
     private val args: CropPhotoFragmentArgs by navArgs()

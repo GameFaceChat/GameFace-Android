@@ -136,8 +136,14 @@
     <string name="shop_charades_title">Charades</string>
     <string name="shop_truth_or_dare_title">Truth or Dare</string>
     <string name="shop_would_you_rather_title">Would You Rather</string>
-    <string name="download_btn">Purchase</string>
+    <string name="purchase_btn">Purchase</string>
+    <string name="download_btn">Download</string>
     <string name="description_title">Description</string>
+    <string name="free_price">Free</string>
+    <string name="stats_friends_title">Friends</string>
+    <string name="stats_packs_title">Packs</string>
+    <string name="stats_games_won_title">Games Won</string>
+    <string name="_0">0</string>
 
 
 </resources>

@@ -12,42 +12,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.doOnPreDraw
-import androidx.core.view.size
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SortedList
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
-import com.magnitudestudios.GameFace.common.SortedRVAdapter
-import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.databinding.FragmentShopBinding
 import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
-import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
-import com.magnitudestudios.GameFace.ui.profile.ProfileFragment
-import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
-import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
-import com.magnitudestudios.GameFace.ui.profile.tabs.PersonalFragment
+import com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment
 import com.magnitudestudios.GameFace.ui.shop.tabs.MarketFragment
-import com.magnitudestudios.GameFace.views.CardPackViewHolder
 import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
 
 class ShopFragment : BaseFragment() {
 
@@ -78,7 +60,7 @@ class ShopFragment : BaseFragment() {
             bind.showcaseFlipper.adapter = ShowCaseAdapter()
         })
 
-        lifecycleScope.launch(Dispatchers.Main) {
+        lifecycleScope.launchWhenCreated{
             while (isActive) {
                 delay(5000)
                 bind.showcaseFlipper.currentItem = (bind.showcaseFlipper.currentItem + 1) % (viewModel.showcaseItems.value?.size ?: 1)
@@ -108,6 +90,7 @@ class ShopFragment : BaseFragment() {
     fun replaceFragment(position: Int) {
         val fragment = when (position) {
             0 -> MarketFragment()
+            1 -> InstalledFragment()
 //            1 -> FriendsFragment()
 //            2 -> FriendRequestsFragment()
             else -> MarketFragment()

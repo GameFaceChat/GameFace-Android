@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
   ~ Unauthorized copying of this file, via any medium is prohibited
   ~ All software is proprietary and confidential
@@ -10,31 +9,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    tools:ignore="UnusedNavigation"
-    app:startDestination="@id/bottomContainerFragment">
+    app:startDestination="@id/bottomContainerFragment"
+    tools:ignore="UnusedNavigation">
 
-    <fragment
-        android:id="@+id/cameraFragment"
-        android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
-        android:label="CameraFragment"
-        tools:layout="@layout/fragment_camera">
-        <argument
-            android:name="callUserUID"
-            app:argType="string"
-            android:defaultValue="" />
-        <argument
-            android:name="roomID"
-            app:argType="string"
-            android:defaultValue=""/>
-        <action
-            android:id="@+id/action_cameraFragment_to_addMembersDialog"
-            app:destination="@id/addMembersDialog" />
-    </fragment>
     <fragment
         android:id="@+id/addFriendsFragment"
         android:name="com.magnitudestudios.GameFace.ui.addFriends.AddFriendsFragment"
         android:label="AddFriendsFragment"
-        tools:layout="@layout/fragment_add_friends"/>
+        tools:layout="@layout/fragment_add_friends" />
     <fragment
         android:id="@+id/takePhotoFragment"
         android:name="com.magnitudestudios.GameFace.ui.takePhoto.TakePhotoFragment"
@@ -62,9 +44,11 @@
             app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/action_bottomContainerFragment_to_cameraFragment"
-            app:destination="@id/cameraFragment"
-            app:enterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit" />
+            app:destination="@id/videoCallGraph"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom" />
         <action
             android:id="@+id/action_bottomContainerFragment_to_settingsFragment"
             app:destination="@id/settingsFragment"
@@ -78,10 +62,17 @@
         <action
             android:id="@+id/action_bottomContainerFragment_to_cardPackDetailsFragment"
             app:destination="@id/cardPackDetailsFragment"
+            app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/none"
             app:popEnterAnim="@anim/none"
-            app:popExitAnim="@anim/fade_out"
-            app:enterAnim="@anim/fade_in"/>
+            app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_bottomContainerFragment_to_friendContainerFragment"
+            app:destination="@id/friendContainerFragment"
+            app:enterAnim="@anim/slide_in_from_left"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/cropPhotoFragment"
@@ -90,8 +81,8 @@
         tools:layout="@layout/fragment_crop_pfp">
         <argument
             android:name="photoUri"
-            app:argType="string"
-            android:defaultValue=""/>
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -124,9 +115,58 @@
             android:name="packItem"
             app:argType="string" />
     </fragment>
-    <dialog
-        android:id="@+id/addMembersDialog"
-        android:name="com.magnitudestudios.GameFace.ui.camera.addMembers.AddMembersDialog"
-        android:label="AddMembersDialog"
-        />
+    <navigation
+        android:id="@+id/videoCallGraph"
+        app:startDestination="@id/cameraFragment">
+        <argument
+            android:name="callUserUID"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="roomID"
+            android:defaultValue=""
+            app:argType="string" />
+        <fragment
+            android:id="@+id/cameraFragment"
+            android:name="com.magnitudestudios.GameFace.ui.camera.CameraFragment"
+            android:label="CameraFragment"
+            tools:layout="@layout/fragment_camera">
+            <argument
+                android:name="callUserUID"
+                android:defaultValue=""
+                app:argType="string" />
+            <argument
+                android:name="roomID"
+                android:defaultValue=""
+                app:argType="string" />
+            <action
+                android:id="@+id/action_cameraFragment_to_addMembersDialog"
+                app:destination="@id/addMembersDialog" />
+        </fragment>
+        <dialog
+            android:id="@+id/addMembersDialog"
+            android:name="com.magnitudestudios.GameFace.ui.camera.addMembers.AddMembersDialog"
+            android:label="AddMembersDialog"
+            tools:layout="@layout/add_members_dialog" />
+    </navigation>
+    <fragment
+        android:id="@+id/friendContainerFragment"
+        android:name="com.magnitudestudios.GameFace.ui.profile.tabs.FriendContainerFragment"
+        android:label="FriendContainerFragment"
+        tools:layout="@layout/friends_container_screen">
+        <action
+            android:id="@+id/action_friendContainerFragment_to_videoCallGraph"
+            app:destination="@id/videoCallGraph"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_from_bottom"
+            app:popExitAnim="@anim/slide_out_bottom" />
+        <action
+            android:id="@+id/action_friendContainerFragment_to_addFriendsFragment"
+            app:destination="@id/addFriendsFragment"
+            app:enterAnim="@anim/slide_from_bottom"
+            app:exitAnim="@anim/none"
+            app:popEnterAnim="@anim/none"
+            app:popExitAnim="@anim/slide_out_bottom" />
+    </fragment>
 </navigation>

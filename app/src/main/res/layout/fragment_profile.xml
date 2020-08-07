@@ -1,119 +1,127 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
   ~ Unauthorized copying of this file, via any medium is prohibited
   ~ All software is proprietary and confidential
   ~
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/topLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/topLayout"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    app:layoutDescription="@xml/fragment_profile_scene">
+
+    <ImageButton
+        android:id="@+id/profile_pic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/layout_margin_medium"
+        android:layout_marginTop="@dimen/layout_margin_medium"
+        android:adjustViewBounds="true"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        android:src="@drawable/profile_placeholder"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.25" />
+
+    <TextView
+        android:id="@+id/display_username"
+        style="@style/normal_text_white"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        >
+        android:layout_marginStart="@dimen/layout_margin_large"
+        android:layout_marginEnd="@dimen/layout_margin_large"
+        android:ellipsize="end"
+        android:fontFamily="@font/raleway_semibold"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@+id/display_name"
+        app:layout_constraintEnd_toEndOf="@id/settings_btn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/profile_pic"
+        app:layout_constraintTop_toTopOf="@+id/profile_pic"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/username_input_hint" />
 
-        <ImageButton
-            android:id="@+id/profile_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginStart="@dimen/layout_margin_medium"
-            android:layout_marginTop="@dimen/layout_margin_medium"
-            android:adjustViewBounds="true"
-            android:background="#00000000"
-            android:scaleType="fitXY"
-            android:src="@drawable/profile_placeholder"
-            app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/display_name"
+        style="@style/small_text_white"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_large"
+        android:layout_marginEnd="@dimen/layout_margin_large"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/profile_pic"
+        app:layout_constraintTop_toBottomOf="@+id/display_username"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@string/full_name_input_hint" />
 
-        <TextView
-            android:id="@+id/display_username"
-            style="@style/normal_text_white"
-            android:layout_width="0dp"
-            android:layout_marginEnd="@dimen/layout_margin_large"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/layout_margin_large"
-            android:layout_marginTop="@dimen/layout_margin_very_small"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/raleway_semibold"
-            app:layout_constraintEnd_toEndOf="@id/settings_btn"
-            app:layout_constraintStart_toEndOf="@+id/profile_pic"
-            app:layout_constraintTop_toTopOf="@+id/profile_pic"
-            tools:text="@string/username_input_hint" />
-
-        <TextView
-            android:id="@+id/display_name"
-            style="@style/small_text_white"
-            android:maxLines="1"
-            android:layout_marginEnd="@dimen/layout_margin_large"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/layout_margin_large"
-            android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/profile_pic"
-            app:layout_constraintTop_toBottomOf="@+id/display_username"
-            tools:text="@string/full_name_input_hint" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/edit_profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#DDFFFFFF"
-            android:fontFamily="@font/raleway_bold"
-            android:text="@string/btn_edit_profile"
-            android:textColor="@color/colorPrimary"
-            android:textAllCaps="false"
-            android:layout_marginBottom="@dimen/layout_margin_small"
-            app:layout_constraintWidth_percent="0.5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_pic" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/settings_btn"
-            style="@style/Widget.AppCompat.ActionButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:background="@drawable/ic_settings_icon"
-            android:layout_margin="@dimen/layout_margin_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/profile_tabs"
+    <include
+        android:id="@+id/statsLayout"
+        layout="@layout/stats_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_person"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_people_48px"/>
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/ic_mail"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_small"
+        app:layout_constraintTop_toBottomOf="@id/profile_pic" />
 
-    </com.google.android.material.tabs.TabLayout>
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager"
+    <TextView
+        android:id="@+id/display_bio"
+        style="@style/small_text_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_large"
+        android:layout_marginTop="@dimen/layout_margin_medium"
+        android:layout_marginEnd="@dimen/layout_margin_large"
+        android:maxLength="@integer/max_bio_length"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_pic"
+        app:layout_constraintTop_toBottomOf="@+id/statsLayout"
+        tools:text="@tools:sample/lorem/random" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/edit_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_margin_medium"
+        android:backgroundTint="#DDFFFFFF"
+        android:fontFamily="@font/raleway_bold"
+        android:text="@string/btn_edit_profile"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/display_bio"
+        app:layout_constraintWidth_percent="0.5" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settings_btn"
+        style="@style/Widget.AppCompat.ActionButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_margin="@dimen/layout_margin_medium"
+        android:background="@drawable/ic_settings_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"/>
-</LinearLayout>
+        android:layout_marginTop="@dimen/layout_margin_medium"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_profile">
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

@@ -11,7 +11,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import com.magnitudestudios.GameFace.pojo.Shop.ShowCaseItem
 import com.magnitudestudios.GameFace.repository.ShopRepository
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +29,7 @@ class ShopViewModel : ViewModel() {
     val selectedShowcase = Transformations.switchMap(selectedShowcaseItem) {
         return@switchMap liveData {
             if (it == null) emit(null)
-            else emit(ShopRepository.loadPack(it.game, it.pack))
+            else emit(ShopRepository.getShopItem(it.game, it.pack))
         }
     }
 }

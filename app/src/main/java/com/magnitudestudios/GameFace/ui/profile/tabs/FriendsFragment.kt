@@ -32,13 +32,13 @@ import com.magnitudestudios.GameFace.views.FriendViewHolder
 
 class FriendsFragment : Fragment() {
     private lateinit var bind: FragmentFriendsBinding
-    private lateinit var viewModel: ProfileViewModel
+    private lateinit var viewModel: FriendsViewModel
 
     private lateinit var mAdapter: SortedRVAdapter<Profile>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         bind = FragmentFriendsBinding.inflate(inflater, container, false)
-        viewModel = activity?.run { ViewModelProvider(this).get(ProfileViewModel::class.java) }!!
+        viewModel = activity?.run { ViewModelProvider(this).get(FriendsViewModel::class.java) }!!
         return bind.root
     }
 
@@ -77,7 +77,7 @@ class FriendsFragment : Fragment() {
 
         })
         bind.addFriendsBtn.setOnClickListener {
-            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_bottomContainerFragment_to_addFriendsFragment)
+            requireActivity().findNavController(R.id.mainNavHost).navigate(R.id.action_friendContainerFragment_to_addFriendsFragment)
         }
 
         super.onViewCreated(view, savedInstanceState)
@@ -93,7 +93,7 @@ class FriendsFragment : Fragment() {
                 val inflater = LayoutInflater.from(parent.context)
                 return FriendViewHolder(RowFriendsBinding.inflate(inflater, parent, false), object : RVButtonClick {
                     override fun onClick(position: Int) {
-                        val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCameraFragment(mAdapter.getitem(position).uid)
+                        val action = FriendContainerFragmentDirections.actionFriendContainerFragmentToVideoCallGraph(mAdapter.getitem(position).uid)
                         activity?.findNavController(R.id.mainNavHost)?.navigate(action)
                     }
 

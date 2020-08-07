@@ -61,7 +61,6 @@ class MorphableButton @JvmOverloads constructor(
                                 fromRadius: Float,
                                 toRadius: Float) {
         animationInProgress = true
-        Log.e("ANIMATION: ", "$fromWidth,$toWidth, $fromRadius, $toRadius")
         text = null
 
         val cornerAnimation = ObjectAnimator.ofFloat(

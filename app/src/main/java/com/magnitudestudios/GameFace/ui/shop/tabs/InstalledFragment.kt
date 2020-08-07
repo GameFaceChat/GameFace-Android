@@ -12,11 +12,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.magnitudestudios.GameFace.R
@@ -24,48 +23,36 @@ import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.SharedItemClicked
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.CardPackBinding
-import com.magnitudestudios.GameFace.databinding.FragmentMarketItemsBinding
-import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
-import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
+import com.magnitudestudios.GameFace.databinding.FragmentInstalledPacksBinding
+import com.magnitudestudios.GameFace.databinding.InstalledPackLayoutBinding
+import com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo
+import com.magnitudestudios.GameFace.repository.ShopRepository
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
-import com.magnitudestudios.GameFace.ui.shop.ShopViewModel
 import com.magnitudestudios.GameFace.views.CardPackViewHolder
-import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
+import com.magnitudestudios.GameFace.views.InstalledCardPackViewHolder
+import java.io.File
 
-class MarketFragment : BaseFragment() {
-    lateinit var bind : FragmentMarketItemsBinding
-    val viewModel: ShopViewModel by navGraphViewModels(R.id.bottom_nav_graph)
-
+class InstalledFragment : BaseFragment() {
+    private lateinit var bind: FragmentInstalledPacksBinding
+    private val mAdapter = InstalledAdapter()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        bind = FragmentMarketItemsBinding.inflate(inflater, container, false)
-//        viewModel = ViewModelProvider(parentFragment as ShopFragment)[ShopViewModel::class.java]
+        bind = FragmentInstalledPacksBinding.inflate(inflater, container, false)
         return bind.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bind.charadesItems.adapter = ShopRowAdapter()
-        bind.tOrDItems.adapter = ShopRowAdapter()
-        bind.wouldYouRatherItems.adapter = ShopRowAdapter()
-        observeItems()
+        val localPacks = ShopRepository.getLocalPacks(requireContext())
+        mAdapter.addAll(localPacks)
+        bind.installedPacks.apply {
+            adapter = mAdapter
+            layoutManager = GridLayoutManager(requireContext(), 2)
+        }
     }
 
-    private fun observeItems() {
-        viewModel.charadesItems.observe(viewLifecycleOwner, Observer {
-            (bind.charadesItems.adapter as ShopRowAdapter).replaceAll(it ?: listOf())
-        })
-        viewModel.tOrDItems.observe(viewLifecycleOwner, Observer {
-            (bind.tOrDItems.adapter as ShopRowAdapter).replaceAll(it ?: listOf())
-        })
-        viewModel.wouldYouRatherItems.observe(viewLifecycleOwner, Observer {
-            (bind.wouldYouRatherItems.adapter as ShopRowAdapter).replaceAll(it ?: listOf())
-        })
-    }
-
-    inner class ShopRowAdapter() : SortedRVAdapter<ShopItem>(ShopItem::class.java) {
+    inner class InstalledAdapter() : SortedRVAdapter<LocalPackInfo>(LocalPackInfo::class.java) {
         override fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            val holderBinding = CardPackBinding.inflate(LayoutInflater.from(requireContext()), parent, false)
-            return CardPackViewHolder(holderBinding, object : SharedItemClicked {
+            val holderBinding = InstalledPackLayoutBinding.inflate(LayoutInflater.from(requireContext()), parent, false)
+            return InstalledCardPackViewHolder(holderBinding, object : SharedItemClicked {
 
                 override fun onClick(position: Int, view: View) {
                     Log.e("CLICKED", position.toString())
@@ -81,18 +68,16 @@ class MarketFragment : BaseFragment() {
         }
 
         override fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int) {
-            holder as CardPackViewHolder
+            holder as InstalledCardPackViewHolder
             holder.bind(this.getitem(position))
         }
 
-        override fun areItemsSame(item1: ShopItem, item2: ShopItem): Boolean {
+        override fun areItemsSame(item1: LocalPackInfo, item2: LocalPackInfo): Boolean {
             return item1 == item2
         }
 
-        override fun compareItems(item1: ShopItem, item2: ShopItem): Int {
-            if (item1.order != item2.order) return item1.order - item2.order
-            if (item1.installs != item1.installs) return item1.installs - item2.installs
-            return item1.name.compareTo(item2.name)
+        override fun compareItems(item1: LocalPackInfo, item2: LocalPackInfo): Int {
+            return item1.id.compareTo(item2.id)
         }
     }
 }
