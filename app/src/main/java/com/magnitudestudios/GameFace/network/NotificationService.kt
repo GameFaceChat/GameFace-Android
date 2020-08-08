@@ -10,7 +10,6 @@ package com.magnitudestudios.GameFace.network
 
 import android.app.PendingIntent
 import android.content.Intent
-import android.content.pm.ServiceInfo
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -21,6 +20,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.magnitudestudios.GameFace.Constants
 import com.magnitudestudios.GameFace.R
+import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.repository.SessionRepository
@@ -64,6 +64,7 @@ class NotificationService : FirebaseMessagingService() {
         val roomID = data["roomID"] ?: error("NO ROOM FOUND")
         serviceScope.launch(Dispatchers.Main) {
             val profiles = withContext(Dispatchers.IO) {
+                SessionRepository.updateMemberStatus(Firebase.auth.uid!!, roomID, MemberStatus.RECEIVED)
                 val members = SessionRepository.getAllMembers(roomID)
                 UserRepository.getUserProfilesByUID(members.map { it.uid })
             }
@@ -76,6 +77,7 @@ class NotificationService : FirebaseMessagingService() {
         val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
             putExtra(Member::roomID.name, roomID)
             putExtra(Constants.ROOM_MEMBERS_KEY, Gson().toJson(members))
+            flags = Intent.FLAG_ACTIVITY_NO_USER_ACTION or Intent.FLAG_ACTIVITY_NEW_TASK
         }
         val fullScreenPendingIntent = PendingIntent.getActivity(this, 1,
                 fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -83,7 +85,7 @@ class NotificationService : FirebaseMessagingService() {
         val formattedMembers = members.filter { it.uid != Firebase.auth.uid }.joinToString(", ") { it.username }
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
                 .setSmallIcon(R.drawable.logo_simple_rainbow)
-                .setContentTitle("Incoming Video Call")
+                .setContentTitle(getString(R.string.notification_title_call))
                 .setContentText("From: $formattedMembers")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_CALL)
@@ -93,7 +95,7 @@ class NotificationService : FirebaseMessagingService() {
                 .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
+            notify(1, notificationBuilder.build())
         }
 //        startForeground(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }

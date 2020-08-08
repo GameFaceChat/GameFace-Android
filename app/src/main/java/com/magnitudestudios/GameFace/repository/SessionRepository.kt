@@ -36,8 +36,7 @@ object SessionRepository {
 
     private const val TAG = "SessionHelper"
 
-
-    fun listenForMessages(callback: RoomCallback) {
+    private fun listenForMessages(callback: RoomCallback) {
         if (currentRoom == null) return
         connectionListener = object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
@@ -112,10 +111,10 @@ object SessionRepository {
                     .child(currentRoom!!)
                     .child(Constants.CONNECT_PATH)
                     .removeEventListener(connectionListener!!)
-            Log.e("REMOVED", "LISTENER")
             connectionListener = null
             if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
                 try {
+                    updateMemberStatus(Firebase.auth.currentUser?.uid!!, currentRoom!!, MemberStatus.UNAVAILABLE)
                     sendMessage(Constants.ALL_MEMBERS, Constants.LEFT_KEY, uid).await()
                     callback.onLeftRoom()
                     if (groupMembers == 1) closeRoom()
@@ -158,7 +157,7 @@ object SessionRepository {
                 .setValue(Member(uid = uid, roomID = roomID, memberStatus = memberStatus.name))
     }
 
-    private fun updateMemberStatus(uid: String, roomID: String, status: MemberStatus) {
+    fun updateMemberStatus(uid: String, roomID: String, status: MemberStatus) {
         Firebase.database.reference
                 .child(Constants.ROOMS_PATH)
                 .child(roomID)

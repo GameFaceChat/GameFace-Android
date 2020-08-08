@@ -10,5 +10,6 @@ package com.magnitudestudios.GameFace.pojo.EnumClasses
 enum class MemberStatus {
     CALLING,
     UNAVAILABLE,
+    RECEIVED,
     ACCEPTED
 }
