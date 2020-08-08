@@ -144,6 +144,7 @@
     <string name="stats_packs_title">Packs</string>
     <string name="stats_games_won_title">Games Won</string>
     <string name="_0">0</string>
+    <string name="installed_key_card_details">Installed</string>
 
 
 </resources>

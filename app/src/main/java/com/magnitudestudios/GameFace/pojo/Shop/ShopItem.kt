@@ -21,6 +21,7 @@ data class ShopItem constructor(
         val samples: List<String> = listOf(),
         val order : Int = 0,
         val version_number : Int = 0,
+        val cards : Int = 0,
         @Exclude
         var type : String = "",
         @Exclude
