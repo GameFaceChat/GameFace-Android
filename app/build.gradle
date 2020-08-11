@@ -20,6 +20,13 @@ android {
     }
     buildTypes {
         release {
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
             minifyEnabled false
             shrinkResources false
 
@@ -100,6 +107,8 @@ dependencies {
     implementation 'com.github.florent37:shapeofview:1.4.7'
 
     implementation "androidx.dynamicanimation:dynamicanimation-ktx:1.0.0-alpha03"
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
 
 }
