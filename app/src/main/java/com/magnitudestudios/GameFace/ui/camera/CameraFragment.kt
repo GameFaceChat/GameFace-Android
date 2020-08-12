@@ -61,6 +61,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private val viewModel: CameraViewModel by navGraphViewModels(R.id.videoCallGraph)
 
     private var videoViews = hashMapOf<String, MovableScreen>()
+    private lateinit var membersAdapter : MemberStatusAdapter
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -90,6 +91,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         observeConnection()
         observeIceConnection()
         observeNewPeers()
+        observeMembers()
+
         bind.root.setOnClickListener {
             lifecycleScope.launch {
                 bind.callingControls.animate().setDuration(5000).alpha(1.0f)
@@ -137,6 +140,18 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
 
         viewModel.connections.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
+        })
+    }
+
+    private fun observeMembers() {
+        membersAdapter = MemberStatusAdapter(viewModel.members.value!!)
+        bind.showMembers.adapter = membersAdapter
+        viewModel.changedMember.observe(viewLifecycleOwner, Observer {
+            membersAdapter.notifyItemChanged(it)
+        })
+        viewModel.newMember.observe(viewLifecycleOwner, Observer {
+            membersAdapter.add(it)
+            membersAdapter.notifyDataSetChanged()
         })
     }
 
@@ -353,8 +368,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View) {
-    }
+    override fun onClick(v: View) {}
 
     override fun onStop() {
         super.onStop()

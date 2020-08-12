@@ -14,6 +14,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="parent" />
+        <Constraint
+            android:id="@+id/show_members"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/topBottom"
+            android:alpha="0" />
+
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/expandedBottom">
@@ -23,6 +30,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent" />
+        <Constraint
+            android:id="@+id/show_members"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/topBottom"
+            android:alpha="1" />
     </ConstraintSet>
 
 <!--    <ConstraintSet android:id="@+id/invisibleControls">-->

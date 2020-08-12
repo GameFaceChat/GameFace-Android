@@ -23,6 +23,7 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
+import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.repository.UserRepository
 import com.magnitudestudios.GameFace.ui.calling.IncomingCall
@@ -75,7 +76,7 @@ class NotificationService : FirebaseMessagingService() {
     //Launch the call notification
     private fun launchCall(roomID: String, members: List<Profile>) {
         val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
-            putExtra(Member::roomID.name, roomID)
+            putExtra(Constants.ROOM_ID_KEY, roomID)
             putExtra(Constants.ROOM_MEMBERS_KEY, Gson().toJson(members))
             flags = Intent.FLAG_ACTIVITY_NO_USER_ACTION or Intent.FLAG_ACTIVITY_NEW_TASK
         }
@@ -83,7 +84,7 @@ class NotificationService : FirebaseMessagingService() {
                 fullScreenIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val formattedMembers = members.filter { it.uid != Firebase.auth.uid }.joinToString(", ") { it.username }
-        val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
+        val receivingCall = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
                 .setSmallIcon(R.drawable.logo_simple_rainbow)
                 .setContentTitle(getString(R.string.notification_title_call))
                 .setContentText("From: $formattedMembers")
@@ -92,11 +93,27 @@ class NotificationService : FirebaseMessagingService() {
                 .setVibrate(Constants.VIBRATE_PATTERN)
                 .setFullScreenIntent(fullScreenPendingIntent, true)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setOngoing(true)
+                .setAutoCancel(true)
+
+        val missedCall = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
+                .setSmallIcon(R.drawable.logo_simple_rainbow)
+                .setContentTitle(getString(R.string.notification_missed_call))
+                .setContentText("From: $formattedMembers")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_CALL)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            notify(1, notificationBuilder.build())
+            notify(Constants.INCOMING_CALL_ID, receivingCall.build())
+            serviceScope.launch {
+                delay(10000)
+                cancel(Constants.INCOMING_CALL_ID)
+                notify(Constants.MISSED_CALL_ID, missedCall.build())
+            }
         }
+
 //        startForeground(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
 

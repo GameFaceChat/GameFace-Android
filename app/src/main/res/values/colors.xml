@@ -15,6 +15,8 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
+    <color name="translucent_bottom_sheet_black">#E03D3939</color>
+
     <color name="connectButton">#526cff</color>
     <color name="connectButtonOnClick">#8f9ef2</color>
     <color name="disconnectButton">#c93524</color>

@@ -74,23 +74,23 @@ object UserRepository {
         getCurrentUserRef().child(User::devicesID.name).child(token).setValue(true).await()
     }
 
-    suspend fun getUserByUID(uid: String): User? {
-        if (Firebase.auth.currentUser == null || !exists(Constants.USERS_PATH, uid)) return null
-        return suspendCoroutine { cont ->
-            getUserRef(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) = cont.resume(null)
-
-                override fun onDataChange(data: DataSnapshot) {
-                    val user = data.getValue(User::class.java)
-                    cont.resume(user)
-                }
-            })
-        }
-    }
+//    suspend fun getUserByUID(uid: String): User? {
+//        if (Firebase.auth.currentUser == null || !exists(Constants.USERS_PATH, uid)) return null
+//        return suspendCoroutine { cont ->
+//            getUserRef(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+//                override fun onCancelled(p0: DatabaseError) = cont.resume(null)
+//
+//                override fun onDataChange(data: DataSnapshot) {
+//                    val user = data.getValue(User::class.java)
+//                    cont.resume(user)
+//                }
+//            })
+//        }
+//    }
 
     suspend fun getUserProfileByUID(uid: String): Profile? {
         Log.e("USER", "PROFILE")
-        if (Firebase.auth.currentUser == null || !exists(Constants.PROFILE_PATH, uid)) return null
+        if (Firebase.auth.currentUser == null) return null
         return suspendCoroutine { cont ->
             Firebase.database.reference
                     .child(Constants.PROFILE_PATH).child(uid)
@@ -98,6 +98,7 @@ object UserRepository {
                         override fun onCancelled(p0: DatabaseError) = cont.resume(null)
 
                         override fun onDataChange(data: DataSnapshot) {
+                            if (!data.exists()) cont.resume(null)
                             val userProfile = data.getValue(Profile::class.java)
                             cont.resume(userProfile)
                         }

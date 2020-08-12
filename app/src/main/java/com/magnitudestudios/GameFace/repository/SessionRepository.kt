@@ -7,7 +7,12 @@
 
 package com.magnitudestudios.GameFace.repository
 
+import android.content.Context
 import android.util.Log
+import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
+import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ChildEventListener
@@ -17,20 +22,30 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.addListener
+import com.magnitudestudios.GameFace.callbacks.MemberCallback
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
+import com.magnitudestudios.GameFace.doOnChildAdded
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
+import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.VideoCall.EmitMessage
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import org.webrtc.IceCandidate
 import org.webrtc.SessionDescription
 
 object SessionRepository {
-    private var groupMembers = 0
     var uid = Firebase.auth.currentUser?.uid
     private var connectionListener: ChildEventListener? = null
+    private var memberListener: ChildEventListener? = null
+
     var currentRoom: String? = null
         private set
 
@@ -38,43 +53,48 @@ object SessionRepository {
 
     private fun listenForMessages(callback: RoomCallback) {
         if (currentRoom == null) return
-        connectionListener = object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
-                Log.e(TAG, "DATA: " + dataSnapshot.value)
-                val emitMessage = dataSnapshot.getValue(EmitMessage::class.java)
-                if (emitMessage == null) {
-                    Log.e(TAG, "onChildAdded: NULL MESSAGE")
-                    return
-                }
-                if (emitMessage.fromUID == uid || (emitMessage.toUID != uid && emitMessage.toUID != Constants.ALL_MEMBERS)) return
-                val gson = Gson()
-                when (emitMessage.type) {
-                    Constants.JOINED_KEY -> {
-                        callback.newParticipantJoined(emitMessage.fromUID)
-                        groupMembers += 1
-                    }
-                    Constants.LEFT_KEY -> {
-                        callback.participantLeft(emitMessage.fromUID)
-                        groupMembers -= 1
-                    }
-                    Constants.OFFER_KEY -> callback.offerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
-                    Constants.ANSWER_KEY -> callback.answerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
-                    Constants.ICE_CANDIDATE_KEY -> callback.iceServerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), IceCandidatePOJO::class.java))
-                }
-            }
-
-            override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
-            override fun onChildRemoved(dataSnapshot: DataSnapshot) {}
-            override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
-            override fun onCancelled(databaseError: DatabaseError) {
-                Log.e(TAG, "onCancelled: " + databaseError.message)
-            }
-        }
-        Firebase.database
+        connectionListener = Firebase.database
                 .getReference(Constants.ROOMS_PATH)
                 .child(currentRoom!!)
                 .child(Constants.CONNECT_PATH)
-                .addChildEventListener(connectionListener!!)
+                .addListener (childAdded = { dataSnapshot ->
+                    Log.e(TAG, "DATA: " + dataSnapshot.value)
+                    val emitMessage = dataSnapshot.getValue(EmitMessage::class.java)
+                    if (emitMessage == null) {
+                        Log.e(TAG, "onChildAdded: NULL MESSAGE")
+                        return@addListener
+                    }
+                    if (emitMessage.fromUID == uid || (emitMessage.toUID != uid && emitMessage.toUID != Constants.ALL_MEMBERS)) return@addListener
+                    val gson = Gson()
+                    when (emitMessage.type) {
+                        Constants.JOINED_KEY -> callback.newParticipantJoined(emitMessage.fromUID)
+                        Constants.LEFT_KEY -> callback.participantLeft(emitMessage.fromUID)
+                        Constants.OFFER_KEY -> callback.offerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
+                        Constants.ANSWER_KEY -> callback.answerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), SessionInfoPOJO::class.java))
+                        Constants.ICE_CANDIDATE_KEY -> callback.iceServerReceived(emitMessage.fromUID, gson.fromJson(gson.toJsonTree(emitMessage.data), IceCandidatePOJO::class.java))
+                    }
+                },
+                onCancelled = {error -> Log.e("ERROR CONNECTION", error.message, error.toException()) })
+    }
+
+    private fun listenToMemberStatus(callback: MemberCallback) {
+        memberListener = Firebase.database
+                .getReference(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+                .child(Constants.MEMBERS_PATH)
+                .addListener  (onCancelled = {
+                    error -> Log.e("ERROR CONNECTION", error.message, error.toException())
+                }, childAdded = {
+                    Log.e("GOT MEMBER ADDED", it.value.toString())
+                    val newMember = it.getValue(Member::class.java)
+                    if (newMember != null) callback.onNewMember(newMember)
+                }, childChanged = {snapshot, _ ->
+                    Log.e("GOT MEMBER CHANGED", snapshot.value.toString())
+                    val memberChanged = snapshot.getValue(Member::class.java)
+                    if (memberChanged != null) {
+                        callback.onMemberStatusChanged(memberChanged.uid, MemberStatus.valueOf(memberChanged.memberStatus))
+                    }
+                })
     }
 
 
@@ -87,53 +107,24 @@ object SessionRepository {
                 .push().setValue(EmitMessage(uid!!, toUID, type, data))
     }
 
-    suspend fun createRoom(callback: RoomCallback, uid: String): String {
+    suspend fun createRoom(roomCallback: RoomCallback, memberCallback: MemberCallback, uid: String): String {
         this.uid = uid
         currentRoom = Firebase.database.reference.child(Constants.ROOMS_PATH).push().key
         addMember(uid, currentRoom!!, MemberStatus.ACCEPTED)
         sendMessage(Constants.ALL_MEMBERS, Constants.JOINED_KEY, this.uid).await()
-        listenForMessages(callback)
+        listenForMessages(roomCallback)
+        listenToMemberStatus(memberCallback)
         return currentRoom!!
     }
 
-    suspend fun joinRoom(roomName: String, callback: RoomCallback, uid: String): String {
+    suspend fun joinRoom(roomName: String, roomCallback: RoomCallback, memberCallback: MemberCallback, uid: String): String {
         this.uid = uid
         currentRoom = roomName
-        sendMessage(Constants.ALL_MEMBERS, Constants.JOINED_KEY, uid).await()
-        listenForMessages(callback)
         updateMemberStatus(uid, roomName, MemberStatus.ACCEPTED)
+        sendMessage(Constants.ALL_MEMBERS, Constants.JOINED_KEY, uid).await()
+        listenForMessages(roomCallback)
+        listenToMemberStatus(memberCallback)
         return roomName
-    }
-
-    suspend fun leaveRoom(callback: RoomCallback) {
-        if (currentRoom != null && connectionListener != null) {
-            Firebase.database.getReference(Constants.ROOMS_PATH)
-                    .child(currentRoom!!)
-                    .child(Constants.CONNECT_PATH)
-                    .removeEventListener(connectionListener!!)
-            connectionListener = null
-            if (FirebaseHelper.exists(Constants.ROOMS_PATH, currentRoom!!)) {
-                try {
-                    updateMemberStatus(Firebase.auth.currentUser?.uid!!, currentRoom!!, MemberStatus.UNAVAILABLE)
-                    sendMessage(Constants.ALL_MEMBERS, Constants.LEFT_KEY, uid).await()
-                    callback.onLeftRoom()
-                    if (groupMembers == 1) closeRoom()
-                    groupMembers = 0
-                    currentRoom = null
-                } catch (e: Exception) {
-
-                }
-            }
-        }
-    }
-
-    suspend fun closeRoom(): Boolean {
-        return try {
-            Firebase.database.reference.child(Constants.ROOMS_PATH).child(currentRoom!!).removeValue().await()
-            true
-        } catch (e: Exception) {
-            false
-        }
     }
 
     fun sendOffer(session: SessionDescription, toUID: String) {
@@ -154,10 +145,25 @@ object SessionRepository {
                 .child(roomID)
                 .child(Constants.MEMBERS_PATH)
                 .child(uid)
-                .setValue(Member(uid = uid, roomID = roomID, memberStatus = memberStatus.name))
+                .setValue(Member(uid = uid, memberStatus = memberStatus.name))
+    }
+
+    fun removeListeners() {
+        if (currentRoom == null) return
+        val reference = Firebase.database.getReference(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+        if (connectionListener != null) {
+            reference.child(Constants.CONNECT_PATH).removeEventListener(connectionListener!!)
+            connectionListener = null
+        }
+        if (memberListener != null) {
+            reference.child(Constants.MEMBERS_PATH).removeEventListener(memberListener!!)
+            memberListener = null
+        }
     }
 
     fun updateMemberStatus(uid: String, roomID: String, status: MemberStatus) {
+        Log.e("UPDATING STATUS", "$uid : ${status.name}")
         Firebase.database.reference
                 .child(Constants.ROOMS_PATH)
                 .child(roomID)
@@ -183,6 +189,22 @@ object SessionRepository {
 
     fun acceptCall(uid: String, roomID: String) {
         updateMemberStatus(uid, roomID, MemberStatus.ACCEPTED)
+    }
+
+    //Requires RoomID
+    class LeaveRoomWorker(appContext : Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {
+        override suspend fun doWork(): Result {
+            val room = inputData.getString(Constants.ROOM_ID_KEY)
+            if (room != null) {
+                if (FirebaseHelper.exists(Constants.ROOMS_PATH, room)) {
+                    try {
+                        updateMemberStatus(Firebase.auth.currentUser?.uid!!, room, MemberStatus.UNAVAILABLE)
+                        sendMessage(Constants.ALL_MEMBERS, Constants.LEFT_KEY, uid).await()
+                    } catch (e: Exception) {return Result.failure()}
+                }
+            }
+            return Result.success()
+        }
     }
 
 }
