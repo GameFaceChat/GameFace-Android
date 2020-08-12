@@ -32,7 +32,6 @@
         android:orientation="horizontal"
         android:alpha="1"
         android:background="@color/translucent_bottom_sheet_black"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/topBottom"
         tools:listitem="@layout/member_information"/>
 

@@ -61,7 +61,7 @@
     <Transition
         app:constraintSetEnd="@id/expandedBottom"
         app:constraintSetStart="@+id/collapsedBottom">
-        <OnSwipe app:dragDirection="dragUp"/>
+        <OnSwipe app:dragDirection="dragUp" app:touchAnchorId="@id/topBottom"/>
     </Transition>
 
     <Transition

@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.R
@@ -146,6 +147,15 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private fun observeMembers() {
         membersAdapter = MemberStatusAdapter(viewModel.members.value!!)
         bind.showMembers.adapter = membersAdapter
+        bind.showMembers.layoutManager = object : LinearLayoutManager(requireContext()) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+
+            override fun canScrollHorizontally(): Boolean {
+                return false
+            }
+        }.apply { orientation = LinearLayoutManager.HORIZONTAL }
         viewModel.changedMember.observe(viewLifecycleOwner, Observer {
             membersAdapter.notifyItemChanged(it)
         })
