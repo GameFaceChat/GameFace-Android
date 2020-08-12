@@ -96,21 +96,21 @@ class NotificationService : FirebaseMessagingService() {
                 .setOngoing(true)
                 .setAutoCancel(true)
 
-        val missedCall = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
-                .setSmallIcon(R.drawable.logo_simple_rainbow)
-                .setContentTitle(getString(R.string.notification_missed_call))
-                .setContentText("From: $formattedMembers")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setCategory(NotificationCompat.CATEGORY_CALL)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setAutoCancel(true)
+//        val missedCall = NotificationCompat.Builder(this, getString(R.string.calling_notification_ID))
+//                .setSmallIcon(R.drawable.logo_simple_rainbow)
+//                .setContentTitle(getString(R.string.notification_missed_call))
+//                .setContentText("From: $formattedMembers")
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                .setCategory(NotificationCompat.CATEGORY_CALL)
+//                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+//                .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
             notify(Constants.INCOMING_CALL_ID, receivingCall.build())
             serviceScope.launch {
                 delay(10000)
                 cancel(Constants.INCOMING_CALL_ID)
-                notify(Constants.MISSED_CALL_ID, missedCall.build())
+//                notify(Constants.MISSED_CALL_ID, missedCall.build())
             }
         }
 
