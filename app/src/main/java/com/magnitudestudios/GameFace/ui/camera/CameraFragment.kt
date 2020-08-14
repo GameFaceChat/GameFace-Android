@@ -36,6 +36,7 @@ import com.magnitudestudios.GameFace.views.MovableScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.webrtc.*
+import java.util.concurrent.ConcurrentHashMap
 
 class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
@@ -61,7 +62,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mainViewModel: MainViewModel
     private val viewModel: CameraViewModel by navGraphViewModels(R.id.videoCallGraph)
 
-    private var videoViews = hashMapOf<String, MovableScreen>()
+    private var videoViews : ConcurrentHashMap<String, MovableScreen> = ConcurrentHashMap()
     private lateinit var membersAdapter : MemberStatusAdapter
 
     private val args: CameraFragmentArgs by navArgs()
@@ -286,6 +287,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 else bind.chronometer.stop()
             }
             PeerConnection.IceConnectionState.CLOSED, PeerConnection.IceConnectionState.FAILED -> {
+                if (stillConnectedMembers()) bind.chronometer.start()
+                else bind.chronometer.stop()
                 removePeer(uid)
             }
         }
@@ -379,11 +382,6 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View) {}
-
-    override fun onStop() {
-        super.onStop()
-        disconnect()
-    }
 
     override fun onDestroy() {
         super.onDestroy()

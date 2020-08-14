@@ -8,6 +8,7 @@
 package com.magnitudestudios.GameFace.ui.camera
 
 import android.app.Application
+import android.se.omapi.Session
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.work.OneTimeWorkRequestBuilder
@@ -38,6 +39,7 @@ import org.webrtc.MediaConstraints
 import org.webrtc.PeerConnection
 import org.webrtc.SessionDescription
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
 class CameraViewModel(application: Application) : AndroidViewModel(application), RoomCallback, MemberCallback {
     private val connectedRoom = MutableLiveData<String>()
@@ -46,7 +48,7 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
     val newMember = MutableLiveData<Member>()
     val changedMember = MutableLiveData<Int>()
 
-    val connections = MutableLiveData<HashMap<String, PeerConnection>>(hashMapOf())
+    val connections = MutableLiveData<ConcurrentHashMap<String, PeerConnection>>(ConcurrentHashMap())
 
     val connectionStatus = MutableLiveData<Resource<Boolean>>(Resource.loading(false))
 
@@ -190,17 +192,21 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
                 try {
                     connections.value!![uid]?.close()
                     removeParticipant(uid)
-                    connections.notifyObserver()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
+            connections.notifyObserver()
             connectionStatus.value = Resource.nothing()
         }
         SessionRepository.removeListeners()
-        val leaveTask = OneTimeWorkRequestBuilder<SessionRepository.LeaveRoomWorker>()
-                .setInputData(workDataOf(Constants.ROOM_ID_KEY to SessionRepository.currentRoom)).build()
-        WorkManager.getInstance(getApplication()).enqueue(leaveTask)
+        Log.e("LEAVE", "TASK")
+        if (SessionRepository.currentRoom != null) {
+            val leaveTask = OneTimeWorkRequestBuilder<SessionRepository.LeaveRoomWorker>()
+                    .setInputData(workDataOf(Constants.ROOM_ID_KEY to SessionRepository.currentRoom)).build()
+            WorkManager.getInstance(getApplication()).enqueue(leaveTask)
+            SessionRepository.currentRoom = null
+        }
     }
 
     override fun onNewMember(member: Member) {
@@ -218,7 +224,6 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
             members.value?.get(index)?.memberStatus = newStatus.name
             changedMember.value = index
         }
-        else onNewMember(Member(uid, SessionRepository.currentRoom!!, newStatus.name))
     }
 
 

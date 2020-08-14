@@ -47,7 +47,6 @@ object SessionRepository {
     private var memberListener: ChildEventListener? = null
 
     var currentRoom: String? = null
-        private set
 
     private const val TAG = "SessionHelper"
 
@@ -99,10 +98,10 @@ object SessionRepository {
 
 
 
-    private fun sendMessage(toUID: String, type: String, data: Any?): Task<Void?> {
+    private fun sendMessage(toUID: String, type: String, data: Any?, roomID: String = currentRoom!!): Task<Void?> {
         return Firebase.database.reference
                 .child(Constants.ROOMS_PATH)
-                .child(currentRoom!!)
+                .child(roomID)
                 .child(Constants.CONNECT_PATH)
                 .push().setValue(EmitMessage(uid!!, toUID, type, data))
     }
@@ -199,8 +198,10 @@ object SessionRepository {
                 if (FirebaseHelper.exists(Constants.ROOMS_PATH, room)) {
                     try {
                         updateMemberStatus(Firebase.auth.currentUser?.uid!!, room, MemberStatus.UNAVAILABLE)
-                        sendMessage(Constants.ALL_MEMBERS, Constants.LEFT_KEY, uid).await()
-                    } catch (e: Exception) {return Result.failure()}
+                        sendMessage(Constants.ALL_MEMBERS, Constants.LEFT_KEY, uid, room).await()
+                    } catch (e: Exception) {
+                        Log.e("ERROR WHILE LEAVING", e.message, e)
+                        return Result.failure()}
                 }
             }
             return Result.success()

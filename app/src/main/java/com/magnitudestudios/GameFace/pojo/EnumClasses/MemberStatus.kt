@@ -11,5 +11,6 @@ enum class MemberStatus {
     CALLING,
     UNAVAILABLE,
     RECEIVED,
-    ACCEPTED
+    ACCEPTED,
+    DISCONNECTED
 }
