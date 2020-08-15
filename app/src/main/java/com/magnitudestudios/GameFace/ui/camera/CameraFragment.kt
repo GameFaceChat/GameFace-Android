@@ -23,6 +23,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.magnitudestudios.GameFace.R
@@ -35,6 +36,7 @@ import com.magnitudestudios.GameFace.views.MovableScreen
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.webrtc.*
+import java.util.concurrent.ConcurrentHashMap
 
 class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
@@ -60,7 +62,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mainViewModel: MainViewModel
     private val viewModel: CameraViewModel by navGraphViewModels(R.id.videoCallGraph)
 
-    private var videoViews = hashMapOf<String, MovableScreen>()
+    private var videoViews : ConcurrentHashMap<String, MovableScreen> = ConcurrentHashMap()
+    private lateinit var membersAdapter : MemberStatusAdapter
 
     private val args: CameraFragmentArgs by navArgs()
 
@@ -90,6 +93,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         observeConnection()
         observeIceConnection()
         observeNewPeers()
+        observeMembers()
+
         bind.root.setOnClickListener {
             lifecycleScope.launch {
                 bind.callingControls.animate().setDuration(5000).alpha(1.0f)
@@ -137,6 +142,27 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
 
         viewModel.connections.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
+        })
+    }
+
+    private fun observeMembers() {
+        membersAdapter = MemberStatusAdapter(viewModel.members.value!!)
+        bind.showMembers.adapter = membersAdapter
+        bind.showMembers.layoutManager = object : LinearLayoutManager(requireContext()) {
+            override fun canScrollVertically(): Boolean {
+                return false
+            }
+
+            override fun canScrollHorizontally(): Boolean {
+                return false
+            }
+        }.apply { orientation = LinearLayoutManager.HORIZONTAL }
+        viewModel.changedMember.observe(viewLifecycleOwner, Observer {
+            membersAdapter.notifyItemChanged(it)
+        })
+        viewModel.newMember.observe(viewLifecycleOwner, Observer {
+            membersAdapter.add(it)
+            membersAdapter.notifyDataSetChanged()
         })
     }
 
@@ -261,6 +287,8 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 else bind.chronometer.stop()
             }
             PeerConnection.IceConnectionState.CLOSED, PeerConnection.IceConnectionState.FAILED -> {
+                if (stillConnectedMembers()) bind.chronometer.start()
+                else bind.chronometer.stop()
                 removePeer(uid)
             }
         }
@@ -353,13 +381,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
-    override fun onClick(v: View) {
-    }
-
-    override fun onStop() {
-        super.onStop()
-        disconnect()
-    }
+    override fun onClick(v: View) {}
 
     override fun onDestroy() {
         super.onDestroy()

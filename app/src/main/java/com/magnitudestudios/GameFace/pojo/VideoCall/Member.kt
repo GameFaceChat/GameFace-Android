@@ -8,13 +8,16 @@
 package com.magnitudestudios.GameFace.pojo.VideoCall
 
 import androidx.annotation.NonNull
+import com.google.firebase.database.Exclude
 import com.google.firebase.database.ServerValue
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
+import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 
 data class Member (
         @NonNull
         val uid: String = "",
-        val roomID: String = "",
-        val memberStatus: String = MemberStatus.CALLING.name,
-        val timestamp: Any = ServerValue.TIMESTAMP
+        var memberStatus: String = MemberStatus.CALLING.name,
+        val timestamp: Any = ServerValue.TIMESTAMP,
+        @Exclude
+        var profile: Profile? = null
 )

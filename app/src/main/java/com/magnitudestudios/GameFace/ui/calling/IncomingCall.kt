@@ -10,6 +10,7 @@ package com.magnitudestudios.GameFace.ui.calling
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.core.app.NotificationManagerCompat
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -28,13 +29,14 @@ class IncomingCall : BasePermissionsActivity() {
     private lateinit var bind: ActivityIncomingCallBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        deleteNotification()
         bind = ActivityIncomingCallBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
-        if (!intent.hasExtra(Member::roomID.name) || !intent.hasExtra(Constants.ROOM_MEMBERS_KEY)) finish()
+        if (!intent.hasExtra(Constants.ROOM_ID_KEY) || !intent.hasExtra(Constants.ROOM_MEMBERS_KEY)) finish()
         else if (Firebase.auth.currentUser == null) finish()
 
-        val roomID = intent.getStringExtra(Member::roomID.name)!!
+        val roomID = intent.getStringExtra(Constants.ROOM_ID_KEY)!!
 
         val memberProfiles = try {
             Gson().fromJson(intent.getStringExtra(Constants.ROOM_MEMBERS_KEY), object : TypeToken<List<Profile>>() {}.type) as List<Profile>
@@ -66,5 +68,9 @@ class IncomingCall : BasePermissionsActivity() {
             startActivity(toMainActivity)
             finish()
         }
+    }
+
+    private fun deleteNotification() {
+        with (NotificationManagerCompat.from(this)) { cancel(Constants.INCOMING_CALL_ID) }
     }
 }

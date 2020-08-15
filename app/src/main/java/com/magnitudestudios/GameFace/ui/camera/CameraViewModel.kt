@@ -8,36 +8,47 @@
 package com.magnitudestudios.GameFace.ui.camera
 
 import android.app.Application
+import android.se.omapi.Session
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
+import com.magnitudestudios.GameFace.Constants
+import com.magnitudestudios.GameFace.callbacks.MemberCallback
 import com.magnitudestudios.GameFace.callbacks.RoomCallback
+import com.magnitudestudios.GameFace.network.DownloadSinglePack
 import com.magnitudestudios.GameFace.network.HTTPRequest
 import com.magnitudestudios.GameFace.notifyObserver
+import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.VideoCall.*
 import com.magnitudestudios.GameFace.repository.SessionRepository
+import com.magnitudestudios.GameFace.repository.UserRepository
 import com.magnitudestudios.GameFace.utils.CustomSdpObserver
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.webrtc.IceCandidate
 import org.webrtc.MediaConstraints
 import org.webrtc.PeerConnection
 import org.webrtc.SessionDescription
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 
-class CameraViewModel(application: Application) : AndroidViewModel(application), RoomCallback {
+class CameraViewModel(application: Application) : AndroidViewModel(application), RoomCallback, MemberCallback {
     private val connectedRoom = MutableLiveData<String>()
 
-    private val members = MutableLiveData<List<Member>>()
-    val connections = MutableLiveData<HashMap<String, PeerConnection>>(hashMapOf())
+    val members = MutableLiveData<MutableList<Member>>(mutableListOf())
+    val newMember = MutableLiveData<Member>()
+    val changedMember = MutableLiveData<Int>()
+
+    val connections = MutableLiveData<ConcurrentHashMap<String, PeerConnection>>(ConcurrentHashMap())
 
     val connectionStatus = MutableLiveData<Resource<Boolean>>(Resource.loading(false))
 
@@ -99,7 +110,10 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     fun createRoom(vararg calls: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val roomID = SessionRepository.createRoom(this@CameraViewModel, Firebase.auth.uid!!)
+            val roomID = SessionRepository.createRoom(
+                    this@CameraViewModel,
+                    this@CameraViewModel,
+                                    Firebase.auth.uid!!)
             connectedRoom.postValue(roomID)
             connectionStatus.postValue(Resource.success(true))
             calls.forEach {
@@ -116,9 +130,12 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     fun joinRoom(roomID: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            connectedRoom.postValue(SessionRepository.joinRoom(roomID, this@CameraViewModel, Firebase.auth.uid!!))
+            connectedRoom.postValue(SessionRepository.joinRoom(
+                    roomID,
+                    this@CameraViewModel,
+                    this@CameraViewModel,
+                    Firebase.auth.uid!!))
             connectionStatus.postValue(Resource.success(true))
-//            members.postValue(SessionHelper.getAllMembers(roomID))
         }
     }
 
@@ -169,21 +186,43 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     @Synchronized
     fun hangUp() {
-        if (connections.value == null) return
-        val peers = connections.value!!.keys
-        for (uid in peers) {
-            try {
-                connections.value!![uid]?.close()
-                removeParticipant(uid)
-                connections.notifyObserver()
-            } catch (e: Exception) {
-                e.printStackTrace()
+        if (connections.value != null) {
+            val peers = connections.value!!.keys
+            for (uid in peers) {
+                try {
+                    connections.value!![uid]?.close()
+                    removeParticipant(uid)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
+            connections.notifyObserver()
+            connectionStatus.value = Resource.nothing()
         }
-        connectionStatus.value = Resource.nothing()
+        SessionRepository.removeListeners()
+        Log.e("LEAVE", "TASK")
+        if (SessionRepository.currentRoom != null) {
+            val leaveTask = OneTimeWorkRequestBuilder<SessionRepository.LeaveRoomWorker>()
+                    .setInputData(workDataOf(Constants.ROOM_ID_KEY to SessionRepository.currentRoom)).build()
+            WorkManager.getInstance(getApplication()).enqueue(leaveTask)
+            SessionRepository.currentRoom = null
+        }
+    }
 
+    override fun onNewMember(member: Member) {
         viewModelScope.launch {
-            SessionRepository.leaveRoom(this@CameraViewModel)
+            member.profile = UserRepository.getUserProfileByUID(member.uid)
+            members.value?.add(member)
+            newMember.value = member
+        }
+    }
+
+    override fun onMemberStatusChanged(uid: String, newStatus: MemberStatus) {
+        val index = members.value?.map { it.uid }?.indexOf(uid) ?: -1
+
+        if (index > 0) {
+            members.value?.get(index)?.memberStatus = newStatus.name
+            changedMember.value = index
         }
     }
 

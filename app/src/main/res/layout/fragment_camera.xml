@@ -25,6 +25,16 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/show_members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:alpha="1"
+        android:background="@color/translucent_bottom_sheet_black"
+        app:layout_constraintBottom_toTopOf="@id/topBottom"
+        tools:listitem="@layout/member_information"/>
+
     <LinearLayout
         android:id="@+id/topBottom"
         android:layout_width="match_parent"
@@ -35,7 +45,7 @@
         android:orientation="vertical"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="#E03D3939">
+        android:background="@color/translucent_bottom_sheet_black">
         <View
             android:id="@+id/indicator"
             android:layout_width="40dp"
@@ -55,7 +65,7 @@
         android:id="@+id/callingControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E03D3939">
+        android:background="@color/translucent_bottom_sheet_black">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/gameButton"

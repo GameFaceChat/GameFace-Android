@@ -90,6 +90,8 @@
     <!-- Incoming Call -->
     <string name="incoming_call">It\'s Game Time!</string>
     <string name="incoming_video_call_from">Incoming Video Call From:</string>
+    <string name="notification_title_call">Incoming Video Call</string>
+    <string name="notification_missed_call">Missed Video Call</string>
 
     <!-- Error -->
     <string name="toast_playservices_unrecoverable">Google Play Services not Installed!</string>
@@ -117,19 +119,7 @@
         <item>faggit</item>
         <item>faggot</item>
     </string-array>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="save_btn">Save</string>
     <string name="cancel_profile_edit">Cancel</string>

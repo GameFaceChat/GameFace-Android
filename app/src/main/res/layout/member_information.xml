@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
+  ~ Unauthorized copying of this file, via any medium is prohibited
+  ~ All software is proprietary and confidential
+  ~
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/padding_medium"
+    tools:background="@color/translucent_bottom_sheet_black"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="@dimen/large_icon_size"
+        android:layout_height="@dimen/large_icon_size"
+        tools:src="@tools:sample/avatars"/>
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_marginTop="@dimen/layout_margin_very_small"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        style="@style/small_text"
+        tools:text="srihariv"/>
+
+    <TextView
+        android:id="@+id/status"
+        android:textSize="@dimen/text_size_tiny"
+        android:textColor="@color/lightGray"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/small_text"
+        tools:text="Calling..."/>
+</LinearLayout>

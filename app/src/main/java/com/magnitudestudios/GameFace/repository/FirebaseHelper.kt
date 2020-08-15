@@ -30,7 +30,11 @@ object FirebaseHelper {
                     cont.resume(false)
                 }
 
-                override fun onDataChange(data: DataSnapshot) = cont.resume(data.exists())
+                override fun onDataChange(data: DataSnapshot) {
+                    Log.e("EXISTING", data.value.toString())
+                    Log.e("EXISTS", data.exists().toString())
+                    cont.resume(data.exists())
+                }
 
             })
         }

@@ -46,10 +46,8 @@ object Constants {
 
     const val ALL_MEMBERS = "ALL"
 
-    const val CALLING_KEY = "CALLING"
-    const val UNAVAILABLE_KEY = "UNAVAILABLE"
-
-    const val SIGN_IN_CLIENT = "SIGNED_IN_CLIENT"
+    const val INCOMING_CALL_ID = 1
+    const val MISSED_CALL_ID = 2
 
     const val NOT_FINISHED = "NotFinished"
 

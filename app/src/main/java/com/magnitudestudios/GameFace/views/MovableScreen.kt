@@ -56,7 +56,6 @@ class MovableScreen @JvmOverloads constructor(
         get() {
             maxwidth = (parent as View).width.toFloat()
             maxheight = (parent as View).height.toFloat()
-            Log.e("INIT", "initView: $maxwidth $maxheight")
         }
 
     //Initially a loading screen
