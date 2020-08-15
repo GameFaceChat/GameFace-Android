@@ -26,39 +26,24 @@
         android:id="@+id/search_shop"
         android:queryHint="Search Shop"
         android:layout_margin="@dimen/layout_margin_medium"
+        android:searchIcon="@drawable/ic_baseline_search_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:id="@+id/showcase_buttons"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDots"
+        android:background="#00000000"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="25dp"
+        app:tabIndicatorFullWidth="true"
+        app:tabBackground="@drawable/tab_indicator_dot"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/showcaseFlipper"
+        app:layout_constraintStart_toStartOf="@id/showcaseFlipper"
+        app:layout_constraintEnd_toEndOf="@id/showcaseFlipper"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/download_btn"
-            style="@style/primary_button_theme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/layout_margin_medium"
-            android:drawableStart="@drawable/baseline_arrow_circle_down_white_24dp"
-            android:drawablePadding="@dimen/padding_medium"
-            android:padding="@dimen/padding_large"
-            android:text="Download" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/info_btn"
-            style="@style/accent_button_theme"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/layout_margin_medium"
-            android:backgroundTint="@color/lightGray"
-            android:drawableStart="@drawable/baseline_arrow_circle_down_white_24dp"
-            android:drawablePadding="@dimen/padding_medium"
-            android:padding="@dimen/padding_large"
-            android:text="More Info" />
-    </LinearLayout>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/shop_tabs"
         android:layout_width="match_parent"
