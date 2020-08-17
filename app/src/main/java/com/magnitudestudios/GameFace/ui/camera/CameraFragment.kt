@@ -82,7 +82,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        bind.localVideo.initialize(rootEglBase, true)
+        bind.localVideo.initialize(eglBase = rootEglBase, overlay = true, onTop = true)
 
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
@@ -307,7 +307,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private fun removePeer(uid: String) {
         videoViews[uid]?.surface?.release()
         Log.e("REMOVING VIEW: ", uid)
-        bind.frameLayout.removeView(videoViews[uid])
+        bind.peersVideoLayout.removeView(videoViews[uid])
         videoViews.remove(uid)
         viewModel.removeParticipant(uid)
 
@@ -335,11 +335,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         if (!videoViews.containsKey(peerUID)) {
             val params = FrameLayout.LayoutParams(400, 700)
             videoView = MovableScreen(requireContext()).apply {
-                initialize(rootEglBase, true)
+                initialize(rootEglBase, false)
                 layoutParams = params
             }
             videoViews[peerUID] = videoView
-            bind.frameLayout.addView(videoView)
+            bind.peersVideoLayout.addView(videoView)
 
         } else {
             videoView = videoViews[peerUID]!!
@@ -386,6 +386,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     override fun onDestroy() {
         super.onDestroy()
         Log.e("DESTROYING", "DESTROYED")
+        audioManager.mode = AudioManager.MODE_NORMAL
         disconnect()
     }
 

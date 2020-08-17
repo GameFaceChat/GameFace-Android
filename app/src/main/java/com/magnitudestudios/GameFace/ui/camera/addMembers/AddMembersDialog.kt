@@ -28,7 +28,7 @@ import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.camera.CameraViewModel
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
-import com.magnitudestudios.GameFace.views.FriendViewHolder
+import com.magnitudestudios.GameFace.views.holders.FriendViewHolder
 
 class AddMembersDialog : BottomSheetDialogFragment() {
     private lateinit var bind : AddMembersDialogBinding
@@ -54,6 +54,7 @@ class AddMembersDialog : BottomSheetDialogFragment() {
                         viewModel.addMember(getitem(position).uid)
                         dismiss()
                     }
+
                     override fun onLongClick(position: Int) {}
                 })
             }

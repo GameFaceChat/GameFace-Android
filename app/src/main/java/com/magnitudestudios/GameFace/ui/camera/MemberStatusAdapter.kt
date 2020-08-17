@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.MemberInformationBinding
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
-import com.magnitudestudios.GameFace.views.MemberViewHolder
+import com.magnitudestudios.GameFace.views.holders.MemberViewHolder
 
 class MemberStatusAdapter(val members: List<Member>) : SortedRVAdapter<Member>(Member::class.java) {
 

@@ -5,7 +5,7 @@
  *
  */
 
-package com.magnitudestudios.GameFace.views
+package com.magnitudestudios.GameFace.views.holders
 
 import android.view.MotionEvent
 import androidx.recyclerview.widget.RecyclerView
@@ -13,14 +13,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.SharedItemClicked
-import com.magnitudestudios.GameFace.databinding.CardPackBinding
-import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
+import com.magnitudestudios.GameFace.databinding.InstalledPackLayoutBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo
 import java.io.File
 
-class CardPackViewHolder(val binding: CardPackBinding, val listener: SharedItemClicked) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(item: ShopItem) {
-        populate(item.imgURL, item.name)
+class InstalledCardPackViewHolder(val bind : InstalledPackLayoutBinding, val listener: SharedItemClicked) : RecyclerView.ViewHolder(bind.root) {
+    fun bind(item: LocalPackInfo) {
+        populate(File(item.imgPath))
         setListeners()
     }
     private fun setListeners() {
@@ -46,21 +45,18 @@ class CardPackViewHolder(val binding: CardPackBinding, val listener: SharedItemC
             return@setOnTouchListener true
         }
         itemView.setOnClickListener {
-            listener.onClick(adapterPosition, binding.packImage)
+            listener.onClick(adapterPosition, bind.packImage)
         }
     }
 
-    fun populate(imgURL : String, title : String) {
+    fun populate(imgFile : File) {
         Glide.with(itemView)
-                .load(imgURL)
+                .load(imgFile)
                 .placeholder(R.drawable.shop_item_placeholder)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.shop_item_placeholder)
-                .into(binding.packImage)
+                .into(bind.packImage)
 
-        binding.packName.text = title
-        binding.packImage.transitionName = imgURL
+        bind.packImage.transitionName = imgFile.path
     }
-
-
 }

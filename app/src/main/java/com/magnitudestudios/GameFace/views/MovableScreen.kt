@@ -65,9 +65,10 @@ class MovableScreen @JvmOverloads constructor(
         radius = 50f
     }
 
-    fun initialize(eglBase: EglBase, overlay: Boolean) {
+    fun initialize(eglBase: EglBase, overlay: Boolean, onTop : Boolean = false) {
         surface.apply {
             setZOrderMediaOverlay(overlay)
+            setZOrderOnTop(onTop)
             init(eglBase.eglBaseContext, null)
         }
     }

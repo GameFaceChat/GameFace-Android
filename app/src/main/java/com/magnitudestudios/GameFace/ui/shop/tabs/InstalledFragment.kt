@@ -12,7 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,15 +21,12 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.callbacks.SharedItemClicked
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
-import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.databinding.FragmentInstalledPacksBinding
 import com.magnitudestudios.GameFace.databinding.InstalledPackLayoutBinding
 import com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo
 import com.magnitudestudios.GameFace.repository.ShopRepository
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
-import com.magnitudestudios.GameFace.views.CardPackViewHolder
-import com.magnitudestudios.GameFace.views.InstalledCardPackViewHolder
-import java.io.File
+import com.magnitudestudios.GameFace.views.holders.InstalledCardPackViewHolder
 
 class InstalledFragment : BaseFragment() {
     private lateinit var bind: FragmentInstalledPacksBinding
@@ -61,7 +57,8 @@ class InstalledFragment : BaseFragment() {
                     val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCardPackDetailsFragment(view.transitionName, clickedItem)
                     try {
                         activity?.findNavController(R.id.mainNavHost)?.navigate(action, extras)
-                    } catch (e: Exception){}
+                    } catch (e: Exception) {
+                    }
                 }
 
             })

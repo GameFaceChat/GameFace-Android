@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.magnitudestudios.GameFace.Constants
-import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentAddFriendsBinding
@@ -33,7 +32,7 @@ import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
-import com.magnitudestudios.GameFace.views.AddFriendViewHolder
+import com.magnitudestudios.GameFace.views.holders.AddFriendViewHolder
 
 
 class AddFriendsFragment : Fragment() {
@@ -115,6 +114,7 @@ class AddFriendsFragment : Fragment() {
                         if (getHolderState(clicked.uid) == Constants.STATE_DEFAULT) viewModel.sendFriendRequest(clicked)
                         else if (getHolderState(clicked.uid) == Constants.STATE_REQUESTED) viewModel.deleteFriendRequest(clicked)
                     }
+
                     override fun onLongClick(position: Int) {}
 
                 })

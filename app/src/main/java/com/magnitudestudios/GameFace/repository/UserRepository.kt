@@ -99,8 +99,10 @@ object UserRepository {
 
                         override fun onDataChange(data: DataSnapshot) {
                             if (!data.exists()) cont.resume(null)
-                            val userProfile = data.getValue(Profile::class.java)
-                            cont.resume(userProfile)
+                            else {
+                                val userProfile = data.getValue(Profile::class.java)
+                                cont.resume(userProfile)
+                            }
                         }
                     })
         }

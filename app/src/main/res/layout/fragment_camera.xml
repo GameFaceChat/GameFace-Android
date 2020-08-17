@@ -14,6 +14,54 @@
     android:background="@color/darkGray"
     app:layoutDescription="@xml/fragment_camera_scene">
 
+    <com.magnitudestudios.GameFace.views.VideoLayout
+        android:id="@+id/peersVideoLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<!--        <View-->
+<!--            android:id="@+id/sample1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/md_red_500"-->
+<!--            />-->
+
+<!--        <View-->
+<!--            android:id="@+id/sample2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/md_blue_500"-->
+<!--            />-->
+
+<!--        <View-->
+<!--            android:id="@+id/sample3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/md_green_500"-->
+<!--            />-->
+
+<!--        <View-->
+<!--            android:id="@+id/sample4"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/md_yellow_500"-->
+<!--            />-->
+
+<!--        <View-->
+<!--            android:id="@+id/sample5"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/white"-->
+<!--            />-->
+
+<!--        <View-->
+<!--            android:id="@+id/sample6"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/md_pink_500"-->
+<!--            />-->
+
+    </com.magnitudestudios.GameFace.views.VideoLayout>
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
@@ -23,7 +71,9 @@
             android:id="@+id/localVideo"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </FrameLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/show_members"
