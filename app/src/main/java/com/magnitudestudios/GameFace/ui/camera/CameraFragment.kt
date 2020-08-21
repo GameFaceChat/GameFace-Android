@@ -334,7 +334,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         val videoView : MovableScreen
         if (!videoViews.containsKey(peerUID)) {
             val params = FrameLayout.LayoutParams(400, 700)
-            videoView = MovableScreen(requireContext()).apply {
+            videoView = MovableScreen(context = requireContext(), overlay = false).apply {
                 initialize(rootEglBase, false)
                 layoutParams = params
             }

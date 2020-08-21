@@ -29,10 +29,12 @@ import kotlin.math.roundToInt
 class MovableScreen @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
-        styleAttr: Int = 0) : CardView(context, attributeSet, styleAttr) {
+        styleAttr: Int = 0,
+        overlay: Boolean = true) : CardView(context, attributeSet, styleAttr) {
 
     val surface: CustomSurfaceView = CustomSurfaceView(context).apply {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        setZOrderMediaOverlay(overlay)
     }
 
     private val progressBar: ProgressBar = ProgressBar(context).apply {
@@ -58,19 +60,18 @@ class MovableScreen @JvmOverloads constructor(
             maxheight = (parent as View).height.toFloat()
         }
 
-    //Initially a loading screen
-    init {
-        addView(surface)
-        addView(progressBar)
-        radius = 50f
-    }
-
     fun initialize(eglBase: EglBase, overlay: Boolean, onTop : Boolean = false) {
         surface.apply {
             setZOrderMediaOverlay(overlay)
             setZOrderOnTop(onTop)
             init(eglBase.eglBaseContext, null)
         }
+
+        addView(surface)
+        addView(progressBar)
+        radius = 50f
+
+
     }
 
     fun setDisconnected() {
@@ -212,6 +213,6 @@ class MovableScreen @JvmOverloads constructor(
 
     //Sets the new dimensions of the view (for full screen)
     private fun setDimensionsFullScreen() {
-        scaleAnimator(width.toFloat(), maxwidth, height.toFloat(), maxheight)
+        scaleAnimator(width.toFloat(), maxwidth, height.toFloat(), maxheight - 100)
     }
 }
