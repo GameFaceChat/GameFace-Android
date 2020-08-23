@@ -26,9 +26,7 @@ import com.magnitudestudios.GameFace.databinding.FragmentFriendsBinding
 import com.magnitudestudios.GameFace.databinding.RowFriendsBinding
 import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
-import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
-import com.magnitudestudios.GameFace.views.FriendViewHolder
+import com.magnitudestudios.GameFace.views.holders.FriendViewHolder
 
 class FriendsFragment : Fragment() {
     private lateinit var bind: FragmentFriendsBinding

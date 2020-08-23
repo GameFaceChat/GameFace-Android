@@ -5,7 +5,7 @@
  *
  */
 
-package com.magnitudestudios.GameFace.views
+package com.magnitudestudios.GameFace.views.holders
 
 import android.widget.ImageView
 import androidx.core.content.ContextCompat

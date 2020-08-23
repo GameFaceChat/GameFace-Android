@@ -5,7 +5,7 @@
  *
  */
 
-package com.magnitudestudios.GameFace.views
+package com.magnitudestudios.GameFace.views.holders
 
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView

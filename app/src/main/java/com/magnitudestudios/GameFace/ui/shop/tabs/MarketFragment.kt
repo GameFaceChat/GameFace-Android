@@ -12,7 +12,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -25,12 +24,10 @@ import com.magnitudestudios.GameFace.callbacks.SharedItemClicked
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.CardPackBinding
 import com.magnitudestudios.GameFace.databinding.FragmentMarketItemsBinding
-import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.shop.ShopViewModel
-import com.magnitudestudios.GameFace.views.CardPackViewHolder
-import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
+import com.magnitudestudios.GameFace.views.holders.CardPackViewHolder
 
 class MarketFragment : BaseFragment() {
     lateinit var bind : FragmentMarketItemsBinding
@@ -74,7 +71,8 @@ class MarketFragment : BaseFragment() {
                     val action = BottomContainerFragmentDirections.actionBottomContainerFragmentToCardPackDetailsFragment(view.transitionName, clickedItem)
                     try {
                         activity?.findNavController(R.id.mainNavHost)?.navigate(action, extras)
-                    } catch (e: Exception){}
+                    } catch (e: Exception) {
+                    }
                 }
 
             })

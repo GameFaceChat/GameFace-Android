@@ -15,18 +15,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.callbacks.RVRequestButton
 import com.magnitudestudios.GameFace.common.SortedRVAdapter
 import com.magnitudestudios.GameFace.databinding.FragmentFriendRequestsBinding
 import com.magnitudestudios.GameFace.databinding.RowRequestsBinding
 import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
-import com.magnitudestudios.GameFace.ui.profile.ProfileViewModel
-import com.magnitudestudios.GameFace.views.FriendRequestViewHolder
+import com.magnitudestudios.GameFace.views.holders.FriendRequestViewHolder
 
 class FriendRequestsFragment : Fragment() {
     private lateinit var bind: FragmentFriendRequestsBinding
