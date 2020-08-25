@@ -20,13 +20,14 @@
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="175dp"
+            app:layout_constraintTop_toTopOf="parent"
             app:shape_arc_height="25dp"
-            app:shape_arc_position="bottom"
-            app:layout_constraintTop_toTopOf="parent">
+            app:shape_arc_position="bottom">
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorPrimary" />
         </com.github.florent37.shapeofview.shapes.ArcView>
 
         <TextView
@@ -74,50 +75,87 @@
 
         <com.magnitudestudios.GameFace.views.MorphableButton
             android:id="@+id/purchase_btn"
-            style="@style/primary_button_theme"
-            android:padding="@dimen/padding_large"
+            style="@style/signup_button"
             android:layout_width="150dp"
-            android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:text="@string/purchase_btn"
             android:layout_marginTop="@dimen/layout_margin_large"
             android:layout_marginBottom="@dimen/layout_margin_large"
+            android:padding="@dimen/padding_large"
+            android:text="@string/purchase_btn"
+            android:textAlignment="center"
+            android:textSize="@dimen/text_size_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sampleQuestion" />
 
-        <LinearLayout
-            android:id="@+id/priceLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
-            <TextView
-                android:id="@+id/price"
-                style="@style/bold_text"
-                android:textSize="@dimen/text_size_title"
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/text_size_very_small"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:drawablePadding="@dimen/padding_medium"
-                android:drawableEnd="@drawable/stacked_gp"
-                android:textColor="@color/md_grey_700"
-                tools:text="200" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/price"
+            style="@style/bold_text"
+            android:layout_width="wrap_content"
+            android:paddingStart="@dimen/padding_large"
+            android:paddingEnd="@dimen/padding_large"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/stacked_gp"
+            android:drawablePadding="@dimen/padding_medium"
+            android:gravity="end"
+            android:textColor="@color/md_grey_700"
+            android:textSize="@dimen/text_size_title"
+            app:layout_constraintEnd_toStartOf="@+id/installs"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cards"
+            app:layout_constraintTop_toBottomOf="@id/materialCardView"
+            tools:text="200" />
+
+        <TextView
+            android:id="@+id/installs"
+            style="@style/bold_text"
+            android:layout_width="0dp"
+            android:layout_marginEnd="@dimen/layout_margin_medium"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/baseline_arrow_circle_down_black_24dp"
+            android:drawablePadding="@dimen/padding_medium"
+            android:gravity="end"
+            android:textColor="@color/md_grey_700"
+            android:textSize="@dimen/text_size_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/price"
+            app:layout_constraintTop_toTopOf="@id/price"
+            tools:text="200" />
+
+        <TextView
+            android:id="@+id/cards"
+            style="@style/bold_text"
+            android:layout_width="0dp"
+            android:layout_marginStart="@dimen/layout_margin_medium"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableEnd="@drawable/ic_playing_cards"
+            android:drawablePadding="@dimen/padding_medium"
+            android:gravity="end"
+            android:textColor="@color/md_grey_700"
+            android:textSize="@dimen/text_size_title"
+            app:layout_constraintEnd_toStartOf="@+id/price"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/price"
+            tools:layout_editor_absoluteY="259dp"
+            tools:text="200" />
+
         <LinearLayout
             android:id="@+id/descriptionLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/layout_margin_small"
             android:layout_marginStart="@dimen/layout_margin_huge"
+            android:layout_marginTop="@dimen/layout_margin_small"
             android:layout_marginEnd="@dimen/layout_margin_huge"
-            app:layout_constraintTop_toBottomOf="@+id/priceLayout">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/price">
 
             <TextView
                 android:id="@+id/descriptionTitle"
@@ -132,7 +170,6 @@
             <TextView
                 android:id="@+id/description"
                 style="@style/small_text"
-                android:justificationMode="inter_word"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="50dp"

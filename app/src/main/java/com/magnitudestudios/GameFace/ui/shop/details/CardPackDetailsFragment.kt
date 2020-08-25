@@ -26,6 +26,7 @@ import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentPackDetailsBinding
 import com.magnitudestudios.GameFace.network.DownloadSinglePack
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
+import com.magnitudestudios.GameFace.repository.ShopRepository
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
 class CardPackDetailsFragment : BaseFragment() {
@@ -54,6 +55,18 @@ class CardPackDetailsFragment : BaseFragment() {
         }
         bind.purchaseBtn.isEnabled = mainViewModel.user.value?.data?.money!! >= packItem.price
 
+        val installed = ShopRepository.getLocalPacks(requireContext()).map { it.id }.contains(packItem.id)
+        if (installed) {
+            bind.purchaseBtn.isEnabled = false
+            bind.purchaseBtn.text = getString(string.installed_key_card_details)
+        } else {
+            if (packItem.price == 0 ) {
+                bind.price.text = getString(string.free_price)
+                bind.purchaseBtn.text = getString(string.download_btn)
+            } else {
+                bind.price.text = packItem.price.toString()
+            }
+        }
         bind.packImage.apply {
             transitionName = imageTransition
             Glide.with(this).load(imageTransition).into(this)
@@ -64,16 +77,13 @@ class CardPackDetailsFragment : BaseFragment() {
             ""
         }
         bind.description.text = packItem.description
-        if (packItem.price == 0) {
-            bind.price.text = getString(string.free_price)
-            bind.purchaseBtn.text = getString(string.download_btn)
-        } else {
-            bind.price.text = packItem.price.toString()
-        }
 
         bind.purchaseBtn.setOnClickListener {
             purchaseAndDownload()
         }
+
+        bind.cards.text = packItem.cards.toString()
+        bind.installs.text = packItem.installs.toString()
     }
 
     private fun purchaseAndDownload() {
