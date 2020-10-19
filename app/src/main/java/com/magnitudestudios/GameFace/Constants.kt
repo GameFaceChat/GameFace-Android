@@ -27,6 +27,7 @@ object Constants {
     const val CONNECT_PATH = "connection"
     const val PROFILE_PATH = "profiles"
     const val MEMBERS_PATH = "members"
+    const val GAMES_PATH = "games"
 
     const val CHARADES_PATH = "charades"
     const val WOULD_YOU_RATHER_PATH = "would_you_rather"

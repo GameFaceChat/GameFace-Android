@@ -8,6 +8,11 @@
     <string name="website">https://www.gamefacechat.com/</string>
     <string name="aboutUs">https://www.gamefacechat.com/about-us</string>
 
+    <!-- Ads Values-->
+    <string name="interstitial_after_calling">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="banner_after_calling">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="banner_earn">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="rewarded_earn">ca-app-pub-3940256099942544/5224354917</string>
 
     <string name="app_name">GameFace</string>
     <string name="app_name_with_styling">Game<b>Face</b></string>
@@ -134,6 +139,9 @@
     <string name="stats_packs_title">Packs</string>
     <string name="stats_games_won_title">Games Won</string>
     <string name="_0">0</string>
+    <string name="call_ended">Call Ended</string>
+    <string name="watch_ad">Watch Ad (+25)</string>
+    <string name="home">Go to Home</string>
 
 
 </resources>

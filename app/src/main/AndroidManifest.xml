@@ -24,6 +24,9 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3495964067534428~4014718354"/>
         <activity
             android:name=".SplashScreen"
             android:theme="@style/SplashTheme">

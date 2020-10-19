@@ -142,12 +142,22 @@
             <action
                 android:id="@+id/action_cameraFragment_to_addMembersDialog"
                 app:destination="@id/addMembersDialog" />
+            <action
+                android:id="@+id/action_cameraFragment_to_callFinished"
+                app:destination="@id/callFinished"
+                app:popUpTo="@+id/main_nav_graph" />
         </fragment>
         <dialog
             android:id="@+id/addMembersDialog"
             android:name="com.magnitudestudios.GameFace.ui.camera.addMembers.AddMembersDialog"
             android:label="AddMembersDialog"
             tools:layout="@layout/add_members_dialog" />
+        <fragment
+            android:id="@+id/callFinished"
+            android:name="com.magnitudestudios.GameFace.ui.camera.CallFinished"
+            app:popUpToInclusive="true"
+            tools:layout="@layout/fragment_call_finished"
+            android:label="CallFinished" />
     </navigation>
     <fragment
         android:id="@+id/friendContainerFragment"
