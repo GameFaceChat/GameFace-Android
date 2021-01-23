@@ -100,7 +100,7 @@ class HomeFragment : BaseFragment() {
                 .requireLensFacing(orientation)
                 .build()
 
-        preview.setSurfaceProvider(bind.previewCamera.createSurfaceProvider())
+        preview.setSurfaceProvider(bind.previewCamera.surfaceProvider)
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview)
             return true

@@ -145,7 +145,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
                 .requireLensFacing(orientation)
                 .build()
 
-        preview.setSurfaceProvider(bind.previewView.createSurfaceProvider())
+        preview.setSurfaceProvider(bind.previewView.surfaceProvider)
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview, captureInstance)
             setUpTapToFocus()
@@ -207,7 +207,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         bind.previewView.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 if (event.action != MotionEvent.ACTION_UP) return true
-                val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+                val factory = bind.previewView.meteringPointFactory
                 val point = factory.createPoint(event.x, event.y)
                 val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
                 camera!!.cameraControl.startFocusAndMetering(action)
@@ -239,7 +239,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
         override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
             if (cameraSelector == null) return true
-            val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+            val factory = bind.previewView.meteringPointFactory
             val point = factory.createPoint(event.x, event.y)
             val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
             camera?.cameraControl?.startFocusAndMetering(action)
