@@ -42,13 +42,24 @@ import com.magnitudestudios.GameFace.ui.calling.IncomingCall
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 import kotlinx.coroutines.*
 
+/**
+ * Notification service. This is the class that handles all notifications, and
+ *
+ * @constructor Create empty Notification service
+ * @see FirebaseMessagingService
+ */
 class NotificationService : FirebaseMessagingService() {
     private val serviceJob = Job()
     private val serviceScope = CoroutineScope(Dispatchers.Main + serviceJob)
+
+    /**
+     * Called when a new Firebase Device is token is issued. This function will also update the device
+     * token that is stored on the server for this specific user.
+     * @param token the new Firebase token of the device
+     */
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         try {
-
             serviceScope.launch {
                 if (Firebase.auth.currentUser != null) {
                     UserRepository.updateDeviceToken(token)
@@ -61,18 +72,30 @@ class NotificationService : FirebaseMessagingService() {
         Log.e("--NEW TOKEN--", token)
     }
 
+    /**
+     * Called when a message is received through the Firebase messaging service
+     *
+     * @param p0 the message that is incoming
+     */
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
         for (a in p0.data) {
             Log.e("Got Data", "${a.key} : ${a.value}")
         }
         if (!validateMessage(p0)) return
+        //Decide action depending on type of message
         when (p0.data["type"]) {
             "CALL" -> receiveCall(p0.data)
             "NOTIFICATION" -> showNotification(p0.data)
         }
     }
 
+    /**
+     * Called when there is an incoming video call from friend(s).
+     * Gets the members of the room.
+     *
+     * @param data key-value pairs of data. Should contain roomID.
+     */
     private fun receiveCall(data: Map<String, String>) {
         val roomID = data["roomID"] ?: error("NO ROOM FOUND")
         serviceScope.launch(Dispatchers.Main) {
@@ -85,7 +108,12 @@ class NotificationService : FirebaseMessagingService() {
         }
     }
 
-    //Launch the call notification
+    /**
+     * Launches the call screen to show caller information.
+     *
+     * @param roomID
+     * @param members
+     */
     private fun launchCall(roomID: String, members: List<Profile>) {
         val fullScreenIntent = Intent(this, IncomingCall::class.java).apply {
             putExtra(Constants.ROOM_ID_KEY, roomID)
@@ -129,7 +157,11 @@ class NotificationService : FirebaseMessagingService() {
 //        startForeground(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
 
-    //For a general Notification
+    /**
+     * Show a generic notification from the server
+     *
+     * @param data
+     */
     private fun showNotification(data: Map<String, String>) {
         val pendingIntent = PendingIntent.getActivity(this, 1, Intent(this, MainActivity::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
         val notificationBuilder = NotificationCompat.Builder(this, getString(R.string.friends_notification_ID))
@@ -147,7 +179,7 @@ class NotificationService : FirebaseMessagingService() {
         }
     }
 
-    //Make sure message has all the necessary components
+    //Makes sure message has all the necessary components
     private fun validateMessage(message: RemoteMessage): Boolean {
         if (message.data.isEmpty() || !message.data.containsKey("type")) return false
         else if (Firebase.auth.currentUser == null) return false

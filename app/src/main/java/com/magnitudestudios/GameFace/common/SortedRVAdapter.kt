@@ -31,6 +31,10 @@ import androidx.recyclerview.widget.SortedList
  */
 abstract class SortedRVAdapter<T>(objectType: Class<T>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    /**
+     * Sorted list
+     * @see SortedList
+     */
     private val sortedList: SortedList<T> = SortedList(objectType, object : SortedList.Callback<T>() {
         override fun areItemsTheSame(item1: T, item2: T): Boolean { return areItemsSame(item1, item2) }
 
@@ -47,20 +51,52 @@ abstract class SortedRVAdapter<T>(objectType: Class<T>) : RecyclerView.Adapter<R
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean { return areItemsTheSame(oldItem, newItem) }
     })
 
+    /**
+     * Adds a model to the list
+     *
+     * @param model
+     */
     fun add(model: T?) { sortedList.add(model) }
 
+    /**
+     * Removes model from the list
+     *
+     * @param model
+     */
     fun remove(model: T?) { sortedList.remove(model) }
 
+    /**
+     * Add all the models given as a parameter
+     *
+     * @param models the models to add to the list
+     */
     fun addAll(models: List<T>) { sortedList.addAll(models) }
 
+    /**
+     * Get an item from the sorted list
+     *
+     * @param position of the model. Must be within the bounds of the list size.
+     * @throws IndexOutOfBoundsException
+     * @return the model at the position specified
+     */
     fun getitem(position: Int) : T { return sortedList.get(position) }
 
+    /**
+     * Removes items from the sorted list
+     *
+     * @param models models of the generic type to remove form the list
+     */
     fun remove(models: List<T?>) {
         sortedList.beginBatchedUpdates()
         for (model in models) sortedList.remove(model)
         sortedList.endBatchedUpdates()
     }
 
+    /**
+     * Replace all
+     * Replaces the entire list of sorted items
+     * @param models the new list
+     */
     fun replaceAll(models: List<T?>) {
         sortedList.beginBatchedUpdates()
         for (i in sortedList.size() - 1 downTo 0) {
@@ -72,14 +108,12 @@ abstract class SortedRVAdapter<T>(objectType: Class<T>) : RecyclerView.Adapter<R
         notifyDataSetChanged()
     }
 
-    abstract fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
-
-    abstract fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int)
-
-    abstract fun areItemsSame(item1: T, item2: T): Boolean
-
-    abstract fun compareItems(item1: T, item2: T): Int
-
+    /**
+     * On bind view holder
+     *
+     * @param holder   ViewHolder for the RecyclerView item
+     * @param position position of the item in the list
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         onViewBinded(holder, position)
     }
@@ -89,4 +123,49 @@ abstract class SortedRVAdapter<T>(objectType: Class<T>) : RecyclerView.Adapter<R
     }
 
     override fun getItemCount(): Int = sortedList.size()
+
+
+    /*
+        |--------------------|
+        |   Public Methods   |
+        |--------------------|
+     */
+
+    /**
+     * On view holder created
+     *
+     * @param parent   Parent ViewGroup of the ViewHolder
+     * @param viewType id Representing the view Type
+     * @return         ViewHolder
+     */
+    abstract fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder
+
+    /**
+     * Called when the ViewHolder has been binded to the RecyclerView
+     *
+     * @param holder    the RecyclerView ViewHolder
+     * @param position  position of the ViewHolder
+     */
+    abstract fun onViewBinded(holder: RecyclerView.ViewHolder, position: Int)
+
+    /**
+     * A function to use to check whether two items have changed/modified.
+     * e.g check each member of the items whether they are equal or not
+     *
+     * @param item1
+     * @param item2
+     * @return
+     */
+    abstract fun areItemsSame(item1: T, item2: T): Boolean
+
+    /**
+     * Function for the comparator of the sorted list.
+     *
+     * @param item1
+     * @param item2
+     * @return integer of -1, 0, 1.
+     * @see String.compareTo
+     */
+    abstract fun compareItems(item1: T, item2: T): Int
+
 }

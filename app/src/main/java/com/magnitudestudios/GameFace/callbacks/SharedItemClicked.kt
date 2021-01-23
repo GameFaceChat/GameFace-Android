@@ -27,8 +27,8 @@ import android.view.View
 interface SharedItemClicked {
     /**
      * On click of view
-     * @param position listItem position
-     * @param view View that was clicked
+     * @param position  listItem position
+     * @param view      View that was clicked
      */
     fun onClick(position: Int, view: View)
 }

@@ -50,7 +50,7 @@ interface RoomCallback {
 
     /**
      * Called when an ICE candidate is received
-     * @param fromUID ICE candidate received from this UID
+     * @param fromUID      ICE candidate received from this UID
      * @param iceCandidate Data class for the ICE Candidate
      */
     fun iceServerReceived(fromUID: String, iceCandidate: IceCandidatePOJO)

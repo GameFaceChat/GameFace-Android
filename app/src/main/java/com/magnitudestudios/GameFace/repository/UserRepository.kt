@@ -42,31 +42,85 @@ import java.io.File
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * User repository
+ * Handles the logic of all user operations
+ * - Creating users
+ * - Creating profiles
+ * - Updating and managing device tokens
+ * - Sending and accepting friend requests
+ *
+ * @constructor Create empty User repository
+ */
 object UserRepository {
     private const val TAG = "FirebaseHelper"
 
-    //Reusing Ref definitions
+    /**
+     * Get the DatabaseReference of a certain user
+     *
+     * @param uid
+     * @return
+     */
     private fun getUserRef(uid: String): DatabaseReference = Firebase.database.reference.child(Constants.USERS_PATH).child(uid)
 
+    /**
+     * Gets the current user database reference
+     *
+     * @return DatabaseReference
+     */
     fun getCurrentUserRef(): DatabaseReference = getUserRef(Firebase.auth.currentUser!!.uid)
 
+    /**
+     * Gets the profile DatabaseReference
+     * @param uid
+     * @return
+     */
     private fun getProfileRef(uid: String): DatabaseReference = Firebase.database.reference.child(Constants.PROFILE_PATH).child(uid)
 
+    /**
+     * Get current user profile ref
+     *
+     * @return
+     */
     private fun getCurrentUserProfileRef(): DatabaseReference = getProfileRef(Firebase.auth.currentUser!!.uid)
 
-    //User Functions
+    /**
+     * Creates user at the user reference
+     *
+     * @param user
+     * @return a Task that can be listened to
+     * @see Task
+     */
     fun createUser(user: User): Task<Void> {
         return getCurrentUserRef().setValue(user)
     }
 
+    /**
+     * Sets a new value for a user
+     *
+     * @param user
+     */
     suspend fun setUser(user: User) {
         getCurrentUserRef().setValue(user).await()
     }
 
+    /**
+     * Create profile for a user
+     *
+     * @param profile   The profile of the current user
+     * @return          A task that can be listened to
+     * @see Task
+     */
     fun createProfile(profile: Profile): Task<Void> {
         return getCurrentUserProfileRef().setValue(profile)
     }
 
+    /**
+     * Updates the user profile
+     *
+     * @param values key value pairs on attributes to update
+     * @return
+     */
     suspend fun updateUserProfile(values: MutableMap<String, Any>): Boolean {
         return try {
             getCurrentUserProfileRef().updateChildren(values).await()
@@ -77,10 +131,21 @@ object UserRepository {
         }
     }
 
+    /**
+     * Gets the current device token
+     *
+     * @return the device token
+     */
     suspend fun getDeviceToken(): String {
         return FirebaseInstanceId.getInstance().instanceId.await().token
     }
 
+    /**
+     * Updates the device token stored in the database. Since a user may have multiple devices, yet
+     * each token is unique the keys are the tokens, and the values are a simple boolean.
+     *
+     * @param token
+     */
     suspend fun updateDeviceToken(token: String) {
         if (Firebase.auth.currentUser == null) return
         getCurrentUserRef().child(User::devicesID.name).child(token).setValue(true).await()
@@ -100,6 +165,13 @@ object UserRepository {
 //        }
 //    }
 
+    /**
+     * Retrieves a user's profile by their User ID.
+     *
+     * @param uid   The target user's User ID
+     * @return      The profile of the user
+     * @see Profile
+     */
     suspend fun getUserProfileByUID(uid: String): Profile? {
         Log.e("USER", "PROFILE")
         if (Firebase.auth.currentUser == null) return null
@@ -120,6 +192,12 @@ object UserRepository {
         }
     }
 
+    /**
+     * Retrieves multiple user profiles by uids
+     *
+     * @param uids  a list of UIDs to retrieve user profiles
+     * @return
+     */
     suspend fun getUserProfilesByUID(uids: List<String>): List<Profile> {
         val temp = mutableListOf<Profile>()
         for (uid in uids) {
@@ -129,6 +207,13 @@ object UserRepository {
         return temp
     }
 
+    /**
+     * Query possible usernames in the database given a query string.
+     *
+     * @param query The query username (does not have to be the entire username)
+     * @return  The search results as list of profiles
+     * @see Profile
+     */
     suspend fun getProfilesByUsername(query: String): Resource<List<Profile>> {
         return suspendCoroutine { cont ->
             Firebase.database.reference.child(Constants.PROFILE_PATH)
@@ -154,6 +239,12 @@ object UserRepository {
         }
     }
 
+    /**
+     * Checks whether a username already exists
+     *
+     * @param username  The username in question
+     * @return          A boolean indicating the existence of the username
+     */
     suspend fun usernameExists(username: String): Resource<Boolean> {
         return suspendCoroutine {
             Firebase.database.reference
@@ -168,6 +259,13 @@ object UserRepository {
         }
     }
 
+    /**
+     * Uploads a profile picture to Cloud Storage.
+     *
+     * @param image
+     * @return  When successful, returns a URI to the image location; returns error message otherwise
+     * @see Resource
+     */
     suspend fun setProfilePic(image: Uri): Resource<Uri?> {
         if (Firebase.auth.currentUser == null) return Resource.error("User must sign in", null)
         return try {
@@ -185,6 +283,11 @@ object UserRepository {
 
     }
 
+    /**
+     * Sends a friend request to a specific user
+     *
+     * @param toUser    The profile of the user to send a friend request to
+     */
     fun sendFriendRequest(toUser: Profile) {
         //Send Request to Friend
         getUserRef(toUser.uid)
@@ -199,6 +302,12 @@ object UserRepository {
                 )
     }
 
+    /**
+     * Remove a friend request from both the user who sent it, and the user who received the request
+     *
+     * @param uid               The uid of the friend who sent the request
+     * @param gotFriendRequest  True if you received the friend request; False if you sent the friend request.
+     */
     suspend fun deleteFriendRequest(uid: String, gotFriendRequest: Boolean) {
         getCurrentUserRef()
                 .child(if (gotFriendRequest) User::friendRequests.name else User::friendRequestsSent.name)
@@ -211,6 +320,11 @@ object UserRepository {
                 .removeValue().await()
     }
 
+    /**
+     * Accept a friend request
+     *
+     * @param uid   The uid of the user whose request to accept
+     */
     suspend fun acceptFriendRequest(uid: String) {
         getCurrentUserRef()
                 .child(User::friends.name)
