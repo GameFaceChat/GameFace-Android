@@ -169,7 +169,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 return false
             }
         }.apply { orientation = LinearLayoutManager.HORIZONTAL }
-        viewModel.changedMember.observe(viewLifecycleOwner, Observer {
+        viewModel.changedMember.observe(viewLifecycleOwner, {
             membersAdapter.notifyItemChanged(it)
         })
         viewModel.newMember.observe(viewLifecycleOwner, Observer {
@@ -179,7 +179,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun observeIceConnection() {
-        viewModel.iceServers.observe(viewLifecycleOwner, Observer {
+        viewModel.iceServers.observe(viewLifecycleOwner, {
             if (it != null) {
                 if (args.roomID.isNotEmpty()) {
                     viewModel.joinRoom(args.roomID)
@@ -192,7 +192,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun observeNewPeers() {
-        viewModel.newPeer.observe(viewLifecycleOwner, Observer {
+        viewModel.newPeer.observe(viewLifecycleOwner, {
             if (!it.isNullOrEmpty() && it != Firebase.auth.currentUser!!.uid) {
                 createPeerConnection(it)
                 if (Firebase.auth.currentUser?.uid!! > it) viewModel.initiateConnection(it)

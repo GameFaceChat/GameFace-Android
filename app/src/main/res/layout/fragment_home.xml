@@ -48,7 +48,6 @@
             android:textColor="@color/darkGray" />
     </com.google.android.material.appbar.MaterialToolbar>
 
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/gameButton"
         android:layout_width="75dp"
