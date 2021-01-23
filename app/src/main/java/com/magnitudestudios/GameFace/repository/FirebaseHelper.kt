@@ -31,7 +31,17 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlin.coroutines.resume
 
+/**
+ * Firebase helper utility functions for performing basic Firebase Realtime functions
+ *
+ */
 object FirebaseHelper {
+    /**
+     * Checks whether the data specified by the string path exists
+     *
+     * @param path vararg of the path as a string
+     * @return boolean value whether the value exists
+     */
     suspend fun exists(vararg path: String): Boolean {
         var reference = Firebase.database.reference
         for (s in path) reference = reference.child(s)
@@ -52,6 +62,13 @@ object FirebaseHelper {
         }
     }
 
+    /**
+     * Get the data at a certain location of the databse specified by path
+     *
+     * @param path  vararg string path of the location
+     * @return      DataSnapshot of the specified location of the database
+     * @see DataSnapshot
+     */
     suspend fun getValue(vararg path: String): DataSnapshot? {
         var reference = Firebase.database.reference
         for (s in path) reference = reference.child(s)
@@ -66,7 +83,14 @@ object FirebaseHelper {
             })
         }
     }
-    
+
+    /**
+     * Pushes a value to a certain location in the database
+     *
+     * @param value object to be pushed
+     * @param path  vararg string path of the database location
+     * @return
+     */
     suspend fun pushValue(value : Any?, vararg path : String) : String {
         var reference = Firebase.database.reference
         for (s in path) reference = reference.child(s)
@@ -76,6 +100,13 @@ object FirebaseHelper {
         } catch (e : DatabaseException) {e.message.toString()}
     }
 
+    /**
+     * Sets the value of a certain location in the database
+     *
+     * @param value new object to be set
+     * @param path  vararg string path of the database location
+     * @return
+     */
     suspend fun setValue(value : Any?, vararg path : String) : String {
         var reference = Firebase.database.reference
         for (s in path) reference = reference.child(s)
@@ -85,6 +116,11 @@ object FirebaseHelper {
         } catch (e : DatabaseException) {e.message.toString()}
     }
 
+    /**
+     * Gets the Firebase ID token of the current signed-in user
+     *
+     * @return string ID Token
+     */
     suspend fun getIDToken() : String? {
         return Firebase.auth.currentUser?.getIdToken(true)?.await()?.token
     }

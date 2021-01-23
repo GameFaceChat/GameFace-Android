@@ -41,7 +41,7 @@ open class BasePermissionsActivity : BaseActivity() {
     }
 
     /**
-     * @param requestCode : code to for the callback function
+     * @param requestCode integer code for the callback function
      * @see onRequestPermissionsResult
      */
     fun checkPermissions(requestCode: Int) {
@@ -84,8 +84,8 @@ open class BasePermissionsActivity : BaseActivity() {
 
         /**
          * Static function to check whether all permissions have been granted
-         * @param context : Context (activity context)
-         * @param permissions : Array<String>; array of permissions needed
+         * @param context       Context (activity context)
+         * @param permissions   Array<String>; array of permissions needed
          */
         fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
             if (context != null) {

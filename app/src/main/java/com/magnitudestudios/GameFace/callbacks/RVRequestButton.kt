@@ -24,6 +24,17 @@ package com.magnitudestudios.GameFace.callbacks
  * for the Friend Requests RecyclerView
  */
 interface RVRequestButton {
+    /**
+     * Accept clicked
+     *
+     * @param position position of the RecyclerView item whose request was accepted
+     */
     fun acceptClicked(position: Int)
+
+    /**
+     * Deny clicked
+     *
+     * @param position position of the RecyclerView item whose request was denied
+     */
     fun denyClicked(position: Int)
 }
