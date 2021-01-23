@@ -1,4 +1,21 @@
-<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<!--
+  ~ Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  ~ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  ~ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+  ~ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  ~
+  -->
 <vector android:height="150dp" android:viewportHeight="1000" android:viewportWidth="1000" android:width="150dp" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="#FF000000" android:pathData="M371.65 127.79c-14.92 4.02-27.94 10.52-40.18 19.71-14.35 10.91-18.18 16.26-32.53 44.97l-12.44 25.07-92.8 0.96c-102.37 1.15-97.59 0.57-123.42 13.97-17.03 8.99-38.65 31.38-47.45 49.37C9.62 308.81 10 298.29 10 546.85c0 216.8 0.19 224.45 3.83 238.8 10.91 42.86 42.48 74.43 85.34 85.34 14.54 3.83 22.77 3.83 400.69 3.83s386.14 0 400.69-3.83c44.01-11.1 77.11-45.54 86.3-88.98 4.21-19.9 4.21-452.73 0-472.44-8.23-39.23-40.76-74.44-80.37-87.45-5.74-1.91-31.57-2.87-100.46-3.64l-92.8-0.96-12.64-25.62c-13.78-27.94-21.81-38.08-40.57-50.13-6.12-4.02-16.46-9.18-22.96-11.67l-11.86-4.4-121.51-0.38c-102.75-0.4-123.03-0.01-132.03 2.47zm249.71 62.77c5.36 2.49 11.1 6.12 12.82 8.04 1.91 2.11 10.14 17.99 18.37 35.21 16.26 33.68 21.43 40.38 33.87 43.82 4.97 1.34 40.18 2.1 102.56 2.1 105.05 0 105.43 0 119.79 12.25 4.02 3.64 9.95 11.1 13.01 16.65l5.74 10.33 0.57 222.73c0.57 256.03 1.72 236.32-16.65 254.88-18.75 18.75 21.62 17.03-411.59 17.03-433.22 0-392.84 1.72-411.59-17.03-18.37-18.57-17.22 1.14-16.64-254.89l0.57-222.73 5.74-10.33c3.06-5.55 8.99-13.01 13.01-16.65 14.35-12.25 14.93-12.25 118.83-12.25 57.6 0 97.21-0.77 102.56-2.1 4.78-1.15 11.1-4.21 13.97-7.08 3.06-2.87 12.25-19.33 20.67-36.55 8.42-17.41 16.65-33.29 18.56-35.21 1.72-2.1 7.65-5.74 12.82-8.23l9.57-4.59H611.8l9.56 4.6z"/>
     <path android:fillColor="#FF000000" android:pathData="M459.48 313.21c-30.42 5.74-63.34 20.09-87.26 38.08-14.54 10.91-39.8 37.31-48.79 51.09-11.29 17.03-22.01 39.99-27.36 58.17-5.74 19.9-5.93 24.3-0.96 34.83 6.51 14.35 22.39 20.66 37.51 14.92 10.91-4.02 16.84-12.05 20.86-27.55 13.97-54.53 58.55-96.63 114.43-108.69 20.48-4.21 53.2-2.49 73.1 4.02 18.56 5.93 39.23 17.22 50.71 27.55l8.61 7.85-20.47 20.67-20.67 20.67 85.15 22.77c46.88 12.63 85.53 22.39 85.92 22 0.38-0.38-9.38-38.65-21.81-84.96s-22.77-84.58-22.77-85.15c-0.19-0.38-9.57 8.42-20.86 19.71l-20.67 20.47-11.29-9.76c-23.92-20.28-53.58-35.4-85.15-43.82-21.26-5.55-66.61-7.08-88.23-2.87zM662.5 553.74c-8.99 6.31-13.01 12.44-16.26 25.45-7.08 27.75-26.6 58.75-48.41 76.73-28.13 23.15-57.98 33.68-95.1 33.87-26.6 0-44.2-3.83-65.25-14.54-12.82-6.51-37.12-23.34-37.12-25.83 0-0.77 9.18-10.52 20.47-21.81l20.28-20.28-8.42-2.3c-83.24-22.58-163.41-43.63-163.8-43.24-0.38 0.38 40.95 156.52 44.58 168.39 0.96 2.87 4.78 0 21.81-17.03l20.48-20.48 17.03 13.59C463.3 778.97 598.2 762.14 669 669.52c29.08-38.27 46.11-90.32 34.44-106.01-6.7-9.18-15.69-13.97-25.64-13.97-6.11-0.01-10.89 1.33-15.3 4.2z"/>

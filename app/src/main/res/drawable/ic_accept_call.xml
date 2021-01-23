@@ -1,4 +1,21 @@
-<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<!--
+  ~ Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  ~ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  ~ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+  ~ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  ~
+  -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android" android:width="70dp" android:height="70dp" android:viewportWidth="70" android:viewportHeight="70">
     <path android:pathData="M0 35a35 35 0 1 1 70 0 35 35 0 1 1-70 0" android:fillColor="@color/button_to_transparent"/>
     <path android:pathData="M50.283 45.847L45.34 39.81c-0.985-1.198-2.615-1.161-3.633 0.083l-2.49 3.041c-0.157-0.106-0.32-0.216-0.491-0.334-1.573-1.064-3.724-2.523-5.989-5.29-2.271-2.775-3.466-5.407-4.34-7.329-0.092-0.203-0.18-0.4-0.268-0.586l1.671-2.038 0.822-1.005c1.02-1.247 1.048-3.237 0.066-4.438l-4.942-6.038c-0.982-1.2-2.613-1.163-3.633 0.084l-1.393 1.71 0.038 0.047c-0.467 0.728-0.857 1.567-1.147 2.473-0.268 0.861-0.435 1.684-0.511 2.508-0.653 6.608 1.82 12.647 8.529 20.842 9.273 11.328 16.747 10.472 17.07 10.43 0.701-0.102 1.374-0.307 2.058-0.632 0.735-0.35 1.422-0.826 2.017-1.396l0.03 0.033 1.412-1.687c1.018-1.247 1.047-3.238 0.066-4.44z" android:fillColor="#00AB59"/>

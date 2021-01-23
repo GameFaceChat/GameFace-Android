@@ -1,4 +1,21 @@
-<!--~ Copyright (c) 2020 - Magnitude Studios - All Rights Reserved ~ Unauthorized copying of this file, via any medium is prohibited ~ All software is proprietary and confidential ~-->
+<!--
+  ~ Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+  ~ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  ~ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+  ~ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+  ~ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  ~ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+  ~ OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+  ~ THE SOFTWARE.
+  ~
+  -->
 <vector android:height="@dimen/icon_size" android:viewportHeight="512" android:viewportWidth="512" android:width="@dimen/icon_size" xmlns:android="http://schemas.android.com/apk/res/android">
     <path android:fillColor="@color/color_primary_selector" android:pathData="M256 0C115.4 0 0 115.4 0 256s115.4 256 256 256 256-115.4 256-256S396.6 0 256 0z"/>
     <path android:fillColor="#FFFFFF" android:pathData="M404.4 256c0-82-66.4-148.4-148.4-148.4S107.6 174 107.6 256 174 404.4 256 404.4c28.1 0.1 55.6-7.9 79.4-22.9l19 19c2.5 2.5 6 4 9.5 4 7.5 0 13.5-6 13.5-13.5v-54c0-7.5-6-13.5-13.5-13.5h-54c-3.6 0-7 1.4-9.5 3.9-5.3 5.3-5.3 13.8 0 19.1l15.2 15.2c-18.2 10.3-38.7 15.8-59.6 15.7-67.1 0-121.4-54.4-121.4-121.4 0-67.1 54.4-121.4 121.4-121.4 67.1 0 121.4 54.4 121.4 121.4 0 7.5 6 13.5 13.5 13.5s13.5-6 13.5-13.5z"/>
