@@ -1,4 +1,5 @@
 # GameFace
+<img src="https://circleci.com/gh/GameFaceChat/GameFace-Android.svg?style=svg" />
 <p align="center">
   <img src="https://user-images.githubusercontent.com/37857112/105618654-d9d5d500-5db7-11eb-8229-53ac36d21ea0.png" width="400" height="400">
 </p>
