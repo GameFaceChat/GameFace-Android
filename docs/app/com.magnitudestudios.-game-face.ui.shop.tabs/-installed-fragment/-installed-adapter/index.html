@@ -1,0 +1,157 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>InstalledFragment.InstalledAdapter - app</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">app</a>&nbsp;/&nbsp;<a href="../../index.html">com.magnitudestudios.GameFace.ui.shop.tabs</a>&nbsp;/&nbsp;<a href="../index.html">InstalledFragment</a>&nbsp;/&nbsp;<a href="./index.html">InstalledAdapter</a><br/>
+<br/>
+<h1>InstalledAdapter</h1>
+<code><span class="keyword">inner</span> <span class="keyword">class </span><span class="identifier">InstalledAdapter</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html"><span class="identifier">SortedRVAdapter</span></a><span class="symbol">&lt;</span><a href="../../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">&gt;</span></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">InstalledAdapter</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/sorted-list.html">sortedList</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sortedList</span><span class="symbol">: </span><span class="identifier">SortedList</span><span class="symbol">&lt;</span><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code>
+<p>Sorted list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="are-items-same.html">areItemsSame</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">areItemsSame</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$areItemsSame(com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo, com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo)/item1">item1</span><span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$areItemsSame(com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo, com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo)/item2">item2</span><span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>A function to use to check whether two items have changed/modified.
+e.g check each member of the items whether they are equal or not</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="compare-items.html">compareItems</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">compareItems</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$compareItems(com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo, com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo)/item1">item1</span><span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$compareItems(com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo, com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo)/item2">item2</span><span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Function for the comparator of the sorted list.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-view-binded.html">onViewBinded</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onViewBinded</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$onViewBinded(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$onViewBinded(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when the ViewHolder has been binded to the RecyclerView</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-view-holder-created.html">onViewHolderCreated</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onViewHolderCreated</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$onViewHolderCreated(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment.InstalledAdapter$onViewHolderCreated(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ViewHolder</span></code>
+<p>On view holder created</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/add.html">add</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">add</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$add(com.magnitudestudios.GameFace.common.SortedRVAdapter.T)/model">model</span><span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds a model to the list</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/add-all.html">addAll</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addAll</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$addAll(kotlin.collections.List((com.magnitudestudios.GameFace.common.SortedRVAdapter.T)))/models">models</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Add all the models given as a parameter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/getitem.html">getitem</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getitem</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$getitem(kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a></code>
+<p>Get an item from the sorted list</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/get-item-count.html">getItemCount</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getItemCount</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/on-bind-view-holder.html">onBindViewHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onBindViewHolder</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/holder">holder</span><span class="symbol">:</span>&nbsp;<span class="identifier">ViewHolder</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$onBindViewHolder(androidx.recyclerview.widget.RecyclerView.ViewHolder, kotlin.Int)/position">position</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>On bind view holder</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/on-create-view-holder.html">onCreateViewHolder</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreateViewHolder</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/parent">parent</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$onCreateViewHolder(android.view.ViewGroup, kotlin.Int)/viewType">viewType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ViewHolder</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/remove.html">remove</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">remove</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$remove(com.magnitudestudios.GameFace.common.SortedRVAdapter.T)/model">model</span><span class="symbol">:</span>&nbsp;<a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes model from the list</p>
+<code><span class="keyword">fun </span><span class="identifier">remove</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$remove(kotlin.collections.List((com.magnitudestudios.GameFace.common.SortedRVAdapter.T)))/models">models</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes items from the sorted list</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/replace-all.html">replaceAll</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">replaceAll</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.common.SortedRVAdapter$replaceAll(kotlin.collections.List((com.magnitudestudios.GameFace.common.SortedRVAdapter.T)))/models">models</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../../com.magnitudestudios.-game-face.common/-sorted-r-v-adapter/index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Replace all
+Replaces the entire list of sorted items</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

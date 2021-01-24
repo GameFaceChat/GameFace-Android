@@ -1,0 +1,176 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MorphableButton.CircularAnimatedDrawable - app</title>
+<link rel="stylesheet" href="../../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../../index.html">app</a>&nbsp;/&nbsp;<a href="../../index.html">com.magnitudestudios.GameFace.views</a>&nbsp;/&nbsp;<a href="../index.html">MorphableButton</a>&nbsp;/&nbsp;<a href="./index.html">CircularAnimatedDrawable</a><br/>
+<br/>
+<h1>CircularAnimatedDrawable</h1>
+<code><span class="keyword">class </span><span class="identifier">CircularAnimatedDrawable</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html"><span class="identifier">Drawable</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/graphics/drawable/Animatable.html"><span class="identifier">Animatable</span></a></code>
+<p>Circular animated drawable</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">CircularAnimatedDrawable</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton.CircularAnimatedDrawable$<init>(android.view.View, kotlin.Float, kotlin.Int)/animView">animView</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton.CircularAnimatedDrawable$<init>(android.view.View, kotlin.Float, kotlin.Int)/borderWidth">borderWidth</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton.CircularAnimatedDrawable$<init>(android.view.View, kotlin.Float, kotlin.Int)/arcColor">arcColor</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="anim-view.html">animView</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">animView</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="border-width.html">borderWidth</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">borderWidth</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="in-progress.html">inProgress</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">inProgress</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-bounds.html">mBounds</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mBounds</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/graphics/RectF.html"><span class="identifier">RectF</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-current-global-angle.html">mCurrentGlobalAngle</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mCurrentGlobalAngle</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-current-global-angle-offset.html">mCurrentGlobalAngleOffset</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mCurrentGlobalAngleOffset</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-current-sweep-angle.html">mCurrentSweepAngle</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mCurrentSweepAngle</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="mode-appearing.html">modeAppearing</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">modeAppearing</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="paint.html">paint</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">paint</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/graphics/Paint.html"><span class="identifier">Paint</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="value-animator-angle.html">valueAnimatorAngle</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">valueAnimatorAngle</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/animation/ValueAnimator.html"><span class="identifier">ValueAnimator</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="value-animator-sweep.html">valueAnimatorSweep</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">valueAnimatorSweep</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/animation/ValueAnimator.html"><span class="identifier">ValueAnimator</span></a><span class="symbol">?</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="draw.html">draw</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">draw</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton.CircularAnimatedDrawable$draw(android.graphics.Canvas)/canvas">canvas</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/Canvas.html"><span class="identifier">Canvas</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-opacity.html">getOpacity</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getOpacity</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="is-running.html">isRunning</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isRunning</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-alpha.html">setAlpha</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setAlpha</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton.CircularAnimatedDrawable$setAlpha(kotlin.Int)/alpha">alpha</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-color-filter.html">setColorFilter</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setColorFilter</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton.CircularAnimatedDrawable$setColorFilter(android.graphics.ColorFilter)/colorFilter">colorFilter</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/ColorFilter.html"><span class="identifier">ColorFilter</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-up-animations.html">setUpAnimations</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setUpAnimations</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="start.html">start</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">start</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="stop.html">stop</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">stop</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="toggle-sweep.html">toggleSweep</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">toggleSweep</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

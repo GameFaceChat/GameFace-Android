@@ -1,0 +1,166 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>EditProfileViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.ui.profile.editProfile</a>&nbsp;/&nbsp;<a href="./index.html">EditProfileViewModel</a><br/>
+<br/>
+<h1>EditProfileViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">EditProfileViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>Edit profile view model</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">EditProfileViewModel</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Edit profile view model</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="changed.html">changed</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">changed</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="current-bio.html">currentBio</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">currentBio</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="current-name.html">currentName</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">currentName</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="current-username.html">currentUsername</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">currentUsername</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="original-bio.html">originalBio</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">originalBio</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="original-name.html">originalName</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">originalName</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="saving-progress.html">savingProgress</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">savingProgress</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="check-changed.html">checkChanged</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkChanged</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-bio.html">getBio</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getBio</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Get the bio of the user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-name.html">getName</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getName</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Get the name of the user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="save.html">save</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">save</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Save the new user Profile</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-bio.html">setBio</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setBio</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.editProfile.EditProfileViewModel$setBio(kotlin.String)/bio">bio</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the new bio</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-name.html">setName</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setName</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.editProfile.EditProfileViewModel$setName(kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the new name</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-original-bio.html">setOriginalBio</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setOriginalBio</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.editProfile.EditProfileViewModel$setOriginalBio(kotlin.String)/bio">bio</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the original bio value before editing</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-original-name.html">setOriginalName</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setOriginalName</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.editProfile.EditProfileViewModel$setOriginalName(kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the original name value before editing</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-username.html">setUsername</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setUsername</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.editProfile.EditProfileViewModel$setUsername(kotlin.String)/username">username</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the new username</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

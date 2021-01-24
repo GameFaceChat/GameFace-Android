@@ -83,6 +83,10 @@ dokka {
         prefix = "com.takusemba.cropme"
         suppress = true
     }
+    packageOptions {
+        prefix = "com.magnitudestudios.GameFace.databinding"
+        suppress = true
+    }
 }
 
 dependencies {

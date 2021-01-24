@@ -1,0 +1,214 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MovableScreen - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.views</a>&nbsp;/&nbsp;<a href="./index.html">MovableScreen</a><br/>
+<br/>
+<h1>MovableScreen</h1>
+<code><span class="keyword">class </span><span class="identifier">MovableScreen</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">CardView</span></code>
+<p>Movable screen</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MovableScreen</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Boolean)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Boolean)/attributeSet">attributeSet</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Boolean)/styleAttr">styleAttr</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int, kotlin.Boolean)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;true<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="anim-in-progress.html">animInProgress</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">animInProgress</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="d-x.html">dX</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">dX</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="d-y.html">dY</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">dY</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="maxheight.html">maxheight</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">maxheight</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="maxwidth.html">maxwidth</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">maxwidth</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="parent-dimens.html">parentDimens</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">parentDimens</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="progress-bar.html">progressBar</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">progressBar</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/widget/ProgressBar.html"><span class="identifier">ProgressBar</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="state-connected.html">stateConnected</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">stateConnected</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="state-full.html">stateFull</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">stateFull</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="surface.html">surface</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">surface</span><span class="symbol">: </span><a href="../-custom-surface-view/index.html"><span class="identifier">CustomSurfaceView</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="close-enough.html">closeEnough</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">closeEnough</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$closeEnough(kotlin.Float, kotlin.Float)/n1">n1</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$closeEnough(kotlin.Float, kotlin.Float)/n2">n2</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="initialize.html">initialize</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">initialize</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$initialize(org.webrtc.EglBase, kotlin.Boolean, kotlin.Boolean)/eglBase">eglBase</span><span class="symbol">:</span>&nbsp;<span class="identifier">EglBase</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$initialize(org.webrtc.EglBase, kotlin.Boolean, kotlin.Boolean)/overlay">overlay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$initialize(org.webrtc.EglBase, kotlin.Boolean, kotlin.Boolean)/onTop">onTop</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Initialize</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-measure.html">onMeasure</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onMeasure</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$onMeasure(kotlin.Int, kotlin.Int)/widthMeasureSpec">widthMeasureSpec</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$onMeasure(kotlin.Int, kotlin.Int)/heightMeasureSpec">heightMeasureSpec</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-touch-event.html">onTouchEvent</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onTouchEvent</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$onTouchEvent(android.view.MotionEvent)/event">event</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="reposition.html">reposition</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">reposition</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$reposition(android.view.MotionEvent, kotlin.FloatArray)/event">event</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$reposition(android.view.MotionEvent, kotlin.FloatArray)/args">args</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="scale-animator.html">scaleAnimator</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">scaleAnimator</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$scaleAnimator(kotlin.Float, kotlin.Float, kotlin.Float, kotlin.Float)/startX">startX</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$scaleAnimator(kotlin.Float, kotlin.Float, kotlin.Float, kotlin.Float)/endX">endX</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$scaleAnimator(kotlin.Float, kotlin.Float, kotlin.Float, kotlin.Float)/startY">startY</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$scaleAnimator(kotlin.Float, kotlin.Float, kotlin.Float, kotlin.Float)/endY">endY</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-calling.html">setCalling</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setCalling</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set calling</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-dimensions-full-screen.html">setDimensionsFullScreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setDimensionsFullScreen</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-dimensions-small-screen.html">setDimensionsSmallScreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setDimensionsSmallScreen</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-disconnected.html">setDisconnected</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setDisconnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the Screen into disconnected mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-full-screen.html">setFullScreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setFullScreen</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-loading.html">setLoading</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLoading</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MovableScreen$setLoading(kotlin.Boolean)/isLoading">isLoading</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set loading</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-local.html">setLocal</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLocal</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the screen into local</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-small-screen.html">setSmallScreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setSmallScreen</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Resource - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.pojo.Helper</a>&nbsp;/&nbsp;<a href="./index.html">Resource</a><br/>
+<br/>
+<h1>Resource</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Resource</span><span class="symbol">&lt;</span><span class="keyword">out</span>&nbsp;<span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Resource class for LiveData instances
+Keeps track of the status of a resource</p>
+<h3>Parameters</h3>
+<p><a name="T"></a>
+<code>T</code> - Generic object class</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Resource</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource$<init>(com.magnitudestudios.GameFace.pojo.EnumClasses.Status, com.magnitudestudios.GameFace.pojo.Helper.Resource.T, kotlin.String)/status">status</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-enum-classes/-status/index.html"><span class="identifier">Status</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource$<init>(com.magnitudestudios.GameFace.pojo.EnumClasses.Status, com.magnitudestudios.GameFace.pojo.Helper.Resource.T, kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource$<init>(com.magnitudestudios.GameFace.pojo.EnumClasses.Status, com.magnitudestudios.GameFace.pojo.Helper.Resource.T, kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">)</span></code>
+<p>Create empty Resource</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="data.html">data</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">data</span><span class="symbol">: </span><a href="index.html#T"><span class="identifier">T</span></a><span class="symbol">?</span></code>
+<p>The data that the resource object holds</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="message.html">message</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">message</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>The message (if there is one)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="status.html">status</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">status</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-enum-classes/-status/index.html"><span class="identifier">Status</span></a></code>
+<p>The status of the resource</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="error.html">error</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">error</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion$error(kotlin.String, com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion.error.T)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion$error(kotlin.String, com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion.error.T)/data">data</span><span class="symbol">:</span>&nbsp;<a href="error.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="error.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="loading.html">loading</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">loading</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion$loading(com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion.loading.T)/data">data</span><span class="symbol">:</span>&nbsp;<a href="loading.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="loading.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="nothing.html">nothing</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">nothing</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion$nothing(com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion.nothing.T)/data">data</span><span class="symbol">:</span>&nbsp;<a href="nothing.html#T"><span class="identifier">T</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="nothing.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="success.html">success</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">success</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion$success(com.magnitudestudios.GameFace.pojo.Helper.Resource.Companion.success.T)/data">data</span><span class="symbol">:</span>&nbsp;<a href="success.html#T"><span class="identifier">T</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="success.html#T"><span class="identifier">T</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

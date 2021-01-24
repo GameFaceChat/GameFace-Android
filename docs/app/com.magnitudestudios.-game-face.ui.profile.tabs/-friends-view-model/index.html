@@ -1,0 +1,125 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>FriendsViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.ui.profile.tabs</a>&nbsp;/&nbsp;<a href="./index.html">FriendsViewModel</a><br/>
+<br/>
+<h1>FriendsViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">FriendsViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>Friends view model</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">FriendsViewModel</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Friends view model</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="friend-profiles.html">friendProfiles</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">friendProfiles</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="query-string.html">queryString</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">queryString</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="request-profiles.html">requestProfiles</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">requestProfiles</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span><span class="symbol">!</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="request-u-i-ds.html">requestUIDs</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">requestUIDs</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="search-results-friends.html">searchResultsFriends</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">searchResultsFriends</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span><span class="symbol">!</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="accept-friend-request.html">acceptFriendRequest</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">acceptFriendRequest</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.tabs.FriendsViewModel$acceptFriendRequest(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Accepts the Friend Request of this uid</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="deny-friend-request.html">denyFriendRequest</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">denyFriendRequest</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.tabs.FriendsViewModel$denyFriendRequest(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Deny friend request</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-filtered-friend-profiles.html">getFilteredFriendProfiles</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getFilteredFriendProfiles</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.tabs.FriendsViewModel$getFilteredFriendProfiles(kotlin.String)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-friend-profiles.html">getFriendProfiles</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getFriendProfiles</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.tabs.FriendsViewModel$getFriendProfiles(kotlin.collections.List((kotlin.String)))/uids">uids</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Get the profiles of the specified friends UIDs</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-query-friend.html">setQueryFriend</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setQueryFriend</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.tabs.FriendsViewModel$setQueryFriend(kotlin.String)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the search query for the friend</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-request-u-i-ds.html">setRequestUIDs</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setRequestUIDs</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.profile.tabs.FriendsViewModel$setRequestUIDs(kotlin.collections.List((kotlin.String)))/uids">uids</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set the Friend Request UIDs</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

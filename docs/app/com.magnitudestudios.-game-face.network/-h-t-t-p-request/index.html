@@ -1,0 +1,121 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>HTTPRequest - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.network</a>&nbsp;/&nbsp;<a href="./index.html">HTTPRequest</a><br/>
+<br/>
+<h1>HTTPRequest</h1>
+<code><span class="keyword">object </span><span class="identifier">HTTPRequest</span></code>
+<p>Http request utility object that has some convenient functions for use in various
+places in the application.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-sealed-pack-info-to-send/index.html">SealedPackInfoToSend</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">SealedPackInfoToSend</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-c-o-n-t-e-n-t_-a_-e-x-t-e-n-s-i-o-n.html">CONTENT_A_EXTENSION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">CONTENT_A_EXTENSION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-o-n-t-e-n-t_-b_-e-x-t-e-n-s-i-o-n.html">CONTENT_B_EXTENSION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">CONTENT_B_EXTENSION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-m-a-g-e_-e-x-t-e-n-s-i-o-n.html">IMAGE_EXTENSION</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">IMAGE_EXTENSION</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-u-r-c-h-a-s-e_-p-a-c-k_-b-a-c-k-e-n-d.html">PURCHASE_PACK_BACKEND</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">PURCHASE_PACK_BACKEND</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-e-r-v-e-r-s_-u-r-l_-b-a-c-k-e-n-d.html">SERVERS_URL_BACKEND</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">SERVERS_URL_BACKEND</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="download-image.html">downloadImage</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">downloadImage</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadImage(android.content.Context, kotlin.String, kotlin.Int, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadImage(android.content.Context, kotlin.String, kotlin.Int, kotlin.Int)/url">url</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadImage(android.content.Context, kotlin.String, kotlin.Int, kotlin.Int)/width">width</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadImage(android.content.Context, kotlin.String, kotlin.Int, kotlin.Int)/height">height</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/graphics/Bitmap.html"><span class="identifier">Bitmap</span></a><span class="symbol">?</span></code>
+<p>Downloads an image. This is mostly used for downloading the images for packs, but can be
+extended to download profile pictures and other assets as well</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="download-pack.html">downloadPack</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">downloadPack</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadPack(android.content.Context, kotlin.String, kotlin.String)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadPack(android.content.Context, kotlin.String, kotlin.String)/packID">packID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$downloadPack(android.content.Context, kotlin.String, kotlin.String)/packType">packType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Download pack from the server. Downloads the image file, the text content and creates
+a local folder and stores the results from the download in it. The user should now have these
+packs online or offline.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-content.html">getContent</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getContent</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$getContent(kotlin.String)/textUrl">textUrl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code>
+<p>Gets text contents of a pack. Simple download request</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-servers.html">getServers</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getServers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Gets the available ICE candidates for the current user by making an API call to the Node JS
+API. The retrieval of ICE servers is done server-side to protect API keys and secrets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="purchase-pack.html">purchasePack</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">purchasePack</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$purchasePack(kotlin.String, kotlin.String)/packID">packID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.HTTPRequest$purchasePack(kotlin.String, kotlin.String)/packType">packType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-download-pack-response/index.html"><span class="identifier">DownloadPackResponse</span></a><span class="symbol">&gt;</span></code>
+<p>Purchases a pack from the store. Makes an API call to the protected endpoint.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

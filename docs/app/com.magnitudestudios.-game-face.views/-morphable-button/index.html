@@ -1,0 +1,136 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MorphableButton - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.views</a>&nbsp;/&nbsp;<a href="./index.html">MorphableButton</a><br/>
+<br/>
+<h1>MorphableButton</h1>
+<code><span class="keyword">class </span><span class="identifier">MorphableButton</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AppCompatButton</span><span class="symbol">, </span><span class="identifier">LifecycleObserver</span></code>
+<p>Morphable button</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-circular-animated-drawable/index.html">CircularAnimatedDrawable</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">CircularAnimatedDrawable</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/drawable/Drawable.html"><span class="identifier">Drawable</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/graphics/drawable/Animatable.html"><span class="identifier">Animatable</span></a></code>
+<p>Circular animated drawable</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-state/index.html">State</a></p>
+</td>
+<td>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">State</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MorphableButton</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/attrs">attrs</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/util/AttributeSet.html"><span class="identifier">AttributeSet</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$<init>(android.content.Context, android.util.AttributeSet, kotlin.Int)/defStyle">defStyle</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="animation-in-progress.html">animationInProgress</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">animationInProgress</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="drawable.html">drawable</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">drawable</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/graphics/drawable/GradientDrawable.html"><span class="identifier">GradientDrawable</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="initial-text.html">initialText</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">initialText</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="initial-width.html">initialWidth</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">initialWidth</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-animated-drawable.html">mAnimatedDrawable</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">mAnimatedDrawable</span><span class="symbol">: </span><a href="-circular-animated-drawable/index.html"><span class="identifier">MorphableButton.CircularAnimatedDrawable</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="m-animation-set.html">mAnimationSet</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mAnimationSet</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/animation/AnimatorSet.html"><span class="identifier">AnimatorSet</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="state.html">state</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">state</span><span class="symbol">: </span><a href="-state/index.html"><span class="identifier">MorphableButton.State</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="draw-intermediate-progress.html">drawIntermediateProgress</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">drawIntermediateProgress</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$drawIntermediateProgress(android.graphics.Canvas)/canvas">canvas</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/Canvas.html"><span class="identifier">Canvas</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-draw.html">onDraw</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onDraw</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$onDraw(android.graphics.Canvas)/canvas">canvas</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/graphics/Canvas.html"><span class="identifier">Canvas</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-loading.html">setLoading</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLoading</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$setLoading(kotlin.Boolean)/boolean">boolean</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the button into loading mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="switch-animation.html">switchAnimation</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">switchAnimation</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$switchAnimation(kotlin.Int, kotlin.Int, kotlin.Float, kotlin.Float)/fromWidth">fromWidth</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$switchAnimation(kotlin.Int, kotlin.Int, kotlin.Float, kotlin.Float)/toWidth">toWidth</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$switchAnimation(kotlin.Int, kotlin.Int, kotlin.Float, kotlin.Float)/fromRadius">fromRadius</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.MorphableButton$switchAnimation(kotlin.Int, kotlin.Int, kotlin.Float, kotlin.Float)/toRadius">toRadius</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-float/index.html"><span class="identifier">Float</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

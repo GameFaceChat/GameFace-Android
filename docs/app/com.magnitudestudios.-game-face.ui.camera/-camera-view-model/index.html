@@ -1,0 +1,234 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CameraViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.ui.camera</a>&nbsp;/&nbsp;<a href="./index.html">CameraViewModel</a><br/>
+<br/>
+<h1>CameraViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">CameraViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AndroidViewModel</span><span class="symbol">, </span><a href="../../com.magnitudestudios.-game-face.callbacks/-room-callback/index.html"><span class="identifier">RoomCallback</span></a><span class="symbol">, </span><a href="../../com.magnitudestudios.-game-face.callbacks/-member-callback/index.html"><span class="identifier">MemberCallback</span></a></code>
+<p>Camera view model</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">CameraViewModel</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$<init>(android.app.Application)/application">application</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/app/Application.html"><span class="identifier">Application</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="changed-member.html">changedMember</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">changedMember</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="connected-room.html">connectedRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">connectedRoom</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="connections.html">connections</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">connections</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/util/concurrent/ConcurrentHashMap.html"><span class="identifier">ConcurrentHashMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<span class="identifier">PeerConnection</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="connection-status.html">connectionStatus</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">connectionStatus</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="ice-servers.html">iceServers</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">iceServers</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><span class="identifier">IceServer</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="members.html">members</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">members</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-list/index.html"><span class="identifier">MutableList</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-member/index.html"><span class="identifier">Member</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="new-member.html">newMember</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">newMember</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-member/index.html"><span class="identifier">Member</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="new-peer.html">newPeer</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">newPeer</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-member.html">addMember</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addMember</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$addMember(kotlin.String, kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$addMember(kotlin.String, kotlin.String)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;connectedRoom.value<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Add a member to the current room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="add-peer.html">addPeer</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addPeer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$addPeer(kotlin.String, org.webrtc.PeerConnection)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$addPeer(kotlin.String, org.webrtc.PeerConnection)/peer">peer</span><span class="symbol">:</span>&nbsp;<span class="identifier">PeerConnection</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Add peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="answer-received.html">answerReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">answerReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$answerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/fromUID">fromUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$answerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/session">session</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-session-info-p-o-j-o/index.html"><span class="identifier">SessionInfoPOJO</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an answer was received from a peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-room.html">createRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createRoom</span><span class="symbol">(</span><span class="keyword">vararg</span> <span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$createRoom(kotlin.Array((kotlin.String)))/calls">calls</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Create a room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="hang-up.html">hangUp</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hangUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Used to hang up the call</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ice-server-received.html">iceServerReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">iceServerReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$iceServerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO)/fromUID">fromUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$iceServerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO)/iceCandidate">iceCandidate</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-ice-candidate-p-o-j-o/index.html"><span class="identifier">IceCandidatePOJO</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an ICE candidate is received</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="initiate-connection.html">initiateConnection</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">initiateConnection</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$initiateConnection(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Initiate connection witha peer (create offer)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="join-room.html">joinRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">joinRoom</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$joinRoom(kotlin.String)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Join a room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="new-participant-joined.html">newParticipantJoined</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">newParticipantJoined</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$newParticipantJoined(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when there is a new participant in the room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="offer-received.html">offerReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">offerReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$offerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/fromUID">fromUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$offerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/session">session</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-session-info-p-o-j-o/index.html"><span class="identifier">SessionInfoPOJO</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an offer was received from a peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-ice-candidate.html">onIceCandidate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onIceCandidate</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$onIceCandidate(kotlin.String, org.webrtc.IceCandidate)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$onIceCandidate(kotlin.String, org.webrtc.IceCandidate)/iceCandidate">iceCandidate</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceCandidate</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an ICE candidate is found, and must be sent to a peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-left-room.html">onLeftRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onLeftRoom</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when the current user has left the room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-member-status-changed.html">onMemberStatusChanged</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onMemberStatusChanged</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$onMemberStatusChanged(kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$onMemberStatusChanged(kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/newStatus">newStatus</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-enum-classes/-member-status/index.html"><span class="identifier">MemberStatus</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when a status of a member has changed</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-new-member.html">onNewMember</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onNewMember</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$onNewMember(com.magnitudestudios.GameFace.pojo.VideoCall.Member)/member">member</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-member/index.html"><span class="identifier">Member</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when a new member joins a room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="participant-left.html">participantLeft</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">participantLeft</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$participantLeft(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-participant.html">removeParticipant</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removeParticipant</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraViewModel$removeParticipant(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Remove a participant</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
