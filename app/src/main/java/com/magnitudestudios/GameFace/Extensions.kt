@@ -19,11 +19,8 @@
 
 package com.magnitudestudios.GameFace
 
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.camera.core.AspectRatio
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.RequestManager
@@ -38,6 +35,12 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
+/**
+ * Load profile
+ *
+ * @param url
+ * @param target
+ */
 fun RequestManager.loadProfile(url: String, target: ImageButton) {
     if (url.isEmpty()) {
         this.load(R.drawable.ic_add_profile_pic).into(target)
@@ -52,6 +55,12 @@ fun RequestManager.loadProfile(url: String, target: ImageButton) {
             .into(target)
 }
 
+/**
+ * Load profile
+ *
+ * @param url
+ * @param target
+ */
 fun RequestManager.loadProfile(url: String?, target: ImageView) {
     if (url.isNullOrEmpty()) {
         this.load(R.drawable.ic_user_placeholder).into(target)
@@ -66,12 +75,29 @@ fun RequestManager.loadProfile(url: String?, target: ImageView) {
             .into(target)
 }
 
+/**
+ * Notify observer
+ *
+ * @param T
+ */
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
 
+/**
+ * Generic type
+ *
+ * @param T
+ */
 inline fun <reified T> genericType() = object: TypeToken<T>() {}.type
 
+/**
+ * Aspect ratio
+ *
+ * @param width
+ * @param height
+ * @return
+ */
 fun aspectRatio(width: Int, height: Int): Int {
     val previewRatio = max(width, height).toDouble() / min(width, height)
     if (abs(previewRatio - (4.0 / 3.0)) <= abs(previewRatio - (16.0 / 9.0))) {
@@ -80,18 +106,49 @@ fun aspectRatio(width: Int, height: Int): Int {
     return AspectRatio.RATIO_16_9
 }
 
+/**
+ * Do on child added
+ *
+ * @param action
+ * @receiver
+ */
 inline fun DatabaseReference.doOnChildAdded(
         crossinline action : (snapshot : DataSnapshot) -> Unit
 ) = addListener(childAdded = action)
 
+/**
+ * Do on child removed
+ *
+ * @param action
+ * @receiver
+ */
 inline fun DatabaseReference.doOnChildRemoved(
         crossinline action : (snapshot : DataSnapshot) -> Unit
 ) = addListener(childRemoved = action)
 
+/**
+ * Do on error
+ *
+ * @param action
+ * @receiver
+ */
 inline fun DatabaseReference.doOnError(
         crossinline action : (error : DatabaseError) -> Unit
 ) = addListener(onCancelled = action)
 
+/**
+ * Add listener
+ *
+ * @param childAdded
+ * @param childRemoved
+ * @param childChanged
+ * @param onCancelled
+ * @receiver
+ * @receiver
+ * @receiver
+ * @receiver
+ * @return
+ */
 inline fun DatabaseReference.addListener (
         crossinline childAdded: (
                 snapshot: DataSnapshot

@@ -27,6 +27,11 @@ import com.magnitudestudios.GameFace.repository.FirebaseHelper
 import com.magnitudestudios.GameFace.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 
+/**
+ * Add members view model
+ *
+ * @constructor Create empty Add members view model
+ */
 class AddMembersViewModel : ViewModel() {
     var friends = MutableLiveData<List<Friend>>()
     var addedMembers = MutableLiveData<List<String>>()

@@ -27,6 +27,15 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 
+/**
+ * Recycler view click listener
+ *
+ * @property clickListener
+ * @constructor
+ *
+ * @param context
+ * @param recyclerView
+ */
 class RecyclerViewClickListener(context: Context?, recyclerView: RecyclerView, private val clickListener: ClickListener?) : OnItemTouchListener {
     private val gestureDetector: GestureDetector
     override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
@@ -39,8 +48,27 @@ class RecyclerViewClickListener(context: Context?, recyclerView: RecyclerView, p
 
     override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
     override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
+
+    /**
+     * On click listener
+     *
+     * @constructor Create empty Click listener
+     */
     interface ClickListener {
+        /**
+         * On click
+         *
+         * @param view
+         * @param position
+         */
         fun onClick(view: View?, position: Int)
+
+        /**
+         * On long click
+         *
+         * @param view
+         * @param position
+         */
         fun onLongClick(view: View?, position: Int)
     }
 

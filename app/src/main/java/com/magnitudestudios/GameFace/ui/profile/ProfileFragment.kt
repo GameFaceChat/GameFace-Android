@@ -40,6 +40,11 @@ import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendRequestsFragment
 import com.magnitudestudios.GameFace.ui.profile.tabs.FriendsFragment
 
+/**
+ * Profile fragment
+ *
+ * @constructor Create empty Profile fragment
+ */
 class ProfileFragment : BaseFragment() {
     private lateinit var bind: FragmentProfileBinding
 

@@ -44,6 +44,11 @@ import com.magnitudestudios.GameFace.ui.shop.tabs.MarketFragment
 import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
 import kotlinx.coroutines.*
 
+/**
+ * Shop fragment
+ *
+ * @constructor Create empty Shop fragment
+ */
 class ShopFragment : BaseFragment() {
 
     lateinit var bind:FragmentShopBinding
@@ -106,6 +111,11 @@ class ShopFragment : BaseFragment() {
         if (repeatedSwitch?.isCancelled == true) repeatedSwitch?.start()
     }
 
+    /**
+     * Replace fragment
+     *
+     * @param position
+     */
     fun replaceFragment(position: Int) {
         val fragment = when (position) {
             0 -> MarketFragment()
@@ -117,6 +127,11 @@ class ShopFragment : BaseFragment() {
         childFragmentManager.beginTransaction().replace(R.id.shopContainer, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
     }
 
+    /**
+     * Show case adapter
+     *
+     * @constructor Create empty Show case adapter
+     */
     inner class ShowCaseAdapter : RecyclerView.Adapter<ShowCaseItemViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShowCaseItemViewHolder {
             return ShowCaseItemViewHolder(ItemShowcaseBinding.inflate(LayoutInflater.from(parent.context), parent, false),

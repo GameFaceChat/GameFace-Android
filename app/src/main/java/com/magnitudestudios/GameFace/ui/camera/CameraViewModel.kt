@@ -53,6 +53,13 @@ import org.webrtc.SessionDescription
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Camera view model
+ *
+ * @constructor
+ *
+ * @param application
+ */
 class CameraViewModel(application: Application) : AndroidViewModel(application), RoomCallback, MemberCallback {
     private val connectedRoom = MutableLiveData<String>()
 
@@ -93,6 +100,12 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         emit(tempIceServers)
     }
 
+    /**
+     * Add peer
+     *
+     * @param uid
+     * @param peer
+     */
     fun addPeer(uid: String, peer: PeerConnection) {
         if (!connections.value!!.containsKey(uid)) {
             connections.value?.put(uid, peer)
@@ -101,11 +114,22 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     }
 
+    /**
+     * Called when an ICE candidate is found, and must be sent to a peer
+     *
+     * @param uid
+     * @param iceCandidate
+     */
     fun onIceCandidate(uid: String, iceCandidate: IceCandidate) {
         if (!SessionRepository.currentRoom.isNullOrEmpty()) SessionRepository.sendIceCandidate(iceCandidate, uid)
     }
 
 
+    /**
+     * Initiate connection witha peer (create offer)
+     *
+     * @param uid
+     */
     fun initiateConnection(uid: String) {
         val peer = connections.value?.get(uid) ?: return
         val sdpConstraints = MediaConstraints()
@@ -120,6 +144,11 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         }, sdpConstraints)
     }
 
+    /**
+     * Create a room
+     *
+     * @param calls
+     */
     fun createRoom(vararg calls: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val roomID = SessionRepository.createRoom(
@@ -134,12 +163,23 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
+    /**
+     * Add a member to the current room
+     *
+     * @param uid
+     * @param roomID
+     */
     fun addMember(uid: String, roomID : String? = connectedRoom.value) {
         if (!roomID.isNullOrEmpty()) {
             SessionRepository.addMember(uid, roomID)
         }
     }
 
+    /**
+     * Join a room
+     *
+     * @param roomID
+     */
     fun joinRoom(roomID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             connectedRoom.postValue(SessionRepository.joinRoom(
@@ -191,11 +231,20 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     }
 
+    /**
+     * Remove a participant
+     *
+     * @param uid
+     */
     @Synchronized
     fun removeParticipant(uid: String) {
         connections.value!!.remove(uid)
     }
 
+    /**
+     * Used to hang up the call
+     *
+     */
     @Synchronized
     fun hangUp() {
         if (connections.value != null) {

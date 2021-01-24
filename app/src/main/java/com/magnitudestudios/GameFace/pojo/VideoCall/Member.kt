@@ -25,6 +25,15 @@ import com.google.firebase.database.ServerValue
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 
+/**
+ * Member
+ *
+ * @property uid                The UID of the member
+ * @property memberStatus       The status of the member
+ * @property timestamp          The timestamp of when the member was created
+ * @property profile            The profile of the member
+ * @constructor Create empty Member
+ */
 data class Member (
         @NonNull
         val uid: String = "",

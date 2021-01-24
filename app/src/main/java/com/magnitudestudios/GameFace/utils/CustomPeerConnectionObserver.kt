@@ -23,6 +23,14 @@ import android.util.Log
 import org.webrtc.*
 import org.webrtc.PeerConnection.*
 
+/**
+ * Custom peer connection observer
+ *
+ * @property peerUID
+ * @constructor
+ *
+ * @param logTag
+ */
 open class CustomPeerConnectionObserver(var peerUID: String, logTag: String) : Observer {
     private var logTag : String = this.javaClass.canonicalName + " " + logTag + " UID: $peerUID"
     override fun onSignalingChange(signalingState: SignalingState) {

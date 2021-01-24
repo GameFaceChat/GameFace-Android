@@ -28,6 +28,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+/**
+ * Profile view model
+ *
+ * @constructor Create empty Profile view model
+ */
 class ProfileViewModel : ViewModel() {
     val numberOfInstalledPacks = liveData {
         emit(ShopRepository.getNumberOfRemotePacks())

@@ -34,6 +34,11 @@ import com.magnitudestudios.GameFace.aspectRatio
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentHomeBinding
 
+/**
+ * Home fragment
+ *
+ * @constructor Create empty Home fragment
+ */
 class HomeFragment : BaseFragment() {
     companion object {
         private const val TAG = "HomeFragment"

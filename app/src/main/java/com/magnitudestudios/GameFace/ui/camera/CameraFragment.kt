@@ -50,6 +50,11 @@ import kotlinx.coroutines.launch
 import org.webrtc.*
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Camera fragment
+ *
+ * @constructor Create empty Camera fragment
+ */
 class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
     private var videoCapturer: VideoCapturer? = null

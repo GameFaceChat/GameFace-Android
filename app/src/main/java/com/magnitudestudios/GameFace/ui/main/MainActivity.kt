@@ -38,6 +38,11 @@ import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
 import com.magnitudestudios.GameFace.ui.login.LoginActivity
 
 
+/**
+ * Main activity
+ *
+ * @constructor Create empty Main activity
+ */
 class MainActivity : BasePermissionsActivity() {
 
     private lateinit var binding: ActivityMainBinding

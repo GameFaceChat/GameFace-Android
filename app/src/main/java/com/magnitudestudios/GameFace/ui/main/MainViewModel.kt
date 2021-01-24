@@ -36,6 +36,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
+/**
+ * Main view model
+ *
+ * @constructor Create empty Main view model
+ */
 class MainViewModel : ViewModel() {
     val user: MutableLiveData<Resource<User>> = MutableLiveData()
     val profile: MutableLiveData<Resource<Profile>> = MutableLiveData()
@@ -54,6 +59,10 @@ class MainViewModel : ViewModel() {
     }
     private var listener: ValueEventListener? = null
 
+    /**
+     * Sign out the current user
+     *
+     */
     fun signOutUser() {
         if (Firebase.auth.currentUser != null) {
             if (listener != null) {
@@ -87,6 +96,10 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Check if the device token has been registered
+     *
+     */
     fun checkDevice() {
         viewModelScope.launch(Dispatchers.IO) {
             if (!user.value?.data?.devicesID?.containsKey(UserRepository.getDeviceToken())!!) {

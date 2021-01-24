@@ -40,6 +40,11 @@ import com.magnitudestudios.GameFace.network.DownloadSinglePack
 import com.magnitudestudios.GameFace.pojo.Shop.ShopItem
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
+/**
+ * Card pack details fragment
+ *
+ * @constructor Create empty Card pack details fragment
+ */
 class CardPackDetailsFragment : BaseFragment() {
     private lateinit var bind: FragmentPackDetailsBinding
     val args: CardPackDetailsFragmentArgs by navArgs()

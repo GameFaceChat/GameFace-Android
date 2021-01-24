@@ -27,6 +27,15 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.textfield.TextInputLayout
 
 
+/**
+ * Custom input layout
+ *
+ * @constructor
+ *
+ * @param context
+ * @param attrs
+ * @param defStyleAttr
+ */
 class CustomInputLayout @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : TextInputLayout(context, attrs, defStyleAttr) {

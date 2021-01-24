@@ -37,6 +37,11 @@ import com.magnitudestudios.GameFace.pojo.Helper.Resource
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
+/**
+ * Edit profile fragment
+ *
+ * @constructor Create empty Edit profile fragment
+ */
 class EditProfileFragment : BottomSheetDialogFragment() {
     private lateinit var bind: DialogEditProfileBinding
     private lateinit var viewModel : EditProfileViewModel

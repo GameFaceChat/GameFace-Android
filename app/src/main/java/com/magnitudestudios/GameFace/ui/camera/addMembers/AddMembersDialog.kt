@@ -42,6 +42,11 @@ import com.magnitudestudios.GameFace.ui.camera.CameraViewModel
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 import com.magnitudestudios.GameFace.views.holders.FriendViewHolder
 
+/**
+ * Add members dialog
+ *
+ * @constructor Create empty Add members dialog
+ */
 class AddMembersDialog : BottomSheetDialogFragment() {
     private lateinit var bind : AddMembersDialogBinding
     private lateinit var mainViewModel: MainViewModel

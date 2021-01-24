@@ -41,6 +41,11 @@ import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
 
+/**
+ * Sign up screen fragment
+ *
+ * @constructor Create empty Sign up screen fragment
+ */
 class SignUpScreenFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentSignupBinding
     private lateinit var viewModel: LoginViewModel

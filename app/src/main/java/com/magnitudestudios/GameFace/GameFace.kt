@@ -29,6 +29,11 @@ import androidx.core.app.NotificationCompat
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
+/**
+ * This is the Base Application class
+ *
+ * @constructor
+ */
 class GameFace : Application() {
     override fun onCreate() {
         super.onCreate()

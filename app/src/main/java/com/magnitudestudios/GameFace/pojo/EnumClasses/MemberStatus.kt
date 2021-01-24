@@ -19,10 +19,40 @@
 
 package com.magnitudestudios.GameFace.pojo.EnumClasses
 
+/**
+ * Member status
+ *
+ * @constructor Create empty Member status
+ */
 enum class MemberStatus {
+    /**
+     * When the member is Calling
+     *
+     */
     CALLING,
+
+    /**
+     * Unavailable
+     *
+     * The member is unavailable
+     */
     UNAVAILABLE,
+
+    /**
+     *
+     * The member has received the call
+     */
     RECEIVED,
+
+    /**
+     *
+     * The member has accepted the call and is joined/is joining
+     */
     ACCEPTED,
+
+    /**
+     * The member has been disconnected
+     *
+     */
     DISCONNECTED
 }

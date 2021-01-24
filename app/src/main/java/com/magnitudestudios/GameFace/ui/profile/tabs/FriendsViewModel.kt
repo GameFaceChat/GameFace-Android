@@ -25,6 +25,11 @@ import com.magnitudestudios.GameFace.repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+/**
+ * Friends view model
+ *
+ * @constructor Create empty Friends view model
+ */
 class FriendsViewModel : ViewModel() {
     val friendProfiles = MutableLiveData<List<Profile>>()
     private val queryString = MutableLiveData<String>()
@@ -42,26 +47,51 @@ class FriendsViewModel : ViewModel() {
         return Transformations.map(friendProfiles) { input: List<Profile>? -> input?.filter { query.isEmpty() || it.username.startsWith(query) || it.name.contains(query) } }
     }
 
+    /**
+     * Get the profiles of the specified friends UIDs
+     *
+     * @param uids  The UIDs of the friends
+     */
     fun getFriendProfiles(uids: List<String>) {
         viewModelScope.launch(Dispatchers.IO) {
             friendProfiles.postValue(UserRepository.getUserProfilesByUID(uids))
         }
     }
 
+    /**
+     * Set the Friend Request UIDs
+     *
+     * @param uids      The UIDs of the current Friend Requests
+     */
     fun setRequestUIDs(uids: List<String>) {
         requestUIDs.value = uids
     }
 
+    /**
+     * Sets the search query for the friend
+     *
+     * @param query The query string for the username of the friend
+     */
     fun setQueryFriend(query: String) {
         queryString.value = query
     }
 
+    /**
+     * Accepts the Friend Request of this uid
+     *
+     * @param uid   UID of the friend whose request to accept
+     */
     fun acceptFriendRequest(uid: String) {
         viewModelScope.launch(Dispatchers.IO) {
             UserRepository.acceptFriendRequest(uid)
         }
     }
 
+    /**
+     * Deny friend request
+     *
+     * @param uid   UID of the friend whose request to deny
+     */
     fun denyFriendRequest(uid: String) {
         viewModelScope.launch(Dispatchers.IO) {
             UserRepository.deleteFriendRequest(uid, true)

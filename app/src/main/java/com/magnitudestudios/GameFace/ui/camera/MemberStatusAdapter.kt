@@ -27,6 +27,12 @@ import com.magnitudestudios.GameFace.databinding.MemberInformationBinding
 import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.views.holders.MemberViewHolder
 
+/**
+ * Member status adapter
+ *
+ * @property members
+ * @constructor Create empty Member status adapter
+ */
 class MemberStatusAdapter(val members: List<Member>) : SortedRVAdapter<Member>(Member::class.java) {
 
     override fun onViewHolderCreated(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

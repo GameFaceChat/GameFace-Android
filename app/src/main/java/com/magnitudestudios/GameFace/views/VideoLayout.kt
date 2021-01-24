@@ -29,6 +29,15 @@ import androidx.core.view.forEach
 import androidx.recyclerview.widget.ItemTouchHelper
 import kotlin.math.max
 
+/**
+ * Video layout
+ *
+ * @constructor
+ *
+ * @param context
+ * @param attrs
+ * @param defStyle
+ */
 class VideoLayout @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
@@ -143,6 +152,11 @@ class VideoLayout @JvmOverloads constructor(
         return LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     }
 
+    /**
+     * Layout params
+     *
+     * @constructor Create empty Layout params
+     */
     open class LayoutParams : ViewGroup.LayoutParams {
 
         constructor(width: Int, height: Int) : super(width, height) {}

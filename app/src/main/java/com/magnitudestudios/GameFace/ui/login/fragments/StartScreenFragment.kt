@@ -47,6 +47,11 @@ import com.magnitudestudios.GameFace.databinding.FragmentStartscreenBinding
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
+/**
+ * Start screen fragment
+ *
+ * @constructor Create empty Start screen fragment
+ */
 class StartScreenFragment : Fragment(), View.OnClickListener {
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private lateinit var navController: NavController

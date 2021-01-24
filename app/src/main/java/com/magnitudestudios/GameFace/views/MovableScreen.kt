@@ -38,6 +38,16 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+/**
+ * Movable screen
+ *
+ * @constructor
+ *
+ * @param context
+ * @param attributeSet
+ * @param styleAttr
+ * @param overlay
+ */
 class MovableScreen @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
@@ -72,6 +82,13 @@ class MovableScreen @JvmOverloads constructor(
             maxheight = (parent as View).height.toFloat()
         }
 
+    /**
+     * Initialize
+     *
+     * @param eglBase
+     * @param overlay
+     * @param onTop
+     */
     fun initialize(eglBase: EglBase, overlay: Boolean, onTop : Boolean = false) {
         surface.apply {
             setZOrderMediaOverlay(overlay)
@@ -86,11 +103,19 @@ class MovableScreen @JvmOverloads constructor(
 
     }
 
+    /**
+     * Sets the Screen into disconnected mode
+     *
+     */
     fun setDisconnected() {
         this.surface.clearImage()
     }
 
-    //Shows the progress bar
+    /**
+     * Set loading
+     *
+     * @param isLoading
+     *///Shows the progress bar
     fun setLoading(isLoading: Boolean) {
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
@@ -193,13 +218,19 @@ class MovableScreen @JvmOverloads constructor(
         animator.start()
     }
 
-    // Set this surface view as a smaller screen
+    /**
+     * Set calling
+     *
+     */// Set this surface view as a smaller screen
     fun setCalling() {
         setSmallScreen()
         stateConnected = true
     }
 
-    // Sets this as a fullscreen view
+    /**
+     * Sets the screen into local
+     *
+     */// Sets this as a fullscreen view
     fun setLocal() {
         setFullScreen()
         stateConnected = false

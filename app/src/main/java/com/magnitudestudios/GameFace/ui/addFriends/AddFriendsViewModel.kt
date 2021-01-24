@@ -31,6 +31,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
+/**
+ * Add friends view model
+ *
+ * @constructor Create empty Add friends view model
+ */
 class AddFriendsViewModel : ViewModel() {
     private val queryString: MutableLiveData<String> = MutableLiveData()
 
@@ -44,24 +49,56 @@ class AddFriendsViewModel : ViewModel() {
 
     val friendUIDs = MutableLiveData<List<String>>()
 
+    /**
+     * Set friend requests sent
+     *
+     * @param a
+     */
     fun setFriendRequestsSent(a: List<FriendRequest>) {
         friendRequestedUIDs.value = a.map { it.friendUID }
     }
+
+    /**
+     * Set friends
+     *
+     * @param userFriends
+     */
     fun setFriends(userFriends: List<Friend>) {
         friendUIDs.value = userFriends.map { it.uid }
     }
+
+    /**
+     * Set query string
+     *
+     * @param query
+     */
     fun setQueryString(query: String) {
         queryString.value = query
     }
 
+    /**
+     * Get query string
+     *
+     * @return
+     */
     fun getQueryString(): String? {
         return queryString.value
     }
 
+    /**
+     * Send friend request
+     *
+     * @param profile
+     */
     fun sendFriendRequest(profile: Profile) {
         if (profile.uid != Firebase.auth.currentUser!!.uid) UserRepository.sendFriendRequest(profile)
     }
 
+    /**
+     * Delete friend request
+     *
+     * @param profile
+     */
     fun deleteFriendRequest(profile: Profile) {
         Log.e("HERE", "FIRST")
         if (profile.uid in getFriendRequestedUIDs()) {
@@ -72,9 +109,20 @@ class AddFriendsViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Get friend requested UIDS
+     *
+     * @return
+     */
     fun getFriendRequestedUIDs() : List<String> {
         return friendRequestedUIDs.value ?: listOf()
     }
+
+    /**
+     * Get friend UIDs
+     *
+     * @return
+     */
     fun getFriendUIDs() : List<String> {
         return friendUIDs.value ?: listOf()
     }

@@ -23,6 +23,18 @@ import android.util.Log
 import com.magnitudestudios.GameFace.pojo.VideoCall.IceServer
 import kotlin.collections.ArrayList
 
+/**
+ * Server information
+ *
+ * @property accountSid
+ * @property dateCreated
+ * @property dateUpdated
+ * @property iceServers
+ * @property password
+ * @property ttl
+ * @property username
+ * @constructor Create empty Server information
+ */
 data class ServerInformation (
         @JvmField
         val accountSid: String? = null,
@@ -41,6 +53,11 @@ data class ServerInformation (
 )
 {
     constructor() : this("", "", "", ArrayList(), "", 0, "")
+
+    /**
+     * Print all for debugging
+     *
+     */
     fun printAll() {
         Log.d("TAG", "printAll: $accountSid $dateCreated $dateUpdated")
         for (i in iceServers!!) {

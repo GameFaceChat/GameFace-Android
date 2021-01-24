@@ -45,6 +45,11 @@ import com.magnitudestudios.GameFace.databinding.FragmentLoginBinding
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
+/**
+ * Login screen fragment
+ *
+ * @constructor Create empty Login screen fragment
+ */
 class LoginScreenFragment : Fragment(), View.OnClickListener {
     private var mGoogleSignInClient: GoogleSignInClient? = null
 
