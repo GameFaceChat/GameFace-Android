@@ -21,6 +21,22 @@ package com.magnitudestudios.GameFace.pojo.Shop
 
 import com.google.firebase.database.Exclude
 
+/**
+ * Shop item
+ *
+ * @property name           The name of the Shop Item
+ * @property description    The description of the Shop Item
+ * @property imgURL         The URL of the image for the pack
+ * @property date_released  The date that this Shop Item was released
+ * @property price          The price of the Shop Item
+ * @property installs       The number of installs that this pack has received
+ * @property samples        The number of sample cards that this pack has to show users
+ * @property order          The order in which to show the pack (if present)
+ * @property version_number The version number of the pack (the latest pack version)
+ * @property type           The type of the pack
+ * @property id             The ID of the pack
+ * @constructor Create empty Shop item
+ */
 data class ShopItem constructor(
         val name: String = "GameFacePack",
         val description: String = "",

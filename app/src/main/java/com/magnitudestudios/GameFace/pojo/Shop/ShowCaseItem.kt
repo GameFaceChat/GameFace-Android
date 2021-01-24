@@ -19,6 +19,14 @@
 
 package com.magnitudestudios.GameFace.pojo.Shop
 
+/**
+ * Show case item
+ *
+ * @property image  The image of the ShowCase Item
+ * @property game   The game that this pack is referring to (type)
+ * @property pack   The specific pack for this ShowCase Item
+ * @constructor Create empty Show case item
+ */
 data class ShowCaseItem (
         val image : String = "",
         val game : String = "",

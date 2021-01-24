@@ -21,6 +21,19 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 
 import com.magnitudestudios.GameFace.pojo.Shop.RemotePackInfo
 
+/**
+ * Local pack info
+ *
+ * @property version        The version of the locally stored pack
+ * @property imgPath        The local path to the image
+ * @property contentAPath   The file path to the content A of the pack
+ * @property contentBPath   The file path to the content B of the pack
+ * @property name           The name of the pack
+ * @constructor
+ *
+ * @param id                The ID of the pack
+ * @param type              The type of the pack
+ */
 class LocalPackInfo(
         id : String = "",
         type : String = "",

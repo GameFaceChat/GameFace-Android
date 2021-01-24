@@ -19,9 +19,32 @@
 
 package com.magnitudestudios.GameFace.pojo.EnumClasses
 
+/**
+ * Resource status for retrieval
+ * Used for LiveData instances
+ *
+ */
 enum class Status {
+    /**
+     * The resource was retrieved successfully
+     */
     SUCCESS,
+
+    /**
+     * An error occurred while retrieving the resource
+     *
+     */
     ERROR,
+
+    /**
+     * The resource is still loading; has not retrieved it yet
+     *
+     */
     LOADING,
+
+    /**
+     * The default state for a state; inactive
+     *
+     */
     NOTHING,
 }

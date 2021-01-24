@@ -22,6 +22,19 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 import androidx.annotation.NonNull
 import com.google.firebase.database.Exclude
 
+/**
+ * User
+ *
+ * @property uid                        The UID of the User
+ * @property created                    The date when the user was created
+ * @property devicesID                  The device IDs registered to this user
+ * @property friendRequests             The friend requests of this user
+ * @property friendRequestsSent         The friend requests sent by this user
+ * @property friends                    The friends of the user
+ * @property money                      The money that this user has
+ * @property rooms                      The rooms that this user is part of
+ * @constructor Create empty User
+ */
 data class User(
         @JvmField
         @NonNull
@@ -34,6 +47,11 @@ data class User(
         var money : Int = 0,
         var rooms: Map<String, Boolean> = HashMap()
 ) {
+        /**
+         * Get created
+         *
+         * @return
+         */
         @Exclude
         fun getCreated(): Long? {
                 return if (created is Long) {

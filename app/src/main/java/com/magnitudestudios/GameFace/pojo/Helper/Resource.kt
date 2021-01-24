@@ -23,9 +23,15 @@ import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 
 
 /**
- * A generic class that holds a value with its loading status.
- * @param <T>
-</T> */
+ * Resource class for LiveData instances
+ * Keeps track of the status of a resource
+ *
+ * @param T             Generic object class
+ * @property status     The status of the resource
+ * @property data       The data that the resource object holds
+ * @property message    The message (if there is one)
+ * @constructor Create empty Resource
+ */
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {
         fun <T> success(data: T?): Resource<T> {

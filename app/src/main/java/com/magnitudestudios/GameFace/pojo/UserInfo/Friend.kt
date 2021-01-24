@@ -22,7 +22,14 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.ServerValue
 
-// Key UID, Data Below
+/**
+ * Friend
+ *
+ * @property uid            The UID of the friend
+ * @property addedDate      The date when the friend was added
+ * @property minutesCalled  The amount of minutes the friend has called with the current user
+ * @constructor Create empty Friend
+ */// Key UID, Data Below
 data class Friend (
         @JvmField
         var uid: String = "",
@@ -33,6 +40,11 @@ data class Friend (
         @JvmField
         var minutesCalled: Int = 0
 ) {
+    /**
+     * Get added date
+     *
+     * @return
+     */
     @Exclude
     fun getAddedDate(): Long? {
         return if (addedDate is Long) {
