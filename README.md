@@ -1,7 +1,7 @@
 # GameFace
 <img src="https://circleci.com/gh/GameFaceChat/GameFace-Android.svg?style=svg" />
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/37857112/105618654-d9d5d500-5db7-11eb-8229-53ac36d21ea0.png" width="400" height="400">
+  <img src="https://user-images.githubusercontent.com/37857112/105650883-3225d900-5e83-11eb-9ae0-246b7a654b4a.png" width="400" height="400">
 </p>
 
 GameFace is a group video call application in which users can also play games with each other while on call. Users can purchase "game packs" from the store, and then use these packs within the video call application. Each user's profile shows the amount of games that the user has won, and the number of packs they have purchased. Every time you win a game, you gain game points which can be used to purchase packs.
