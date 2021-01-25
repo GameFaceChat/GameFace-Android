@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RoomCallback - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.callbacks</a>&nbsp;/&nbsp;<a href="./index.html">RoomCallback</a><br/>
+<br/>
+<h1>RoomCallback</h1>
+<code><span class="keyword">interface </span><span class="identifier">RoomCallback</span></code>
+<p>Callback for room events including WebRTC protocol events</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="answer-received.html">answerReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">answerReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$answerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/fromUID">fromUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$answerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/session">session</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-session-info-p-o-j-o/index.html"><span class="identifier">SessionInfoPOJO</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an answer was received from a peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ice-server-received.html">iceServerReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">iceServerReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$iceServerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO)/fromUID">fromUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$iceServerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO)/iceCandidate">iceCandidate</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-ice-candidate-p-o-j-o/index.html"><span class="identifier">IceCandidatePOJO</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an ICE candidate is received</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="new-participant-joined.html">newParticipantJoined</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">newParticipantJoined</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$newParticipantJoined(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when there is a new participant in the room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="offer-received.html">offerReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">offerReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$offerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/fromUID">fromUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$offerReceived(kotlin.String, com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO)/session">session</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-session-info-p-o-j-o/index.html"><span class="identifier">SessionInfoPOJO</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when an offer was received from a peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-left-room.html">onLeftRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onLeftRoom</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when the current user has left the room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="participant-left.html">participantLeft</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">participantLeft</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.callbacks.RoomCallback$participantLeft(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.magnitudestudios.-game-face.ui.camera/-camera-view-model/index.html">CameraViewModel</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">CameraViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">AndroidViewModel</span><span class="symbol">, </span><a href="./index.html"><span class="identifier">RoomCallback</span></a><span class="symbol">, </span><a href="../-member-callback/index.html"><span class="identifier">MemberCallback</span></a></code>
+<p>Camera view model</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

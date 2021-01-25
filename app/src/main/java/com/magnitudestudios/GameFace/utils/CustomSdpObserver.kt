@@ -23,6 +23,13 @@ import android.util.Log
 import org.webrtc.SdpObserver
 import org.webrtc.SessionDescription
 
+/**
+ * Custom sdp observer
+ *
+ * @constructor
+ *
+ * @param logTag
+ */
 open class CustomSdpObserver(logTag: String) : SdpObserver {
     private var tag = this.javaClass.canonicalName
     override fun onCreateSuccess(sessionDescription: SessionDescription) {

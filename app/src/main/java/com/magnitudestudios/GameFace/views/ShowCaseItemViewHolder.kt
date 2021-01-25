@@ -26,7 +26,20 @@ import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
 import com.magnitudestudios.GameFace.pojo.Shop.ShowCaseItem
 
+/**
+ * Show case item view holder
+ *
+ * @property bind       The binding of the ShowCaseItem
+ * @property listener   The onClick listener
+ * @see ItemShowcaseBinding
+ * @constructor Create empty Show case item view holder
+ */
 class ShowCaseItemViewHolder(private val bind: ItemShowcaseBinding, private val listener: RVButtonClick) : RecyclerView.ViewHolder(bind.root) {
+    /**
+     * Called when a ShowCaseItem is binded to a ViewHolder
+     *
+     * @param item
+     */
     fun bind(item: ShowCaseItem) {
         Glide.with(itemView).load(item.image).transition(DrawableTransitionOptions.withCrossFade()).into(bind.showcaseImage)
         bind.showcaseImage.setOnClickListener {

@@ -34,6 +34,11 @@ import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FriendsContainerScreenBinding
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
+/**
+ * Friend container fragment
+ *
+ * @constructor Create empty Friend container fragment
+ */
 class FriendContainerFragment : BaseFragment() {
     private lateinit var bind : FriendsContainerScreenBinding
     private lateinit var mainViewModel: MainViewModel
@@ -82,6 +87,13 @@ class FriendContainerFragment : BaseFragment() {
         })
     }
 
+    /**
+     * Profile tab adapter
+     *
+     * @constructor
+     *
+     * @param fragment
+     */
     inner class ProfileTabAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         override fun getItemCount(): Int = NUMBER_OF_TABS
 

@@ -19,6 +19,13 @@
 
 package com.magnitudestudios.GameFace.pojo.VideoCall
 
+/**
+ * Session details
+ *
+ * @property username
+ * @property sessionDescriptionJSON
+ * @constructor Create empty Session details
+ */
 data class SessionDetails (
         @JvmField
         var username: String? = null,

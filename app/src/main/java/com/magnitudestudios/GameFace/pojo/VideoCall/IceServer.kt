@@ -19,6 +19,15 @@
 
 package com.magnitudestudios.GameFace.pojo.VideoCall
 
+/**
+ * Ice server
+ *
+ * @property url        The url of the ICE server
+ * @property username   username if needed for the server
+ * @property urls       The different Urls to try
+ * @property credential The credential if needed for the server
+ * @constructor Create empty Ice server
+ */
 data class IceServer (
     @JvmField
     val url: String,

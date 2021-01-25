@@ -37,11 +37,18 @@ import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 
+/**
+ * Incoming call
+ *
+ * @constructor Create empty Incoming call
+ */
 class IncomingCall : BasePermissionsActivity() {
     private lateinit var bind: ActivityIncomingCallBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Delete the notification
         deleteNotification()
+
         bind = ActivityIncomingCallBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
@@ -50,6 +57,7 @@ class IncomingCall : BasePermissionsActivity() {
 
         val roomID = intent.getStringExtra(Constants.ROOM_ID_KEY)!!
 
+        //Load the member profiles
         val memberProfiles = try {
             Gson().fromJson(intent.getStringExtra(Constants.ROOM_MEMBERS_KEY), object : TypeToken<List<Profile>>() {}.type) as List<Profile>
         } catch (e: Exception) {
@@ -58,6 +66,7 @@ class IncomingCall : BasePermissionsActivity() {
             ArrayList<Profile>()
         }
 
+        //Update the UI of the Incoming call screen
         Glide.with(this)
                 .load(memberProfiles[0].profilePic)
                 .placeholder(R.drawable.profile_placeholder)

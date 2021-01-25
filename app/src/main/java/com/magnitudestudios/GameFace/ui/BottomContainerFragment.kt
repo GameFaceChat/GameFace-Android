@@ -52,6 +52,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+/**
+ * Bottom container fragment
+ *
+ * @constructor Create empty Bottom container fragment
+ */
 class BottomContainerFragment : Fragment() {
     private lateinit var bind: FragmentBottomNavBinding
     private lateinit var mainViewModel: MainViewModel

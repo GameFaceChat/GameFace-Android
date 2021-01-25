@@ -54,6 +54,11 @@ import kotlin.math.max
 import kotlin.math.min
 
 
+/**
+ * Take photo fragment
+ *
+ * @constructor Create empty Take photo fragment
+ */
 class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private val TAG = "TakePhotoFragment"
     private lateinit var bind: FragmentTakePhotoBinding
@@ -232,6 +237,11 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         command.run()
     }
 
+    /**
+     * Gesture listener
+     *
+     * @constructor Create empty Gesture listener
+     */
     inner class GestureListener : SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent): Boolean {
             return true

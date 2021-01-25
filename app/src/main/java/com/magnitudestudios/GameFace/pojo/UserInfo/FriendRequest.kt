@@ -21,6 +21,14 @@ package com.magnitudestudios.GameFace.pojo.UserInfo
 
 import com.google.firebase.database.Exclude
 
+/**
+ * Friend request
+ *
+ * @property friendUID  The UID of the friend for the request
+ * @property sentDate   The date when the request was sent
+ * @property accepted   A boolean whether the request has been accepted
+ * @constructor Create empty Friend request
+ */
 data class FriendRequest (
         @JvmField
         var friendUID: String = "",
@@ -34,6 +42,11 @@ data class FriendRequest (
         @JvmField
         var accepted: Boolean = false
 ) {
+        /**
+         * Get the date that this request was sent as a long
+         *
+         * @return
+         */
         @Exclude
         fun getSentDate(): Long? {
                 return if (sentDate is Long) {

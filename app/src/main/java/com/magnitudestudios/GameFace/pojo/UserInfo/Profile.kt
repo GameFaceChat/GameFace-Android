@@ -24,6 +24,18 @@ import com.google.firebase.database.Exclude
 import com.google.firebase.database.ServerValue
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Profile
+ *
+ * @property uid                The UID of the profile
+ * @property username           The username of the profile
+ * @property name               The name of the user profile
+ * @property bio                The bio of the user profile
+ * @property profilePic         The profile picture URI of the user profile
+ * @property score              The score of the user profile
+ * @property lastLogin          The date of the last login of the user
+ * @constructor Create empty Profile
+ */
 data class Profile(
         @JvmField
         @NonNull
@@ -48,6 +60,11 @@ data class Profile(
         @JvmField
         var lastLogin: Any? = null
 ) {
+        /**
+         * Get last login
+         *
+         * @return
+         */
         @Exclude
         fun getLastLogin(): Long? {
                 return if (lastLogin is Long) {

@@ -27,6 +27,11 @@ import com.magnitudestudios.GameFace.pojo.Shop.ShowCaseItem
 import com.magnitudestudios.GameFace.repository.ShopRepository
 import kotlinx.coroutines.Dispatchers
 
+/**
+ * Shop view model
+ *
+ * @constructor Create empty Shop view model
+ */
 class ShopViewModel : ViewModel() {
     val charadesItems = liveData(Dispatchers.IO) { emit(ShopRepository.getCharadesItems()) }
 

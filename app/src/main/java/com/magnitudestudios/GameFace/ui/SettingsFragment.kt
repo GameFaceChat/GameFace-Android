@@ -35,6 +35,11 @@ import com.magnitudestudios.GameFace.R
 import com.magnitudestudios.GameFace.databinding.ToolbarBackBinding
 import com.magnitudestudios.GameFace.ui.main.MainViewModel
 
+/**
+ * Settings fragment
+ *
+ * @constructor Create empty Settings fragment
+ */
 class SettingsFragment : PreferenceFragmentCompat() {
     lateinit var toolbar: ToolbarBackBinding
     lateinit var mainViewModel: MainViewModel

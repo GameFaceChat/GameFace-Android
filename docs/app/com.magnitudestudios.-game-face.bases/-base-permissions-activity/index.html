@@ -1,0 +1,128 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BasePermissionsActivity - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.bases</a>&nbsp;/&nbsp;<a href="./index.html">BasePermissionsActivity</a><br/>
+<br/>
+<h1>BasePermissionsActivity</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">BasePermissionsActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-base-activity/index.html"><span class="identifier">BaseActivity</span></a></code>
+<p>Base Permission class for all activities that require permissions;
+Extend this class to ensure that the permissions defined in</p>
+<p><strong>See Also</strong><br/>
+<p><a href="../../com.magnitudestudios.-game-face/-constants/-p-e-r-m-i-s-s-i-o-n-s.html">Constants.PERMISSIONS</a></p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">BasePermissionsActivity</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Base Permission class for all activities that require permissions;
+Extend this class to ensure that the permissions defined in</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="check-permissions.html">checkPermissions</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkPermissions</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity$checkPermissions(kotlin.Int)/requestCode">requestCode</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="has-all-permissions-granted.html">hasAllPermissionsGranted</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hasAllPermissionsGranted</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity$hasAllPermissionsGranted(kotlin.IntArray)/grantResults">grantResults</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Checks all permissions</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-create.html">onCreate</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCreate</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity$onCreate(android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-request-permissions-result.html">onRequestPermissionsResult</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onRequestPermissionsResult</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity$onRequestPermissionsResult(kotlin.Int, kotlin.Array((kotlin.String)), kotlin.IntArray)/requestCode">requestCode</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity$onRequestPermissionsResult(kotlin.Int, kotlin.Array((kotlin.String)), kotlin.IntArray)/permissions">permissions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity$onRequestPermissionsResult(kotlin.Int, kotlin.Array((kotlin.String)), kotlin.IntArray)/grantResults">grantResults</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int-array/index.html"><span class="identifier">IntArray</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Callback for result of permissions request</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-t-a-g.html">TAG</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="has-permissions.html">hasPermissions</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">hasPermissions</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity.Companion$hasPermissions(android.content.Context, kotlin.Array((kotlin.String)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.bases.BasePermissionsActivity.Companion$hasPermissions(android.content.Context, kotlin.Array((kotlin.String)))/permissions">permissions</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Static function to check whether all permissions have been granted</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="../../com.magnitudestudios.-game-face.ui.calling/-incoming-call/index.html">IncomingCall</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">IncomingCall</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BasePermissionsActivity</span></a></code>
+<p>Incoming call</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.magnitudestudios.-game-face.ui.login/-login-activity/index.html">LoginActivity</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LoginActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BasePermissionsActivity</span></a></code>
+<p>Login activity</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="../../com.magnitudestudios.-game-face.ui.main/-main-activity/index.html">MainActivity</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">MainActivity</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">BasePermissionsActivity</span></a></code>
+<p>Main activity</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -19,6 +19,15 @@
 
 package com.magnitudestudios.GameFace.pojo.VideoCall
 
+/**
+ * Ice candidate p o j o
+ *
+ * @property sdpMid
+ * @property sdpMLineIndex
+ * @property sdp
+ * @property serverUrl
+ * @constructor Create empty Ice candidate object
+ */
 data class IceCandidatePOJO (
     @JvmField
     val sdpMid: String = "",

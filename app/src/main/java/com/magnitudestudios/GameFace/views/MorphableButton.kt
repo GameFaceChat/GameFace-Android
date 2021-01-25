@@ -43,6 +43,15 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.magnitudestudios.GameFace.R
 
+/**
+ * Morphable button
+ *
+ * @constructor
+ *
+ * @param context
+ * @param attrs
+ * @param defStyle
+ */
 class MorphableButton @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
@@ -60,7 +69,8 @@ class MorphableButton @JvmOverloads constructor(
     private var initialText = ""
 
     private enum class State {
-        PROGRESS, IDLE
+        PROGRESS,
+        IDLE
     }
 
     init {
@@ -114,6 +124,11 @@ class MorphableButton @JvmOverloads constructor(
         if (state == State.PROGRESS && !animationInProgress) drawIntermediateProgress(canvas!!)
     }
 
+    /**
+     * Sets the button into loading mode
+     *
+     * @param boolean
+     */
     fun setLoading(boolean: Boolean) {
         if (width == 0) return
         mAnimatedDrawable?.stop()
@@ -131,6 +146,15 @@ class MorphableButton @JvmOverloads constructor(
         }
     }
 
+    /**
+     * Circular animated drawable
+     *
+     * @property animView
+     * @property borderWidth
+     * @constructor
+     *
+     * @param arcColor
+     */
     class CircularAnimatedDrawable(val animView: View, val borderWidth: Float, arcColor: Int) : Drawable(), Animatable {
         private val paint: Paint = Paint()
         private var inProgress = false

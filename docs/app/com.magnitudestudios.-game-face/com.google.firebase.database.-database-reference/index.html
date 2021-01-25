@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.magnitudestudios.GameFace.com.google.firebase.database.DatabaseReference - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace</a>&nbsp;/&nbsp;<a href="./index.html">com.google.firebase.database.DatabaseReference</a><br/>
+<br/>
+<h3>Extensions for com.google.firebase.database.DatabaseReference</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-listener.html">addListener</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">DatabaseReference</span><span class="symbol">.</span><span class="identifier">addListener</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace$addListener(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function2((com.google.firebase.database.DataSnapshot, kotlin.String, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))/childAdded">childAdded</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">snapshot</span><span class="symbol">:</span>&nbsp;<span class="identifier">DataSnapshot</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{ _ -&gt; }<span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace$addListener(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function2((com.google.firebase.database.DataSnapshot, kotlin.String, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))/childRemoved">childRemoved</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">snapshot</span><span class="symbol">:</span>&nbsp;<span class="identifier">DataSnapshot</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{ _ -&gt; }<span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace$addListener(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function2((com.google.firebase.database.DataSnapshot, kotlin.String, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))/childChanged">childChanged</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">snapshot</span><span class="symbol">:</span>&nbsp;<span class="identifier">DataSnapshot</span><span class="symbol">,</span>&nbsp;<span class="identifier">previousChildName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{ _, _ -&gt; }<span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace$addListener(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function2((com.google.firebase.database.DataSnapshot, kotlin.String, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))/onCancelled">onCancelled</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">error</span><span class="symbol">:</span>&nbsp;<span class="identifier">DatabaseError</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a>&nbsp;<span class="symbol">=</span>&nbsp;{ _ -&gt; }<span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ChildEventListener</span></code>
+<p>Add listener</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="do-on-child-added.html">doOnChildAdded</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">DatabaseReference</span><span class="symbol">.</span><span class="identifier">doOnChildAdded</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace$doOnChildAdded(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)))/action">action</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">snapshot</span><span class="symbol">:</span>&nbsp;<span class="identifier">DataSnapshot</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ChildEventListener</span></code>
+<p>Do on child added</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="do-on-child-removed.html">doOnChildRemoved</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">DatabaseReference</span><span class="symbol">.</span><span class="identifier">doOnChildRemoved</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace$doOnChildRemoved(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)))/action">action</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">snapshot</span><span class="symbol">:</span>&nbsp;<span class="identifier">DataSnapshot</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ChildEventListener</span></code>
+<p>Do on child removed</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="do-on-error.html">doOnError</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">DatabaseReference</span><span class="symbol">.</span><span class="identifier">doOnError</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace$doOnError(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))/action">action</span><span class="symbol">:</span>&nbsp;<span class="symbol">(</span><span class="identifier">error</span><span class="symbol">:</span>&nbsp;<span class="identifier">DatabaseError</span><span class="symbol">)</span>&nbsp;<span class="symbol">-&gt;</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ChildEventListener</span></code>
+<p>Do on error</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

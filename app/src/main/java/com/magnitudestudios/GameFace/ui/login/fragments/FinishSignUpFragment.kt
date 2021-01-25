@@ -36,6 +36,11 @@ import com.magnitudestudios.GameFace.databinding.FragmentFinishSigningUpBinding
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.login.LoginViewModel
 
+/**
+ * Finish the sign up fragment
+ *
+ * @constructor Create empty Finish sign up fragment
+ */
 class FinishSignUpFragment : Fragment() {
     private lateinit var binding: FragmentFinishSigningUpBinding
     private lateinit var viewModel: LoginViewModel

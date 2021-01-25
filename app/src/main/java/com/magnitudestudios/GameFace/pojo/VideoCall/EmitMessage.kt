@@ -19,6 +19,15 @@
 
 package com.magnitudestudios.GameFace.pojo.VideoCall
 
+/**
+ * Emit message
+ *
+ * @property fromUID    The UID from whom the message came from
+ * @property toUID      The UID to who the message is going to
+ * @property type       The type of the message (the types are defined in the Constants file)
+ * @property data       The data of the message
+ * @constructor Create empty Emit message
+ */
 data class EmitMessage(
         val fromUID: String = "",
         val toUID: String = "",

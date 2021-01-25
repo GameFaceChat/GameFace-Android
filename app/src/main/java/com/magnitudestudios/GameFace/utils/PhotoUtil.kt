@@ -24,6 +24,11 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import java.io.*
 
+/**
+ * Compress an image at the given File
+ *
+ * @param file  The file where the image is currently saved to
+ */
 fun compressImage(file: File?) {
     if (file == null) throw (FileNotFoundException("File not Found in TakePhotoFragment"))
 

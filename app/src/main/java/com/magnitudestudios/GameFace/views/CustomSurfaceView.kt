@@ -25,6 +25,11 @@ import android.util.Log
 import android.view.SurfaceHolder
 import org.webrtc.SurfaceViewRenderer
 
+/**
+ * Custom surface view
+ *
+ * @constructor Create empty Custom surface view
+ */
 class CustomSurfaceView : SurfaceViewRenderer {
 
     constructor(context: Context?) : super(context) {}

@@ -1,0 +1,130 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ShopRepository - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.repository</a>&nbsp;/&nbsp;<a href="./index.html">ShopRepository</a><br/>
+<br/>
+<h1>ShopRepository</h1>
+<code><span class="keyword">object </span><span class="identifier">ShopRepository</span></code>
+<p>Shop repository
+Handles various Shop functions such as downloading packs,
+Getting the items to display, getting the user's packs from the database
+and syncing with local packs.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-to-local-packs.html">addToLocalPacks</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addToLocalPacks</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$addToLocalPacks(android.content.Context, com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$addToLocalPacks(android.content.Context, com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo)/pack">pack</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds a pack to local packs (once it has been downloaded)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="check-with-remote-packs.html">checkWithRemotePacks</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">checkWithRemotePacks</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$checkWithRemotePacks(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-remote-pack-info/index.html"><span class="identifier">RemotePackInfo</span></a><span class="symbol">&gt;</span></code>
+<p>Check with remote packs and return the packs that need to be downloaded from the database.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="download-all.html">downloadAll</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">downloadAll</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$downloadAll(android.content.Context, kotlin.collections.List((com.magnitudestudios.GameFace.pojo.Shop.RemotePackInfo)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$downloadAll(android.content.Context, kotlin.collections.List((com.magnitudestudios.GameFace.pojo.Shop.RemotePackInfo)))/toDownload">toDownload</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-remote-pack-info/index.html"><span class="identifier">RemotePackInfo</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-remote-pack-info/index.html"><span class="identifier">RemotePackInfo</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Downloads all the packs given in the parameter toDownload</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="fetch-remote-packs.html">fetchRemotePacks</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">fetchRemotePacks</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-remote-pack-info/index.html"><span class="identifier">RemotePackInfo</span></a><span class="symbol">&gt;</span></code>
+<p>Fetches the remote packs that the user has purchased. This is stored in the database.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-charades-items.html">getCharadesItems</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getCharadesItems</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-shop-item/index.html"><span class="identifier">ShopItem</span></a><span class="symbol">&gt;</span></code>
+<p>Gets the charades available items in the shop</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-items.html">getItems</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getItems</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$getItems(kotlin.String)/path">path</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-shop-item/index.html"><span class="identifier">ShopItem</span></a><span class="symbol">&gt;</span></code>
+<p>Get shop items from a certain path in the database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-local-packs.html">getLocalPacks</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getLocalPacks</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$getLocalPacks(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-local-pack-info/index.html"><span class="identifier">LocalPackInfo</span></a><span class="symbol">&gt;</span></code>
+<p>Gets all the locally installed packs. These are packs installed on the user's device.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-number-of-remote-packs.html">getNumberOfRemotePacks</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getNumberOfRemotePacks</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Get the number of remote packs that the user should have</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-shop-item.html">getShopItem</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getShopItem</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$getShopItem(kotlin.String, kotlin.String)/gameType">gameType</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.ShopRepository$getShopItem(kotlin.String, kotlin.String)/packID">packID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-shop-item/index.html"><span class="identifier">ShopItem</span></a><span class="symbol">?</span></code>
+<p>Get shop item</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-showcase-items.html">getShowcaseItems</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getShowcaseItems</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-show-case-item/index.html"><span class="identifier">ShowCaseItem</span></a><span class="symbol">&gt;</span></code>
+<p>Get the items to display in the showcase in the shop</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-tor-d-items.html">getTorDItems</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getTorDItems</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-shop-item/index.html"><span class="identifier">ShopItem</span></a><span class="symbol">&gt;</span></code>
+<p>Gets the Truth or Dare available items in the shop</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-would-you-rather-items.html">getWouldYouRatherItems</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getWouldYouRatherItems</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-shop/-shop-item/index.html"><span class="identifier">ShopItem</span></a><span class="symbol">&gt;</span></code>
+<p>Gets the Would You Rather available items in the shop</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

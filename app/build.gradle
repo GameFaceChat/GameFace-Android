@@ -23,7 +23,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'org.jetbrains.dokka'
+//apply plugin: 'org.jetbrains.dokka'
+apply plugin: "org.jetbrains.dokka-android"
+
 
 android {
     compileSdkVersion 29
@@ -70,14 +72,20 @@ android {
     }
 
 }
-dokkaHtml {
-
-    dokkaSourceSets {
-        named("main") {
-            outputDirectory.set(buildDir.resolve("docs"))
-            noAndroidSdkLink.set(false)
-            skipDeprecated.set(true)
-        }
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/docs"
+    skipDeprecated = true
+    noStdlibLink = false
+    includeNonPublic = true
+    skipEmptyPackages = true
+    packageOptions {
+        prefix = "com.takusemba.cropme"
+        suppress = true
+    }
+    packageOptions {
+        prefix = "com.magnitudestudios.GameFace.databinding"
+        suppress = true
     }
 }
 

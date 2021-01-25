@@ -35,6 +35,11 @@ import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 
 
+/**
+ * Login activity
+ *
+ * @constructor Create empty Login activity
+ */
 class LoginActivity : BasePermissionsActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel

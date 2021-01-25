@@ -21,11 +21,24 @@ package com.magnitudestudios.GameFace.pojo.Shop
 
 import com.google.firebase.database.ServerValue
 
+/**
+ * Remote pack info
+ *
+ * @property id             The ID of the remote pack
+ * @property type           The type of the remote pack
+ * @property purchasedDate  The date that this user's pack was initially purchased
+ * @constructor Create empty Remote pack info
+ */
 open class RemotePackInfo (
         val id : String = "",
         val type : String = "",
         val purchasedDate : Any? = ServerValue.TIMESTAMP
 ) {
+    /**
+     * Get purchased time
+     *
+     * @return
+     */
     fun getPurchasedTime() : Long? {
         return if (purchasedDate is Long) purchasedDate
         else null

@@ -40,6 +40,11 @@ import com.magnitudestudios.GameFace.loadProfile
 import com.magnitudestudios.GameFace.pojo.UserInfo.Profile
 import com.magnitudestudios.GameFace.views.holders.FriendViewHolder
 
+/**
+ * Friends fragment
+ *
+ * @constructor Create empty Friends fragment
+ */
 class FriendsFragment : Fragment() {
     private lateinit var bind: FragmentFriendsBinding
     private lateinit var viewModel: FriendsViewModel

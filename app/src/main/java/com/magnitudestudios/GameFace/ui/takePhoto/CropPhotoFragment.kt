@@ -40,6 +40,11 @@ import com.takusemba.cropme.OnCropListener
 import java.io.File
 import java.io.FileOutputStream
 
+/**
+ * Crop photo fragment
+ *
+ * @constructor Create empty Crop photo fragment
+ */
 class CropPhotoFragment : BaseFragment() {
     private lateinit var bind: FragmentCropPfpBinding
 

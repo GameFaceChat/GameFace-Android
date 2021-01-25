@@ -19,6 +19,18 @@
 
 package com.magnitudestudios.GameFace.pojo.Shop
 
+/**
+ * Response of a download request made to the API
+ *
+ * @property packID             The ID of the pack
+ * @property packType           The type of the pack
+ * @property content            The content of the pack (text)
+ * @property contentB           The second file of content if needed
+ * @property imgURL             The image URL for the pack
+ * @property version_number     The version number of the pack (used for updating packs)
+ * @property name               The name of the pack for users
+ * @constructor Create empty Download pack response
+ */
 data class DownloadPackResponse(
         val packID : String = "",
         val packType : String = "",
