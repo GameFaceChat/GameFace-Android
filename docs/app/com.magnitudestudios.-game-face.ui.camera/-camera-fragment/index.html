@@ -1,0 +1,330 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CameraFragment - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.ui.camera</a>&nbsp;/&nbsp;<a href="./index.html">CameraFragment</a><br/>
+<br/>
+<h1>CameraFragment</h1>
+<code><span class="keyword">class </span><span class="identifier">CameraFragment</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.bases/-base-fragment/index.html"><span class="identifier">BaseFragment</span></a><span class="symbol">, </span><a href="https://developer.android.com/reference/android/view/View/OnClickListener.html"><span class="identifier">OnClickListener</span></a></code>
+<p>Camera fragment</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">CameraFragment</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Camera fragment</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="args.html">args</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">args</span><span class="symbol">: </span><span class="identifier">CameraFragmentArgs</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="audio-constraints.html">audioConstraints</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">audioConstraints</span><span class="symbol">: </span><span class="identifier">MediaConstraints</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="audio-manager.html">audioManager</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">audioManager</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/media/AudioManager.html"><span class="identifier">AudioManager</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="audio-source.html">audioSource</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">audioSource</span><span class="symbol">: </span><span class="identifier">AudioSource</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="bind.html">bind</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">bind</span><span class="symbol">: </span><span class="identifier">FragmentCameraBinding</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="local-audio-track.html">localAudioTrack</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">localAudioTrack</span><span class="symbol">: </span><span class="identifier">AudioTrack</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="local-stream.html">localStream</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">localStream</span><span class="symbol">: </span><span class="identifier">MediaStream</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="local-video-track.html">localVideoTrack</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">localVideoTrack</span><span class="symbol">: </span><span class="identifier">VideoTrack</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="main-view-model.html">mainViewModel</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">mainViewModel</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.ui.main/-main-view-model/index.html"><span class="identifier">MainViewModel</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="members-adapter.html">membersAdapter</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">membersAdapter</span><span class="symbol">: </span><a href="../-member-status-adapter/index.html"><span class="identifier">MemberStatusAdapter</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="peer-connection-factory.html">peerConnectionFactory</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">peerConnectionFactory</span><span class="symbol">: </span><span class="identifier">PeerConnectionFactory</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="root-egl-base.html">rootEglBase</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">rootEglBase</span><span class="symbol">: </span><span class="identifier">EglBase</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="video-capturer.html">videoCapturer</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">videoCapturer</span><span class="symbol">: </span><span class="identifier">VideoCapturer</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="video-constraints.html">videoConstraints</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">videoConstraints</span><span class="symbol">: </span><span class="identifier">MediaConstraints</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="video-source.html">videoSource</a></p>
+</td>
+<td>
+<code><span class="keyword">lateinit</span> <span class="keyword">var </span><span class="identifier">videoSource</span><span class="symbol">: </span><span class="identifier">VideoSource</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="video-views.html">videoViews</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">videoViews</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/util/concurrent/ConcurrentHashMap.html"><span class="identifier">ConcurrentHashMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.views/-movable-screen/index.html"><span class="identifier">MovableScreen</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="view-model.html">viewModel</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">viewModel</span><span class="symbol">: </span><a href="../-camera-view-model/index.html"><span class="identifier">CameraViewModel</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="connection-failed.html">connectionFailed</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">connectionFailed</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$connectionFailed(kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="create-camera-capturer.html">createCameraCapturer</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createCameraCapturer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$createCameraCapturer(org.webrtc.CameraEnumerator)/enumerator">enumerator</span><span class="symbol">:</span>&nbsp;<span class="identifier">CameraEnumerator</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">VideoCapturer</span><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="create-peer-connection.html">createPeerConnection</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createPeerConnection</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$createPeerConnection(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="disconnect.html">disconnect</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">disconnect</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$disconnect(kotlin.Boolean)/userDefined">userDefined</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="get-screen.html">getScreen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getScreen</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$getScreen(kotlin.String)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.views/-movable-screen/index.html"><span class="identifier">MovableScreen</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="got-peer-stream.html">gotPeerStream</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">gotPeerStream</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$gotPeerStream(kotlin.String, org.webrtc.MediaStream)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$gotPeerStream(kotlin.String, org.webrtc.MediaStream)/stream">stream</span><span class="symbol">:</span>&nbsp;<span class="identifier">MediaStream</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="observe-connection.html">observeConnection</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">observeConnection</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="observe-ice-connection.html">observeIceConnection</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">observeIceConnection</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="observe-members.html">observeMembers</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">observeMembers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="observe-new-peers.html">observeNewPeers</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">observeNewPeers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-click.html">onClick</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onClick</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$onClick(android.view.View)/v">v</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-create-view.html">onCreateView</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onCreateView</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/inflater">inflater</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/LayoutInflater.html"><span class="identifier">LayoutInflater</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/container">container</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/ViewGroup.html"><span class="identifier">ViewGroup</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-destroy.html">onDestroy</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onDestroy</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-destroy-view.html">onDestroyView</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onDestroyView</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-pause.html">onPause</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onPause</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-view-created.html">onViewCreated</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onViewCreated</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$onViewCreated(android.view.View, android.os.Bundle)/view">view</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/View.html"><span class="identifier">View</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$onViewCreated(android.view.View, android.os.Bundle)/savedInstanceState">savedInstanceState</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/os/Bundle.html"><span class="identifier">Bundle</span></a><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-peer.html">removePeer</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removePeer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$removePeer(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="set-loading.html">setLoading</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setLoading</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$setLoading(kotlin.Boolean)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="start-camera.html">startCamera</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">startCamera</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="still-connected-members.html">stillConnectedMembers</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">stillConnectedMembers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="transition-connected.html">transitionConnected</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">transitionConnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="transition-disconnected.html">transitionDisconnected</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">transitionDisconnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="update-connection-status.html">updateConnectionStatus</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateConnectionStatus</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$updateConnectionStatus(kotlin.String, org.webrtc.PeerConnection.IceConnectionState)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$updateConnectionStatus(kotlin.String, org.webrtc.PeerConnection.IceConnectionState)/iceConnectionState">iceConnectionState</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceConnectionState</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-t-a-g.html">TAG</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

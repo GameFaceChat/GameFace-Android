@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>NotificationService - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.network</a>&nbsp;/&nbsp;<a href="./index.html">NotificationService</a><br/>
+<br/>
+<h1>NotificationService</h1>
+<code><span class="keyword">class </span><span class="identifier">NotificationService</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">FirebaseMessagingService</span></code>
+<p>Notification service. This is the class that handles all notifications, and</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">NotificationService</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Notification service. This is the class that handles all notifications, and</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="service-job.html">serviceJob</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">serviceJob</span><span class="symbol">: </span><span class="identifier">CompletableJob</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="service-scope.html">serviceScope</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">serviceScope</span><span class="symbol">: </span><span class="identifier">CoroutineScope</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="launch-call.html">launchCall</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">launchCall</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$launchCall(kotlin.String, kotlin.collections.List((com.magnitudestudios.GameFace.pojo.UserInfo.Profile)))/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$launchCall(kotlin.String, kotlin.collections.List((com.magnitudestudios.GameFace.pojo.UserInfo.Profile)))/members">members</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Launches the call screen to show caller information.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-message-received.html">onMessageReceived</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onMessageReceived</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$onMessageReceived(com.google.firebase.messaging.RemoteMessage)/p0">p0</span><span class="symbol">:</span>&nbsp;<span class="identifier">RemoteMessage</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when a message is received through the Firebase messaging service</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-new-token.html">onNewToken</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onNewToken</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$onNewToken(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when a new Firebase Device is token is issued. This function will also update the device
+token that is stored on the server for this specific user.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="receive-call.html">receiveCall</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">receiveCall</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$receiveCall(kotlin.collections.Map((kotlin.String, )))/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Called when there is an incoming video call from friend(s).
+Gets the members of the room.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="show-notification.html">showNotification</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">showNotification</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$showNotification(kotlin.collections.Map((kotlin.String, )))/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-map/index.html"><span class="identifier">Map</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Show a generic notification from the server</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="validate-message.html">validateMessage</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">validateMessage</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.network.NotificationService$validateMessage(com.google.firebase.messaging.RemoteMessage)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">RemoteMessage</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

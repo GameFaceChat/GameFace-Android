@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -27,6 +39,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+/**
+ * Login view model
+ *
+ * @constructor Create empty Login view model
+ */
 class LoginViewModel : ViewModel() {
     val authenticated = MutableLiveData<Resource<Boolean>>()
 
@@ -41,14 +58,31 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Validate email
+     *
+     * @param email     Validates whether an email is correct
+     * @return
+     */
     fun validateEmail(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
+    /**
+     * Reset user status
+     *
+     */
     fun resetUserStatus() {
         authenticated.postValue(Resource.nothing(false))
     }
 
+    /**
+     * Sign up user with email
+     *
+     * @param email         email of the user
+     * @param password      password of the user
+     * @return              An observable resource
+     */
     fun signUpUserWithEmail(email: String, password: String): LiveData<Resource<Boolean>> {
         authenticated.value = Resource.loading(false)
         return liveData(Dispatchers.IO) {
@@ -68,6 +102,12 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Firebase user authentication with Google Account
+     *
+     * @param account
+     * @return
+     */
     fun firebaseAuthWithGoogle(account: GoogleSignInAccount?): LiveData<Resource<Boolean>> {
         val credential = GoogleAuthProvider.getCredential(account!!.idToken, null)
         return liveData(Dispatchers.IO) {
@@ -92,6 +132,12 @@ class LoginViewModel : ViewModel() {
     }
 
 
+    /**
+     * Sign in a user with email and password
+     *
+     * @param email         The email of the user
+     * @param password      The password of the user
+     */
     fun signInWithEmail(email: String, password: String) {
         authenticated.value = Resource.loading(false)
         viewModelScope.launch(Dispatchers.IO) {
@@ -105,6 +151,12 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Send a Forgot Password email to a certain email
+     *
+     * @param email     The email of the user
+     * @return
+     */
     fun sendForgotPassword(email: String): LiveData<Resource<Boolean>> {
         return liveData(Dispatchers.IO) {
             try {
@@ -117,6 +169,13 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Create a user profile
+     *
+     * @param username  The username of the new user
+     * @param name      The full name of the new user
+     * @param bio       The bio of the user
+     */
     fun createUser(username: String, name: String, bio: String) {
         authenticated.postValue(Resource.loading(false))
         viewModelScope.launch(Dispatchers.IO) {
@@ -144,6 +203,11 @@ class LoginViewModel : ViewModel() {
 
     }
 
+    /**
+     * Checks whether a username exists
+     *
+     * @param username  The username to check if it already exists
+     */
     fun userNameExists(username: String) {
         viewModelScope.launch(Dispatchers.IO) {
             usernameExists.postValue(Resource.loading(false))
@@ -151,10 +215,20 @@ class LoginViewModel : ViewModel() {
         }
     }
 
+    /**
+     * Check if there is currently a Firebase user logged in
+     *
+     * @return
+     */
     fun isFirebaseUserNull(): Boolean {
         return Firebase.auth.currentUser == null
     }
 
+    /**
+     * Set profile pic uri
+     *
+     * @param uri   The profile picture URi
+     */
     fun setProfilePicUri(uri: String) {
         profilePicUri.postValue(Uri.parse(uri))
     }

@@ -1,0 +1,200 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>UserRepository - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.repository</a>&nbsp;/&nbsp;<a href="./index.html">UserRepository</a><br/>
+<br/>
+<h1>UserRepository</h1>
+<code><span class="keyword">object </span><span class="identifier">UserRepository</span></code>
+<p>User repository
+Handles the logic of all user operations</p>
+<ul><li>Creating users</li>
+<li>Creating profiles</li>
+<li>Updating and managing device tokens</li>
+<li>Sending and accepting friend requests</li>
+</ul>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-t-a-g.html">TAG</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="accept-friend-request.html">acceptFriendRequest</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">acceptFriendRequest</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$acceptFriendRequest(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Accept a friend request</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-profile.html">createProfile</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createProfile</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$createProfile(com.magnitudestudios.GameFace.pojo.UserInfo.Profile)/profile">profile</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Task</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">&gt;</span></code>
+<p>Create profile for a user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-user.html">createUser</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createUser</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$createUser(com.magnitudestudios.GameFace.pojo.UserInfo.User)/user">user</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-user/index.html"><span class="identifier">User</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Task</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">&gt;</span></code>
+<p>Creates user at the user reference</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delete-friend-request.html">deleteFriendRequest</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">deleteFriendRequest</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$deleteFriendRequest(kotlin.String, kotlin.Boolean)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$deleteFriendRequest(kotlin.String, kotlin.Boolean)/gotFriendRequest">gotFriendRequest</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Remove a friend request from both the user who sent it, and the user who received the request</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-current-user-profile-ref.html">getCurrentUserProfileRef</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getCurrentUserProfileRef</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">DatabaseReference</span></code>
+<p>Get current user profile ref</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-current-user-ref.html">getCurrentUserRef</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getCurrentUserRef</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">DatabaseReference</span></code>
+<p>Gets the current user database reference</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-device-token.html">getDeviceToken</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getDeviceToken</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Gets the current device token</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-profile-ref.html">getProfileRef</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getProfileRef</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$getProfileRef(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">DatabaseReference</span></code>
+<p>Gets the profile DatabaseReference</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-profiles-by-username.html">getProfilesByUsername</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getProfilesByUsername</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$getProfilesByUsername(kotlin.String)/query">query</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Query possible usernames in the database given a query string.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-user-profile-by-u-i-d.html">getUserProfileByUID</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getUserProfileByUID</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$getUserProfileByUID(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">?</span></code>
+<p>Retrieves a user's profile by their User ID.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-user-profiles-by-u-i-d.html">getUserProfilesByUID</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getUserProfilesByUID</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$getUserProfilesByUID(kotlin.collections.List((kotlin.String)))/uids">uids</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">&gt;</span></code>
+<p>Retrieves multiple user profiles by uids</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-user-ref.html">getUserRef</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getUserRef</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$getUserRef(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">DatabaseReference</span></code>
+<p>Get the DatabaseReference of a certain user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-friend-request.html">sendFriendRequest</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendFriendRequest</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$sendFriendRequest(com.magnitudestudios.GameFace.pojo.UserInfo.Profile)/toUser">toUser</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-profile/index.html"><span class="identifier">Profile</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sends a friend request to a specific user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-profile-pic.html">setProfilePic</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">setProfilePic</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$setProfilePic(android.net.Uri)/image">image</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/net/Uri.html"><span class="identifier">Uri</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/net/Uri.html"><span class="identifier">Uri</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Uploads a profile picture to Cloud Storage.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-user.html">setUser</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">setUser</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$setUser(com.magnitudestudios.GameFace.pojo.UserInfo.User)/user">user</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-user-info/-user/index.html"><span class="identifier">User</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets a new value for a user</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-device-token.html">updateDeviceToken</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">updateDeviceToken</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$updateDeviceToken(kotlin.String)/token">token</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Updates the device token stored in the database. Since a user may have multiple devices, yet
+each token is unique the keys are the tokens, and the values are a simple boolean.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-user-profile.html">updateUserProfile</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">updateUserProfile</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$updateUserProfile(kotlin.collections.MutableMap((kotlin.String, kotlin.Any)))/values">values</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-mutable-map/index.html"><span class="identifier">MutableMap</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Updates the user profile</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="username-exists.html">usernameExists</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">usernameExists</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.UserRepository$usernameExists(kotlin.String)/username">username</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span></code>
+<p>Checks whether a username already exists</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

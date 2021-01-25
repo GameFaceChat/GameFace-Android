@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -44,6 +56,13 @@ import org.webrtc.SessionDescription
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Camera view model
+ *
+ * @constructor
+ *
+ * @param application
+ */
 class CameraViewModel(application: Application) : AndroidViewModel(application), RoomCallback, MemberCallback {
     private val connectedRoom = MutableLiveData<String>()
 
@@ -86,6 +105,12 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     val newGame = MutableLiveData<StartGameRequest>()
 
+    /**
+     * Add peer
+     *
+     * @param uid
+     * @param peer
+     */
     fun addPeer(uid: String, peer: PeerConnection) {
         if (!connections.value!!.containsKey(uid)) {
             connections.value?.put(uid, peer)
@@ -94,11 +119,22 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     }
 
+    /**
+     * Called when an ICE candidate is found, and must be sent to a peer
+     *
+     * @param uid
+     * @param iceCandidate
+     */
     fun onIceCandidate(uid: String, iceCandidate: IceCandidate) {
         if (!SessionRepository.currentRoom.isNullOrEmpty()) SessionRepository.sendIceCandidate(iceCandidate, uid)
     }
 
 
+    /**
+     * Initiate connection witha peer (create offer)
+     *
+     * @param uid
+     */
     fun initiateConnection(uid: String) {
         val peer = connections.value?.get(uid) ?: return
         val sdpConstraints = MediaConstraints()
@@ -113,6 +149,11 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         }, sdpConstraints)
     }
 
+    /**
+     * Create a room
+     *
+     * @param calls
+     */
     fun createRoom(vararg calls: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val roomID = SessionRepository.createRoom(
@@ -127,12 +168,23 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
+    /**
+     * Add a member to the current room
+     *
+     * @param uid
+     * @param roomID
+     */
     fun addMember(uid: String, roomID : String? = connectedRoom.value) {
         if (!roomID.isNullOrEmpty()) {
             SessionRepository.addMember(uid, roomID)
         }
     }
 
+    /**
+     * Join a room
+     *
+     * @param roomID
+     */
     fun joinRoom(roomID: String) {
         viewModelScope.launch(Dispatchers.IO) {
             connectedRoom.postValue(SessionRepository.joinRoom(
@@ -184,11 +236,20 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
     }
 
+    /**
+     * Remove a participant
+     *
+     * @param uid
+     */
     @Synchronized
     fun removeParticipant(uid: String) {
         connections.value!!.remove(uid)
     }
 
+    /**
+     * Used to hang up the call
+     *
+     */
     @Synchronized
     fun hangUp() {
         if (connections.value != null) {

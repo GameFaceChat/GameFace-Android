@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -25,11 +37,18 @@ import com.magnitudestudios.GameFace.pojo.VideoCall.Member
 import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.ui.main.MainActivity
 
+/**
+ * Incoming call
+ *
+ * @constructor Create empty Incoming call
+ */
 class IncomingCall : BasePermissionsActivity() {
     private lateinit var bind: ActivityIncomingCallBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Delete the notification
         deleteNotification()
+
         bind = ActivityIncomingCallBinding.inflate(layoutInflater)
         setContentView(bind.root)
 
@@ -38,6 +57,7 @@ class IncomingCall : BasePermissionsActivity() {
 
         val roomID = intent.getStringExtra(Constants.ROOM_ID_KEY)!!
 
+        //Load the member profiles
         val memberProfiles = try {
             Gson().fromJson(intent.getStringExtra(Constants.ROOM_MEMBERS_KEY), object : TypeToken<List<Profile>>() {}.type) as List<Profile>
         } catch (e: Exception) {
@@ -46,6 +66,7 @@ class IncomingCall : BasePermissionsActivity() {
             ArrayList<Profile>()
         }
 
+        //Update the UI of the Incoming call screen
         Glide.with(this)
                 .load(memberProfiles[0].profilePic)
                 .placeholder(R.drawable.profile_placeholder)

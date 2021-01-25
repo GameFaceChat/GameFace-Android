@@ -1,0 +1,39 @@
+$dokka.format:html
+$dokka.linkExtension:html
+$dokka.location:com.magnitudestudios.GameFace$addListener(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)), kotlin.Function2((com.google.firebase.database.DataSnapshot, kotlin.String, kotlin.Unit)), kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))com.magnitudestudios.-game-face/com.google.firebase.database.-database-reference/add-listener.html
+$dokka.location:com.magnitudestudios.GameFace$doOnChildAdded(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)))com.magnitudestudios.-game-face/com.google.firebase.database.-database-reference/do-on-child-added.html
+$dokka.location:com.magnitudestudios.GameFace$doOnChildRemoved(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DataSnapshot, kotlin.Unit)))com.magnitudestudios.-game-face/com.google.firebase.database.-database-reference/do-on-child-removed.html
+$dokka.location:com.magnitudestudios.GameFace$doOnError(com.google.firebase.database.DatabaseReference, kotlin.Function1((com.google.firebase.database.DatabaseError, kotlin.Unit)))com.magnitudestudios.-game-face/com.google.firebase.database.-database-reference/do-on-error.html
+$dokka.location:com.magnitudestudios.GameFace$loadProfile(com.bumptech.glide.RequestManager, kotlin.String, android.widget.ImageButton)com.magnitudestudios.-game-face/com.bumptech.glide.-request-manager/load-profile.html
+$dokka.location:com.magnitudestudios.GameFace$loadProfile(com.bumptech.glide.RequestManager, kotlin.String, android.widget.ImageView)com.magnitudestudios.-game-face/com.bumptech.glide.-request-manager/load-profile.html
+$dokka.location:com.magnitudestudios.GameFace$notifyObserver(androidx.lifecycle.MutableLiveData((com.magnitudestudios.GameFace.notifyObserver.T)))com.magnitudestudios.-game-face/androidx.lifecycle.-mutable-live-data/notify-observer.html
+com.magnitudestudios.GameFace
+com.magnitudestudios.GameFace.bases
+com.magnitudestudios.GameFace.callbacks
+com.magnitudestudios.GameFace.common
+com.magnitudestudios.GameFace.network
+com.magnitudestudios.GameFace.pojo.EnumClasses
+com.magnitudestudios.GameFace.pojo.Helper
+com.magnitudestudios.GameFace.pojo.Shop
+com.magnitudestudios.GameFace.pojo.UserInfo
+com.magnitudestudios.GameFace.pojo.VideoCall
+com.magnitudestudios.GameFace.repository
+com.magnitudestudios.GameFace.ui
+com.magnitudestudios.GameFace.ui.addFriends
+com.magnitudestudios.GameFace.ui.calling
+com.magnitudestudios.GameFace.ui.camera
+com.magnitudestudios.GameFace.ui.camera.addMembers
+com.magnitudestudios.GameFace.ui.home
+com.magnitudestudios.GameFace.ui.login
+com.magnitudestudios.GameFace.ui.login.fragments
+com.magnitudestudios.GameFace.ui.main
+com.magnitudestudios.GameFace.ui.profile
+com.magnitudestudios.GameFace.ui.profile.editProfile
+com.magnitudestudios.GameFace.ui.profile.tabs
+com.magnitudestudios.GameFace.ui.shop
+com.magnitudestudios.GameFace.ui.shop.details
+com.magnitudestudios.GameFace.ui.shop.tabs
+com.magnitudestudios.GameFace.ui.takePhoto
+com.magnitudestudios.GameFace.utils
+com.magnitudestudios.GameFace.views
+com.magnitudestudios.GameFace.views.holders

@@ -1,0 +1,149 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>LoginViewModel - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.ui.login</a>&nbsp;/&nbsp;<a href="./index.html">LoginViewModel</a><br/>
+<br/>
+<h1>LoginViewModel</h1>
+<code><span class="keyword">class </span><span class="identifier">LoginViewModel</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ViewModel</span></code>
+<p>Login view model</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">LoginViewModel</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Login view model</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="authenticated.html">authenticated</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">authenticated</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="profile-pic-uri.html">profilePicUri</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">profilePicUri</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/android/net/Uri.html"><span class="identifier">Uri</span></a><span class="symbol">&gt;</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="username-exists.html">usernameExists</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">usernameExists</span><span class="symbol">: </span><span class="identifier">MutableLiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="create-user.html">createUser</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createUser</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$createUser(kotlin.String, kotlin.String, kotlin.String)/username">username</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$createUser(kotlin.String, kotlin.String, kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$createUser(kotlin.String, kotlin.String, kotlin.String)/bio">bio</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Create a user profile</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="firebase-auth-with-google.html">firebaseAuthWithGoogle</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">firebaseAuthWithGoogle</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$firebaseAuthWithGoogle(com.google.android.gms.auth.api.signin.GoogleSignInAccount)/account">account</span><span class="symbol">:</span>&nbsp;<span class="identifier">GoogleSignInAccount</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Firebase user authentication with Google Account</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-firebase-user-null.html">isFirebaseUserNull</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isFirebaseUserNull</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Check if there is currently a Firebase user logged in</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="reset-user-status.html">resetUserStatus</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">resetUserStatus</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Reset user status</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-forgot-password.html">sendForgotPassword</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendForgotPassword</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$sendForgotPassword(kotlin.String)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Send a Forgot Password email to a certain email</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-profile-pic-uri.html">setProfilePicUri</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setProfilePicUri</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$setProfilePicUri(kotlin.String)/uri">uri</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set profile pic uri</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="sign-in-with-email.html">signInWithEmail</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">signInWithEmail</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$signInWithEmail(kotlin.String, kotlin.String)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$signInWithEmail(kotlin.String, kotlin.String)/password">password</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sign in a user with email and password</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="sign-up-user-with-email.html">signUpUserWithEmail</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">signUpUserWithEmail</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$signUpUserWithEmail(kotlin.String, kotlin.String)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$signUpUserWithEmail(kotlin.String, kotlin.String)/password">password</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-helper/-resource/index.html"><span class="identifier">Resource</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Sign up user with email</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="user-name-exists.html">userNameExists</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">userNameExists</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$userNameExists(kotlin.String)/username">username</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Checks whether a username exists</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="validate-email.html">validateEmail</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">validateEmail</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.login.LoginViewModel$validateEmail(kotlin.String)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Validate email</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

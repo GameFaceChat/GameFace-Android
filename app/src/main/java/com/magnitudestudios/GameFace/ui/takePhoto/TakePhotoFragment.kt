@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -42,6 +54,11 @@ import kotlin.math.max
 import kotlin.math.min
 
 
+/**
+ * Take photo fragment
+ *
+ * @constructor Create empty Take photo fragment
+ */
 class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
     private val TAG = "TakePhotoFragment"
     private lateinit var bind: FragmentTakePhotoBinding
@@ -133,7 +150,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
                 .requireLensFacing(orientation)
                 .build()
 
-        preview.setSurfaceProvider(bind.previewView.createSurfaceProvider())
+        preview.setSurfaceProvider(bind.previewView.surfaceProvider)
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview, captureInstance)
             setUpTapToFocus()
@@ -195,7 +212,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         bind.previewView.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 if (event.action != MotionEvent.ACTION_UP) return true
-                val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+                val factory = bind.previewView.meteringPointFactory
                 val point = factory.createPoint(event.x, event.y)
                 val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
                 camera!!.cameraControl.startFocusAndMetering(action)
@@ -220,6 +237,11 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
         command.run()
     }
 
+    /**
+     * Gesture listener
+     *
+     * @constructor Create empty Gesture listener
+     */
     inner class GestureListener : SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent): Boolean {
             return true
@@ -227,7 +249,7 @@ class TakePhotoFragment : Fragment(), CameraXConfig.Provider, Executor {
 
         override fun onSingleTapConfirmed(event: MotionEvent): Boolean {
             if (cameraSelector == null) return true
-            val factory = bind.previewView.createMeteringPointFactory(cameraSelector!!)
+            val factory = bind.previewView.meteringPointFactory
             val point = factory.createPoint(event.x, event.y)
             val action: FocusMeteringAction = FocusMeteringAction.Builder(point).build()
             camera?.cameraControl?.startFocusAndMetering(action)

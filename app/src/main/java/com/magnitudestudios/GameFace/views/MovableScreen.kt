@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -26,6 +38,16 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
+/**
+ * Movable screen
+ *
+ * @constructor
+ *
+ * @param context
+ * @param attributeSet
+ * @param styleAttr
+ * @param overlay
+ */
 class MovableScreen @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
@@ -60,6 +82,13 @@ class MovableScreen @JvmOverloads constructor(
             maxheight = (parent as View).height.toFloat()
         }
 
+    /**
+     * Initialize
+     *
+     * @param eglBase
+     * @param overlay
+     * @param onTop
+     */
     fun initialize(eglBase: EglBase, overlay: Boolean, onTop : Boolean = false) {
         surface.apply {
             setZOrderMediaOverlay(overlay)
@@ -74,11 +103,19 @@ class MovableScreen @JvmOverloads constructor(
 
     }
 
+    /**
+     * Sets the Screen into disconnected mode
+     *
+     */
     fun setDisconnected() {
         this.surface.clearImage()
     }
 
-    //Shows the progress bar
+    /**
+     * Set loading
+     *
+     * @param isLoading
+     *///Shows the progress bar
     fun setLoading(isLoading: Boolean) {
         progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
@@ -181,13 +218,19 @@ class MovableScreen @JvmOverloads constructor(
         animator.start()
     }
 
-    // Set this surface view as a smaller screen
+    /**
+     * Set calling
+     *
+     */// Set this surface view as a smaller screen
     fun setCalling() {
         setSmallScreen()
         stateConnected = true
     }
 
-    // Sets this as a fullscreen view
+    /**
+     * Sets the screen into local
+     *
+     */// Sets this as a fullscreen view
     fun setLocal() {
         setFullScreen()
         stateConnected = false

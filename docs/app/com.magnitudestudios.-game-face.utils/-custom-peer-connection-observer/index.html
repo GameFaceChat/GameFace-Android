@@ -1,0 +1,127 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CustomPeerConnectionObserver - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.utils</a>&nbsp;/&nbsp;<a href="./index.html">CustomPeerConnectionObserver</a><br/>
+<br/>
+<h1>CustomPeerConnectionObserver</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CustomPeerConnectionObserver</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Observer</span></code>
+<p>Custom peer connection observer</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">CustomPeerConnectionObserver</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$<init>(kotlin.String, kotlin.String)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$<init>(kotlin.String, kotlin.String)/logTag">logTag</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="log-tag.html">logTag</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">logTag</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="peer-u-i-d.html">peerUID</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">peerUID</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-add-stream.html">onAddStream</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onAddStream</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onAddStream(org.webrtc.MediaStream)/mediaStream">mediaStream</span><span class="symbol">:</span>&nbsp;<span class="identifier">MediaStream</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-add-track.html">onAddTrack</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onAddTrack</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onAddTrack(org.webrtc.RtpReceiver, kotlin.Array((org.webrtc.MediaStream)))/rtpReceiver">rtpReceiver</span><span class="symbol">:</span>&nbsp;<span class="identifier">RtpReceiver</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onAddTrack(org.webrtc.RtpReceiver, kotlin.Array((org.webrtc.MediaStream)))/mediaStreams">mediaStreams</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">MediaStream</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-data-channel.html">onDataChannel</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onDataChannel</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onDataChannel(org.webrtc.DataChannel)/dataChannel">dataChannel</span><span class="symbol">:</span>&nbsp;<span class="identifier">DataChannel</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-ice-candidate.html">onIceCandidate</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onIceCandidate</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onIceCandidate(org.webrtc.IceCandidate)/iceCandidate">iceCandidate</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceCandidate</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-ice-candidates-removed.html">onIceCandidatesRemoved</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onIceCandidatesRemoved</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onIceCandidatesRemoved(kotlin.Array((org.webrtc.IceCandidate)))/iceCandidates">iceCandidates</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html"><span class="identifier">Array</span></a><span class="symbol">&lt;</span><span class="identifier">IceCandidate</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-ice-connection-change.html">onIceConnectionChange</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onIceConnectionChange</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onIceConnectionChange(org.webrtc.PeerConnection.IceConnectionState)/iceConnectionState">iceConnectionState</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceConnectionState</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-ice-connection-receiving-change.html">onIceConnectionReceivingChange</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onIceConnectionReceivingChange</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onIceConnectionReceivingChange(kotlin.Boolean)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-ice-gathering-change.html">onIceGatheringChange</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onIceGatheringChange</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onIceGatheringChange(org.webrtc.PeerConnection.IceGatheringState)/iceGatheringState">iceGatheringState</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceGatheringState</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-remove-stream.html">onRemoveStream</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onRemoveStream</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onRemoveStream(org.webrtc.MediaStream)/mediaStream">mediaStream</span><span class="symbol">:</span>&nbsp;<span class="identifier">MediaStream</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-renegotiation-needed.html">onRenegotiationNeeded</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onRenegotiationNeeded</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-signaling-change.html">onSignalingChange</a></p>
+</td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onSignalingChange</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.utils.CustomPeerConnectionObserver$onSignalingChange(org.webrtc.PeerConnection.SignalingState)/signalingState">signalingState</span><span class="symbol">:</span>&nbsp;<span class="identifier">SignalingState</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

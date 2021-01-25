@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -14,10 +26,7 @@ import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.camera.core.Camera
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.google.common.util.concurrent.ListenableFuture
@@ -25,6 +34,11 @@ import com.magnitudestudios.GameFace.aspectRatio
 import com.magnitudestudios.GameFace.bases.BaseFragment
 import com.magnitudestudios.GameFace.databinding.FragmentHomeBinding
 
+/**
+ * Home fragment
+ *
+ * @constructor Create empty Home fragment
+ */
 class HomeFragment : BaseFragment() {
     companion object {
         private const val TAG = "HomeFragment"
@@ -45,7 +59,7 @@ class HomeFragment : BaseFragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        cameraProviderFuture.addListener(Runnable {
+        cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
             setUpCamera(cameraProvider)
         }, ContextCompat.getMainExecutor(requireContext()))
@@ -88,7 +102,7 @@ class HomeFragment : BaseFragment() {
                 .requireLensFacing(orientation)
                 .build()
 
-        preview.setSurfaceProvider(bind.previewCamera.createSurfaceProvider())
+        preview.setSurfaceProvider(bind.previewCamera.surfaceProvider)
         try {
             camera = cameraProvider.bindToLifecycle(viewLifecycleOwner, cameraSelector!!, preview)
             return true

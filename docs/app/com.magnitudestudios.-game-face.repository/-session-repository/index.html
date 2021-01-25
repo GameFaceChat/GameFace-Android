@@ -1,0 +1,211 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SessionRepository - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.repository</a>&nbsp;/&nbsp;<a href="./index.html">SessionRepository</a><br/>
+<br/>
+<h1>SessionRepository</h1>
+<code><span class="keyword">object </span><span class="identifier">SessionRepository</span></code>
+<p>Session repository
+Singleton class to manage a connection to a room.</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-leave-room-worker/index.html">LeaveRoomWorker</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">LeaveRoomWorker</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">CoroutineWorker</span></code>
+<p>Leave room worker is used to leave a room. Helps to ensure that the user leaves a room when needed,
+even if they close the app.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="connection-listener.html">connectionListener</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">connectionListener</span><span class="symbol">: </span><span class="identifier">ChildEventListener</span><span class="symbol">?</span></code>
+<p>Connection listener that listens to connection events</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="current-room.html">currentRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">currentRoom</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>The current room that the user is connected to</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="member-listener.html">memberListener</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">memberListener</span><span class="symbol">: </span><span class="identifier">ChildEventListener</span><span class="symbol">?</span></code>
+<p>Member listener that listens to member events</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-a-g.html">TAG</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">TAG</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="uid.html">uid</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">uid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span></code>
+<p>UID of the current User</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="accept-call.html">acceptCall</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">acceptCall</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$acceptCall(kotlin.String, kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$acceptCall(kotlin.String, kotlin.String)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Accept call: updates the member status accordingly</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="add-member.html">addMember</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addMember</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$addMember(kotlin.String, kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$addMember(kotlin.String, kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$addMember(kotlin.String, kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/memberStatus">memberStatus</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-enum-classes/-member-status/index.html"><span class="identifier">MemberStatus</span></a>&nbsp;<span class="symbol">=</span>&nbsp;MemberStatus.CALLING<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds a member to the "members" section of the Room JSON tree in the NoSQL database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-room.html">createRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">createRoom</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$createRoom(com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/roomCallback">roomCallback</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.callbacks/-room-callback/index.html"><span class="identifier">RoomCallback</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$createRoom(com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/memberCallback">memberCallback</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.callbacks/-member-callback/index.html"><span class="identifier">MemberCallback</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$createRoom(com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Called when the current user is creating a new room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="deny-call.html">denyCall</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">denyCall</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$denyCall(kotlin.String, kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$denyCall(kotlin.String, kotlin.String)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Deny call: updates the member status accordingly</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-all-members.html">getAllMembers</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">getAllMembers</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$getAllMembers(kotlin.String)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.magnitudestudios.-game-face.pojo.-video-call/-member/index.html"><span class="identifier">Member</span></a><span class="symbol">&gt;</span></code>
+<p>Get all members</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="join-room.html">joinRoom</a></p>
+</td>
+<td>
+<code><span class="keyword">suspend</span> <span class="keyword">fun </span><span class="identifier">joinRoom</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$joinRoom(kotlin.String, com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/roomName">roomName</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$joinRoom(kotlin.String, com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/roomCallback">roomCallback</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.callbacks/-room-callback/index.html"><span class="identifier">RoomCallback</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$joinRoom(kotlin.String, com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/memberCallback">memberCallback</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.callbacks/-member-callback/index.html"><span class="identifier">MemberCallback</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$joinRoom(kotlin.String, com.magnitudestudios.GameFace.callbacks.RoomCallback, com.magnitudestudios.GameFace.callbacks.MemberCallback, kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Called when the current user is joining an existing room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="listen-for-messages.html">listenForMessages</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">listenForMessages</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$listenForMessages(com.magnitudestudios.GameFace.callbacks.RoomCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.callbacks/-room-callback/index.html"><span class="identifier">RoomCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Listen for Room Events (Web RTC protocol events included as well)
+Events include : JOINED, LEFT, OFFER, ANSWER, ICE CANDIDATE</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="listen-to-member-status.html">listenToMemberStatus</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">listenToMemberStatus</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$listenToMemberStatus(com.magnitudestudios.GameFace.callbacks.MemberCallback)/callback">callback</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.callbacks/-member-callback/index.html"><span class="identifier">MemberCallback</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Listens to the status of each member in a room
+The Member class contains their profile, the timestamp and the status</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-listeners.html">removeListeners</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removeListeners</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Remove all the listeners on the current room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-answer.html">sendAnswer</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendAnswer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendAnswer(org.webrtc.SessionDescription, kotlin.String)/session">session</span><span class="symbol">:</span>&nbsp;<span class="identifier">SessionDescription</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendAnswer(org.webrtc.SessionDescription, kotlin.String)/toUID">toUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Send answer response to an offer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-ice-candidate.html">sendIceCandidate</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendIceCandidate</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendIceCandidate(org.webrtc.IceCandidate, kotlin.String)/iceCandidate">iceCandidate</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceCandidate</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendIceCandidate(org.webrtc.IceCandidate, kotlin.String)/toUID">toUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Send an ICE candidate to a potential peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-message.html">sendMessage</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendMessage</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendMessage(kotlin.String, kotlin.String, kotlin.Any, kotlin.String)/toUID">toUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendMessage(kotlin.String, kotlin.String, kotlin.Any, kotlin.String)/type">type</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendMessage(kotlin.String, kotlin.String, kotlin.Any, kotlin.String)/data">data</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendMessage(kotlin.String, kotlin.String, kotlin.Any, kotlin.String)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a>&nbsp;<span class="symbol">=</span>&nbsp;currentRoom!!<span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Task</span><span class="symbol">&lt;</span><a href="https://developer.android.com/reference/java/lang/Void.html"><span class="identifier">Void</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Send message to another user in the room</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-offer.html">sendOffer</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendOffer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendOffer(org.webrtc.SessionDescription, kotlin.String)/session">session</span><span class="symbol">:</span>&nbsp;<span class="identifier">SessionDescription</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$sendOffer(org.webrtc.SessionDescription, kotlin.String)/toUID">toUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Send offer to specific user to initiate Peer Connection</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-member-status.html">updateMemberStatus</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateMemberStatus</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$updateMemberStatus(kotlin.String, kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$updateMemberStatus(kotlin.String, kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/roomID">roomID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.repository.SessionRepository$updateMemberStatus(kotlin.String, kotlin.String, com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus)/status">status</span><span class="symbol">:</span>&nbsp;<a href="../../com.magnitudestudios.-game-face.pojo.-enum-classes/-member-status/index.html"><span class="identifier">MemberStatus</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Update member status</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

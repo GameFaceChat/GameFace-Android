@@ -1,7 +1,19 @@
 /*
- * Copyright (c) 2020 - Magnitude Studios - All Rights Reserved
- * Unauthorized copying of this file, via any medium is prohibited
- * All software is proprietary and confidential
+ * Copyright (c) 2021 -Srihari Vishnu - All Rights Reserved
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ * OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
  */
 
@@ -53,6 +65,11 @@ Client:
 - Version
 */
 
+/**
+ * Http request utility object that has some convenient functions for use in various
+ * places in the application.
+ *
+ */
 object HTTPRequest {
     private const val SERVERS_URL_BACKEND = "https://us-central1-gameface-chat.cloudfunctions.net/app/servers"
     private const val PURCHASE_PACK_BACKEND = "https://us-central1-gameface-chat.cloudfunctions.net/app/purchasePack"
@@ -60,8 +77,15 @@ object HTTPRequest {
     private const val CONTENT_A_EXTENSION = "_contentA.txt"
     private const val CONTENT_B_EXTENSION = "_contentB.txt"
 
-
+    /**
+     * Gets the available ICE candidates for the current user by making an API call to the Node JS
+     * API. The retrieval of ICE servers is done server-side to protect API keys and secrets
+     *
+     * @return JSON containing a list of available Server Information
+     */
     suspend fun getServers() : Resource<String?> {
+        //Get the token to verify that this is a valid user when making the request to the
+        //protected endpoint
         val idToken = FirebaseHelper.getIDToken() ?: return Resource.error("Invalid Token", null)
         val client = HttpClient(Android)
         return try {
@@ -75,6 +99,13 @@ object HTTPRequest {
         }
     }
 
+    /**
+     * Purchases a pack from the store. Makes an API call to the protected endpoint.
+     *
+     * @param packID    ID of the pack
+     * @param packType  The type of the pack (game type)
+     * @return          Success or failure depending on whether the purchase was successful
+     */
     private suspend fun purchasePack(packID: String, packType: String) : Resource<DownloadPackResponse> {
         val idToken = FirebaseHelper.getIDToken() ?: return Resource.error("Invalid Token", null)
         val client = HttpClient(Android)
@@ -97,6 +128,16 @@ object HTTPRequest {
 
     private data class SealedPackInfoToSend(val packID : String = "", val packType : String = "")
 
+    /**
+     * Downloads an image. This is mostly used for downloading the images for packs, but can be
+     * extended to download profile pictures and other assets as well
+     *
+     * @param context   Context of the caller (activity preferable)
+     * @param url       URL of the image
+     * @param width     Width of the image  (approximation)
+     * @param height    Height of the image (approximation)
+     * @return  A bitmap of the image that was downloaded that is ready to be saved to a file
+     */
     private suspend fun downloadImage(context: Context, url : String, width : Int, height : Int) : Bitmap? {
         return suspendCoroutine {
             Glide.with(context).asBitmap()
@@ -115,6 +156,12 @@ object HTTPRequest {
         }
     }
 
+    /**
+     * Gets text contents of a pack. Simple download request
+     *
+     * @param textUrl
+     * @return  Success contains the string contents of the file.
+     */
     private suspend fun getContent(textUrl : String) : Resource<String> {
         Log.e("GETTING", textUrl)
         val client = HttpClient(Android)
@@ -128,6 +175,18 @@ object HTTPRequest {
         }
     }
 
+    /**
+     * Download pack from the server. Downloads the image file, the text content and creates
+     * a local folder and stores the results from the download in it. The user should now have these
+     * packs online or offline.
+     *
+     * @param context   Context (preferably applicationContext)
+     * @param packID    ID of the pack to be downloaded to the device
+     * @param packType  The type of the pack to be downloaded
+     * @return          A data class (LocalPackInfo) if successful
+     *
+     * @see LocalPackInfo
+     */
     suspend fun downloadPack(context: Context, packID: String, packType: String) : Resource<LocalPackInfo?> {
         try {
             val responseResult = purchasePack(packID, packType)
@@ -194,6 +253,7 @@ object HTTPRequest {
                     contentBPath,
                     response.name
             )
+            //Add the list of local packs
             ShopRepository.addToLocalPacks(context, localPack)
             return Resource.success(localPack)
 

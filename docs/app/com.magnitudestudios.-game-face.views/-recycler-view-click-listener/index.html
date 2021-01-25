@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RecyclerViewClickListener - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.magnitudestudios.GameFace.views</a>&nbsp;/&nbsp;<a href="./index.html">RecyclerViewClickListener</a><br/>
+<br/>
+<h1>RecyclerViewClickListener</h1>
+<code><span class="keyword">class </span><span class="identifier">RecyclerViewClickListener</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">OnItemTouchListener</span></code>
+<p>Recycler view click listener</p>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-click-listener/index.html">ClickListener</a></p>
+</td>
+<td>
+<code><span class="keyword">interface </span><span class="identifier">ClickListener</span></code>
+<p>On click listener</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">RecyclerViewClickListener</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$<init>(android.content.Context, androidx.recyclerview.widget.RecyclerView, com.magnitudestudios.GameFace.views.RecyclerViewClickListener.ClickListener)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$<init>(android.content.Context, androidx.recyclerview.widget.RecyclerView, com.magnitudestudios.GameFace.views.RecyclerViewClickListener.ClickListener)/recyclerView">recyclerView</span><span class="symbol">:</span>&nbsp;<span class="identifier">RecyclerView</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$<init>(android.content.Context, androidx.recyclerview.widget.RecyclerView, com.magnitudestudios.GameFace.views.RecyclerViewClickListener.ClickListener)/clickListener">clickListener</span><span class="symbol">:</span>&nbsp;<a href="-click-listener/index.html"><span class="identifier">RecyclerViewClickListener.ClickListener</span></a><span class="symbol">?</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="click-listener.html">clickListener</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">clickListener</span><span class="symbol">: </span><a href="-click-listener/index.html"><span class="identifier">RecyclerViewClickListener.ClickListener</span></a><span class="symbol">?</span></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="gesture-detector.html">gestureDetector</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">gestureDetector</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/view/GestureDetector.html"><span class="identifier">GestureDetector</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="on-intercept-touch-event.html">onInterceptTouchEvent</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onInterceptTouchEvent</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$onInterceptTouchEvent(androidx.recyclerview.widget.RecyclerView, android.view.MotionEvent)/rv">rv</span><span class="symbol">:</span>&nbsp;<span class="identifier">RecyclerView</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$onInterceptTouchEvent(androidx.recyclerview.widget.RecyclerView, android.view.MotionEvent)/e">e</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-request-disallow-intercept-touch-event.html">onRequestDisallowInterceptTouchEvent</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onRequestDisallowInterceptTouchEvent</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$onRequestDisallowInterceptTouchEvent(kotlin.Boolean)/disallowIntercept">disallowIntercept</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="on-touch-event.html">onTouchEvent</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onTouchEvent</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$onTouchEvent(androidx.recyclerview.widget.RecyclerView, android.view.MotionEvent)/rv">rv</span><span class="symbol">:</span>&nbsp;<span class="identifier">RecyclerView</span><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.views.RecyclerViewClickListener$onTouchEvent(androidx.recyclerview.widget.RecyclerView, android.view.MotionEvent)/e">e</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/view/MotionEvent.html"><span class="identifier">MotionEvent</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
