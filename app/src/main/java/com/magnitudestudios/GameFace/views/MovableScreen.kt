@@ -219,7 +219,7 @@ class MovableScreen @JvmOverloads constructor(
     }
 
     /**
-     * Set calling
+     * Sets the screen into calling mode
      *
      */// Set this surface view as a smaller screen
     fun setCalling() {
@@ -228,7 +228,7 @@ class MovableScreen @JvmOverloads constructor(
     }
 
     /**
-     * Sets the screen into local
+     * Sets the screen into local mode
      *
      */// Sets this as a fullscreen view
     fun setLocal() {

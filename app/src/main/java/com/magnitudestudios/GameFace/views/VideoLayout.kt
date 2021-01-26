@@ -30,7 +30,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import kotlin.math.max
 
 /**
- * Video layout
+ * Video layout: this is the Layout for the Video screens.
+ * Whenever a screen is added dynamically, this view supports
+ * resizes and puts all the other screens in the correct places
+ *
+ * Currently supports up to six screens
  *
  * @constructor
  *

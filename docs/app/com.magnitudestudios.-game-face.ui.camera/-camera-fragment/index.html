@@ -156,42 +156,54 @@
 <p><a href="connection-failed.html">connectionFailed</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">connectionFailed</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$connectionFailed(kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">connectionFailed</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$connectionFailed(kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Connection failed: called when there is an error connecting</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="create-camera-capturer.html">createCameraCapturer</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">createCameraCapturer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$createCameraCapturer(org.webrtc.CameraEnumerator)/enumerator">enumerator</span><span class="symbol">:</span>&nbsp;<span class="identifier">CameraEnumerator</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">VideoCapturer</span><span class="symbol">?</span></code></td>
+<code><span class="keyword">fun </span><span class="identifier">createCameraCapturer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$createCameraCapturer(org.webrtc.CameraEnumerator)/enumerator">enumerator</span><span class="symbol">:</span>&nbsp;<span class="identifier">CameraEnumerator</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">VideoCapturer</span><span class="symbol">?</span></code>
+<p>Finds the camera devices available for the video stream</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="create-peer-connection.html">createPeerConnection</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">createPeerConnection</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$createPeerConnection(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">createPeerConnection</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$createPeerConnection(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Creates a peer connection with the specified UID</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="disconnect.html">disconnect</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">disconnect</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$disconnect(kotlin.Boolean)/userDefined">userDefined</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">disconnect</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$disconnect(kotlin.Boolean)/userDefined">userDefined</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Disconnect the current user from all screens</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="get-screen.html">getScreen</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">getScreen</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$getScreen(kotlin.String)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.views/-movable-screen/index.html"><span class="identifier">MovableScreen</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">getScreen</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$getScreen(kotlin.String)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.magnitudestudios.-game-face.views/-movable-screen/index.html"><span class="identifier">MovableScreen</span></a></code>
+<p>Helper function to retrieve/create a screen for peer given their UID</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="got-peer-stream.html">gotPeerStream</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">gotPeerStream</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$gotPeerStream(kotlin.String, org.webrtc.MediaStream)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$gotPeerStream(kotlin.String, org.webrtc.MediaStream)/stream">stream</span><span class="symbol">:</span>&nbsp;<span class="identifier">MediaStream</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">gotPeerStream</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$gotPeerStream(kotlin.String, org.webrtc.MediaStream)/peerUID">peerUID</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$gotPeerStream(kotlin.String, org.webrtc.MediaStream)/stream">stream</span><span class="symbol">:</span>&nbsp;<span class="identifier">MediaStream</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Got a peer stream from the specified UID and is ready to displayed on a screen</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -205,21 +217,33 @@
 <p><a href="observe-ice-connection.html">observeIceConnection</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">observeIceConnection</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">observeIceConnection</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Observe ICE connection
+Called when the user's potential ICE servers from the API
+have been received, and is ready to join a room,
+or create a room</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="observe-members.html">observeMembers</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">observeMembers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">observeMembers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Observe members: updates the users UI when a member has been added/ their status
+has changed.</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="observe-new-peers.html">observeNewPeers</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">observeNewPeers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">observeNewPeers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Observe new peers: Called whenever a new peer has joined.
+Creates the peer connection, and only send the offer if their UID is lexicographically
+greater than the other peer's.</p>
+</td>
 </tr>
 <tr>
 <td>
@@ -268,49 +292,64 @@
 <p><a href="remove-peer.html">removePeer</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">removePeer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$removePeer(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">removePeer</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$removePeer(kotlin.String)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes a peer (UI)</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="set-loading.html">setLoading</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">setLoading</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$setLoading(kotlin.Boolean)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">setLoading</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$setLoading(kotlin.Boolean)/b">b</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the screen into loading mode (ie when connecting)</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="start-camera.html">startCamera</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">startCamera</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">startCamera</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Start the camera: sets up the camera and audio constraints and
+stream. The local video track is the local stream from your camera</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="still-connected-members.html">stillConnectedMembers</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">stillConnectedMembers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">stillConnectedMembers</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Helper function to check whether there are other members in the call still</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="transition-connected.html">transitionConnected</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">transitionConnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">transitionConnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Transitions the local screen into connected mode</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="transition-disconnected.html">transitionDisconnected</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">transitionDisconnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">transitionDisconnected</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Transition the local screen into disconnected mode</p>
+</td>
 </tr>
 <tr>
 <td>
 <p><a href="update-connection-status.html">updateConnectionStatus</a></p>
 </td>
 <td>
-<code><span class="keyword">fun </span><span class="identifier">updateConnectionStatus</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$updateConnectionStatus(kotlin.String, org.webrtc.PeerConnection.IceConnectionState)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$updateConnectionStatus(kotlin.String, org.webrtc.PeerConnection.IceConnectionState)/iceConnectionState">iceConnectionState</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceConnectionState</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+<code><span class="keyword">fun </span><span class="identifier">updateConnectionStatus</span><span class="symbol">(</span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$updateConnectionStatus(kotlin.String, org.webrtc.PeerConnection.IceConnectionState)/uid">uid</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.magnitudestudios.GameFace.ui.camera.CameraFragment$updateConnectionStatus(kotlin.String, org.webrtc.PeerConnection.IceConnectionState)/iceConnectionState">iceConnectionState</span><span class="symbol">:</span>&nbsp;<span class="identifier">IceConnectionState</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Update connection status UI</p>
+</td>
 </tr>
 </tbody>
 </table>

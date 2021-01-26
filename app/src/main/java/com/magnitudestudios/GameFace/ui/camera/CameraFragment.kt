@@ -59,6 +59,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var peerConnectionFactory: PeerConnectionFactory
     private var videoCapturer: VideoCapturer? = null
 
+    //Local stream setup variables
     private lateinit var videoSource: VideoSource
     private lateinit var audioSource: AudioSource
 
@@ -79,12 +80,15 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     private lateinit var mainViewModel: MainViewModel
     private val viewModel: CameraViewModel by navGraphViewModels(R.id.videoCallGraph)
 
+    //Maps the Peer UIDs to Video screens
     private var videoViews : ConcurrentHashMap<String, MovableScreen> = ConcurrentHashMap()
+
     private lateinit var membersAdapter : MemberStatusAdapter
 
     private val args: CameraFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        //Initialize the peer connection factory
         val initializationOptions = PeerConnectionFactory.InitializationOptions.builder(requireContext().applicationContext).createInitializationOptions()
         PeerConnectionFactory.initialize(initializationOptions)
         bind = FragmentCameraBinding.inflate(inflater)
@@ -112,6 +116,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         observeNewPeers()
         observeMembers()
 
+        //Set up the listeners for buttons and root surface
         bind.root.setOnClickListener {
             lifecycleScope.launch {
                 bind.callingControls.animate().setDuration(5000).alpha(1.0f)
@@ -162,6 +167,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
+    /**
+     * Observe members: updates the users UI when a member has been added/ their status
+     * has changed.
+     *
+     */
     private fun observeMembers() {
         membersAdapter = MemberStatusAdapter(viewModel.members.value!!)
         bind.showMembers.adapter = membersAdapter
@@ -183,6 +193,13 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
+    /**
+     * Observe ICE connection
+     * Called when the user's potential ICE servers from the API
+     * have been received, and is ready to join a room,
+     * or create a room
+     *
+     */
     private fun observeIceConnection() {
         viewModel.iceServers.observe(viewLifecycleOwner, {
             if (it != null) {
@@ -196,6 +213,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
+    /**
+     * Observe new peers: Called whenever a new peer has joined.
+     * Creates the peer connection, and only send the offer if their UID is lexicographically
+     * greater than the other peer's.
+     *
+     */
     private fun observeNewPeers() {
         viewModel.newPeer.observe(viewLifecycleOwner, {
             if (!it.isNullOrEmpty() && it != Firebase.auth.currentUser!!.uid) {
@@ -205,6 +228,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         })
     }
 
+    /**
+     * Start the camera: sets up the camera and audio constraints and
+     * stream. The local video track is the local stream from your camera
+     *
+     */
     private fun startCamera() {
         Log.e(TAG, "startCamera: " + "STARTING CAMERA")
 //        //Create a new PeerConnectionFactory instance - using Hardware encoder and decoder.
@@ -249,7 +277,13 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
 
     }
 
+    /**
+     * Creates a peer connection with the specified UID
+     *
+     * @param uid   The UID of the peer
+     */
     private fun createPeerConnection(uid: String) {
+        //Configure the connection
         val rtcConfig = PeerConnection.RTCConfiguration(viewModel.iceServers.value).apply {
             tcpCandidatePolicy = PeerConnection.TcpCandidatePolicy.DISABLED
             bundlePolicy = PeerConnection.BundlePolicy.MAXBUNDLE
@@ -258,6 +292,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             keyType = PeerConnection.KeyType.ECDSA
         }
 
+        //Create the peer
         val peer = peerConnectionFactory.createPeerConnection(rtcConfig, object : CustomPeerConnectionObserver(uid, "localPeerCreation") {
             override fun onIceCandidate(iceCandidate: IceCandidate) {
                 super.onIceCandidate(iceCandidate)
@@ -278,13 +313,16 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         })
         peer?.let {
             it.addStream(localStream)
-            viewModel.addPeer(uid, it)
+            viewModel.addPeer(uid, it)      //Add the peer to the viewModel
         }
-
-
     }
 
-    //For UI updates for each participant
+    /**
+     * Update connection status UI
+     *
+     * @param uid                   The uid of the member
+     * @param iceConnectionState    The new ICE connection state
+     */
     private fun updateConnectionStatus(uid: String, iceConnectionState: PeerConnection.IceConnectionState) {
         when (iceConnectionState) {
             PeerConnection.IceConnectionState.NEW -> {
@@ -311,6 +349,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    /**
+     * Helper function to check whether there are other members in the call still
+     *
+     * @return
+     */
     private fun stillConnectedMembers() : Boolean {
         viewModel.connections.value?.forEach {
             if (it.value.iceConnectionState() == PeerConnection.IceConnectionState.COMPLETED || it.value.iceConnectionState() == PeerConnection.IceConnectionState.CONNECTED) {
@@ -320,6 +363,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         return false
     }
 
+    /**
+     * Removes a peer (UI)
+     *
+     * @param uid
+     */
     @Synchronized
     private fun removePeer(uid: String) {
         videoViews[uid]?.surface?.release()
@@ -332,6 +380,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     }
 
 
+    /**
+     * Got a peer stream from the specified UID and is ready to displayed on a screen
+     *
+     * @param peerUID   The UID of the peer
+     * @param stream    The MediaStream of the peer to attach to screen surface
+     */
     private fun gotPeerStream(peerUID: String, stream: MediaStream ) {
         Log.e(TAG, "gotRemoteStream: " + "GOT REMOTE STREAM")
         //we have remote video stream. add to the renderer.
@@ -347,6 +401,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    /**
+     * Helper function to retrieve/create a screen for peer given their UID
+     *
+     * @param peerUID   The UID of the peer
+     * @return  A movable screen object
+     */
     private fun getScreen(peerUID: String) : MovableScreen {
         val videoView : MovableScreen
         if (!videoViews.containsKey(peerUID)) {
@@ -364,25 +424,48 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         return videoView
     }
 
-
+    /**
+     * Transitions the local screen into connected mode
+     *
+     */
     private fun transitionConnected() {
         bind.localVideo.setCalling()
     }
 
+    /**
+     * Transition the local screen into disconnected mode
+     *
+     */
     private fun transitionDisconnected() {
         bind.localVideo.setLocal()
     }
 
+    /**
+     * Sets the screen into loading mode (ie when connecting)
+     *
+     * @param b - True when loading, false otherwise.
+     */
     private fun setLoading(b: Boolean) {
         bind.localVideo.setLoading(b)
 
     }
+
+    /**
+     * Connection failed: called when there is an error connecting
+     *
+     * @param message
+     */
     private fun connectionFailed(message: String? = null) {
         activity?.runOnUiThread {
             if (!message.isNullOrEmpty()) Toast.makeText(context, message, Toast.LENGTH_LONG).show()
         }
     }
 
+    /**
+     * Disconnect the current user from all screens
+     *
+     * @param userDefined
+     */
     private fun disconnect(userDefined: Boolean = false) {
         viewModel.hangUp()
         transitionDisconnected()
@@ -407,6 +490,12 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         disconnect()
     }
 
+    /**
+     * Finds the camera devices available for the video stream
+     *
+     * @param enumerator
+     * @return
+     */
     private fun createCameraCapturer(enumerator: CameraEnumerator): VideoCapturer? {
         val deviceNames = enumerator.deviceNames
         // Trying to find a front facing camera!

@@ -61,18 +61,28 @@ import java.util.concurrent.ConcurrentHashMap
  * @param application
  */
 class CameraViewModel(application: Application) : AndroidViewModel(application), RoomCallback, MemberCallback {
+    //The name of the connected room
     private val connectedRoom = MutableLiveData<String>()
 
+    //The list of all the members in the room right now.
     val members = MutableLiveData<MutableList<Member>>(mutableListOf())
+
+    //New member
     val newMember = MutableLiveData<Member>()
+
+    //Member changed
     val changedMember = MutableLiveData<Int>()
 
+    //Maps user UIDs to a peer connection. Thread safe.
     val connections = MutableLiveData<ConcurrentHashMap<String, PeerConnection>>(ConcurrentHashMap())
 
+    //Keeps track of the current user's connection status
     val connectionStatus = MutableLiveData<Resource<Boolean>>(Resource.loading(false))
 
+    // The UID of the new peer
     val newPeer = MutableLiveData<String>()
 
+    //Retrieve the ICE servers from the API
     val iceServers = liveData(Dispatchers.IO) {
         val data = HTTPRequest.getServers()
         if (data.status == Status.ERROR) {

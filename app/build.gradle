@@ -87,6 +87,10 @@ dokka {
         prefix = "com.magnitudestudios.GameFace.databinding"
         suppress = true
     }
+    packageOptions {
+        prefix = "com.magnitudestudios.GameFace.ui.camera.CameraFragmentArgs"
+        suppress = true
+    }
 }
 
 dependencies {
