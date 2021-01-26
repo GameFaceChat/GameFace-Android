@@ -29,6 +29,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -49,6 +50,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.webrtc.*
 import java.util.concurrent.ConcurrentHashMap
+
 
 /**
  * Camera fragment
@@ -92,6 +94,11 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             ViewModelProvider(this).get(MainViewModel::class.java)
         }!!
         rootEglBase = EglBase.create()
+
+        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true /* enabled by default */) {
+            override fun handleOnBackPressed() {}
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
         return bind.root
     }
 
@@ -99,7 +106,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
-        bind.localVideo.initialize(eglBase = rootEglBase, overlay = true, onTop = true)
+        bind.localVideo.initialize(eglBase = rootEglBase, overlay = true, onTop = false)
 
         audioManager = context?.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.isSpeakerphoneOn = true
@@ -119,7 +126,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
                 bind.callingControls.animate().setDuration(5000).alpha(0f)
             }
         }
-        bind.callingControls.setOnClickListener {Log.e("CLICKED","CLICKED")}
+        bind.callingControls.setOnClickListener {Log.e("CLICKED", "CLICKED")}
 
         bind.addMember.setOnClickListener {
             findNavController().navigate(R.id.action_cameraFragment_to_addMembersDialog)
@@ -150,7 +157,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
 
     private fun observeConnection() {
         viewModel.connectionStatus.observe(viewLifecycleOwner, Observer {
-            when(it.status) {
+            when (it.status) {
                 Status.ERROR -> connectionFailed(it.message)
                 Status.LOADING -> setLoading(true)
                 else -> setLoading(false)
@@ -188,8 +195,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             if (it != null) {
                 if (args.roomID.isNotEmpty()) {
                     viewModel.joinRoom(args.roomID)
-                }
-                else if (args.callUserUID.isNotEmpty()) {
+                } else if (args.callUserUID.isNotEmpty()) {
                     viewModel.createRoom(args.callUserUID)
                 }
             }
@@ -332,7 +338,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
     }
 
 
-    private fun gotPeerStream(peerUID: String, stream: MediaStream ) {
+    private fun gotPeerStream(peerUID: String, stream: MediaStream) {
         Log.e(TAG, "gotRemoteStream: " + "GOT REMOTE STREAM")
         //we have remote video stream. add to the renderer.
         activity?.runOnUiThread {
@@ -394,7 +400,7 @@ class CameraFragment : BaseFragment(), View.OnClickListener {
             e.printStackTrace()
         }
         if (userDefined) {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_cameraFragment_to_callFinished)
         }
     }
 

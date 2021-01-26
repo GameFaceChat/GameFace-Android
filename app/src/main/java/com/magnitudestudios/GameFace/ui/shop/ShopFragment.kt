@@ -39,6 +39,7 @@ import com.magnitudestudios.GameFace.callbacks.RVButtonClick
 import com.magnitudestudios.GameFace.databinding.FragmentShopBinding
 import com.magnitudestudios.GameFace.databinding.ItemShowcaseBinding
 import com.magnitudestudios.GameFace.ui.BottomContainerFragmentDirections
+import com.magnitudestudios.GameFace.ui.shop.tabs.EarnFragment
 import com.magnitudestudios.GameFace.ui.shop.tabs.InstalledFragment
 import com.magnitudestudios.GameFace.ui.shop.tabs.MarketFragment
 import com.magnitudestudios.GameFace.views.ShowCaseItemViewHolder
@@ -120,9 +121,8 @@ class ShopFragment : BaseFragment() {
         val fragment = when (position) {
             0 -> MarketFragment()
             1 -> InstalledFragment()
-//            1 -> FriendsFragment()
-//            2 -> FriendRequestsFragment()
-            else -> MarketFragment()
+            2 -> EarnFragment()
+            else -> throw IllegalStateException("Unknown Fragment Position: $position")
         }
         childFragmentManager.beginTransaction().replace(R.id.shopContainer, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
     }

@@ -136,7 +136,6 @@ class VideoLayout @JvmOverloads constructor(
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         return super.onTouchEvent(event)
     }
 

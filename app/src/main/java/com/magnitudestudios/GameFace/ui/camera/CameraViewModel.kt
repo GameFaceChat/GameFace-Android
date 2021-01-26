@@ -26,6 +26,8 @@ import androidx.lifecycle.*
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.FirebaseAuthKtxRegistrar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -39,6 +41,7 @@ import com.magnitudestudios.GameFace.notifyObserver
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.EnumClasses.Status
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
+import com.magnitudestudios.GameFace.pojo.UserInfo.LocalPackInfo
 import com.magnitudestudios.GameFace.pojo.VideoCall.*
 import com.magnitudestudios.GameFace.repository.SessionRepository
 import com.magnitudestudios.GameFace.repository.UserRepository
@@ -99,6 +102,8 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
 
         emit(tempIceServers)
     }
+
+    val newGame = MutableLiveData<StartGameRequest>()
 
     /**
      * Add peer
@@ -287,5 +292,21 @@ class CameraViewModel(application: Application) : AndroidViewModel(application),
         }
     }
 
+
+    /**
+     * Game Functions
+     */
+
+    fun sendGameRequest(req : LocalPackInfo) {
+        SessionRepository.introduceGame(StartGameRequest(req.id, req.version, req.name, Firebase.auth.currentUser!!.uid))
+    }
+
+    fun onNewGame(startGameRequest: StartGameRequest) {
+        newGame.value = startGameRequest
+    }
+
+    fun joinGame(gameID : String) {
+
+    }
 
 }

@@ -21,6 +21,8 @@ package com.magnitudestudios.GameFace.repository
 
 import android.content.Context
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.work.CoroutineWorker
 import androidx.work.ListenableWorker
 import androidx.work.Worker
@@ -40,10 +42,7 @@ import com.magnitudestudios.GameFace.callbacks.RoomCallback
 import com.magnitudestudios.GameFace.doOnChildAdded
 import com.magnitudestudios.GameFace.pojo.EnumClasses.MemberStatus
 import com.magnitudestudios.GameFace.pojo.Helper.Resource
-import com.magnitudestudios.GameFace.pojo.VideoCall.EmitMessage
-import com.magnitudestudios.GameFace.pojo.VideoCall.IceCandidatePOJO
-import com.magnitudestudios.GameFace.pojo.VideoCall.Member
-import com.magnitudestudios.GameFace.pojo.VideoCall.SessionInfoPOJO
+import com.magnitudestudios.GameFace.pojo.VideoCall.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -349,6 +348,38 @@ object SessionRepository {
             }
             return Result.success()
         }
+    }
+
+    /**
+     * Game Server Operations
+     */
+    fun introduceGame(req: StartGameRequest) {
+        Firebase.database.reference
+                .child(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+                .child(Constants.GAMES_PATH)
+                .push()
+                .setValue(req)
+    }
+
+    fun joinGame(gameID : String) {
+        Firebase.database.reference
+                .child(Constants.ROOMS_PATH)
+                .child(currentRoom!!)
+                .child(gameID)
+                .push()
+                .setValue({Constants.JOINED_KEY to Firebase.auth.currentUser!!.uid})
+    }
+
+    fun listenForNewGames() : LiveData<StartGameRequest> {
+        val live =  MutableLiveData<StartGameRequest>()
+        Firebase.database.reference.child(Constants.ROOMS_PATH).child(currentRoom!!).child(Constants.GAMES_PATH).doOnChildAdded {
+            val data = it.getValue(StartGameRequest::class.java)
+            if (data != null && data.senderUID != Firebase.auth.currentUser!!.uid) {
+                live.postValue(data!!)
+            }
+        }
+        return live
     }
 
 }
