@@ -29,6 +29,7 @@ import com.magnitudestudios.GameFace.views.holders.MemberViewHolder
 
 /**
  * Member status adapter
+ * @see SortedRVAdapter
  *
  * @property members
  * @constructor Create empty Member status adapter
